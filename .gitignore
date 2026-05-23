@@ -1,0 +1,12 @@
+# 임시 파일
+*.tmp
+*.bak
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# 예시 폴더 (배포 제외)
+3. 예시/
+
+# 내부 문서
+firebase-setup.md

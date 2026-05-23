@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#f0f5fc">
+<title>하이앤드 발리볼 | 관리자</title>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#f0f5fc;--surface:#fff;--surface2:#e8eff9;
+  --border:#cbd8ec;--blue:#1a53d4;--blueH:#1240b0;--blueL:#e8f0fe;
+  --text:#0d1b2e;--sub:#3a5272;--muted:#6b82a0;
+  --green:#128f3d;--greenL:#e6f4ec;--red:#c8231e;--redL:#fdecea;
+  --orange:#d16b00;--orangeL:#fef3e2;--pink:#b5178d;--pinkL:#fce4f5;
+  --shadow:0 2px 12px rgba(26,83,212,.08);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans KR',-apple-system,sans-serif;font-size:14px;}
+input,select,button,textarea{font-family:inherit;font-size:14px;}
+input,select,textarea{
+  background:var(--surface);border:1.5px solid var(--border);border-radius:8px;
+  padding:10px 13px;color:var(--text);width:100%;outline:none;transition:border-color .2s;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blueL);}
+textarea{resize:vertical;min-height:80px;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:8px;cursor:pointer;font-weight:700;transition:all .15s;padding:10px 18px;font-size:14px;gap:5px;}
+.btn:active{transform:scale(.97);}
+.btn-blue{background:var(--blue);color:#fff;}
+.btn-blue:hover{background:var(--blueH);}
+.btn-green{background:var(--green);color:#fff;}
+.btn-green:hover{opacity:.88;}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--sub);}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);}
+.btn-danger{background:transparent;border:1.5px solid rgba(200,35,30,.4);color:var(--red);}
+.btn-danger:hover{background:var(--redL);}
+.btn-orange{background:var(--orange);color:#fff;}
+.btn-orange:hover{opacity:.88;}
+.btn-sm{padding:7px 13px;font-size:13px;border-radius:6px;}
+.btn-xs{padding:5px 10px;font-size:12px;border-radius:5px;}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);}
+
+.badge{font-size:11px;border-radius:20px;padding:3px 10px;font-weight:700;}
+.badge-blue{background:var(--blueL);color:var(--blue);}
+.badge-green{background:var(--greenL);color:var(--green);}
+.badge-red{background:var(--redL);color:var(--red);}
+.badge-orange{background:var(--orangeL);color:var(--orange);}
+.badge-grey{background:var(--surface2);color:var(--muted);}
+.badge-pink{background:var(--pinkL);color:var(--pink);}
+
+.header{background:var(--surface);border-bottom:1.5px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
+.header-brand{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.08em;color:var(--blue);}
+.admin-chip{font-size:12px;font-weight:700;color:var(--red);background:var(--redL);padding:4px 12px;border-radius:20px;}
+
+.tabs{display:flex;background:var(--surface);border-bottom:1.5px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:1;min-width:56px;padding:12px 4px;background:none;border:none;border-bottom:2.5px solid transparent;color:var(--muted);font-weight:500;cursor:pointer;font-size:12px;font-family:inherit;white-space:nowrap;transition:color .2s,border-color .2s;}
+.tab.active{border-bottom-color:var(--blue);color:var(--blue);font-weight:700;}
+
+.page{display:none;padding:14px;max-width:720px;margin:0 auto;}
+.page.active{display:block;}
+.section-title{font-size:17px;font-weight:900;color:var(--text);margin-bottom:12px;letter-spacing:-.02em;}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;}
+.form-grid{display:grid;gap:10px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.label{display:block;font-size:11px;color:var(--muted);letter-spacing:.06em;margin-bottom:4px;font-weight:700;text-transform:uppercase;}
+.empty{text-align:center;padding:40px 16px;color:var(--muted);}
+.divider{height:1px;background:var(--border);margin:12px 0;}
+
+/* LOGIN */
+.login-wrap{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:20px;
+  background-image:url('./1. 사진 자료/KakaoTalk_20260504_231114315.jpg');background-size:cover;background-position:center;}
+.login-overlay{position:fixed;inset:0;background:rgba(240,245,252,.88);backdrop-filter:blur(10px);}
+.login-box{position:relative;z-index:1;width:100%;max-width:370px;background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:30px 26px;box-shadow:0 20px 60px rgba(26,83,212,.14);}
+.login-brand{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.12em;color:var(--blue);}
+.login-sub{font-size:11px;color:var(--muted);margin-bottom:24px;letter-spacing:.06em;}
+.login-err{font-size:13px;color:var(--red);text-align:center;padding:9px;background:var(--redL);border-radius:8px;margin-top:10px;display:none;}
+
+/* MEMBER CARD */
+.member-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;transition:border-color .2s;}
+.member-card:hover{border-color:var(--blue);}
+.mc-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.mc-name{font-size:16px;font-weight:900;}
+.mc-info{font-size:12px;color:var(--muted);margin-top:2px;}
+.mc-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.mc-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--sub);}
+
+/* CALENDAR ADMIN */
+.cal-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.cal-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1.5px solid var(--border);background:var(--surface2);}
+.cal-month-title{font-size:16px;font-weight:900;}
+.cal-nav{background:none;border:1.5px solid var(--border);border-radius:8px;padding:5px 11px;cursor:pointer;color:var(--sub);font-size:14px;transition:all .15s;}
+.cal-nav:hover{border-color:var(--blue);color:var(--blue);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
+.cal-dow{text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--border);}
+.cal-dow:first-child{color:#d32f2f;}
+.cal-dow:last-child{color:#1565c0;}
+.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:1px solid transparent;transition:all .15s;gap:2px;padding:4px 2px;min-height:40px;}
+.cal-day:hover:not(.empty-day){background:var(--blueL);border-color:var(--blue);}
+.cal-day.selected{background:var(--blue)!important;border-radius:8px;}
+.cal-day.selected .day-num{color:#fff!important;}
+.cal-day.today .day-num{color:var(--blue);font-weight:900;}
+.cal-day.empty-day{cursor:default;}
+.cal-day.past-day{opacity:.55;}
+.cal-day.sun .day-num{color:#d32f2f;}
+.cal-day.sat .day-num{color:#1565c0;}
+.day-num{font-size:12px;font-weight:700;line-height:1;}
+.day-dots{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;}
+.day-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);}
+.day-dot.grey{background:var(--muted);}
+
+/* SESSION PANEL */
+.sess-panel{background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-top:12px;}
+.sess-card{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:13px;margin-bottom:8px;}
+.sess-card.cancelled-card{border-color:#e0b0b0;background:#fff8f8;}
+.sess-card:last-child{margin-bottom:0;}
+.sca-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.sca-time{font-size:16px;font-weight:900;}
+.sca-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.att-member{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);}
+.att-member:last-child{border-bottom:none;}
+.att-member.attended{background:var(--greenL);margin:0 -13px;padding:9px 13px;}
+.att-toggle{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border);cursor:pointer;background:var(--surface);font-size:15px;transition:all .15s;flex-shrink:0;}
+.att-toggle.on{background:var(--greenL);border-color:var(--green);color:var(--green);}
+
+/* ALERT */
+.alert{border-radius:10px;padding:11px 14px;font-size:13px;margin-bottom:12px;display:flex;align-items:flex-start;gap:8px;line-height:1.5;}
+.alert-info{background:var(--blueL);color:var(--blue);}
+.alert-warn{background:var(--orangeL);color:var(--orange);}
+.alert-err{background:var(--redL);color:var(--red);}
+.alert-ok{background:var(--greenL);color:var(--green);}
+
+/* PAYMENT ROW */
+.pay-row{display:flex;justify-content:space-between;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--border);}
+.pay-row:last-child{border-bottom:none;}
+.pay-info{flex:1;min-width:0;}
+.pay-title{font-size:14px;font-weight:700;}
+.pay-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.pay-actions{display:flex;gap:6px;margin-top:8px;}
+
+/* PROGRESS */
+.progress-wrap{background:var(--surface2);border-radius:4px;height:5px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:4px;background:var(--blue);transition:width .4s;}
+.progress-fill.warn{background:var(--orange);}
+.progress-fill.danger{background:var(--red);}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--text);color:#fff;padding:10px 20px;border-radius:12px;
+  font-size:13px;font-weight:700;z-index:9999;opacity:0;
+  transition:opacity .25s,transform .25s;pointer-events:none;max-width:90vw;text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(13,27,46,.4);backdrop-filter:blur(4px);z-index:800;display:none;align-items:center;justify-content:center;padding:16px;}
+.modal-bg.show{display:flex;}
+.modal{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:22px;width:100%;max-width:500px;max-height:92dvh;overflow-y:auto;box-shadow:0 20px 60px rgba(26,83,212,.15);}
+.modal-title{font-size:17px;font-weight:900;margin-bottom:14px;}
+
+/* BACKUP */
+.backup-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}
+.backup-item:last-child{border-bottom:none;}
+
+@media(max-width:420px){
+  .grid2{grid-template-columns:1fr;}
+  .grid3{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginWrap" class="login-wrap">
+  <div class="login-overlay"></div>
+  <div class="login-box">
+    <div class="login-brand">HIGH END</div>
+    <div class="login-sub">VOLLEYBALL ACADEMY · 관리자</div>
+    <div class="form-grid">
+      <div>
+        <label class="label">아이디</label>
+        <input id="loginId" type="text" placeholder="admin" autocomplete="username">
+      </div>
+      <div>
+        <label class="label">비밀번호</label>
+        <input id="loginPw" type="password" placeholder="비밀번호" autocomplete="current-password">
+      </div>
+      <button class="btn btn-blue" style="width:100%;margin-top:4px;" onclick="doLogin()">로그인</button>
+    </div>
+    <div id="loginErr" class="login-err">아이디 또는 비밀번호가 올바르지 않습니다.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none;">
+  <header class="header">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <img src="./1. 사진 자료/KakaoTalk_20260504_231126741.jpg" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" onerror="this.style.display='none'">
+      <span class="header-brand">HIGH END</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="admin-chip">관리자</span>
+      <a href="index.html" class="btn btn-outline btn-sm">홈</a>
+      <button class="btn btn-outline btn-sm" onclick="doLogout()">로그아웃</button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabBar">
+    <button class="tab active" onclick="showTab(0)">스케줄</button>
+    <button class="tab" onclick="showTab(1)">회원 관리</button>
+    <button class="tab" onclick="showTab(2)">결제 요청</button>
+    <button class="tab" onclick="showTab(3)">수업 등록</button>
+    <button class="tab" onclick="showTab(4)">백업/설정</button>
+  </nav>
+
+  <!-- TAB 0: 스케줄 캘린더 -->
+  <div class="page active" id="page0">
+    <div class="row">
+      <div class="section-title" style="margin:0;">수업 스케줄</div>
+      <button class="btn btn-blue btn-sm" id="autoGenBtn" onclick="autoGenSaturdays(true)">토요일 자동생성</button>
+    </div>
+    <div id="autoGenStatus" style="display:none;margin-bottom:10px;"></div>
+    <div id="dbWarning" style="display:none;margin-bottom:10px;"></div>
+    <div class="cal-wrap">
+      <div class="cal-header">
+        <button class="cal-nav" onclick="calMove(-1)">&#8249;</button>
+        <div class="cal-month-title" id="calMonthTitle"></div>
+        <button class="cal-nav" onclick="calMove(1)">&#8250;</button>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-dow">일</div><div class="cal-dow">월</div><div class="cal-dow">화</div>
+        <div class="cal-dow">수</div><div class="cal-dow">목</div><div class="cal-dow">금</div>
+        <div class="cal-dow">토</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <div id="sessPanel"></div>
+  </div>
+
+  <!-- TAB 1: 회원 관리 -->
+  <div class="page" id="page1">
+    <div class="row">
+      <div class="section-title" style="margin:0;">회원 관리</div>
+      <button class="btn btn-blue btn-sm" onclick="openAddMember()">+ 회원 등록</button>
+    </div>
+    <div style="margin-bottom:10px;">
+      <input id="memberSearch" type="search" placeholder="이름 또는 전화번호 검색" oninput="renderMembers()">
+    </div>
+    <div id="memberList"></div>
+  </div>
+
+  <!-- TAB 2: 결제 요청 -->
+  <div class="page" id="page2">
+    <div class="section-title">결제 요청 관리</div>
+    <div id="payList"></div>
+  </div>
+
+  <!-- TAB 3: 수업 등록 -->
+  <div class="page" id="page3">
+    <div class="card">
+      <div class="section-title" style="font-size:15px;">개별 수업 등록</div>
+      <div class="form-grid">
+        <div class="grid2">
+          <div>
+            <label class="label">날짜</label>
+            <input type="date" id="newDate">
+          </div>
+          <div>
+            <label class="label">시작 시간</label>
+            <input type="time" id="newTime" value="12:00">
+          </div>
+        </div>
+        <div class="grid2">
+          <div>
+            <label class="label">수업 유형</label>
+            <select id="newType">
+              <option value="group">그룹</option>
+              <option value="private">프라이빗</option>
+            </select>
+          </div>
+          <div>
+            <label class="label">최대 인원</label>
+            <input type="number" id="newCap" value="16" min="1" max="50">
+          </div>
+        </div>
+        <div>
+          <label class="label">수업 제목 (미입력시 자동)</label>
+          <input type="text" id="newTitle" placeholder="예) 토요 그룹 수업">
+        </div>
+        <button class="btn btn-blue" style="width:100%;" onclick="addSession()">수업 등록</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title" style="font-size:15px;">토요일 일괄 자동 생성</div>
+      <div class="alert alert-info">
+        <span>🗓️</span>
+        <span>지정 기간의 토요일마다 3개 타임(12:00, 13:30, 16:30)을 생성합니다. 이미 있는 수업은 건너뜁니다.</span>
+      </div>
+      <div class="grid2" style="margin-bottom:10px;">
+        <div>
+          <label class="label">시작일</label>
+          <input type="date" id="batchStart">
+        </div>
+        <div>
+          <label class="label">종료일</label>
+          <input type="date" id="batchEnd">
+        </div>
+      </div>
+      <button class="btn btn-orange" style="width:100%;" id="batchBtn" onclick="batchSaturdays()">일괄 생성</button>
+      <div id="batchStatus" style="margin-top:10px;display:none;"></div>
+    </div>
+  </div>
+
+  <!-- TAB 4: 백업/설정 -->
+  <div class="page" id="page4">
+    <div class="section-title">데이터 관리</div>
+
+    <div class="card">
+      <div style="font-size:15px;font-weight:700;margin-bottom:10px;">데이터 백업</div>
+      <div class="alert alert-info" style="margin-bottom:12px;">
+        <span>💾</span>
+        <span>모든 DB 데이터를 JSON 파일로 내보냅니다. 정기적으로 백업해 두세요.</span>
+      </div>
+      <div class="backup-item">
+        <div>
+          <div style="font-weight:700;">전체 데이터 백업</div>
+          <div style="font-size:12px;color:var(--muted);">회원, 수업, 예약, 결제 내역 전체</div>
+        </div>
+        <button class="btn btn-blue btn-sm" onclick="exportAll()">JSON 다운로드</button>
+      </div>
+      <div class="backup-item">
+        <div>
+          <div style="font-weight:700;">회원 목록 CSV</div>
+          <div style="font-size:12px;color:var(--muted);">회원 정보만 엑셀에서 열 수 있는 형태로</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="exportMembersCsv()">CSV 다운로드</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:15px;font-weight:700;margin-bottom:10px;">Firebase 규칙 안내</div>
+      <div class="alert alert-warn">
+        <span>⚠️</span>
+        <div>
+          <div style="font-weight:700;margin-bottom:4px;">쓰기 오류 발생 시 확인하세요</div>
+          <div>Firebase Console → Realtime Database → 규칙 탭에서 아래와 같이 설정:</div>
+          <pre style="background:rgba(0,0,0,.06);padding:8px;border-radius:6px;margin-top:6px;font-size:12px;overflow-x:auto;">{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}</pre>
+        </div>
+      </div>
+      <div id="connStatus" style="margin-top:8px;"></div>
+      <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="testConnection()">연결 상태 확인</button>
+    </div>
+
+    <div class="card">
+      <div style="font-size:15px;font-weight:700;margin-bottom:10px;">관리자 정보</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8;">
+        아이디: admin<br>
+        비밀번호: s1102!<br>
+        Firebase 프로젝트: high-end-f4c77
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBER MODAL -->
+<div class="modal-bg" id="memberModal">
+  <div class="modal">
+    <div class="modal-title" id="memberModalTitle">회원 등록</div>
+    <div class="form-grid">
+      <div class="grid2">
+        <div><label class="label">이름 *</label><input id="mName" type="text" placeholder="홍길동"></div>
+        <div><label class="label">전화번호 *</label><input id="mPhone" type="tel" placeholder="01012345678" inputmode="tel"></div>
+      </div>
+      <div class="grid2">
+        <div><label class="label">생년월일</label><input id="mBirth" type="date"></div>
+        <div><label class="label">초기 비밀번호</label><input id="mPw" type="text" placeholder="0000"></div>
+      </div>
+      <div class="grid2">
+        <div>
+          <label class="label">수업 유형</label>
+          <select id="mClass">
+            <option value="group">그룹</option>
+            <option value="private">프라이빗</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">수강권 종류</label>
+          <select id="mPass">
+            <option value="4">4회권</option>
+            <option value="8">8회권</option>
+            <option value="12">12회권</option>
+            <option value="custom">기타</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div><label class="label">잔여 그룹 횟수</label><input id="mRegSess" type="number" min="0" placeholder="0"></div>
+        <div><label class="label">잔여 프라이빗 횟수</label><input id="mPrivSess" type="number" min="0" placeholder="0"></div>
+      </div>
+      <div><label class="label">만료일</label><input id="mExpiry" type="date"></div>
+      <div id="memberSaveErr" class="alert alert-err" style="display:none;"></div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-blue" style="flex:1;" id="memberSaveBtn" onclick="saveMember()">저장</button>
+        <button class="btn btn-outline" style="flex:1;" onclick="closeMemberModal()">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── FIREBASE ── */
+const firebaseConfig={
+  apiKey:"AIzaSyBpH-WuCPjT26_70eAmT9JUCaSgnB38JUY",
+  authDomain:"high-end-f4c77.firebaseapp.com",
+  databaseURL:"https://high-end-f4c77-default-rtdb.firebaseio.com",
+  projectId:"high-end-f4c77",
+  storageBucket:"high-end-f4c77.firebasestorage.app",
+  messagingSenderId:"293479223544",
+  appId:"1:293479223544:web:6dc2612ce9cfa5d3676b0d"
+};
+if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+
+/* ── STATE ── */
+const S={
+  sessions:{},members:{},reservations:{},payRequests:{},attendance:{},
+  calYear:new Date().getFullYear(),calMonth:new Date().getMonth(),
+  selectedDate:null,editingMemberId:null,dbOk:null
+};
+
+/* ── UTILS ── */
+function $(id){return document.getElementById(id);}
+function toast(msg,type='',dur=2800){
+  const el=$('toast');
+  el.textContent=msg;
+  el.style.background=type==='err'?'var(--red)':type==='ok'?'var(--green)':'var(--text)';
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.classList.remove('show'),dur);
+}
+function fmtDate(d){return d?d.replace(/-/g,'. '):'-';}
+function todayStr(){
+  const t=new Date();
+  return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
+}
+function showAlert(elId,msg,type='err'){
+  const el=$(elId);if(!el)return;
+  el.className=`alert alert-${type}`;
+  el.textContent=msg;
+  el.style.display='flex';
+}
+
+/* ── LOGIN ── */
+['loginId','loginPw'].forEach(id=>{
+  $(id)?.addEventListener('keydown',e=>e.key==='Enter'&&doLogin());
+});
+function doLogin(){
+  const id=($('loginId').value||'').trim();
+  const pw=($('loginPw').value||'').trim();
+  if(id==='admin'&&pw==='s1102!'){
+    $('loginWrap').style.display='none';
+    $('app').style.display='block';
+    initApp();
+  }else{
+    const el=$('loginErr');
+    el.style.display='block';
+    setTimeout(()=>el.style.display='none',3000);
+  }
+}
+function doLogout(){location.reload();}
+
+/* ── INIT ── */
+async function initApp(){
+  const td=todayStr();
+  const in4w=new Date();in4w.setDate(in4w.getDate()+28);
+  $('batchStart').value=td;
+  $('batchEnd').value=`${in4w.getFullYear()}-${String(in4w.getMonth()+1).padStart(2,'0')}-${String(in4w.getDate()).padStart(2,'0')}`;
+  $('newDate').value=td;
+
+  // Subscribe to all collections
+  db.ref('sessions').on('value',s=>{S.sessions=s.val()||{};renderCal();renderSessPanel();});
+  db.ref('members').on('value',s=>{S.members=s.val()||{};renderMembers();});
+  db.ref('reservations').on('value',s=>{S.reservations=s.val()||{};renderCal();renderSessPanel();});
+  db.ref('paymentRequests').on('value',s=>{S.payRequests=s.val()||{};renderPayList();});
+  db.ref('attendance').on('value',s=>{S.attendance=s.val()||{};renderSessPanel();});
+
+  // Test Firebase write permission
+  await testConnection();
+
+  // Auto-generate Saturdays after a short delay so S.sessions loads first
+  setTimeout(()=>autoGenSaturdays(false),2000);
+}
+
+/* ── CONNECTION TEST ── */
+async function testConnection(){
+  const connEl=$('connStatus');
+  try{
+    const testRef=db.ref('_ping');
+    await testRef.set({t:Date.now()});
+    await testRef.remove();
+    S.dbOk=true;
+    if(connEl) connEl.innerHTML='<span style="color:var(--green);font-size:13px;font-weight:700;">✓ Firebase 연결 정상</span>';
+    const warn=$('dbWarning');if(warn)warn.style.display='none';
+  }catch(e){
+    S.dbOk=false;
+    if(connEl) connEl.innerHTML='<span style="color:var(--red);font-size:13px;font-weight:700;">✗ 쓰기 권한 없음</span>';
+    const warn=$('dbWarning');
+    if(warn){
+      warn.style.display='block';
+      warn.innerHTML=`<div class="alert alert-err">
+        ⚠️ <strong>Firebase 쓰기 권한이 없습니다.</strong><br>
+        Firebase Console → Realtime Database → 규칙 탭에서 <code>.write: true</code>로 설정 후 새로고침하세요.<br>
+        <button class="btn btn-danger btn-xs" style="margin-top:6px;" onclick="showTab(4)">규칙 안내 보기</button>
+      </div>`;
+    }
+    toast('Firebase 쓰기 권한 없음. 백업/설정 탭을 확인하세요.','err',5000);
+  }
+}
+
+/* ── AUTO GENERATE SATURDAYS ── */
+async function autoGenSaturdays(manual){
+  if(manual){
+    const btn=$('autoGenBtn');
+    if(btn){btn.disabled=true;btn.textContent='생성 중...';}
+  }
+  try{
+    // Read current sessions fresh from Firebase (not from S.sessions to avoid race condition)
+    const snap=await db.ref('sessions').once('value');
+    const currentSessions=snap.val()||{};
+
+    const today=new Date();
+    const end=new Date(today);end.setDate(today.getDate()+30);
+    const times=[
+      {time:'12:00',title:'토요 그룹 수업 (12:00)'},
+      {time:'13:30',title:'토요 그룹 수업 (13:30)'},
+      {time:'16:30',title:'토요 그룹 수업 (16:30)'},
+    ];
+
+    let created=0;
+    const cur=new Date(today);
+    while(cur<=end){
+      if(cur.getDay()===6){
+        const y=cur.getFullYear();
+        const m=String(cur.getMonth()+1).padStart(2,'0');
+        const d=String(cur.getDate()).padStart(2,'0');
+        const dateStr=`${y}-${m}-${d}`;
+        for(const t of times){
+          const exists=Object.values(currentSessions).some(
+            s=>s.date===dateStr&&s.time===t.time&&s.status!=='cancelled'
+          );
+          if(!exists){
+            const id=db.ref('sessions').push().key;
+            await db.ref(`sessions/${id}`).set({
+              id,date:dateStr,time:t.time,title:t.title,
+              sessionType:'group',maxCapacity:16,autoGenerated:true,
+              createdAt:new Date().toISOString()
+            });
+            created++;
+          }
+        }
+      }
+      cur.setDate(cur.getDate()+1);
+    }
+
+    if(manual){
+      const el=$('autoGenStatus');
+      if(el){
+        el.style.display='block';
+        el.innerHTML=`<div class="alert alert-${created>0?'ok':'info'}">
+          ${created>0?`✓ ${created}개 수업이 생성되었습니다.`:'이미 모든 수업이 존재합니다.'}
+        </div>`;
+        setTimeout(()=>{el.style.display='none';},4000);
+      }
+      toast(created>0?`${created}개 수업 생성 완료`:'이미 모두 존재함', created>0?'ok':'');
+    }
+  }catch(e){
+    console.error('autoGenSaturdays error:',e);
+    if(manual){
+      toast('생성 실패: Firebase 쓰기 권한을 확인하세요.','err',4000);
+    }
+  }finally{
+    if(manual){
+      const btn=$('autoGenBtn');
+      if(btn){btn.disabled=false;btn.textContent='토요일 자동생성';}
+    }
+  }
+}
+
+/* ── CALENDAR ── */
+function calMove(dir){
+  S.calMonth+=dir;
+  if(S.calMonth>11){S.calMonth=0;S.calYear++;}
+  if(S.calMonth<0){S.calMonth=11;S.calYear--;}
+  S.selectedDate=null;
+  $('sessPanel').innerHTML='';
+  renderCal();
+}
+function renderCal(){
+  const y=S.calYear,m=S.calMonth;
+  $('calMonthTitle').textContent=`${y}년 ${m+1}월`;
+  const first=new Date(y,m,1).getDay();
+  const days=new Date(y,m+1,0).getDate();
+  const td=todayStr();
+
+  const sessionDates={};
+  Object.values(S.sessions).forEach(sess=>{
+    if(!sess.date)return;
+    const[sy,sm]=sess.date.split('-').map(Number);
+    if(sy===y&&sm-1===m){
+      if(!sessionDates[sess.date])sessionDates[sess.date]={has:0,cancelled:0};
+      if(sess.status==='cancelled')sessionDates[sess.date].cancelled++;
+      else sessionDates[sess.date].has++;
+    }
+  });
+
+  let html='';
+  for(let i=0;i<first;i++)html+=`<div class="cal-day empty-day"></div>`;
+  for(let d=1;d<=days;d++){
+    const dateStr=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dow=(first+d-1)%7;
+    const sd=sessionDates[dateStr];
+    let dots='';
+    if(sd){
+      if(sd.has>0)dots+=`<div class="day-dot"></div>`;
+      if(sd.cancelled>0)dots+=`<div class="day-dot grey"></div>`;
+    }
+    const cls=`cal-day${dow===0?' sun':dow===6?' sat':''}${dateStr===td?' today':''}${dateStr<td?' past-day':''}${dateStr===S.selectedDate?' selected':''}`;
+    html+=`<div class="${cls}" onclick="selectDate('${dateStr}')">
+      <div class="day-num">${d}</div>
+      ${dots?`<div class="day-dots">${dots}</div>`:''}
+    </div>`;
+  }
+  $('calGrid').innerHTML=html;
+}
+
+function selectDate(dateStr){
+  S.selectedDate=dateStr;
+  renderCal();
+  renderSessPanel();
+}
+
+function renderSessPanel(){
+  const d=S.selectedDate;
+  if(!d){$('sessPanel').innerHTML='';return;}
+  const daySessions=Object.values(S.sessions).filter(s=>s.date===d).sort((a,b)=>a.time>b.time?1:-1);
+  const dow=['일','월','화','수','목','금','토'][new Date(d).getDay()];
+  const [y,m,dd]=d.split('-').map(Number);
+  const label=`${m}월 ${dd}일 (${dow})`;
+
+  if(!daySessions.length){
+    $('sessPanel').innerHTML=`<div class="sess-panel">
+      <div style="font-weight:900;font-size:15px;margin-bottom:10px;">${label}</div>
+      <div class="empty" style="padding:20px 0;">이 날짜에 수업이 없습니다</div>
+      <button class="btn btn-blue btn-sm" onclick="quickAddSession('${d}')">+ 수업 추가</button>
+    </div>`;
+    return;
+  }
+
+  const cards=daySessions.map(sess=>{
+    const isCancelled=sess.status==='cancelled';
+    const sessRes=Object.values(S.reservations).filter(r=>r.sessionId===sess.id);
+    const confirmed=sessRes.filter(r=>r.status==='confirmed');
+    const cap=sess.maxCapacity||16;
+    const pct=Math.min(100,Math.round((confirmed.length/cap)*100));
+    const fillCls=pct>=100?'danger':pct>=75?'warn':'';
+
+    // Show all reservations for cancelled sessions, only confirmed for active
+    const showList=isCancelled?sessRes:confirmed;
+    let attendeeHtml='';
+    if(showList.length){
+      attendeeHtml=`<div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px;">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">
+          ${isCancelled?'예약자 명단 (취소된 수업 — 차감 없음)':'예약자 (클릭: 출석 체크)'}
+        </div>
+        ${showList.map(r=>{
+          const attKey=`${sess.id}_${r.memberId}`;
+          const isAtt=!!S.attendance[attKey];
+          if(isCancelled){
+            return `<div class="att-member">
+              <div>
+                <div style="font-size:14px;font-weight:700;">${r.memberName||'-'}</div>
+                <div style="font-size:12px;color:var(--muted);">${r.memberPhone||''}</div>
+              </div>
+              <span class="badge ${r.status==='cancelled'?'badge-red':'badge-orange'}">${r.status==='cancelled'?'취소됨':'예약됨'}</span>
+            </div>`;
+          }
+          return `<div class="att-member${isAtt?' attended':''}">
+            <div>
+              <div style="font-size:14px;font-weight:700;">${r.memberName||'-'}</div>
+              <div style="font-size:12px;color:var(--muted);">${r.memberPhone||''}</div>
+            </div>
+            <div class="att-toggle${isAtt?' on':''}" onclick="toggleAttend('${sess.id}','${r.memberId}')" title="${isAtt?'출석':'미출석'}">
+              ${isAtt?'✓':'—'}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>`;
+    }
+
+    return `<div class="sess-card${isCancelled?' cancelled-card':''}">
+      <div class="sca-top">
+        <div>
+          <div class="sca-time">${sess.time}</div>
+          <div style="font-size:12px;color:var(--muted);">${sess.title||''}</div>
+        </div>
+        ${isCancelled?
+          '<span class="badge badge-red">취소됨</span>':
+          `<span class="badge badge-blue">${confirmed.length}/${cap}명</span>`}
+      </div>
+      ${!isCancelled?`<div class="progress-wrap" style="margin-bottom:4px;">
+        <div class="progress-fill ${fillCls}" style="width:${pct}%"></div>
+      </div>`:''}
+      ${attendeeHtml}
+      <div class="sca-btns">
+        ${!isCancelled?`<button class="btn btn-danger btn-xs" onclick="cancelSession('${sess.id}')">수업 취소</button>`:''}
+        <button class="btn btn-outline btn-xs" onclick="deleteSession('${sess.id}')">삭제</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  $('sessPanel').innerHTML=`<div class="sess-panel">
+    <div style="font-weight:900;font-size:15px;margin-bottom:10px;">${label}</div>
+    ${cards}
+    <div style="margin-top:10px;">
+      <button class="btn btn-blue btn-sm" onclick="quickAddSession('${d}')">+ 수업 추가</button>
+    </div>
+  </div>`;
+}
+
+/* ── SESSION ACTIONS ── */
+async function cancelSession(sessId){
+  if(!confirm('이 수업을 취소 처리하시겠습니까?\n예약자 명단은 보존됩니다.'))return;
+  try{
+    await db.ref(`sessions/${sessId}`).update({status:'cancelled'});
+    toast('수업이 취소 처리되었습니다.','ok');
+  }catch(e){toast('오류: '+e.message,'err');}
+}
+async function deleteSession(sessId){
+  if(!confirm('이 수업을 완전히 삭제하시겠습니까?\n예약 내역도 함께 삭제됩니다.'))return;
+  try{
+    // Remove related reservations
+    const toDelete=Object.entries(S.reservations)
+      .filter(([,r])=>r.sessionId===sessId).map(([k])=>k);
+    const updates={};
+    updates[`sessions/${sessId}`]=null;
+    toDelete.forEach(k=>updates[`reservations/${k}`]=null);
+    await db.ref().update(updates);
+    S.selectedDate=null;
+    $('sessPanel').innerHTML='';
+    toast('수업이 삭제되었습니다.','ok');
+  }catch(e){toast('오류: '+e.message,'err');}
+}
+async function quickAddSession(date){
+  const time=prompt(`${date}에 추가할 시작 시간을 입력하세요\n예) 12:00 / 13:30 / 16:30`);
+  if(!time||!time.match(/^\d{1,2}:\d{2}$/))return;
+  await addSessionDirect(date,time,`수업 (${time})`,16,'group');
+}
+async function addSessionDirect(date,time,title,cap,type){
+  try{
+    const id=db.ref('sessions').push().key;
+    await db.ref(`sessions/${id}`).set({
+      id,date,time,title,sessionType:type,maxCapacity:cap,
+      createdAt:new Date().toISOString()
+    });
+    toast('수업이 추가되었습니다.','ok');
+  }catch(e){toast('오류: '+e.message,'err');}
+}
+
+/* ── ADD SESSION (Tab 3) ── */
+async function addSession(){
+  const date=$('newDate').value;
+  const time=$('newTime').value;
+  const title=($('newTitle').value||'').trim()||`수업 (${time})`;
+  const type=$('newType').value;
+  const cap=parseInt($('newCap').value)||16;
+  if(!date||!time){toast('날짜와 시간을 입력해주세요.','err');return;}
+  await addSessionDirect(date,time,title,cap,type);
+  $('newTitle').value='';
+}
+
+async function batchSaturdays(){
+  const startStr=$('batchStart').value;
+  const endStr=$('batchEnd').value;
+  if(!startStr||!endStr){toast('날짜를 선택해주세요.','err');return;}
+
+  const btn=$('batchBtn');
+  btn.disabled=true;btn.textContent='생성 중...';
+  const statusEl=$('batchStatus');
+
+  try{
+    // Read fresh sessions to check duplicates
+    const snap=await db.ref('sessions').once('value');
+    const currentSessions=snap.val()||{};
+
+    const times=[
+      {time:'12:00',title:'토요 그룹 수업 (12:00)'},
+      {time:'13:30',title:'토요 그룹 수업 (13:30)'},
+      {time:'16:30',title:'토요 그룹 수업 (16:30)'},
+    ];
+
+    // Parse dates as local time (avoid UTC offset issues)
+    const [sy,sm,sd]=startStr.split('-').map(Number);
+    const [ey,em,ed]=endStr.split('-').map(Number);
+    const start=new Date(sy,sm-1,sd);
+    const end=new Date(ey,em-1,ed);
+
+    let created=0;
+    const cur=new Date(start);
+    while(cur<=end){
+      if(cur.getDay()===6){
+        const dateStr=`${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}-${String(cur.getDate()).padStart(2,'0')}`;
+        for(const t of times){
+          const exists=Object.values(currentSessions).some(
+            s=>s.date===dateStr&&s.time===t.time&&s.status!=='cancelled'
+          );
+          if(!exists){
+            const id=db.ref('sessions').push().key;
+            await db.ref(`sessions/${id}`).set({
+              id,date:dateStr,time:t.time,title:t.title,
+              sessionType:'group',maxCapacity:16,autoGenerated:true,
+              createdAt:new Date().toISOString()
+            });
+            created++;
+          }
+        }
+      }
+      cur.setDate(cur.getDate()+1);
+    }
+    if(statusEl){
+      statusEl.style.display='block';
+      statusEl.innerHTML=`<div class="alert alert-${created>0?'ok':'info'}">${created>0?`✓ ${created}개 수업 생성 완료`:'이미 모두 존재합니다.'}</div>`;
+    }
+    toast(created>0?`${created}개 수업 생성됨`:'이미 모두 존재함', created>0?'ok':'');
+  }catch(e){
+    toast('오류: '+e.message,'err',4000);
+  }finally{
+    btn.disabled=false;btn.textContent='일괄 생성';
+  }
+}
+
+/* ── ATTENDANCE ── */
+async function toggleAttend(sessId,memberId){
+  const key=`${sessId}_${memberId}`;
+  try{
+    if(S.attendance[key]){
+      await db.ref(`attendance/${key}`).remove();
+    }else{
+      await db.ref(`attendance/${key}`).set({timestamp:Date.now()});
+    }
+  }catch(e){toast('출석 처리 오류: '+e.message,'err');}
+}
+
+/* ── MEMBERS ── */
+function renderMembers(){
+  const q=($('memberSearch')?.value||'').toLowerCase().replace(/\D/g,'') ||
+           ($('memberSearch')?.value||'').toLowerCase();
+  const raw=($('memberSearch')?.value||'').toLowerCase();
+  const list=Object.values(S.members).filter(m=>{
+    if(m.isAdmin)return false;
+    if(!raw)return true;
+    return (m.name||'').toLowerCase().includes(raw)||
+           (m.phone||'').replace(/\D/g,'').includes(raw.replace(/\D/g,''));
+  }).sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'));
+
+  if(!list.length){
+    $('memberList').innerHTML='<div class="empty"><div>회원이 없습니다</div></div>';return;
+  }
+
+  $('memberList').innerHTML=list.map(m=>{
+    const reg=parseInt(m.regularSessions)||0;
+    const priv=parseInt(m.privateSessions)||0;
+    const resCount=Object.values(S.reservations).filter(r=>r.memberId===m.id&&r.status==='confirmed').length;
+    const isExpired=m.expiryDate&&m.expiryDate<todayStr();
+    return `<div class="member-card">
+      <div class="mc-top">
+        <div>
+          <div class="mc-name">${m.name||'-'}${isExpired?'<span class="badge badge-red" style="margin-left:6px;font-size:10px;">만료</span>':''}</div>
+          <div class="mc-info">${m.phone||''} · ${m.birthdate||'-'}</div>
+        </div>
+        <div style="display:flex;gap:5px;">
+          <button class="btn btn-outline btn-xs" onclick="openEditMember('${m.id}')">수정</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteMember('${m.id}','${(m.name||'').replace(/'/g,"\\'")}')">삭제</button>
+        </div>
+      </div>
+      <div class="mc-chips">
+        <span class="mc-chip">${m.classType==='private'?'프라이빗':'그룹'}</span>
+        <span class="mc-chip">${m.passType||'-'}회권</span>
+        <span class="mc-chip" style="color:var(--green);">그룹 잔여 ${reg}회</span>
+        ${priv>0?`<span class="mc-chip" style="color:var(--blue);">프라이빗 ${priv}회</span>`:''}
+        <span class="mc-chip">만료 ${m.expiryDate||'-'}</span>
+        <span class="mc-chip" style="color:var(--orange);">예약 ${resCount}건</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openAddMember(){
+  S.editingMemberId=null;
+  $('memberModalTitle').textContent='회원 등록';
+  $('mName').value='';
+  $('mPhone').value='';
+  $('mBirth').value='';
+  $('mPw').value='0000';
+  $('mClass').value='group';
+  $('mPass').value='8';
+  $('mRegSess').value='0';
+  $('mPrivSess').value='0';
+  $('mExpiry').value='';
+  $('memberSaveErr').style.display='none';
+  $('memberModal').classList.add('show');
+  setTimeout(()=>$('mName').focus(),100);
+}
+function openEditMember(id){
+  const m=S.members[id];if(!m)return;
+  S.editingMemberId=id;
+  $('memberModalTitle').textContent='회원 수정 — '+m.name;
+  $('mName').value=m.name||'';
+  $('mPhone').value=m.phone||'';
+  $('mBirth').value=m.birthdate||'';
+  $('mPw').value=m.password||'0000';
+  $('mClass').value=m.classType||'group';
+  $('mPass').value=m.passType||'8';
+  $('mRegSess').value=m.regularSessions!=null?m.regularSessions:0;
+  $('mPrivSess').value=m.privateSessions!=null?m.privateSessions:0;
+  $('mExpiry').value=m.expiryDate||'';
+  $('memberSaveErr').style.display='none';
+  $('memberModal').classList.add('show');
+}
+function closeMemberModal(){$('memberModal').classList.remove('show');}
+
+async function saveMember(){
+  const name=($('mName').value||'').trim();
+  const rawPhone=($('mPhone').value||'').replace(/\D/g,'');
+  if(!name){showAlert('memberSaveErr','이름을 입력해주세요.');return;}
+  if(rawPhone.length<10){showAlert('memberSaveErr','전화번호를 올바르게 입력해주세요.');return;}
+
+  const btn=$('memberSaveBtn');
+  btn.disabled=true;btn.textContent='저장 중...';
+
+  const data={
+    name,
+    phone:rawPhone,
+    birthdate:$('mBirth').value||'',
+    password:($('mPw').value||'0000').trim(),
+    classType:$('mClass').value,
+    passType:$('mPass').value,
+    regularSessions:parseInt($('mRegSess').value)||0,
+    privateSessions:parseInt($('mPrivSess').value)||0,
+    expiryDate:$('mExpiry').value||'',
+    isAdmin:false
+  };
+
+  try{
+    if(S.editingMemberId){
+      data.id=S.editingMemberId;
+      await db.ref(`members/${S.editingMemberId}`).update(data);
+      toast(`${name} 회원 정보가 수정되었습니다.`,'ok');
+    }else{
+      const id=db.ref('members').push().key;
+      data.id=id;
+      await db.ref(`members/${id}`).set(data);
+      toast(`${name} 회원이 등록되었습니다.`,'ok');
+    }
+    closeMemberModal();
+  }catch(e){
+    showAlert('memberSaveErr','저장 실패: Firebase 쓰기 권한을 확인하세요.\n'+e.message);
+  }finally{
+    btn.disabled=false;btn.textContent='저장';
+  }
+}
+
+async function deleteMember(id,name){
+  if(!confirm(`${name} 회원을 삭제하시겠습니까?`))return;
+  try{
+    await db.ref(`members/${id}`).remove();
+    toast(`${name} 회원이 삭제되었습니다.`,'ok');
+  }catch(e){toast('삭제 실패: '+e.message,'err');}
+}
+
+/* ── PAYMENT ── */
+function renderPayList(){
+  const list=Object.values(S.payRequests).sort((a,b)=>
+    (b.createdAt||'')>(a.createdAt||'')?1:-1
+  );
+  const pending=list.filter(r=>r.status==='pending');
+  const done=list.filter(r=>r.status!=='pending');
+
+  if(!list.length){
+    $('payList').innerHTML='<div class="empty"><div>결제 요청이 없습니다</div></div>';return;
+  }
+
+  function renderItem(r){
+    const statusMap={pending:'검토중',confirmed:'승인됨',rejected:'반려됨'};
+    const badgeCls={pending:'badge-orange',confirmed:'badge-green',rejected:'badge-red'};
+    const classLabel=r.classType==='private'?'프라이빗':'그룹';
+    return `<div class="pay-row">
+      <div class="pay-info">
+        <div class="pay-title">${r.memberName||'-'} · ${classLabel} ${r.passType}회권</div>
+        <div class="pay-sub">${r.phone||''} · ${(r.createdAt||'').slice(0,10)}</div>
+        ${r.note?`<div class="pay-sub" style="margin-top:2px;font-style:italic;">"${r.note}"</div>`:''}
+        ${r.status==='pending'?`<div class="pay-actions">
+          <button class="btn btn-green btn-xs" onclick="approvePayment('${r.id}')">승인</button>
+          <button class="btn btn-danger btn-xs" onclick="rejectPayment('${r.id}')">반려</button>
+        </div>`:''}
+      </div>
+      <span class="badge ${badgeCls[r.status]||'badge-grey'}" style="white-space:nowrap;margin-left:8px;">${statusMap[r.status]||r.status}</span>
+    </div>`;
+  }
+
+  let html='';
+  if(pending.length){
+    html+=`<div class="card"><div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:8px;">⏳ 대기 중 (${pending.length})</div>${pending.map(renderItem).join('')}</div>`;
+  }
+  if(done.length){
+    html+=`<div class="card"><div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:8px;">처리 완료</div>${done.map(renderItem).join('')}</div>`;
+  }
+  $('payList').innerHTML=html;
+}
+
+async function approvePayment(id){
+  const r=S.payRequests[id];if(!r)return;
+  try{
+    const updates={};
+    updates[`paymentRequests/${id}/status`]='confirmed';
+    // Find and update member
+    const member=Object.values(S.members).find(m=>m.id===r.memberId);
+    if(member){
+      const cnt=parseInt(r.passType)||0;
+      if(r.classType==='private'){
+        updates[`members/${r.memberId}/privateSessions`]=(parseInt(member.privateSessions)||0)+cnt;
+      }else{
+        updates[`members/${r.memberId}/regularSessions`]=(parseInt(member.regularSessions)||0)+cnt;
+      }
+      updates[`members/${r.memberId}/passType`]=r.passType;
+      updates[`members/${r.memberId}/classType`]=r.classType;
+    }
+    await db.ref().update(updates);
+    toast('승인 완료. 수강권이 발급되었습니다.','ok');
+  }catch(e){toast('승인 실패: '+e.message,'err');}
+}
+async function rejectPayment(id){
+  if(!confirm('반려하시겠습니까?'))return;
+  try{
+    await db.ref(`paymentRequests/${id}/status`).set('rejected');
+    toast('반려되었습니다.','ok');
+  }catch(e){toast('오류: '+e.message,'err');}
+}
+
+/* ── BACKUP / EXPORT ── */
+async function exportAll(){
+  try{
+    const snap=await db.ref('/').once('value');
+    const data=snap.val()||{};
+    const json=JSON.stringify(data,null,2);
+    const blob=new Blob([json],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    const now=new Date();
+    a.download=`highend_backup_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast('백업 파일이 다운로드되었습니다.','ok');
+  }catch(e){toast('백업 실패: '+e.message,'err');}
+}
+
+async function exportMembersCsv(){
+  try{
+    const snap=await db.ref('members').once('value');
+    const members=snap.val()||{};
+    const rows=[['이름','전화번호','생년월일','수업유형','수강권','그룹잔여','프라이빗잔여','만료일']];
+    Object.values(members).filter(m=>!m.isAdmin).forEach(m=>{
+      rows.push([
+        m.name||'',m.phone||'',m.birthdate||'',
+        m.classType==='private'?'프라이빗':'그룹',
+        m.passType||'',
+        m.regularSessions||0,
+        m.privateSessions||0,
+        m.expiryDate||''
+      ]);
+    });
+    const csv='﻿'+rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=`highend_members_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast('CSV 파일이 다운로드되었습니다.','ok');
+  }catch(e){toast('내보내기 실패: '+e.message,'err');}
+}
+
+/* ── TABS ── */
+function showTab(idx){
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===idx));
+  document.querySelectorAll('#tabBar .tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  if(idx===0){renderCal();renderSessPanel();}
+}
+
+/* ── MODAL CLOSE ON BACKDROP ── */
+document.getElementById('memberModal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('memberModal'))closeMemberModal();
+});
+</script>
+</body>
+</html>
