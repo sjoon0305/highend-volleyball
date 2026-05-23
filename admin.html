@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#f0f5fc">
 <title>하이앤드 발리볼 | 관리자</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
@@ -183,16 +184,16 @@ textarea{resize:vertical;min-height:80px;}
     <div class="login-sub">VOLLEYBALL ACADEMY · 관리자</div>
     <div class="form-grid">
       <div>
-        <label class="label">아이디</label>
-        <input id="loginId" type="text" placeholder="admin" autocomplete="username">
+        <label class="label">이메일</label>
+        <input id="loginEmail" type="email" placeholder="관리자 이메일" autocomplete="username">
       </div>
       <div>
         <label class="label">비밀번호</label>
         <input id="loginPw" type="password" placeholder="비밀번호" autocomplete="current-password">
       </div>
-      <button class="btn btn-blue" style="width:100%;margin-top:4px;" onclick="doLogin()">로그인</button>
+      <button id="loginBtn" class="btn btn-blue" style="width:100%;margin-top:4px;" onclick="doLogin()">로그인</button>
     </div>
-    <div id="loginErr" class="login-err">아이디 또는 비밀번호가 올바르지 않습니다.</div>
+    <div id="loginErr" class="login-err">이메일 또는 비밀번호가 올바르지 않습니다.</div>
   </div>
 </div>
 
@@ -464,23 +465,38 @@ function showAlert(elId,msg,type='err'){
 }
 
 /* ── LOGIN ── */
-['loginId','loginPw'].forEach(id=>{
+['loginEmail','loginPw'].forEach(id=>{
   $(id)?.addEventListener('keydown',e=>e.key==='Enter'&&doLogin());
 });
-function doLogin(){
-  const id=($('loginId').value||'').trim();
-  const pw=($('loginPw').value||'').trim();
-  if(id==='admin'&&pw==='s1102!'){
+firebase.auth().onAuthStateChanged(user=>{
+  if(user){
     $('loginWrap').style.display='none';
     $('app').style.display='block';
     initApp();
   }else{
+    $('loginWrap').style.display='flex';
+    $('app').style.display='none';
+  }
+});
+async function doLogin(){
+  const email=($('loginEmail').value||'').trim();
+  const pw=($('loginPw').value||'').trim();
+  if(!email||!pw)return;
+  const btn=$('loginBtn');
+  btn.disabled=true;btn.textContent='로그인 중...';
+  try{
+    await firebase.auth().signInWithEmailAndPassword(email,pw);
+  }catch(e){
     const el=$('loginErr');
     el.style.display='block';
-    setTimeout(()=>el.style.display='none',3000);
+    setTimeout(()=>el.style.display='none',3500);
+    btn.disabled=false;btn.textContent='로그인';
   }
 }
-function doLogout(){location.reload();}
+async function doLogout(){
+  await firebase.auth().signOut();
+  location.reload();
+}
 
 /* ── INIT ── */
 async function initApp(){

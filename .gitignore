@@ -10,3 +10,7 @@ desktop.ini
 
 # 내부 문서
 firebase-setup.md
+GUIDE.md
+*.txt
+*.md
+!README.md
