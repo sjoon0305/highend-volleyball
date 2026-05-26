@@ -224,25 +224,31 @@ textarea{resize:vertical;min-height:90px;}
   </header>
 
   <nav class="tabs">
-    <button class="tab active" onclick="showTab(0)">내 수강권</button>
-    <button class="tab" onclick="showTab(1)">수업 예약</button>
-    <button class="tab" onclick="showTab(2)">추가 수강권 신청</button>
-    <button class="tab" onclick="showTab(3)">설정</button>
+    <button class="tab active" onclick="showTab(0)">홈</button>
+    <button class="tab" onclick="showTab(1)">내 수강권</button>
+    <button class="tab" onclick="showTab(2)">수업 예약</button>
+    <button class="tab" onclick="showTab(3)">수강권 신청</button>
+    <button class="tab" onclick="showTab(4)">설정</button>
   </nav>
 
-  <!-- TAB 0: 내 수강권 -->
+  <!-- TAB 0: 홈 -->
   <div class="page active" id="page0">
     <div class="inner">
-      <div id="passCard"></div>
-      <div class="card">
-        <div class="section-title">예약 내역</div>
-        <div id="reservHistory"></div>
-      </div>
+      <div id="homeContent"></div>
     </div>
   </div>
 
-  <!-- TAB 1: 수업 예약 -->
+  <!-- TAB 1: 내 수강권 -->
   <div class="page" id="page1">
+    <div class="inner">
+      <div id="passCard"></div>
+      <div id="passHistSection"></div>
+      <div id="passUsageSection"></div>
+    </div>
+  </div>
+
+  <!-- TAB 2: 수업 예약 -->
+  <div class="page" id="page2">
     <div class="inner">
       <div class="alert alert-info">
         <span>📅</span>
@@ -265,8 +271,8 @@ textarea{resize:vertical;min-height:90px;}
     </div>
   </div>
 
-  <!-- TAB 2: 추가 수강권 신청 -->
-  <div class="page" id="page2">
+  <!-- TAB 3: 추가 수강권 신청 -->
+  <div class="page" id="page3">
     <div class="inner">
       <div class="section-title">추가 수강권 신청</div>
       <div class="alert alert-info" style="margin-bottom:14px;">
@@ -315,8 +321,8 @@ textarea{resize:vertical;min-height:90px;}
     </div>
   </div>
 
-  <!-- TAB 3: 설정 -->
-  <div class="page" id="page3">
+  <!-- TAB 4: 설정 -->
+  <div class="page" id="page4">
     <div class="inner">
       <div class="card" style="margin-bottom:14px;">
         <div class="section-title" style="font-size:15px;">내 정보</div>
@@ -368,7 +374,7 @@ const db=firebase.database();
 /* ── STATE ── */
 const S={
   memberId:null, member:null,
-  sessions:{}, reservations:{}, payRequests:{},
+  sessions:{}, reservations:{}, payRequests:{}, passHistory:{},
   calYear:new Date().getFullYear(), calMonth:new Date().getMonth(),
   selectedDate:null
 };
@@ -449,6 +455,7 @@ function startApp(member){
   $('headerName').textContent=member.name+' 회원님';
   renderPassCard();
   renderMyInfo();
+  renderHome();
   subscribeFirebase();
   showTab(0);
 }
@@ -470,7 +477,8 @@ function subscribeFirebase(){
   });
   db.ref('reservations').on('value',s=>{
     S.reservations=s.val()||{};
-    renderReservHistory();
+    renderPassCard();
+    renderHome();
     renderCal();
     renderSessionPanel();
   });
@@ -478,74 +486,173 @@ function subscribeFirebase(){
     S.payRequests=s.val()||{};
     renderPayHistory();
   });
+  db.ref('passHistory').on('value',s=>{
+    S.passHistory=s.val()||{};
+    renderPassCard();
+    renderHome();
+  });
 }
 
 /* ── PASS CARD ── */
 function renderPassCard(){
   const m=S.member;
-  if(!m){$('passCard').innerHTML='';return;}
-  const classLabel=m.classType==='private'?'프라이빗':'그룹';
-  // passType = purchased session count (e.g. "8" for 8-session pass)
-  // regularSessions = remaining sessions (decremented on reserve)
-  const total=parseInt(m.passType)||0;
-  const remain=m.classType==='private'
-    ?(parseInt(m.privateSessions)||0)
-    :(parseInt(m.regularSessions)||0);
-  const used=Math.max(0,total-remain);
+  if(!m){$('passCard')&&($('passCard').innerHTML='');return;}
+  const groupRemain=parseInt(m.regularSessions)||0;
+  const privRemain=parseInt(m.privateSessions)||0;
+  const totalRemain=groupRemain+privRemain;
   const exp=m.expiryDate?fmtDate(m.expiryDate):'-';
-  const pct=total>0?Math.round((remain/total)*100):0;
-  const fillClass=pct<=25?'danger':pct<=50?'warn':'';
   const isExpired=m.expiryDate&&m.expiryDate<todayStr();
 
+  const myHist=Object.values(S.passHistory||{})
+    .filter(h=>h.memberId===S.memberId)
+    .sort((a,b)=>b.createdAt>a.createdAt?1:-1);
+  const totalPurchased=myHist.filter(h=>h.type==='purchase'||h.type==='admin_add')
+    .reduce((a,h)=>a+(parseInt(h.sessions)||0),0);
+  const pct=totalPurchased>0?Math.round((totalRemain/totalPurchased)*100):0;
+  const safePct=Math.min(100,Math.max(0,pct));
+  const fillClass=safePct<=25?'danger':safePct<=50?'warn':'';
+
   $('passCard').innerHTML=`
-    <div class="pass-card" style="margin-bottom:16px;">
-      <div class="pass-type">${classLabel} 수업 · ${m.passType||'-'}회권</div>
-      <div class="pass-name">${remain}회 남음</div>
-      <div style="display:flex;gap:12px;margin-top:12px;">
-        <div class="pass-stat" style="flex:1;">
-          <div class="pass-stat-num" style="${remain<=3?'color:#ffd9d9':''}">${remain}</div>
-          <div class="pass-stat-lbl">잔여 횟수</div>
+    <div class="pass-card" style="margin-bottom:0;">
+      <div class="pass-type">HIGH END VOLLEYBALL ACADEMY</div>
+      <div class="pass-name">${totalRemain}회 남음</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+        <div class="pass-stat">
+          <div class="pass-stat-num" style="${groupRemain<=2?'color:#ffd9d9':''}">${groupRemain}</div>
+          <div class="pass-stat-lbl">그룹 잔여</div>
         </div>
-        <div class="pass-stat" style="flex:1;">
-          <div class="pass-stat-num">${used}</div>
-          <div class="pass-stat-lbl">사용 횟수</div>
+        <div class="pass-stat" style="background:rgba(255,192,203,.18);">
+          <div class="pass-stat-num" style="${privRemain<=2?'color:#ffd9d9':''}">${privRemain}</div>
+          <div class="pass-stat-lbl">프라이빗 잔여</div>
         </div>
       </div>
-      <div style="margin-top:12px;">
-        <div class="progress-wrap"><div class="progress-fill ${fillClass}" style="width:${pct}%"></div></div>
+      <div style="margin-top:14px;">
+        <div class="progress-wrap" style="background:rgba(255,255,255,.2);">
+          <div class="progress-fill ${fillClass}" style="width:${safePct}%;background:#fff;"></div>
+        </div>
         <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;opacity:.8;">
-          <span>잔여 ${remain}회</span><span>${pct}% 남음</span>
+          <span>잔여 ${totalRemain}회</span><span>${safePct}% 남음</span>
         </div>
       </div>
       <div class="pass-expiry">만료일 · ${exp}${isExpired?' ⚠️ 만료됨':''}</div>
     </div>`;
-}
 
-/* ── RESERVATION HISTORY ── */
-function renderReservHistory(){
-  const my=Object.values(S.reservations)
-    .filter(r=>r.memberId===S.memberId&&r.type!=='walkin')
-    .sort((a,b)=>b.date>a.date?1:b.date<a.date?-1:0);
-  if(!my.length){
-    $('reservHistory').innerHTML='<div class="empty"><div>예약 내역이 없습니다</div></div>';return;
-  }
+  // passHistory section
+  const typeLabel={purchase:'수강권 결제',admin_add:'관리자 추가',admin_deduct:'관리자 차감'};
+  const typeColor={purchase:'var(--blue)',admin_add:'#22c55e',admin_deduct:'var(--red)'};
+  const histHtml=myHist.length?myHist.map(h=>`
+    <div class="history-item">
+      <div class="history-icon blue" style="background:${h.type==='admin_deduct'?'var(--redL)':h.type==='admin_add'?'#dcfce7':'var(--blueL)'};font-size:14px;">
+        ${h.type==='purchase'?'💳':h.type==='admin_add'?'➕':'➖'}
+      </div>
+      <div class="history-info">
+        <div class="history-title" style="color:${typeColor[h.type]||'var(--text)'};">${typeLabel[h.type]||h.type} ${h.sessions>0?'+':'-'}${Math.abs(h.sessions||0)}회</div>
+        <div class="history-sub">${(h.note||'').slice(0,40)||'-'}</div>
+        <div class="history-sub" style="font-size:11px;">${(h.createdAt||'').slice(0,16).replace('T',' ')}</div>
+      </div>
+    </div>`).join('')
+    :'<div class="empty" style="padding:16px 0;">수강권 내역 없음</div>';
+
+  // usage section
   const td=todayStr();
-  $('reservHistory').innerHTML=my.map(r=>{
-    const isCancelled=r.status==='cancelled';
-    const isPast=r.date<td&&!isCancelled;
-    const label=isCancelled?'취소됨':isPast?'수강 완료':'예약완료';
-    const badgeCls=isCancelled?'badge-red':isPast?'badge-green':'badge-blue';
-    const icon=isCancelled?'✕':isPast?'✓':'📅';
-    const iconBg=isCancelled?'red':'blue';
-    return `<div class="history-item">
-      <div class="history-icon ${iconBg}">${icon}</div>
+  const usedRes=Object.values(S.reservations)
+    .filter(r=>r.memberId===S.memberId&&r.type!=='walkin'&&r.status==='confirmed'&&r.date<=td)
+    .sort((a,b)=>b.date>a.date?1:-1);
+  const usedHtml=usedRes.length?usedRes.slice(0,30).map(r=>`
+    <div class="history-item">
+      <div class="history-icon blue" style="font-size:14px;">✓</div>
       <div class="history-info">
         <div class="history-title">${r.title||'-'}</div>
-        <div class="history-sub" style="font-weight:${isPast?'700':'400'};color:${isPast?'var(--green)':'var(--muted)'};">${fmtDate(r.date)} · ${r.time||''}</div>
+        <div class="history-sub">${fmtDate(r.date)} · ${r.time||''}</div>
       </div>
-      <span class="badge ${badgeCls}">${label}</span>
+      <span class="badge badge-green">수강완료</span>
+    </div>`).join('')
+    :'<div class="empty" style="padding:16px 0;">사용 내역 없음</div>';
+
+  if($('passHistSection'))$('passHistSection').innerHTML=`
+    <div class="card" style="margin-top:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;cursor:pointer;" onclick="toggleSection('histBody')">
+        <div class="section-title" style="font-size:15px;margin-bottom:0;">결제·추가 내역</div>
+        <span id="histBodyArrow" style="font-size:18px;color:var(--muted);">▾</span>
+      </div>
+      <div id="histBody">${histHtml}</div>
     </div>`;
-  }).join('');
+  if($('passUsageSection'))$('passUsageSection').innerHTML=`
+    <div class="card" style="margin-top:14px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;cursor:pointer;" onclick="toggleSection('usageBody')">
+        <div class="section-title" style="font-size:15px;margin-bottom:0;">수강 기록 (${usedRes.length}회)</div>
+        <span id="usageBodyArrow" style="font-size:18px;color:var(--muted);">▾</span>
+      </div>
+      <div id="usageBody" style="display:none;">${usedHtml}</div>
+    </div>`;
+}
+
+function toggleSection(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const arrow=document.getElementById(id+'Arrow');
+  const hidden=el.style.display==='none';
+  el.style.display=hidden?'':'none';
+  if(arrow)arrow.textContent=hidden?'▴':'▾';
+}
+
+/* ── HOME ── */
+function renderHome(){
+  const m=S.member;
+  if(!m||!$('homeContent'))return;
+  const td=todayStr();
+  const groupRemain=parseInt(m.regularSessions)||0;
+  const privRemain=parseInt(m.privateSessions)||0;
+  const upcoming=Object.values(S.reservations)
+    .filter(r=>r.memberId===S.memberId&&r.type!=='walkin'&&r.status==='confirmed'&&r.date>=td)
+    .sort((a,b)=>a.date>b.date?1:a.date<b.date?-1:(a.time||'')>(b.time||'')?1:-1)
+    .slice(0,5);
+  const upcomingHtml=upcoming.length?upcoming.map(r=>`
+    <div class="history-item">
+      <div class="history-icon blue" style="font-size:14px;">📅</div>
+      <div class="history-info">
+        <div class="history-title">${r.title||'-'}</div>
+        <div class="history-sub">${fmtDate(r.date)} · ${r.time||''}</div>
+      </div>
+      ${canCancel(r.date)?`<button class="btn btn-ghost btn-xs" onclick="cancelReserv('${r.id}','${r.date}')">취소</button>`
+        :'<span style="font-size:11px;color:var(--muted);">취소불가</span>'}
+    </div>`).join('')
+    :'<div class="empty" style="padding:16px 0;">예정 수업 없음</div>';
+
+  const isExpired=m.expiryDate&&m.expiryDate<td;
+  const noSessions=(groupRemain+privRemain)===0;
+
+  $('homeContent').innerHTML=`
+    <div style="margin-bottom:16px;">
+      <div style="font-size:22px;font-weight:900;color:var(--text);letter-spacing:-.02em;">안녕하세요,<br>${m.name} 회원님 👋</div>
+    </div>
+    ${isExpired?`<div class="alert alert-err"><span>⚠️</span><span>수강권이 만료되었습니다. 수강권 신청 탭에서 재신청해주세요.</span></div>`:''}
+    ${noSessions&&!isExpired?`<div class="alert alert-warn"><span>📋</span><span>잔여 수업이 없습니다. 수강권을 신청해주세요.</span></div>`:''}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+      <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;text-align:center;">
+        <div style="font-size:11px;color:var(--blue);font-weight:700;letter-spacing:.05em;margin-bottom:4px;">그룹 잔여</div>
+        <div style="font-size:32px;font-weight:900;color:var(--blue);line-height:1;">${groupRemain}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">회</div>
+      </div>
+      <div style="background:#fdf2f8;border:1.5px solid #fbcfe8;border-radius:12px;padding:16px;text-align:center;">
+        <div style="font-size:11px;color:#db2777;font-weight:700;letter-spacing:.05em;margin-bottom:4px;">프라이빗 잔여</div>
+        <div style="font-size:32px;font-weight:900;color:#db2777;line-height:1;">${privRemain}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">회</div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:14px;">
+      <div class="section-title" style="font-size:15px;">예정 수업</div>
+      ${upcomingHtml}
+      ${upcoming.length?`<div style="margin-top:8px;"><button class="btn btn-outline btn-sm" style="width:100%;" onclick="showTab(2)">수업 예약하기</button></div>`:'<div style="margin-top:8px;"><button class="btn btn-blue btn-sm" style="width:100%;" onclick="showTab(2)">수업 예약하기</button></div>'}
+    </div>
+    <div class="alert alert-info" style="margin-bottom:14px;">
+      <span>📌</span>
+      <div><strong>수업 취소 안내</strong><br>수업 취소는 <strong>전날 22:00까지</strong> 가능합니다. 이후에는 취소가 불가하며 횟수가 차감됩니다.</div>
+    </div>
+    <div class="alert alert-info">
+      <span>💬</span>
+      <span>문의: <a href="tel:010-4463-1177" style="color:var(--blue);font-weight:700;">010-4463-1177</a> · <a href="https://www.instagram.com/highend_volleyball" target="_blank" style="color:var(--blue);font-weight:700;">인스타그램</a></span>
+    </div>`;
 }
 
 /* ── CALENDAR ── */
@@ -809,7 +916,8 @@ async function changePw(){
 function showTab(idx){
   document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===idx));
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
-  if(idx===1){renderCal();renderSessionPanel();}
+  if(idx===2){renderCal();renderSessionPanel();}
+  if(idx===1){renderPassCard();}
 }
 
 /* ── AUTO LOGIN ── */

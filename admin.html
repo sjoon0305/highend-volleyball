@@ -431,24 +431,34 @@ textarea{resize:vertical;min-height:80px;}
   </div>
 </div>
 
-<!-- WALK-IN MODAL -->
+<!-- 수강 인원 추가 MODAL -->
 <div class="modal-bg" id="walkinModal">
   <div class="modal">
-    <div class="modal-title">📋 수강생 추가 (원데이)</div>
+    <div class="modal-title">➕ 수강 인원 추가</div>
     <div id="walkinSessInfo" style="font-size:13px;color:var(--muted);margin-bottom:12px;padding:8px 10px;background:var(--surface2);border-radius:8px;"></div>
     <div class="form-grid">
       <div>
-        <label class="label">회원 선택 <span style="font-size:10px;font-weight:400;">(등록 회원이면 선택)</span></label>
-        <select id="walkinMemberSel" onchange="onWalkinMemberChange(this.value)">
-          <option value="">── 직접 이름 입력 ──</option>
-        </select>
+        <label class="label">추가 유형</label>
+        <div style="display:flex;gap:8px;">
+          <button id="wModeMemberBtn" class="btn btn-blue btn-sm" style="flex:1;" onclick="setWalkinMode('member')">기존 회원</button>
+          <button id="wModeWalkinBtn" class="btn btn-outline btn-sm" style="flex:1;" onclick="setWalkinMode('walkin')">원데이</button>
+        </div>
       </div>
-      <div>
-        <label class="label">이름 * <span style="font-size:10px;font-weight:400;">(원데이·직접입력 가능)</span></label>
-        <input id="walkinName" type="text" placeholder="수강생 이름">
+      <!-- 기존 회원 섹션 -->
+      <div id="wMemberSection">
+        <label class="label">회원 선택 *</label>
+        <select id="walkinMemberSel" onchange="onWalkinMemberChange(this.value)">
+          <option value="">── 회원 선택 ──</option>
+        </select>
+        <div id="walkinMemberInfo" style="margin-top:8px;font-size:13px;"></div>
+      </div>
+      <!-- 원데이 섹션 -->
+      <div id="wNameSection" style="display:none;">
+        <label class="label">이름 * <span style="font-size:10px;font-weight:400;">(원데이 수강생)</span></label>
+        <input id="walkinName" type="text" placeholder="이름 입력">
       </div>
       <div style="display:flex;gap:8px;">
-        <button class="btn btn-orange" style="flex:1;" onclick="saveWalkin()">추가</button>
+        <button class="btn btn-blue" style="flex:1;" onclick="saveWalkin()">추가하기</button>
         <button class="btn btn-outline" style="flex:1;" onclick="closeWalkinModal()">취소</button>
       </div>
     </div>
@@ -482,7 +492,7 @@ const db=firebase.database();
 
 /* ── STATE ── */
 const S={
-  sessions:{},members:{},reservations:{},payRequests:{},attendance:{},
+  sessions:{},members:{},reservations:{},payRequests:{},attendance:{},passHistory:{},
   calYear:new Date().getFullYear(),calMonth:new Date().getMonth(),
   selectedDate:null,editingMemberId:null,dbOk:null
 };
@@ -557,6 +567,7 @@ async function initApp(){
   db.ref('reservations').on('value',s=>{S.reservations=s.val()||{};renderCal();renderSessPanel();});
   db.ref('paymentRequests').on('value',s=>{S.payRequests=s.val()||{};renderPayList();});
   db.ref('attendance').on('value',s=>{S.attendance=s.val()||{};renderSessPanel();});
+  db.ref('passHistory').on('value',s=>{S.passHistory=s.val()||{};});
 
   // Test Firebase write permission
   await testConnection();
@@ -676,45 +687,89 @@ function onPassTypeChange(val){
   }
 }
 
-/* ── WALK-IN (원데이) ── */
-let walkinSessId=null;
+/* ── 수강 인원 추가 (기존회원 / 원데이) ── */
+let walkinSessId=null, walkinMode='member';
+function setWalkinMode(mode){
+  walkinMode=mode;
+  $('wModeMemberBtn').className=`btn btn-sm${mode==='member'?' btn-blue':' btn-outline'}`;
+  $('wModeWalkinBtn').className=`btn btn-sm${mode==='walkin'?' btn-blue':' btn-outline'}`;
+  $('wMemberSection').style.display=mode==='member'?'block':'none';
+  $('wNameSection').style.display=mode==='walkin'?'block':'none';
+  if(mode==='walkin')setTimeout(()=>$('walkinName').focus(),50);
+}
 function openWalkinModal(sessId){
-  walkinSessId=sessId;
+  walkinSessId=sessId;walkinMode='member';
   const sess=S.sessions[sessId];
   $('walkinSessInfo').textContent=sess?`${sess.date} ${sess.time} · ${sess.title||''}`:sessId;
-  $('walkinName').value='';
+  $('walkinName').value='';$('walkinMemberInfo').innerHTML='';
   const opts=Object.values(S.members)
     .filter(m=>!m.isAdmin)
     .sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'))
-    .map(m=>`<option value="${m.id}">${m.name} (${m.phone||''})</option>`)
+    .map(m=>`<option value="${m.id}">${m.name} (${(m.phone||'').slice(-4)})</option>`)
     .join('');
-  $('walkinMemberSel').innerHTML=`<option value="">── 직접 이름 입력 ──</option>${opts}`;
+  $('walkinMemberSel').innerHTML=`<option value="">── 회원 선택 ──</option>${opts}`;
+  setWalkinMode('member');
   $('walkinModal').classList.add('show');
-  setTimeout(()=>$('walkinName').focus(),100);
 }
 function closeWalkinModal(){$('walkinModal').classList.remove('show');walkinSessId=null;}
 function onWalkinMemberChange(memberId){
-  if(memberId&&S.members[memberId]) $('walkinName').value=S.members[memberId].name||'';
-  else $('walkinName').value='';
+  const m=memberId?S.members[memberId]:null;
+  if(!m){$('walkinMemberInfo').innerHTML='';return;}
+  const reg=parseInt(m.regularSessions)||0;
+  const priv=parseInt(m.privateSessions)||0;
+  const alreadyBooked=Object.values(S.reservations).find(r=>r.sessionId===walkinSessId&&r.memberId===memberId&&r.status==='confirmed');
+  $('walkinMemberInfo').innerHTML=`
+    <div style="background:var(--surface2);border-radius:8px;padding:10px;font-size:13px;">
+      <div style="font-weight:700;">${m.name}</div>
+      <div style="color:var(--muted);">그룹 잔여 <b style="color:var(--blue);">${reg}회</b> · 프라이빗 잔여 <b style="color:var(--pink);">${priv}회</b></div>
+      ${alreadyBooked?'<div style="color:var(--red);font-size:12px;margin-top:4px;">⚠️ 이미 이 수업에 예약됨</div>':''}
+    </div>`;
 }
 async function saveWalkin(){
-  const name=($('walkinName').value||'').trim();
-  if(!name||!walkinSessId){toast('이름을 입력해주세요.','err');return;}
+  if(!walkinSessId)return;
   const sess=S.sessions[walkinSessId];if(!sess)return;
-  const selMemberId=$('walkinMemberSel').value||null;
-  const selMember=selMemberId?S.members[selMemberId]:null;
+  if(walkinMode==='member'){
+    const memberId=$('walkinMemberSel').value;
+    if(!memberId){toast('회원을 선택해주세요.','err');return;}
+    await addMemberToSession(walkinSessId,memberId);
+  }else{
+    const name=($('walkinName').value||'').trim();
+    if(!name){toast('이름을 입력해주세요.','err');return;}
+    try{
+      const id=db.ref('reservations').push().key;
+      await db.ref(`reservations/${id}`).set({
+        id,sessionId:walkinSessId,date:sess.date,time:sess.time,title:sess.title,
+        memberId:null,memberName:name,memberPhone:'',
+        type:'walkin',status:'confirmed',createdAt:new Date().toISOString()
+      });
+      toast(`${name} 원데이 추가 완료`,'ok');
+      closeWalkinModal();
+    }catch(e){toast('추가 실패: '+e.message,'err');}
+  }
+}
+async function addMemberToSession(sessId,memberId){
+  const sess=S.sessions[sessId];
+  const m=S.members[memberId];
+  if(!sess||!m){toast('정보를 찾을 수 없습니다.','err');return;}
+  const dup=Object.values(S.reservations).find(r=>r.sessionId===sessId&&r.memberId===memberId&&r.status==='confirmed');
+  if(dup){toast('이미 예약된 회원입니다.','err');return;}
+  const confirmedCnt=Object.values(S.reservations).filter(r=>r.sessionId===sessId&&r.status==='confirmed'&&r.type!=='walkin').length;
+  if(confirmedCnt>=(sess.maxCapacity||16)){toast('정원이 가득 찼습니다.','err');return;}
+  const field=m.classType==='private'?'privateSessions':'regularSessions';
+  const cur=parseInt(m[field])||0;
+  if(cur<=0){toast(`${m.name}의 잔여 수강권이 없습니다.`,'err');return;}
   try{
     const id=db.ref('reservations').push().key;
-    await db.ref(`reservations/${id}`).set({
-      id,sessionId:walkinSessId,
+    const updates={};
+    updates[`reservations/${id}`]={
+      id,memberId,sessionId:sessId,
+      memberName:m.name,memberPhone:m.phone||'',
       date:sess.date,time:sess.time,title:sess.title,
-      memberId:selMemberId||null,
-      memberName:name,
-      memberPhone:selMember?selMember.phone||'':'',
-      type:'walkin',status:'confirmed',
-      createdAt:new Date().toISOString()
-    });
-    toast(`${name} 추가 완료`,'ok');
+      status:'confirmed',addedByAdmin:true,createdAt:new Date().toISOString()
+    };
+    updates[`members/${memberId}/${field}`]=cur-1;
+    await db.ref().update(updates);
+    toast(`${m.name} 추가 완료 (잔여 ${cur-1}회)`,'ok');
     closeWalkinModal();
   }catch(e){toast('추가 실패: '+e.message,'err');}
 }
@@ -730,38 +785,85 @@ async function removeWalkin(reservId){
 function showMemberInfo(memberId){
   const m=S.members[memberId];
   if(!m){toast('회원 정보를 찾을 수 없습니다.','err');return;}
-  $('memberInfoTitle').textContent=m.name+' 회원 정보';
-  const remain=m.classType==='private'?(parseInt(m.privateSessions)||0):(parseInt(m.regularSessions)||0);
+  $('memberInfoTitle').textContent=m.name+' 수강권 정보';
+  const groupRemain=parseInt(m.regularSessions)||0;
+  const privRemain=parseInt(m.privateSessions)||0;
   const isExpired=m.expiryDate&&m.expiryDate<todayStr();
+  const td=todayStr();
+
+  const myHist=Object.values(S.passHistory||{})
+    .filter(h=>h.memberId===memberId)
+    .sort((a,b)=>b.createdAt>a.createdAt?1:-1);
+
   const myRes=Object.values(S.reservations)
     .filter(r=>r.memberId===memberId&&r.type!=='walkin')
-    .sort((a,b)=>b.date>a.date?1:-1).slice(0,10);
-  const attKeys=Object.keys(S.attendance).filter(k=>k.endsWith('_'+memberId));
-  const attHtml=attKeys.map(k=>{
-    const sessId=k.replace('_'+memberId,'');
-    const sess=S.sessions[sessId];
-    return sess?`<div style="font-size:13px;padding:4px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;"><span>✓ ${sess.date} ${sess.time}</span><span style="font-size:11px;color:var(--muted);">${sess.title||''}</span></div>`:null;
-  }).filter(Boolean).join('');
+    .sort((a,b)=>b.date>a.date?1:-1);
+  const usedRes=myRes.filter(r=>r.status==='confirmed'&&r.date<=td);
+  const upcomingRes=myRes.filter(r=>r.status==='confirmed'&&r.date>td);
+
+  const typeLabel={purchase:'수강권 결제',admin_add:'관리자 추가',admin_deduct:'관리자 차감'};
+  const typeColor={purchase:'var(--blue)',admin_add:'#22c55e',admin_deduct:'var(--red)'};
+
+  const histHtml=myHist.length?myHist.map(h=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);gap:8px;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;color:${typeColor[h.type]||'var(--text)'};">${typeLabel[h.type]||h.type}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px;">${h.note||''}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:1px;">${(h.createdAt||'').slice(0,16).replace('T',' ')}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <span style="font-size:15px;font-weight:700;color:${typeColor[h.type]||'var(--text)'};">${h.sessions>0?'+':'-'}${Math.abs(h.sessions||0)}회</span>
+        <button onclick="deletePassHistory('${h.id}')" style="background:none;border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:11px;color:var(--muted);cursor:pointer;">삭제</button>
+      </div>
+    </div>`).join('')
+    :'<div style="font-size:13px;color:var(--muted);padding:8px 0;">수강권 내역 없음</div>';
+
+  const usedHtml=usedRes.length?usedRes.slice(0,20).map(r=>{
+    const sess=Object.values(S.sessions).find(s=>s.date===r.date&&s.time===r.time)||{};
+    return `<div style="font-size:13px;padding:5px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;">
+      <span>${r.date} ${r.time}</span><span style="font-size:12px;color:var(--muted);">${sess.title||''}</span>
+    </div>`;
+  }).join(''):'<div style="font-size:13px;color:var(--muted);padding:8px 0;">사용 내역 없음</div>';
+
+  const upcomingHtml=upcomingRes.length?upcomingRes.slice(0,10).map(r=>`
+    <div style="font-size:13px;padding:5px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;">
+      <span>${r.date} ${r.time}</span><span class="badge badge-blue">예정</span>
+    </div>`).join(''):'';
+
   $('memberInfoContent').innerHTML=`
     <div class="info-row"><span class="info-label">전화번호</span><span class="info-value">${m.phone||'-'}</span></div>
     <div class="info-row"><span class="info-label">생년월일</span><span class="info-value">${m.birthdate||'-'}</span></div>
-    <div class="info-row"><span class="info-label">수업유형</span><span class="info-value">${m.classType==='private'?'프라이빗':'그룹'}</span></div>
-    <div class="info-row"><span class="info-label">수강권</span><span class="info-value">${m.passType||'-'}회권</span></div>
-    <div class="info-row"><span class="info-label">잔여 횟수</span><span class="info-value" style="color:var(--blue);font-size:18px;font-weight:900;">${remain}회</span></div>
     <div class="info-row"><span class="info-label">만료일</span><span class="info-value" style="${isExpired?'color:var(--red)':''}">${m.expiryDate||'-'}${isExpired?' ⚠️ 만료':''}</span></div>
-    ${m.createdAt?`<div class="info-row"><span class="info-label">등록일</span><span class="info-value">${(m.createdAt||'').slice(0,10)}</span></div>`:''}
     <div class="divider"></div>
-    <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">최근 예약 내역</div>
-    ${myRes.length?myRes.map(r=>`<div style="font-size:13px;padding:5px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-      <span>${r.date} ${r.time}</span>
-      <span class="badge ${r.status==='cancelled'?'badge-red':'badge-blue'}">${r.status==='cancelled'?'취소':'완료'}</span>
-    </div>`).join(''):'<div style="font-size:13px;color:var(--muted);">예약 내역 없음</div>'}
-    ${attHtml?`<div class="divider"></div><div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">출석 기록</div>${attHtml}`:''}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+      <div style="background:#eff6ff;border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:11px;color:var(--blue);font-weight:600;margin-bottom:4px;">그룹 잔여</div>
+        <div style="font-size:26px;font-weight:900;color:var(--blue);">${groupRemain}</div>
+        <div style="font-size:11px;color:var(--muted);">회</div>
+      </div>
+      <div style="background:#fdf2f8;border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:11px;color:#db2777;font-weight:600;margin-bottom:4px;">프라이빗 잔여</div>
+        <div style="font-size:26px;font-weight:900;color:#db2777;">${privRemain}</div>
+        <div style="font-size:11px;color:var(--muted);">회</div>
+      </div>
+    </div>
+    <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em;">수강권 내역</div>
+    ${histHtml}
+    <div class="divider"></div>
+    <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em;">사용 기록 (${usedRes.length}회)</div>
+    ${usedHtml}
+    ${upcomingHtml?`<div class="divider"></div><div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em;">예정 수업</div>${upcomingHtml}`:''}
   `;
-  // Add CSS for info-row if not present
   $('memberInfoModal').classList.add('show');
 }
 function closeMemberInfoModal(){$('memberInfoModal').classList.remove('show');}
+async function deletePassHistory(hid){
+  if(!confirm('이 수강권 내역을 삭제하시겠습니까?'))return;
+  try{
+    await db.ref(`passHistory/${hid}`).remove();
+    toast('내역이 삭제되었습니다.','ok');
+  }catch(e){toast('삭제 실패: '+e.message,'err');}
+}
 
 /* ── CALENDAR ── */
 function calMove(dir){
@@ -908,7 +1010,7 @@ function renderSessPanel(){
       ${attendeeHtml}
       <div class="sca-btns">
         ${!isCancelled?`
-          <button class="btn btn-orange btn-xs" onclick="openWalkinModal('${sess.id}')">+ 원데이 추가</button>
+          <button class="btn btn-orange btn-xs" onclick="openWalkinModal('${sess.id}')">+ 수강 인원 추가</button>
           <button class="btn btn-danger btn-xs" onclick="cancelSession('${sess.id}')">수업 취소</button>`:''}
         <button class="btn btn-outline btn-xs" onclick="deleteSession('${sess.id}')">삭제</button>
       </div>
@@ -1149,14 +1251,67 @@ async function saveMember(){
   };
 
   try{
+    const updates={};
     if(S.editingMemberId){
       data.id=S.editingMemberId;
-      await db.ref(`members/${S.editingMemberId}`).update(data);
+      const old=S.members[S.editingMemberId]||{};
+      const oldReg=parseInt(old.regularSessions)||0;
+      const oldPriv=parseInt(old.privateSessions)||0;
+      const newReg=data.regularSessions;
+      const newPriv=data.privateSessions;
+      // passHistory for group session change
+      if(newReg!==oldReg){
+        const hid=db.ref('passHistory').push().key;
+        updates[`passHistory/${hid}`]={
+          id:hid,memberId:data.id,memberName:name,
+          type:newReg>oldReg?'admin_add':'admin_deduct',
+          classType:'group',passType:data.passType,
+          sessions:Math.abs(newReg-oldReg),
+          note:`관리자 수정 — 그룹 잔여 ${oldReg}→${newReg}회`,
+          createdAt:new Date().toISOString(),adminAction:true
+        };
+      }
+      // passHistory for private session change
+      if(newPriv!==oldPriv){
+        const hid2=db.ref('passHistory').push().key;
+        updates[`passHistory/${hid2}`]={
+          id:hid2,memberId:data.id,memberName:name,
+          type:newPriv>oldPriv?'admin_add':'admin_deduct',
+          classType:'private',passType:data.passType,
+          sessions:Math.abs(newPriv-oldPriv),
+          note:`관리자 수정 — 프라이빗 잔여 ${oldPriv}→${newPriv}회`,
+          createdAt:new Date().toISOString(),adminAction:true
+        };
+      }
+      updates[`members/${S.editingMemberId}`]=data;
+      await db.ref().update(updates);
       toast(`${name} 회원 정보가 수정되었습니다.`,'ok');
     }else{
       const id=db.ref('members').push().key;
       data.id=id;
-      await db.ref(`members/${id}`).set(data);
+      updates[`members/${id}`]=data;
+      // 신규 등록 시 passHistory
+      if(data.regularSessions>0){
+        const hid=db.ref('passHistory').push().key;
+        updates[`passHistory/${hid}`]={
+          id:hid,memberId:id,memberName:name,
+          type:'admin_add',classType:'group',passType:data.passType,
+          sessions:data.regularSessions,
+          note:`신규 등록 — 그룹 ${data.regularSessions}회 부여`,
+          createdAt:new Date().toISOString(),adminAction:true
+        };
+      }
+      if(data.privateSessions>0){
+        const hid=db.ref('passHistory').push().key;
+        updates[`passHistory/${hid}`]={
+          id:hid,memberId:id,memberName:name,
+          type:'admin_add',classType:'private',passType:data.passType,
+          sessions:data.privateSessions,
+          note:`신규 등록 — 프라이빗 ${data.privateSessions}회 부여`,
+          createdAt:new Date().toISOString(),adminAction:true
+        };
+      }
+      await db.ref().update(updates);
       toast(`${name} 회원이 등록되었습니다.`,'ok');
     }
     closeMemberModal();
@@ -1243,7 +1398,7 @@ async function approvePayment(id){
   try{
     const updates={};
     updates[`paymentRequests/${id}/status`]='confirmed';
-    // Find and update member
+    updates[`paymentRequests/${id}/approvedAt`]=new Date().toISOString();
     const member=Object.values(S.members).find(m=>m.id===r.memberId);
     if(member){
       const cnt=parseInt(r.passType)||0;
@@ -1255,6 +1410,16 @@ async function approvePayment(id){
       updates[`members/${r.memberId}/passType`]=r.passType;
       updates[`members/${r.memberId}/classType`]=r.classType;
     }
+    // passHistory 기록
+    const hid=db.ref('passHistory').push().key;
+    updates[`passHistory/${hid}`]={
+      id:hid,memberId:r.memberId,memberName:r.memberName||'',
+      type:'purchase',classType:r.classType,passType:r.passType,
+      sessions:parseInt(r.passType)||0,
+      note:`수강권 신청 승인 (${r.classType==='private'?'프라이빗':'그룹'} ${r.passType}회권)`,
+      payRequestId:id,
+      createdAt:new Date().toISOString(),adminAction:true
+    };
     await db.ref().update(updates);
     toast('승인 완료. 수강권이 발급되었습니다.','ok');
   }catch(e){toast('승인 실패: '+e.message,'err');}
