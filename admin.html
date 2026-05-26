@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#f0f5fc">
 <title>하이앤드 발리볼 | 관리자</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏐</text></svg>">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -168,6 +169,12 @@ textarea{resize:vertical;min-height:80px;}
 .backup-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}
 .backup-item:last-child{border-bottom:none;}
 
+/* INFO ROW (member info modal) */
+.info-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.info-row:last-child{border-bottom:none;}
+.info-label{color:var(--muted);}
+.info-value{font-weight:700;color:var(--text);}
+
 @media(max-width:420px){
   .grid2{grid-template-columns:1fr;}
   .grid3{grid-template-columns:1fr 1fr;}
@@ -257,7 +264,13 @@ textarea{resize:vertical;min-height:80px;}
 
   <!-- TAB 2: 결제 요청 -->
   <div class="page" id="page2">
-    <div class="section-title">결제 요청 관리</div>
+    <div class="row" style="margin-bottom:12px;">
+      <div class="section-title" style="margin:0;">결제 요청</div>
+      <div style="display:flex;gap:6px;">
+        <button id="btnFilterPending" class="btn btn-blue btn-sm" onclick="setPayFilter('pending')">대기 중</button>
+        <button id="btnFilterDone" class="btn btn-outline btn-sm" onclick="setPayFilter('done')">처리 완료</button>
+      </div>
+    </div>
     <div id="payList"></div>
   </div>
 
@@ -366,9 +379,8 @@ textarea{resize:vertical;min-height:80px;}
     <div class="card">
       <div style="font-size:15px;font-weight:700;margin-bottom:10px;">관리자 정보</div>
       <div style="font-size:13px;color:var(--muted);line-height:1.8;">
-        아이디: admin<br>
-        비밀번호: s1102!<br>
-        Firebase 프로젝트: high-end-f4c77
+        계정 관리: Firebase Console → Authentication<br>
+        Firebase 프로젝트: highend-volleyball-60f04
       </div>
     </div>
   </div>
@@ -384,7 +396,7 @@ textarea{resize:vertical;min-height:80px;}
         <div><label class="label">전화번호 *</label><input id="mPhone" type="tel" placeholder="01012345678" inputmode="tel"></div>
       </div>
       <div class="grid2">
-        <div><label class="label">생년월일</label><input id="mBirth" type="date"></div>
+        <div><label class="label">생년월일</label><input id="mBirth" type="text" placeholder="예) 19900115"></div>
         <div><label class="label">초기 비밀번호</label><input id="mPw" type="text" placeholder="0000"></div>
       </div>
       <div class="grid2">
@@ -396,11 +408,11 @@ textarea{resize:vertical;min-height:80px;}
           </select>
         </div>
         <div>
-          <label class="label">수강권 종류</label>
-          <select id="mPass">
-            <option value="4">4회권</option>
-            <option value="8">8회권</option>
-            <option value="12">12회권</option>
+          <label class="label">수강권 종류 <span style="font-size:10px;color:var(--blue);font-weight:400;">(선택 시 횟수+만료일 자동설정)</span></label>
+          <select id="mPass" onchange="onPassTypeChange(this.value)">
+            <option value="4">4회권 (6주)</option>
+            <option value="8">8회권 (10주)</option>
+            <option value="12">12회권 (16주)</option>
             <option value="custom">기타</option>
           </select>
         </div>
@@ -416,6 +428,39 @@ textarea{resize:vertical;min-height:80px;}
         <button class="btn btn-outline" style="flex:1;" onclick="closeMemberModal()">취소</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- WALK-IN MODAL -->
+<div class="modal-bg" id="walkinModal">
+  <div class="modal">
+    <div class="modal-title">📋 수강생 추가 (원데이)</div>
+    <div id="walkinSessInfo" style="font-size:13px;color:var(--muted);margin-bottom:12px;padding:8px 10px;background:var(--surface2);border-radius:8px;"></div>
+    <div class="form-grid">
+      <div>
+        <label class="label">회원 선택 <span style="font-size:10px;font-weight:400;">(등록 회원이면 선택)</span></label>
+        <select id="walkinMemberSel" onchange="onWalkinMemberChange(this.value)">
+          <option value="">── 직접 이름 입력 ──</option>
+        </select>
+      </div>
+      <div>
+        <label class="label">이름 * <span style="font-size:10px;font-weight:400;">(원데이·직접입력 가능)</span></label>
+        <input id="walkinName" type="text" placeholder="수강생 이름">
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-orange" style="flex:1;" onclick="saveWalkin()">추가</button>
+        <button class="btn btn-outline" style="flex:1;" onclick="closeWalkinModal()">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBER INFO MODAL -->
+<div class="modal-bg" id="memberInfoModal">
+  <div class="modal">
+    <div class="modal-title" id="memberInfoTitle">회원 수강권 정보</div>
+    <div id="memberInfoContent"></div>
+    <button class="btn btn-outline" style="width:100%;margin-top:12px;" onclick="closeMemberInfoModal()">닫기</button>
   </div>
 </div>
 
@@ -615,6 +660,109 @@ async function autoGenSaturdays(manual){
   }
 }
 
+/* ── PASS AUTO CALC ── */
+function onPassTypeChange(val){
+  const weeksMap={'4':6,'8':10,'12':16};
+  const weeks=weeksMap[val];
+  if(weeks){
+    const exp=new Date();
+    exp.setDate(exp.getDate()+weeks*7);
+    $('mExpiry').value=`${exp.getFullYear()}-${String(exp.getMonth()+1).padStart(2,'0')}-${String(exp.getDate()).padStart(2,'0')}`;
+  }
+  const cnt=parseInt(val)||0;
+  if(cnt>0){
+    const cur=parseInt($('mRegSess').value)||0;
+    $('mRegSess').value=cur+cnt;
+  }
+}
+
+/* ── WALK-IN (원데이) ── */
+let walkinSessId=null;
+function openWalkinModal(sessId){
+  walkinSessId=sessId;
+  const sess=S.sessions[sessId];
+  $('walkinSessInfo').textContent=sess?`${sess.date} ${sess.time} · ${sess.title||''}`:sessId;
+  $('walkinName').value='';
+  const opts=Object.values(S.members)
+    .filter(m=>!m.isAdmin)
+    .sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'))
+    .map(m=>`<option value="${m.id}">${m.name} (${m.phone||''})</option>`)
+    .join('');
+  $('walkinMemberSel').innerHTML=`<option value="">── 직접 이름 입력 ──</option>${opts}`;
+  $('walkinModal').classList.add('show');
+  setTimeout(()=>$('walkinName').focus(),100);
+}
+function closeWalkinModal(){$('walkinModal').classList.remove('show');walkinSessId=null;}
+function onWalkinMemberChange(memberId){
+  if(memberId&&S.members[memberId]) $('walkinName').value=S.members[memberId].name||'';
+  else $('walkinName').value='';
+}
+async function saveWalkin(){
+  const name=($('walkinName').value||'').trim();
+  if(!name||!walkinSessId){toast('이름을 입력해주세요.','err');return;}
+  const sess=S.sessions[walkinSessId];if(!sess)return;
+  const selMemberId=$('walkinMemberSel').value||null;
+  const selMember=selMemberId?S.members[selMemberId]:null;
+  try{
+    const id=db.ref('reservations').push().key;
+    await db.ref(`reservations/${id}`).set({
+      id,sessionId:walkinSessId,
+      date:sess.date,time:sess.time,title:sess.title,
+      memberId:selMemberId||null,
+      memberName:name,
+      memberPhone:selMember?selMember.phone||'':'',
+      type:'walkin',status:'confirmed',
+      createdAt:new Date().toISOString()
+    });
+    toast(`${name} 추가 완료`,'ok');
+    closeWalkinModal();
+  }catch(e){toast('추가 실패: '+e.message,'err');}
+}
+async function removeWalkin(reservId){
+  if(!confirm('삭제하시겠습니까?'))return;
+  try{
+    await db.ref(`reservations/${reservId}`).remove();
+    toast('삭제되었습니다.','ok');
+  }catch(e){toast('삭제 실패: '+e.message,'err');}
+}
+
+/* ── MEMBER INFO MODAL ── */
+function showMemberInfo(memberId){
+  const m=S.members[memberId];
+  if(!m){toast('회원 정보를 찾을 수 없습니다.','err');return;}
+  $('memberInfoTitle').textContent=m.name+' 회원 정보';
+  const remain=m.classType==='private'?(parseInt(m.privateSessions)||0):(parseInt(m.regularSessions)||0);
+  const isExpired=m.expiryDate&&m.expiryDate<todayStr();
+  const myRes=Object.values(S.reservations)
+    .filter(r=>r.memberId===memberId&&r.type!=='walkin')
+    .sort((a,b)=>b.date>a.date?1:-1).slice(0,10);
+  const attKeys=Object.keys(S.attendance).filter(k=>k.endsWith('_'+memberId));
+  const attHtml=attKeys.map(k=>{
+    const sessId=k.replace('_'+memberId,'');
+    const sess=S.sessions[sessId];
+    return sess?`<div style="font-size:13px;padding:4px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;"><span>✓ ${sess.date} ${sess.time}</span><span style="font-size:11px;color:var(--muted);">${sess.title||''}</span></div>`:null;
+  }).filter(Boolean).join('');
+  $('memberInfoContent').innerHTML=`
+    <div class="info-row"><span class="info-label">전화번호</span><span class="info-value">${m.phone||'-'}</span></div>
+    <div class="info-row"><span class="info-label">생년월일</span><span class="info-value">${m.birthdate||'-'}</span></div>
+    <div class="info-row"><span class="info-label">수업유형</span><span class="info-value">${m.classType==='private'?'프라이빗':'그룹'}</span></div>
+    <div class="info-row"><span class="info-label">수강권</span><span class="info-value">${m.passType||'-'}회권</span></div>
+    <div class="info-row"><span class="info-label">잔여 횟수</span><span class="info-value" style="color:var(--blue);font-size:18px;font-weight:900;">${remain}회</span></div>
+    <div class="info-row"><span class="info-label">만료일</span><span class="info-value" style="${isExpired?'color:var(--red)':''}">${m.expiryDate||'-'}${isExpired?' ⚠️ 만료':''}</span></div>
+    ${m.createdAt?`<div class="info-row"><span class="info-label">등록일</span><span class="info-value">${(m.createdAt||'').slice(0,10)}</span></div>`:''}
+    <div class="divider"></div>
+    <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">최근 예약 내역</div>
+    ${myRes.length?myRes.map(r=>`<div style="font-size:13px;padding:5px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+      <span>${r.date} ${r.time}</span>
+      <span class="badge ${r.status==='cancelled'?'badge-red':'badge-blue'}">${r.status==='cancelled'?'취소':'완료'}</span>
+    </div>`).join(''):'<div style="font-size:13px;color:var(--muted);">예약 내역 없음</div>'}
+    ${attHtml?`<div class="divider"></div><div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">출석 기록</div>${attHtml}`:''}
+  `;
+  // Add CSS for info-row if not present
+  $('memberInfoModal').classList.add('show');
+}
+function closeMemberInfoModal(){$('memberInfoModal').classList.remove('show');}
+
 /* ── CALENDAR ── */
 function calMove(dir){
   S.calMonth+=dir;
@@ -671,9 +819,9 @@ function selectDate(dateStr){
 function renderSessPanel(){
   const d=S.selectedDate;
   if(!d){$('sessPanel').innerHTML='';return;}
-  const daySessions=Object.values(S.sessions).filter(s=>s.date===d).sort((a,b)=>a.time>b.time?1:-1);
-  const dow=['일','월','화','수','목','금','토'][new Date(d).getDay()];
   const [y,m,dd]=d.split('-').map(Number);
+  const daySessions=Object.values(S.sessions).filter(s=>s.date===d).sort((a,b)=>a.time>b.time?1:-1);
+  const dow=['일','월','화','수','목','금','토'][new Date(y,m-1,dd).getDay()];
   const label=`${m}월 ${dd}일 (${dow})`;
 
   if(!daySessions.length){
@@ -687,42 +835,60 @@ function renderSessPanel(){
 
   const cards=daySessions.map(sess=>{
     const isCancelled=sess.status==='cancelled';
-    const sessRes=Object.values(S.reservations).filter(r=>r.sessionId===sess.id);
-    const confirmed=sessRes.filter(r=>r.status==='confirmed');
+    const allRes=Object.values(S.reservations).filter(r=>r.sessionId===sess.id);
+    const regularRes=allRes.filter(r=>r.type!=='walkin'&&r.status==='confirmed');
+    const walkinRes=allRes.filter(r=>r.type==='walkin'&&r.status!=='walkin_deleted');
+    const cancelledRes=allRes.filter(r=>r.type!=='walkin'&&r.status==='cancelled');
     const cap=sess.maxCapacity||16;
-    const pct=Math.min(100,Math.round((confirmed.length/cap)*100));
+    const pct=Math.min(100,Math.round((regularRes.length/cap)*100));
     const fillCls=pct>=100?'danger':pct>=75?'warn':'';
 
-    // Show all reservations for cancelled sessions, only confirmed for active
-    const showList=isCancelled?sessRes:confirmed;
+    const listToShow=isCancelled?[...regularRes,...cancelledRes]:regularRes;
+
+    const regHtml=listToShow.map(r=>{
+      const attKey=`${sess.id}_${r.memberId}`;
+      const isAtt=!!S.attendance[attKey];
+      const hasId=r.memberId&&S.members[r.memberId];
+      if(isCancelled){
+        return `<div class="att-member">
+          <div>
+            <div style="font-size:14px;font-weight:700;${hasId?'cursor:pointer;color:var(--blue);text-decoration:underline;':''}" ${hasId?`onclick="showMemberInfo('${r.memberId}')"`:''}>${r.memberName||'-'}</div>
+            <div style="font-size:12px;color:var(--muted);">${r.memberPhone||''}</div>
+          </div>
+          <span class="badge ${r.status==='cancelled'?'badge-red':'badge-orange'}">${r.status==='cancelled'?'취소됨':'예약됨'}</span>
+        </div>`;
+      }
+      return `<div class="att-member${isAtt?' attended':''}">
+        <div>
+          <div style="font-size:14px;font-weight:700;${hasId?'cursor:pointer;color:var(--blue);text-decoration:underline;':''}" ${hasId?`onclick="showMemberInfo('${r.memberId}')"`:''}>${r.memberName||'-'}</div>
+          <div style="font-size:12px;color:var(--muted);">${r.memberPhone||''}</div>
+        </div>
+        <div class="att-toggle${isAtt?' on':''}" onclick="toggleAttend('${sess.id}','${r.memberId}')" title="${isAtt?'출석':'미출석'}">${isAtt?'✓':'—'}</div>
+      </div>`;
+    }).join('');
+
+    const walkinHtml=walkinRes.map(r=>{
+      const wKey=`${sess.id}_w_${r.id}`;
+      const isAtt=!!S.attendance[wKey];
+      return `<div class="att-member${isAtt?' attended':''}" style="background:${isAtt?'var(--orangeL)':'rgba(209,107,0,.05)'};border-left:3px solid var(--orange);margin:3px -13px;padding:7px 13px;">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--orange);">🎫 ${r.memberName||'-'}</div>
+          <div style="font-size:11px;color:var(--muted);">원데이</div>
+        </div>
+        <div style="display:flex;gap:5px;align-items:center;">
+          <div class="att-toggle${isAtt?' on':''}" onclick="toggleAttend('${sess.id}','w_${r.id}')" title="${isAtt?'출석':'미출석'}" style="${isAtt?'background:var(--orangeL);border-color:var(--orange);color:var(--orange);':''}">${isAtt?'✓':'—'}</div>
+          <button class="btn btn-danger btn-xs" onclick="removeWalkin('${r.id}')">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+
     let attendeeHtml='';
-    if(showList.length){
+    if(listToShow.length||walkinRes.length){
       attendeeHtml=`<div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px;">
         <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">
-          ${isCancelled?'예약자 명단 (취소된 수업 — 차감 없음)':'예약자 (클릭: 출석 체크)'}
+          ${isCancelled?'예약자 명단':'수강생 명단 (이름 클릭: 수강권 확인 · 토글: 출석)'}
         </div>
-        ${showList.map(r=>{
-          const attKey=`${sess.id}_${r.memberId}`;
-          const isAtt=!!S.attendance[attKey];
-          if(isCancelled){
-            return `<div class="att-member">
-              <div>
-                <div style="font-size:14px;font-weight:700;">${r.memberName||'-'}</div>
-                <div style="font-size:12px;color:var(--muted);">${r.memberPhone||''}</div>
-              </div>
-              <span class="badge ${r.status==='cancelled'?'badge-red':'badge-orange'}">${r.status==='cancelled'?'취소됨':'예약됨'}</span>
-            </div>`;
-          }
-          return `<div class="att-member${isAtt?' attended':''}">
-            <div>
-              <div style="font-size:14px;font-weight:700;">${r.memberName||'-'}</div>
-              <div style="font-size:12px;color:var(--muted);">${r.memberPhone||''}</div>
-            </div>
-            <div class="att-toggle${isAtt?' on':''}" onclick="toggleAttend('${sess.id}','${r.memberId}')" title="${isAtt?'출석':'미출석'}">
-              ${isAtt?'✓':'—'}
-            </div>
-          </div>`;
-        }).join('')}
+        ${regHtml}${walkinHtml}
       </div>`;
     }
 
@@ -734,14 +900,16 @@ function renderSessPanel(){
         </div>
         ${isCancelled?
           '<span class="badge badge-red">취소됨</span>':
-          `<span class="badge badge-blue">${confirmed.length}/${cap}명</span>`}
+          `<span class="badge badge-blue">${regularRes.length}/${cap}명${walkinRes.length?` <span style="color:var(--orange);">+${walkinRes.length}원데이</span>`:''}</span>`}
       </div>
       ${!isCancelled?`<div class="progress-wrap" style="margin-bottom:4px;">
         <div class="progress-fill ${fillCls}" style="width:${pct}%"></div>
       </div>`:''}
       ${attendeeHtml}
       <div class="sca-btns">
-        ${!isCancelled?`<button class="btn btn-danger btn-xs" onclick="cancelSession('${sess.id}')">수업 취소</button>`:''}
+        ${!isCancelled?`
+          <button class="btn btn-orange btn-xs" onclick="openWalkinModal('${sess.id}')">+ 원데이 추가</button>
+          <button class="btn btn-danger btn-xs" onclick="cancelSession('${sess.id}')">수업 취소</button>`:''}
         <button class="btn btn-outline btn-xs" onclick="deleteSession('${sess.id}')">삭제</button>
       </div>
     </div>`;
@@ -976,7 +1144,8 @@ async function saveMember(){
     regularSessions:parseInt($('mRegSess').value)||0,
     privateSessions:parseInt($('mPrivSess').value)||0,
     expiryDate:$('mExpiry').value||'',
-    isAdmin:false
+    isAdmin:false,
+    createdAt:S.editingMemberId?(S.members[S.editingMemberId]?.createdAt||new Date().toISOString()):new Date().toISOString()
   };
 
   try{
@@ -1007,43 +1176,66 @@ async function deleteMember(id,name){
 }
 
 /* ── PAYMENT ── */
+let payFilter='pending';
+function setPayFilter(f){
+  payFilter=f;
+  $('btnFilterPending').className=`btn btn-sm${f==='pending'?' btn-blue':' btn-outline'}`;
+  $('btnFilterDone').className=`btn btn-sm${f==='done'?' btn-blue':' btn-outline'}`;
+  renderPayList();
+}
+
 function renderPayList(){
   const list=Object.values(S.payRequests).sort((a,b)=>
     (b.createdAt||'')>(a.createdAt||'')?1:-1
   );
-  const pending=list.filter(r=>r.status==='pending');
-  const done=list.filter(r=>r.status!=='pending');
+  const showing=payFilter==='pending'
+    ?list.filter(r=>r.status==='pending')
+    :list.filter(r=>r.status!=='pending');
 
   if(!list.length){
     $('payList').innerHTML='<div class="empty"><div>결제 요청이 없습니다</div></div>';return;
   }
+  if(!showing.length){
+    const emptyMsg=payFilter==='pending'?'대기 중인 요청이 없습니다':'처리된 내역이 없습니다';
+    $('payList').innerHTML=`<div class="empty"><div>${emptyMsg}</div></div>`;return;
+  }
+
+  const statusMap={pending:'검토중',confirmed:'승인됨',rejected:'반려됨'};
+  const badgeCls={pending:'badge-orange',confirmed:'badge-green',rejected:'badge-red'};
 
   function renderItem(r){
-    const statusMap={pending:'검토중',confirmed:'승인됨',rejected:'반려됨'};
-    const badgeCls={pending:'badge-orange',confirmed:'badge-green',rejected:'badge-red'};
     const classLabel=r.classType==='private'?'프라이빗':'그룹';
+    const isPending=r.status==='pending';
     return `<div class="pay-row">
       <div class="pay-info">
         <div class="pay-title">${r.memberName||'-'} · ${classLabel} ${r.passType}회권</div>
-        <div class="pay-sub">${r.phone||''} · ${(r.createdAt||'').slice(0,10)}</div>
+        <div class="pay-sub" style="color:var(--blue);font-weight:700;">${(r.createdAt||'').slice(0,10)} 신청</div>
+        <div class="pay-sub">${r.phone||''}</div>
         ${r.note?`<div class="pay-sub" style="margin-top:2px;font-style:italic;">"${r.note}"</div>`:''}
-        ${r.status==='pending'?`<div class="pay-actions">
-          <button class="btn btn-green btn-xs" onclick="approvePayment('${r.id}')">승인</button>
-          <button class="btn btn-danger btn-xs" onclick="rejectPayment('${r.id}')">반려</button>
-        </div>`:''}
+        <div class="pay-actions">
+          ${isPending?`
+            <button class="btn btn-green btn-xs" onclick="approvePayment('${r.id}')">승인</button>
+            <button class="btn btn-danger btn-xs" onclick="rejectPayment('${r.id}')">반려</button>`:''}
+          <button class="btn btn-outline btn-xs" onclick="deletePayment('${r.id}')">삭제</button>
+        </div>
       </div>
       <span class="badge ${badgeCls[r.status]||'badge-grey'}" style="white-space:nowrap;margin-left:8px;">${statusMap[r.status]||r.status}</span>
     </div>`;
   }
 
-  let html='';
-  if(pending.length){
-    html+=`<div class="card"><div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:8px;">⏳ 대기 중 (${pending.length})</div>${pending.map(renderItem).join('')}</div>`;
-  }
-  if(done.length){
-    html+=`<div class="card"><div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:8px;">처리 완료</div>${done.map(renderItem).join('')}</div>`;
-  }
-  $('payList').innerHTML=html;
+  const titleMap={pending:`⏳ 대기 중 (${showing.length})`,done:'처리 완료'};
+  $('payList').innerHTML=`<div class="card">
+    <div style="font-size:13px;font-weight:700;color:${payFilter==='pending'?'var(--orange)':'var(--muted)'};margin-bottom:8px;">${titleMap[payFilter]||''}</div>
+    ${showing.map(renderItem).join('')}
+  </div>`;
+}
+
+async function deletePayment(id){
+  if(!confirm('이 결제 요청을 삭제하시겠습니까?'))return;
+  try{
+    await db.ref(`paymentRequests/${id}`).remove();
+    toast('삭제되었습니다.','ok');
+  }catch(e){toast('삭제 실패: '+e.message,'err');}
 }
 
 async function approvePayment(id){
@@ -1128,8 +1320,14 @@ function showTab(idx){
 }
 
 /* ── MODAL CLOSE ON BACKDROP ── */
-document.getElementById('memberModal').addEventListener('click',e=>{
-  if(e.target===document.getElementById('memberModal'))closeMemberModal();
+['memberModal','walkinModal','memberInfoModal'].forEach(id=>{
+  document.getElementById(id)?.addEventListener('click',e=>{
+    if(e.target===document.getElementById(id)){
+      if(id==='memberModal')closeMemberModal();
+      else if(id==='walkinModal')closeWalkinModal();
+      else if(id==='memberInfoModal')closeMemberInfoModal();
+    }
+  });
 });
 </script>
 </body>

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#ffffff">
 <title>하이앤드 발리볼 아카데미 | HIGH END VOLLEYBALL ACADEMY</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏐</text></svg>">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -737,13 +738,27 @@ const db=firebase.database();
 
 let pubSessions={}, pubReservations={};
 let calY=new Date().getFullYear(), calM=new Date().getMonth();
-let selDate=null;
+let selDate=null, _nearestDone=false;
 
-function todayStr(){return new Date().toISOString().slice(0,10);}
+function todayStr(){const t=new Date();return`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;}
 function calcEnd(t){if(!t)return'';const[h,m]=t.split(':').map(Number);const e=new Date(2000,0,1,h,m+80);return`${String(e.getHours()).padStart(2,'0')}:${String(e.getMinutes()).padStart(2,'0')}`;}
 
-db.ref('sessions').on('value',s=>{pubSessions=s.val()||{};renderCal();});
-db.ref('reservations').on('value',s=>{pubReservations=s.val()||{};renderCal();});
+function autoSelectNearest(){
+  if(_nearestDone||!Object.keys(pubSessions).length)return;
+  const td=todayStr();
+  const future=Object.values(pubSessions)
+    .filter(s=>s.date>=td&&s.status!=='cancelled')
+    .sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  if(!future.length)return;
+  _nearestDone=true;
+  const d=future[0].date;
+  const[y,m]=d.split('-').map(Number);
+  calY=y;calM=m-1;selDate=d;
+  renderCal();renderPanel(d);
+}
+
+db.ref('sessions').on('value',s=>{pubSessions=s.val()||{};renderCal();autoSelectNearest();});
+db.ref('reservations').on('value',s=>{pubReservations=s.val()||{};renderCal();if(selDate)renderPanel(selDate);});
 
 function renderCal(){
   const y=calY,m=calM;
@@ -833,9 +848,8 @@ function renderPanel(date){
     const isCancelled=s.status==='cancelled';
     const rc=Object.values(pubReservations).filter(r=>r.sessionId===s.id&&r.status!=='cancelled').length;
     const cap=s.maxCapacity||16;
-    const avail=Math.max(0,cap-rc);
-    const pct=Math.min(100,(rc/cap)*100);
-    const isWarn=pct>=70, isFull=avail===0;
+    const isFull=rc>=cap;
+    const isAlmost=!isFull&&rc>5;
 
     html+=`<div class="sess-slot${isCancelled?' cancelled-slot':''}">
       <div>
@@ -847,10 +861,12 @@ function renderPanel(date){
         <div class="slot-meta">${s.sessionType||'정규반'} · 최대 ${cap}명</div>
       </div>
       ${!isCancelled?`
-      <div class="slot-avail">
-        <div class="avail-num" style="color:${isFull?'var(--red)':isWarn?'var(--orange)':'var(--green)'}">${avail}</div>
-        <div class="avail-label">잔여석</div>
-        <div class="avail-bar"><div class="avail-fill${isWarn?' warn':''}${isFull?' full':''}" style="width:${pct}%"></div></div>
+      <div class="slot-avail" style="text-align:right;flex-shrink:0;">
+        ${isFull
+          ?'<span style="background:var(--redL);color:var(--red);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;">마감</span>'
+          :isAlmost
+          ?'<span style="background:var(--orangeL);color:var(--orange);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;">거의 마감</span>'
+          :'<span style="background:var(--blueL);color:var(--blue);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;">여유</span>'}
       </div>`:`<div style="font-size:12px;color:var(--muted);">취소</div>`}
     </div>`;
   });

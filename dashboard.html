@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#f0f5fc">
 <title>하이앤드 발리볼 | 회원 대시보드</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏐</text></svg>">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -225,7 +226,7 @@ textarea{resize:vertical;min-height:90px;}
   <nav class="tabs">
     <button class="tab active" onclick="showTab(0)">내 수강권</button>
     <button class="tab" onclick="showTab(1)">수업 예약</button>
-    <button class="tab" onclick="showTab(2)">수강권 신청</button>
+    <button class="tab" onclick="showTab(2)">추가 수강권 신청</button>
     <button class="tab" onclick="showTab(3)">설정</button>
   </nav>
 
@@ -264,10 +265,14 @@ textarea{resize:vertical;min-height:90px;}
     </div>
   </div>
 
-  <!-- TAB 2: 수강권 신청 -->
+  <!-- TAB 2: 추가 수강권 신청 -->
   <div class="page" id="page2">
     <div class="inner">
-      <div class="section-title">수강권 신청</div>
+      <div class="section-title">추가 수강권 신청</div>
+      <div class="alert alert-info" style="margin-bottom:14px;">
+        <span>📞</span>
+        <div><strong>수강료 문의</strong><br>전화: <a href="tel:010-4463-1177" style="color:var(--blue);font-weight:700;">010-4463-1177</a></div>
+      </div>
       <div class="bank-info">
         <div class="bank-row"><span class="bank-key">은행</span><span class="bank-val">카카오뱅크</span></div>
         <div class="bank-row"><span class="bank-key">계좌번호</span><span class="bank-val">3333-29-4463177</span></div>
@@ -496,15 +501,20 @@ function renderPassCard(){
     <div class="pass-card" style="margin-bottom:16px;">
       <div class="pass-type">${classLabel} 수업 · ${m.passType||'-'}회권</div>
       <div class="pass-name">${remain}회 남음</div>
-      <div class="pass-stats">
-        <div class="pass-stat"><div class="pass-stat-num">${total}</div><div class="pass-stat-lbl">구매 횟수</div></div>
-        <div class="pass-stat"><div class="pass-stat-num" style="${remain<=3?'color:#ffd9d9':''}">${remain}</div><div class="pass-stat-lbl">잔여</div></div>
-        <div class="pass-stat"><div class="pass-stat-num">${used}</div><div class="pass-stat-lbl">사용</div></div>
+      <div style="display:flex;gap:12px;margin-top:12px;">
+        <div class="pass-stat" style="flex:1;">
+          <div class="pass-stat-num" style="${remain<=3?'color:#ffd9d9':''}">${remain}</div>
+          <div class="pass-stat-lbl">잔여 횟수</div>
+        </div>
+        <div class="pass-stat" style="flex:1;">
+          <div class="pass-stat-num">${used}</div>
+          <div class="pass-stat-lbl">사용 횟수</div>
+        </div>
       </div>
       <div style="margin-top:12px;">
         <div class="progress-wrap"><div class="progress-fill ${fillClass}" style="width:${pct}%"></div></div>
         <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;opacity:.8;">
-          <span>${remain}회 잔여</span><span>${pct}%</span>
+          <span>잔여 ${remain}회</span><span>${pct}% 남음</span>
         </div>
       </div>
       <div class="pass-expiry">만료일 · ${exp}${isExpired?' ⚠️ 만료됨':''}</div>
@@ -514,20 +524,26 @@ function renderPassCard(){
 /* ── RESERVATION HISTORY ── */
 function renderReservHistory(){
   const my=Object.values(S.reservations)
-    .filter(r=>r.memberId===S.memberId)
+    .filter(r=>r.memberId===S.memberId&&r.type!=='walkin')
     .sort((a,b)=>b.date>a.date?1:b.date<a.date?-1:0);
   if(!my.length){
     $('reservHistory').innerHTML='<div class="empty"><div>예약 내역이 없습니다</div></div>';return;
   }
+  const td=todayStr();
   $('reservHistory').innerHTML=my.map(r=>{
     const isCancelled=r.status==='cancelled';
+    const isPast=r.date<td&&!isCancelled;
+    const label=isCancelled?'취소됨':isPast?'수강 완료':'예약완료';
+    const badgeCls=isCancelled?'badge-red':isPast?'badge-green':'badge-blue';
+    const icon=isCancelled?'✕':isPast?'✓':'📅';
+    const iconBg=isCancelled?'red':'blue';
     return `<div class="history-item">
-      <div class="history-icon ${isCancelled?'red':'blue'}">${isCancelled?'✕':'✓'}</div>
+      <div class="history-icon ${iconBg}">${icon}</div>
       <div class="history-info">
         <div class="history-title">${r.title||'-'}</div>
-        <div class="history-sub">${fmtDate(r.date)} · ${r.time||''}</div>
+        <div class="history-sub" style="font-weight:${isPast?'700':'400'};color:${isPast?'var(--green)':'var(--muted)'};">${fmtDate(r.date)} · ${r.time||''}</div>
       </div>
-      <span class="badge ${isCancelled?'badge-red':'badge-blue'}">${isCancelled?'취소됨':'예약완료'}</span>
+      <span class="badge ${badgeCls}">${label}</span>
     </div>`;
   }).join('');
 }
@@ -740,15 +756,18 @@ function renderPayHistory(){
   if(!my.length){$('payHistoryList').innerHTML='<div class="empty" style="padding:20px 0;">신청 내역이 없습니다</div>';return;}
   const statusMap={pending:'검토중',confirmed:'승인됨',rejected:'반려됨'};
   const badgeCls={pending:'badge-orange',confirmed:'badge-green',rejected:'badge-red'};
-  $('payHistoryList').innerHTML=my.map(r=>`
-    <div class="history-item">
+  $('payHistoryList').innerHTML=my.map(r=>{
+    const dateStr=(r.createdAt||'').slice(0,10);
+    const dateDisp=dateStr?fmtDate(dateStr):'-';
+    return `<div class="history-item">
       <div class="history-icon blue">💳</div>
       <div class="history-info">
         <div class="history-title">${r.classType==='private'?'프라이빗':'그룹'} ${r.passType}회권</div>
-        <div class="history-sub">${(r.createdAt||'').slice(0,10)}</div>
+        <div class="history-sub"><span style="color:var(--blue);font-weight:700;">${dateDisp} 신청</span></div>
       </div>
       <span class="badge ${badgeCls[r.status]||'badge-grey'}">${statusMap[r.status]||r.status}</span>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 /* ── MY INFO ── */
