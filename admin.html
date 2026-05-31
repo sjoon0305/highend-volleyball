@@ -179,6 +179,88 @@ textarea{resize:vertical;min-height:80px;}
   .grid2{grid-template-columns:1fr;}
   .grid3{grid-template-columns:1fr 1fr;}
 }
+
+/* FAB */
+.fab-wrap{position:fixed;bottom:24px;right:20px;z-index:200;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:10px;}
+.fab{width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:26px;cursor:pointer;box-shadow:0 4px 18px rgba(26,83,212,.38);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.fab:hover{background:var(--blueH);transform:scale(1.06);}
+.fab-menu{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:6px 0;min-width:170px;box-shadow:0 8px 30px rgba(26,83,212,.18);display:none;position:absolute;bottom:60px;right:0;}
+.fab-menu.show{display:block;}
+.fab-item{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;font-size:14px;font-weight:700;color:var(--text);transition:background .15s;}
+.fab-item:hover{background:var(--surface2);}
+
+/* STEPPER */
+.stepper{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;height:40px;}
+.stepper-btn{width:38px;height:100%;background:var(--surface2);border:none;cursor:pointer;font-size:20px;font-weight:700;color:var(--text);flex-shrink:0;transition:background .15s;}
+.stepper-btn:hover{background:var(--blueL);color:var(--blue);}
+.stepper-val{flex:1;text-align:center;font-size:15px;font-weight:700;border:none;background:var(--surface);padding:0;-moz-appearance:textfield;}
+.stepper-val::-webkit-outer-spin-button,.stepper-val::-webkit-inner-spin-button{-webkit-appearance:none;appearance:none;}
+
+/* DOW SELECTOR */
+.dow-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:6px 0;}
+.dow-btn{padding:8px 2px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);font-size:12px;font-weight:700;cursor:pointer;text-align:center;color:var(--sub);transition:all .15s;}
+.dow-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.dow-btn:first-child{color:#d32f2f;}
+.dow-btn:last-child{color:#1565c0;}
+.dow-btn:first-child.active,.dow-btn:last-child.active{background:inherit;}
+.dow-preview{max-height:80px;overflow-y:auto;background:var(--surface2);border-radius:8px;padding:8px;font-size:12px;color:var(--muted);line-height:1.7;margin-top:4px;}
+
+/* MEMBER MANAGEMENT OVERLAY */
+.overlay{position:fixed;inset:0;background:var(--bg);z-index:850;display:none;flex-direction:column;}
+.overlay.show{display:flex;}
+.overlay-hdr{background:var(--surface);border-bottom:1.5px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.overlay-title{font-size:15px;font-weight:900;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.overlay-search{padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--border);flex-shrink:0;}
+.overlay-body{flex:1;overflow-y:auto;}
+.member-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;}
+.member-row:active{background:var(--blueL);}
+.member-row.enrolled{background:#f0fdf4;}
+.member-row.pending-add{background:#eff6ff;}
+.member-row.pending-remove{background:#fff8f8;}
+.mr-check{width:26px;height:26px;border-radius:7px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:all .15s;}
+.member-row.enrolled .mr-check,.member-row.pending-add .mr-check{background:var(--green);border-color:var(--green);color:#fff;}
+.member-row.pending-remove .mr-check{background:var(--red);border-color:var(--red);color:#fff;}
+.mr-info{flex:1;min-width:0;}
+.mr-name{font-size:14px;font-weight:700;}
+.mr-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.ol-section-hdr{padding:8px 16px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;background:var(--surface2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;}
+.walkin-input-row{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;gap:8px;}
+.walkin-input-row input{flex:1;}
+
+/* MEMBER PROFILE FULLSCREEN */
+.profile-screen{position:fixed;inset:0;background:var(--bg);z-index:900;display:none;flex-direction:column;}
+.profile-screen.show{display:flex;}
+.profile-top{background:var(--surface);border-bottom:1.5px solid var(--border);padding:14px 16px;flex-shrink:0;display:flex;align-items:center;gap:10px;}
+.profile-hdr{background:var(--surface);padding:16px;flex-shrink:0;}
+.profile-name{font-size:24px;font-weight:900;color:var(--text);}
+.profile-contact{font-size:14px;color:var(--muted);margin-top:3px;}
+.profile-meta{font-size:12px;color:var(--muted);margin-top:6px;}
+.profile-tabs{display:flex;background:var(--surface);border-bottom:1.5px solid var(--border);flex-shrink:0;overflow-x:auto;scrollbar-width:none;}
+.profile-tab{flex:1;min-width:70px;padding:12px 6px;background:none;border:none;border-bottom:2.5px solid transparent;color:var(--muted);font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;white-space:nowrap;}
+.profile-tab.active{border-bottom-color:var(--blue);color:var(--blue);}
+.profile-body{flex:1;overflow-y:auto;padding:16px;}
+
+/* PASS CARD ITEM */
+.pci{border-radius:14px;padding:18px;margin-bottom:12px;color:#fff;position:relative;overflow:hidden;}
+.pci.group-pci{background:linear-gradient(135deg,var(--blue),var(--blueH));}
+.pci.priv-pci{background:linear-gradient(135deg,#7c3aed,#5b21b6);}
+.pci::before{content:'';position:absolute;top:-18px;right:-18px;width:80px;height:80px;background:rgba(255,255,255,.08);border-radius:50%;}
+.pci-type{font-size:11px;font-weight:700;opacity:.8;letter-spacing:.08em;}
+.pci-name{font-size:18px;font-weight:900;margin:4px 0 12px;}
+.pci-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.pci-box{background:rgba(255,255,255,.14);border-radius:8px;padding:8px;text-align:center;}
+.pci-num{font-size:22px;font-weight:900;line-height:1;}
+.pci-lbl{font-size:10px;opacity:.76;margin-top:2px;}
+.pci-exp{margin-top:12px;font-size:12px;opacity:.75;}
+
+/* BULK BOOKING */
+.dow-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.dow-filter-btn{padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;background:var(--surface);font-size:12px;font-weight:700;cursor:pointer;color:var(--sub);}
+.dow-filter-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.bulk-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+.bulk-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.bulk-row.selected .bulk-check{background:var(--blue);border-color:var(--blue);color:#fff;}
+.bulk-row.reserved .bulk-check{background:var(--green);border-color:var(--green);color:#fff;}
 </style>
 </head>
 <body>
@@ -230,7 +312,7 @@ textarea{resize:vertical;min-height:80px;}
   <div class="page active" id="page0">
     <div class="row">
       <div class="section-title" style="margin:0;">수업 스케줄</div>
-      <button class="btn btn-blue btn-sm" id="autoGenBtn" onclick="autoGenSaturdays(true)">토요일 자동생성</button>
+      <button class="btn btn-outline btn-sm" id="autoGenBtn" onclick="autoGenSaturdays(true)">토요 자동생성</button>
     </div>
     <div id="autoGenStatus" style="display:none;margin-bottom:10px;"></div>
     <div id="dbWarning" style="display:none;margin-bottom:10px;"></div>
@@ -386,6 +468,58 @@ textarea{resize:vertical;min-height:80px;}
   </div>
 </div>
 
+<!-- FAB (schedule tab) -->
+<div class="fab-wrap" id="fabWrap">
+  <div class="fab-menu" id="fabMenu">
+    <div class="fab-item" onclick="openCreateSessModal('private')">🟣 프라이빗 수업</div>
+    <div class="fab-item" onclick="openCreateSessModal('group')">🔵 그룹 수업</div>
+    <div class="fab-item" onclick="openCreateSessModal('other')">📌 기타 일정</div>
+  </div>
+  <button class="fab" id="fabBtn" onclick="toggleFabMenu()" title="수업 등록">+</button>
+</div>
+
+<!-- SESSION CREATE MODAL -->
+<div class="modal-bg" id="createSessModal">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-title" id="createSessTitle">수업 등록</div>
+    <div class="form-grid" id="createSessForm"></div>
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <button class="btn btn-blue" style="flex:1;" onclick="saveSessions()">등록하기</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="closeCreateSessModal()">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBER MANAGEMENT OVERLAY -->
+<div class="overlay" id="memberMgmtOverlay">
+  <div class="overlay-hdr">
+    <button class="btn btn-outline btn-sm" onclick="closeMemberMgmt()">← 뒤로</button>
+    <div class="overlay-title" id="mmTitle">수강 인원 관리</div>
+    <button class="btn btn-blue btn-sm" onclick="saveMemberMgmt()">저장</button>
+  </div>
+  <div class="overlay-search">
+    <input id="mmSearch" type="search" placeholder="이름 또는 전화번호 검색" oninput="renderMemberMgmt()" style="width:100%;margin:0;">
+  </div>
+  <div class="overlay-body" id="mmBody"></div>
+</div>
+
+<!-- MEMBER PROFILE SCREEN -->
+<div class="profile-screen" id="memberProfileScreen">
+  <div class="profile-top">
+    <button class="btn btn-outline btn-sm" onclick="closeMemberProfile()">← 뒤로</button>
+    <div style="flex:1;"></div>
+    <button class="btn btn-outline btn-sm" onclick="editProfileMember()">정보 수정</button>
+  </div>
+  <div class="profile-hdr" id="profileHdr"></div>
+  <div class="profile-tabs">
+    <button class="profile-tab active" onclick="showProfileTab(0)">기본 내역</button>
+    <button class="profile-tab" onclick="showProfileTab(1)">이용 내역</button>
+    <button class="profile-tab" onclick="showProfileTab(2)">결제 내역</button>
+    <button class="profile-tab" onclick="showProfileTab(3)">일괄 예약</button>
+  </div>
+  <div class="profile-body" id="profileBody"></div>
+</div>
+
 <!-- MEMBER MODAL -->
 <div class="modal-bg" id="memberModal">
   <div class="modal">
@@ -399,6 +533,7 @@ textarea{resize:vertical;min-height:80px;}
         <div><label class="label">생년월일</label><input id="mBirth" type="text" placeholder="예) 19900115"></div>
         <div><label class="label">초기 비밀번호</label><input id="mPw" type="text" placeholder="0000"></div>
       </div>
+      <div><label class="label">이메일 (선택)</label><input id="mEmail" type="email" placeholder="example@email.com"></div>
       <div class="grid2">
         <div>
           <label class="label">수업 유형</label>
@@ -492,7 +627,7 @@ const db=firebase.database();
 
 /* ── STATE ── */
 const S={
-  sessions:{},members:{},reservations:{},payRequests:{},attendance:{},passHistory:{},
+  sessions:{},members:{},reservations:{},payRequests:{},attendance:{},passHistory:{},passes:{},
   calYear:new Date().getFullYear(),calMonth:new Date().getMonth(),
   selectedDate:null,editingMemberId:null,dbOk:null
 };
@@ -568,6 +703,7 @@ async function initApp(){
   db.ref('paymentRequests').on('value',s=>{S.payRequests=s.val()||{};renderPayList();});
   db.ref('attendance').on('value',s=>{S.attendance=s.val()||{};renderSessPanel();});
   db.ref('passHistory').on('value',s=>{S.passHistory=s.val()||{};});
+  db.ref('passes').on('value',s=>{S.passes=s.val()||{};});
 
   // Test Firebase write permission
   await testConnection();
@@ -954,7 +1090,7 @@ function renderSessPanel(){
       if(isCancelled){
         return `<div class="att-member">
           <div>
-            <div style="font-size:14px;font-weight:700;${hasId?'cursor:pointer;color:var(--blue);text-decoration:underline;':''}" ${hasId?`onclick="showMemberInfo('${r.memberId}')"`:''}>${r.memberName||'-'}</div>
+            <div style="font-size:14px;font-weight:700;${hasId?'cursor:pointer;color:var(--blue);text-decoration:underline;':''}" ${hasId?`onclick="showMemberProfile('${r.memberId}')"`:''}>${r.memberName||'-'}</div>
             <div style="font-size:12px;color:var(--muted);">${r.memberPhone||''}</div>
           </div>
           <span class="badge ${r.status==='cancelled'?'badge-red':'badge-orange'}">${r.status==='cancelled'?'취소됨':'예약됨'}</span>
@@ -962,7 +1098,7 @@ function renderSessPanel(){
       }
       return `<div class="att-member${isAtt?' attended':''}">
         <div>
-          <div style="font-size:14px;font-weight:700;${hasId?'cursor:pointer;color:var(--blue);text-decoration:underline;':''}" ${hasId?`onclick="showMemberInfo('${r.memberId}')"`:''}>${r.memberName||'-'}</div>
+          <div style="font-size:14px;font-weight:700;${hasId?'cursor:pointer;color:var(--blue);text-decoration:underline;':''}" ${hasId?`onclick="showMemberProfile('${r.memberId}')"`:''}>${r.memberName||'-'}</div>
           <div style="font-size:12px;color:var(--muted);">${r.memberPhone||''}</div>
         </div>
         <div class="att-toggle${isAtt?' on':''}" onclick="toggleAttend('${sess.id}','${r.memberId}')" title="${isAtt?'출석':'미출석'}">${isAtt?'✓':'—'}</div>
@@ -1010,7 +1146,7 @@ function renderSessPanel(){
       ${attendeeHtml}
       <div class="sca-btns">
         ${!isCancelled?`
-          <button class="btn btn-orange btn-xs" onclick="openWalkinModal('${sess.id}')">+ 수강 인원 추가</button>
+          <button class="btn btn-blue btn-xs" onclick="openMemberMgmt('${sess.id}')">👥 수강 인원 관리</button>
           <button class="btn btn-danger btn-xs" onclick="cancelSession('${sess.id}')">수업 취소</button>`:''}
         <button class="btn btn-outline btn-xs" onclick="deleteSession('${sess.id}')">삭제</button>
       </div>
@@ -1168,26 +1304,27 @@ function renderMembers(){
   $('memberList').innerHTML=list.map(m=>{
     const reg=parseInt(m.regularSessions)||0;
     const priv=parseInt(m.privateSessions)||0;
-    const resCount=Object.values(S.reservations).filter(r=>r.memberId===m.id&&r.status==='confirmed').length;
-    const isExpired=m.expiryDate&&m.expiryDate<todayStr();
-    return `<div class="member-card">
+    const td=todayStr();
+    const futureRes=Object.values(S.reservations).filter(r=>r.memberId===m.id&&r.status==='confirmed'&&r.date>=td).length;
+    const isExpired=m.expiryDate&&m.expiryDate<td;
+    const expiryDays=m.expiryDate?Math.ceil((new Date(m.expiryDate)-new Date())/(86400000)):null;
+    return `<div class="member-card" onclick="showMemberProfile('${m.id}')" style="cursor:pointer;">
       <div class="mc-top">
         <div>
           <div class="mc-name">${m.name||'-'}${isExpired?'<span class="badge badge-red" style="margin-left:6px;font-size:10px;">만료</span>':''}</div>
-          <div class="mc-info">${m.phone||''} · ${m.birthdate||'-'}</div>
+          <div class="mc-info">${(m.phone||'').replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3')}${m.birthdate?' · '+m.birthdate:''}</div>
         </div>
-        <div style="display:flex;gap:5px;">
+        <div style="display:flex;gap:5px;" onclick="event.stopPropagation()">
           <button class="btn btn-outline btn-xs" onclick="openEditMember('${m.id}')">수정</button>
           <button class="btn btn-danger btn-xs" onclick="deleteMember('${m.id}','${(m.name||'').replace(/'/g,"\\'")}')">삭제</button>
         </div>
       </div>
       <div class="mc-chips">
-        <span class="mc-chip">${m.classType==='private'?'프라이빗':'그룹'}</span>
-        <span class="mc-chip">${m.passType||'-'}회권</span>
-        <span class="mc-chip" style="color:var(--green);">그룹 잔여 ${reg}회</span>
-        ${priv>0?`<span class="mc-chip" style="color:var(--blue);">프라이빗 ${priv}회</span>`:''}
-        <span class="mc-chip">만료 ${m.expiryDate||'-'}</span>
-        <span class="mc-chip" style="color:var(--orange);">예약 ${resCount}건</span>
+        ${reg>0?`<span class="mc-chip" style="color:var(--blue);">그룹 ${reg}회</span>`:''}
+        ${priv>0?`<span class="mc-chip" style="color:#7c3aed;">프라이빗 ${priv}회</span>`:''}
+        ${reg===0&&priv===0?'<span class="mc-chip" style="color:var(--muted);">잔여 없음</span>':''}
+        <span class="mc-chip">예약 ${futureRes}건</span>
+        ${expiryDays!==null?`<span class="mc-chip" style="color:${expiryDays<7?'var(--red)':expiryDays<30?'var(--orange)':'var(--muted)'};">${expiryDays<0?'만료됨':expiryDays+'일 남음'}</span>`:''}
       </div>
     </div>`;
   }).join('');
@@ -1196,15 +1333,10 @@ function renderMembers(){
 function openAddMember(){
   S.editingMemberId=null;
   $('memberModalTitle').textContent='회원 등록';
-  $('mName').value='';
-  $('mPhone').value='';
-  $('mBirth').value='';
-  $('mPw').value='0000';
-  $('mClass').value='group';
-  $('mPass').value='8';
-  $('mRegSess').value='0';
-  $('mPrivSess').value='0';
-  $('mExpiry').value='';
+  $('mName').value='';$('mPhone').value='';$('mBirth').value='';
+  $('mPw').value='0000';$('mEmail').value='';
+  $('mClass').value='group';$('mPass').value='8';
+  $('mRegSess').value='0';$('mPrivSess').value='0';$('mExpiry').value='';
   $('memberSaveErr').style.display='none';
   $('memberModal').classList.add('show');
   setTimeout(()=>$('mName').focus(),100);
@@ -1213,12 +1345,10 @@ function openEditMember(id){
   const m=S.members[id];if(!m)return;
   S.editingMemberId=id;
   $('memberModalTitle').textContent='회원 수정 — '+m.name;
-  $('mName').value=m.name||'';
-  $('mPhone').value=m.phone||'';
-  $('mBirth').value=m.birthdate||'';
-  $('mPw').value=m.password||'0000';
-  $('mClass').value=m.classType||'group';
-  $('mPass').value=m.passType||'8';
+  $('mName').value=m.name||'';$('mPhone').value=m.phone||'';
+  $('mBirth').value=m.birthdate||'';$('mPw').value=m.password||'0000';
+  $('mEmail').value=m.email||'';
+  $('mClass').value=m.classType||'group';$('mPass').value=m.passType||'8';
   $('mRegSess').value=m.regularSessions!=null?m.regularSessions:0;
   $('mPrivSess').value=m.privateSessions!=null?m.privateSessions:0;
   $('mExpiry').value=m.expiryDate||'';
@@ -1240,6 +1370,7 @@ async function saveMember(){
     name,
     phone:rawPhone,
     birthdate:$('mBirth').value||'',
+    email:($('mEmail').value||'').trim(),
     password:($('mPw').value||'0000').trim(),
     classType:$('mClass').value,
     passType:$('mPass').value,
@@ -1397,28 +1528,34 @@ async function approvePayment(id){
   const r=S.payRequests[id];if(!r)return;
   try{
     const updates={};
+    const now=new Date().toISOString();
     updates[`paymentRequests/${id}/status`]='confirmed';
-    updates[`paymentRequests/${id}/approvedAt`]=new Date().toISOString();
+    updates[`paymentRequests/${id}/approvedAt`]=now;
     const member=Object.values(S.members).find(m=>m.id===r.memberId);
+    const cnt=parseInt(r.passType)||0;
+    // Compute new expiry: max of existing or today + weeks based on passType
+    const weeksMap={'4':6,'8':10,'12':16};
+    const weeks=weeksMap[r.passType]||10;
+    const newExpiry=addDays(todayStr(),weeks*7);
     if(member){
-      const cnt=parseInt(r.passType)||0;
       if(r.classType==='private'){
         updates[`members/${r.memberId}/privateSessions`]=(parseInt(member.privateSessions)||0)+cnt;
       }else{
         updates[`members/${r.memberId}/regularSessions`]=(parseInt(member.regularSessions)||0)+cnt;
       }
+      // Extend expiry if new one is later
+      const curExp=member.expiryDate||'';
+      updates[`members/${r.memberId}/expiryDate`]=newExpiry>curExp?newExpiry:curExp;
       updates[`members/${r.memberId}/passType`]=r.passType;
       updates[`members/${r.memberId}/classType`]=r.classType;
     }
-    // passHistory 기록
     const hid=db.ref('passHistory').push().key;
     updates[`passHistory/${hid}`]={
       id:hid,memberId:r.memberId,memberName:r.memberName||'',
       type:'purchase',classType:r.classType,passType:r.passType,
-      sessions:parseInt(r.passType)||0,
-      note:`수강권 신청 승인 (${r.classType==='private'?'프라이빗':'그룹'} ${r.passType}회권)`,
-      payRequestId:id,
-      createdAt:new Date().toISOString(),adminAction:true
+      sessions:cnt,
+      note:`수강권 승인 · ${r.classType==='private'?'프라이빗':'그룹'} ${r.passType}회권 · 만료 ${newExpiry}`,
+      payRequestId:id,createdAt:now,adminAction:true
     };
     await db.ref().update(updates);
     toast('승인 완료. 수강권이 발급되었습니다.','ok');
@@ -1477,20 +1614,491 @@ async function exportMembersCsv(){
   }catch(e){toast('내보내기 실패: '+e.message,'err');}
 }
 
+/* ── FAB & SESSION CREATION ── */
+let _createType='group', _createDows=[];
+
+function toggleFabMenu(){
+  $('fabMenu').classList.toggle('show');
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#fabWrap'))$('fabMenu')?.classList.remove('show');
+});
+
+function addDays(s,n){const d=new Date(s);d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);}
+
+function getDates(start,end,dows){
+  if(!start||!end||end<start)return[];
+  const out=[];let c=new Date(start);const e=new Date(end);
+  while(c<=e&&out.length<400){
+    if(!dows.length||dows.includes(c.getDay()))out.push(c.toISOString().slice(0,10));
+    c.setDate(c.getDate()+1);
+  }
+  return out;
+}
+
+function openCreateSessModal(type){
+  _createType=type;_createDows=[];
+  $('fabMenu').classList.remove('show');
+  const titles={group:'그룹 수업 등록',private:'프라이빗 수업 등록',other:'기타 일정 등록'};
+  $('createSessTitle').textContent=titles[type]||'수업 등록';
+  const td=todayStr();
+  const durOpts=type==='private'
+    ?'<option value="60">60분</option><option value="80">80분</option>'
+    :'<option value="80">80분</option>';
+  const passF=type==='private'?'privateSessions':'regularSessions';
+  const memberOpts=Object.values(S.members).filter(m=>!m.isAdmin&&(parseInt(m[passF])||0)>0)
+    .sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'))
+    .map(m=>`<option value="${m.id}">${m.name} (잔여${parseInt(m[passF])||0}회)</option>`).join('');
+  $('createSessForm').innerHTML=`
+    <div class="grid2">
+      <div><label class="label">시작일 *</label><input type="date" id="csStart" value="${td}" oninput="updateSessPreview()"></div>
+      <div><label class="label">종료일 *</label><input type="date" id="csEnd" value="${td}" oninput="updateSessPreview()"></div>
+    </div>
+    <div class="grid2">
+      <div><label class="label">시작 시간 *</label><input type="time" id="csTime" value="12:00"></div>
+      <div><label class="label">수업 시간</label><select id="csDur">${durOpts}</select></div>
+    </div>
+    ${type!=='other'?`<div>
+      <label class="label">반복 요일 (미선택 시 전체)</label>
+      <div class="dow-grid" id="dowGrid"></div>
+      <div class="dow-preview" id="sessPreview">날짜를 선택하면 예정 수업이 표시됩니다.</div>
+    </div>
+    <div>
+      <label class="label">수강 회원 미리 등록 (선택 · 복수선택 가능)</label>
+      <select id="csMembers" multiple style="height:80px;">${memberOpts||'<option disabled>수강권 보유 회원 없음</option>'}</select>
+    </div>`:''}
+    <div><label class="label">수업명 (미입력 시 자동)</label><input type="text" id="csTitle" placeholder="예) 토요 그룹 수업"></div>
+    <div>
+      <label class="label">최대 수강 인원</label>
+      <div class="stepper"><button class="stepper-btn" onclick="stepVal('csCap',-1)">−</button>
+        <input class="stepper-val" type="number" id="csCap" value="${type==='private'?1:16}" min="1" max="50" readonly>
+        <button class="stepper-btn" onclick="stepVal('csCap',1)">+</button></div>
+    </div>
+    ${type==='group'?`<div>
+      <label class="label">최소 수강 인원</label>
+      <div class="stepper"><button class="stepper-btn" onclick="stepVal('csMin',-1)">−</button>
+        <input class="stepper-val" type="number" id="csMin" value="0" min="0" max="50" readonly>
+        <button class="stepper-btn" onclick="stepVal('csMin',1)">+</button></div>
+    </div>`:''}`;
+  if(type!=='other'){renderDowGrid();updateSessPreview();}
+  $('createSessModal').classList.add('show');
+}
+
+function closeCreateSessModal(){$('createSessModal').classList.remove('show');}
+
+function stepVal(id,dir){
+  const el=$(id);const v=parseInt(el.value)||0;
+  el.value=Math.max(parseInt(el.min)||0,Math.min(parseInt(el.max)||99,v+dir));
+}
+
+function renderDowGrid(){
+  const labels=['일','월','화','수','목','금','토'];
+  $('dowGrid').innerHTML=labels.map((d,i)=>
+    `<button class="dow-btn${_createDows.includes(i)?' active':''}" onclick="toggleDow(${i})">${d}</button>`
+  ).join('');
+}
+
+function toggleDow(i){
+  const idx=_createDows.indexOf(i);
+  if(idx>=0)_createDows.splice(idx,1);else _createDows.push(i);
+  renderDowGrid();updateSessPreview();
+}
+
+function updateSessPreview(){
+  const el=$('sessPreview');if(!el)return;
+  const s=$('csStart')?.value,e=$('csEnd')?.value;
+  if(!s||!e){el.textContent='날짜를 선택하세요';return;}
+  if(e<s){el.textContent='⚠️ 종료일이 시작일보다 빠릅니다';return;}
+  const dates=getDates(s,e,_createDows);
+  el.innerHTML=dates.length
+    ?`<strong>${dates.length}개 수업 생성 예정</strong> — ${dates.slice(0,12).join(', ')}${dates.length>12?` 외 ${dates.length-12}개`:''}`
+    :'선택된 날짜가 없습니다.';
+}
+
+async function saveSessions(){
+  const start=$('csStart')?.value,end=$('csEnd')?.value,time=$('csTime')?.value;
+  if(!start||!time){toast('날짜와 시간을 입력해주세요.','err');return;}
+  if(end&&end<start){toast('종료일을 확인해주세요.','err');return;}
+  const dur=parseInt($('csDur')?.value)||80;
+  const cap=parseInt($('csCap')?.value)||(_createType==='private'?1:16);
+  const minCap=parseInt($('csMin')?.value)||0;
+  const titleInput=($('csTitle')?.value||'').trim();
+  const type=_createType;
+  const dates=type==='other'?[start]:getDates(start,end||start,_createDows);
+  if(!dates.length){toast('생성할 날짜가 없습니다.','err');return;}
+  if(dates.length>120&&!confirm(`${dates.length}개 수업을 생성합니다. 계속하시겠습니까?`))return;
+  const selMemberIds=$('csMembers')?Array.from($('csMembers').selectedOptions).map(o=>o.value):[];
+  const passF=type==='private'?'privateSessions':'regularSessions';
+  try{
+    const updates={};
+    const sessArr=[];
+    for(const date of dates){
+      const typeLabel=type==='private'?'프라이빗':type==='group'?'그룹':'기타';
+      const id=db.ref('sessions').push().key;
+      sessArr.push({id,date});
+      updates[`sessions/${id}`]={id,date,time,title:titleInput||`${typeLabel} 수업 (${time})`,
+        sessionType:type,maxCapacity:cap,minCapacity:minCap,duration:dur,createdAt:new Date().toISOString()};
+    }
+    const memberRemain={};
+    selMemberIds.forEach(mid=>{const m=S.members[mid];if(m)memberRemain[mid]=parseInt(m[passF])||0;});
+    for(const {id:sid,date} of sessArr){
+      for(const mid of selMemberIds){
+        if((memberRemain[mid]||0)<=0)continue;
+        const m=S.members[mid];if(!m)continue;
+        if(m.expiryDate&&m.expiryDate<date)continue;
+        const rId=db.ref('reservations').push().key;
+        updates[`reservations/${rId}`]={id:rId,memberId:mid,sessionId:sid,
+          memberName:m.name,memberPhone:m.phone||'',date,time,
+          title:updates[`sessions/${sid}`].title,status:'confirmed',
+          addedByAdmin:true,createdAt:new Date().toISOString()};
+        memberRemain[mid]--;
+      }
+    }
+    selMemberIds.forEach(mid=>{if(memberRemain[mid]!=null)updates[`members/${mid}/${passF}`]=memberRemain[mid];});
+    await db.ref().update(updates);
+    closeCreateSessModal();
+    toast(`${dates.length}개 수업이 등록되었습니다.`,'ok');
+  }catch(e){toast('등록 실패: '+e.message,'err');}
+}
+
+/* ── MEMBER MANAGEMENT OVERLAY ── */
+let _mmSessId=null,_mmPending={};
+
+function openMemberMgmt(sessId){
+  _mmSessId=sessId;_mmPending={};
+  const sess=S.sessions[sessId];
+  $('mmTitle').textContent=sess?`${sess.date} ${sess.time} — 수강 인원 관리`:'수강 인원 관리';
+  $('mmSearch').value='';
+  renderMemberMgmt();
+  $('memberMgmtOverlay').classList.add('show');
+}
+function closeMemberMgmt(){$('memberMgmtOverlay').classList.remove('show');_mmSessId=null;_mmPending={};}
+
+function renderMemberMgmt(){
+  const sess=S.sessions[_mmSessId];if(!sess){closeMemberMgmt();return;}
+  const q=($('mmSearch').value||'').toLowerCase();
+  const sessType=sess.sessionType||'group';
+  const passF=sessType==='private'?'privateSessions':'regularSessions';
+  const enrolled=Object.values(S.reservations).filter(r=>r.sessionId===_mmSessId&&r.status==='confirmed'&&r.type!=='walkin');
+  const enrolledIds=new Set(enrolled.map(r=>r.memberId));
+  const walkins=Object.values(S.reservations).filter(r=>r.sessionId===_mmSessId&&r.type==='walkin'&&r.status!=='walkin_deleted');
+  const all=Object.values(S.members).filter(m=>!m.isAdmin&&(!q||(m.name||'').toLowerCase().includes(q)||(m.phone||'').includes(q)));
+  const td=todayStr();
+
+  const daysLeft=m=>{if(!m.expiryDate)return null;return Math.ceil((new Date(m.expiryDate)-new Date())/86400000);};
+  const fmtRemain=m=>{const r=parseInt(m[passF])||0;const d=daysLeft(m);return `잔여 ${r}회${d!==null?' · '+d+'일남':''}`; };
+
+  const rowHtml=(m,isEnrolled)=>{
+    const chg=_mmPending[m.id];
+    const effEnrolled=isEnrolled?chg!=='remove':chg==='add';
+    let cls='member-row';
+    if(isEnrolled&&chg==='remove')cls+=' pending-remove';
+    else if(!isEnrolled&&chg==='add')cls+=' pending-add';
+    else if(effEnrolled)cls+=' enrolled';
+    const checkIcon=chg==='remove'?'✕':effEnrolled?'✓':'';
+    const remain=parseInt(m[passF])||0;
+    return `<div class="${cls}" onclick="toggleMemberReserv('${m.id}')">
+      <div class="mr-check">${checkIcon}</div>
+      <div class="mr-info">
+        <div class="mr-name">${m.name}</div>
+        <div class="mr-sub">${(m.phone||'').replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3')} · ${fmtRemain(m)}</div>
+      </div>
+      ${!remain&&!isEnrolled?'<span class="badge badge-grey" style="font-size:10px;">수강권없음</span>':''}
+    </div>`;
+  };
+
+  const enrolledMembers=all.filter(m=>enrolledIds.has(m.id));
+  const availMembers=all.filter(m=>!enrolledIds.has(m.id)&&(parseInt(m[passF])||0)>0&&(!m.expiryDate||m.expiryDate>=sess.date));
+  const otherMembers=q?all.filter(m=>!enrolledIds.has(m.id)&&((parseInt(m[passF])||0)===0||(m.expiryDate&&m.expiryDate<sess.date))):[];
+
+  let html='';
+  if(enrolledMembers.length){
+    html+=`<div class="ol-section-hdr">예약된 회원 (${enrolledMembers.length}명)</div>`;
+    html+=enrolledMembers.map(m=>rowHtml(m,true)).join('');
+  }
+  if(availMembers.length){
+    html+=`<div class="ol-section-hdr">수강 가능 회원</div>`;
+    html+=availMembers.map(m=>rowHtml(m,false)).join('');
+  }
+  if(otherMembers.length){
+    html+=`<div class="ol-section-hdr">수강권 없음</div>`;
+    html+=otherMembers.map(m=>rowHtml(m,false)).join('');
+  }
+  if(walkins.length){
+    html+=`<div class="ol-section-hdr">원데이 (${walkins.length}명)</div>`;
+    html+=walkins.map(r=>`<div class="member-row" style="background:var(--orangeL);">
+      <div class="mr-check" style="background:var(--orange);border-color:var(--orange);color:#fff;font-size:11px;">원데이</div>
+      <div class="mr-info"><div class="mr-name">${r.memberName||'-'}</div></div>
+      <button class="btn btn-danger btn-xs" onclick="event.stopPropagation();removeWalkin('${r.id}')">✕</button>
+    </div>`).join('');
+  }
+  html+=`<div class="ol-section-hdr">원데이 직접 추가</div>
+    <div class="walkin-input-row">
+      <input type="text" id="mmWalkinName" placeholder="이름 입력">
+      <button class="btn btn-orange btn-sm" onclick="addWalkinMgmt()">추가</button>
+    </div>`;
+  if(!enrolledMembers.length&&!availMembers.length&&!walkins.length&&!q)
+    html=`<div class="empty" style="padding:30px 0;">아직 예약된 회원이 없습니다</div>`+html;
+  $('mmBody').innerHTML=html;
+}
+
+function toggleMemberReserv(mid){
+  const sess=S.sessions[_mmSessId];if(!sess)return;
+  const passF=(sess.sessionType||'group')==='private'?'privateSessions':'regularSessions';
+  const m=S.members[mid];if(!m)return;
+  const isEnrolled=Object.values(S.reservations).some(r=>r.sessionId===_mmSessId&&r.memberId===mid&&r.status==='confirmed');
+  const cur=_mmPending[mid];
+  if(isEnrolled){_mmPending[mid]=cur==='remove'?undefined:'remove';}
+  else{
+    if(cur==='add'){delete _mmPending[mid];}
+    else{
+      if(!(parseInt(m[passF])||0)){toast(`${m.name}의 잔여 수강권이 없습니다.`,'err');return;}
+      _mmPending[mid]='add';
+    }
+  }
+  if(_mmPending[mid]===undefined)delete _mmPending[mid];
+  renderMemberMgmt();
+}
+
+async function saveMemberMgmt(){
+  const sess=S.sessions[_mmSessId];if(!sess)return;
+  const passF=(sess.sessionType||'group')==='private'?'privateSessions':'regularSessions';
+  const entries=Object.entries(_mmPending);
+  if(!entries.length){closeMemberMgmt();return;}
+  const td=todayStr();
+  try{
+    const updates={};
+    for(const[mid,action] of entries){
+      const m=S.members[mid];if(!m)continue;
+      if(action==='add'){
+        const cnt=Object.values(S.reservations).filter(r=>r.sessionId===_mmSessId&&r.status==='confirmed'&&r.type!=='walkin').length;
+        if(cnt>=(sess.maxCapacity||16)){toast(`${m.name}: 정원 초과.`,'err');continue;}
+        const cur=parseInt(m[passF])||0;
+        if(cur<=0){toast(`${m.name}: 수강권 없음.`,'err');continue;}
+        const rId=db.ref('reservations').push().key;
+        updates[`reservations/${rId}`]={id:rId,memberId:mid,sessionId:_mmSessId,memberName:m.name,memberPhone:m.phone||'',
+          date:sess.date,time:sess.time,title:sess.title,status:'confirmed',addedByAdmin:true,createdAt:new Date().toISOString()};
+        updates[`members/${mid}/${passF}`]=cur-1;
+      }else if(action==='remove'){
+        const res=Object.values(S.reservations).find(r=>r.sessionId===_mmSessId&&r.memberId===mid&&r.status==='confirmed');
+        if(!res)continue;
+        updates[`reservations/${res.id}/status`]='cancelled';
+        if(sess.date>=td){const cur=parseInt(m[passF])||0;updates[`members/${mid}/${passF}`]=cur+1;}
+      }
+    }
+    await db.ref().update(updates);
+    toast('저장 완료.','ok');
+    closeMemberMgmt();
+  }catch(e){toast('저장 실패: '+e.message,'err');}
+}
+
+async function addWalkinMgmt(){
+  const name=($('mmWalkinName')?.value||'').trim();if(!name){toast('이름을 입력해주세요.','err');return;}
+  const sess=S.sessions[_mmSessId];if(!sess)return;
+  try{
+    const id=db.ref('reservations').push().key;
+    await db.ref(`reservations/${id}`).set({id,sessionId:_mmSessId,date:sess.date,time:sess.time,title:sess.title,
+      memberId:null,memberName:name,memberPhone:'',type:'walkin',status:'confirmed',createdAt:new Date().toISOString()});
+    $('mmWalkinName').value='';toast(`${name} 원데이 추가 완료`,'ok');
+  }catch(e){toast('추가 실패: '+e.message,'err');}
+}
+
+/* ── MEMBER PROFILE SCREEN ── */
+let _profileId=null,_profileTabIdx=0,_bulkType='group',_bulkDow=null,_bulkSel=new Set();
+
+function showMemberProfile(mid){
+  _profileId=mid;_profileTabIdx=0;_bulkSel=new Set();
+  const m=S.members[mid];if(!m){toast('회원을 찾을 수 없습니다.','err');return;}
+  renderProfileHdr();showProfileTab(0);
+  $('memberProfileScreen').classList.add('show');
+}
+function closeMemberProfile(){$('memberProfileScreen').classList.remove('show');_profileId=null;}
+function editProfileMember(){if(_profileId)openEditMember(_profileId);}
+
+function renderProfileHdr(){
+  const m=S.members[_profileId];if(!m)return;
+  const regDate=(m.createdAt||'').slice(0,10);
+  $('profileHdr').innerHTML=`
+    <div class="profile-name">${m.name}</div>
+    <div class="profile-contact">${(m.phone||'').replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3')}${m.email?' · '+m.email:''}</div>
+    ${regDate?`<div class="profile-meta">등록일: ${regDate}</div>`:''}`;
+}
+
+function showProfileTab(idx){
+  _profileTabIdx=idx;
+  document.querySelectorAll('.profile-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  if(idx===0)renderProfileBasic();
+  else if(idx===1)renderProfileUsage();
+  else if(idx===2)renderProfilePayments();
+  else renderProfileBulkBook();
+}
+
+function renderProfileBasic(){
+  const m=S.members[_profileId];if(!m){$('profileBody').innerHTML='';return;}
+  const td=todayStr();
+  const grp=parseInt(m.regularSessions)||0,prv=parseInt(m.privateSessions)||0;
+  const futureRes=Object.values(S.reservations).filter(r=>r.memberId===_profileId&&r.status==='confirmed'&&r.date>td);
+  const futGrp=futureRes.filter(r=>{const s=S.sessions[r.sessionId];return !s||s.sessionType!=='private';}).length;
+  const futPrv=futureRes.filter(r=>{const s=S.sessions[r.sessionId];return s&&s.sessionType==='private';}).length;
+  const isExp=m.expiryDate&&m.expiryDate<td;
+  const myHist=Object.values(S.passHistory||{}).filter(h=>h.memberId===_profileId).sort((a,b)=>b.createdAt>a.createdAt?1:-1);
+  const tCol={purchase:'var(--blue)',admin_add:'#22c55e',admin_deduct:'var(--red)'};
+  const tLbl={purchase:'수강권 결제',admin_add:'관리자 추가',admin_deduct:'관리자 차감'};
+  let cards='';
+  if(grp>0){cards+=`<div class="pci group-pci">
+    <div class="pci-type">그룹 수업 수강권</div><div class="pci-name">그룹 수강권</div>
+    <div class="pci-row">
+      <div class="pci-box"><div class="pci-num">${grp}</div><div class="pci-lbl">잔여</div></div>
+      <div class="pci-box"><div class="pci-num">${Math.max(0,grp-futGrp)}</div><div class="pci-lbl">예약가능</div></div>
+      <div class="pci-box"><div class="pci-num">${futGrp}</div><div class="pci-lbl">예약중</div></div>
+    </div>
+    ${m.expiryDate?`<div class="pci-exp">유효기간 ~${m.expiryDate}${isExp?' ⚠️':''}</div>`:''}
+  </div>`;}
+  if(prv>0){cards+=`<div class="pci priv-pci">
+    <div class="pci-type">프라이빗 수업 수강권</div><div class="pci-name">프라이빗 수강권</div>
+    <div class="pci-row">
+      <div class="pci-box"><div class="pci-num">${prv}</div><div class="pci-lbl">잔여</div></div>
+      <div class="pci-box"><div class="pci-num">${Math.max(0,prv-futPrv)}</div><div class="pci-lbl">예약가능</div></div>
+      <div class="pci-box"><div class="pci-num">${futPrv}</div><div class="pci-lbl">예약중</div></div>
+    </div>
+    ${m.expiryDate?`<div class="pci-exp">유효기간 ~${m.expiryDate}${isExp?' ⚠️':''}</div>`:''}
+  </div>`;}
+  if(!cards)cards=`<div class="alert alert-warn"><span>📋</span><span>잔여 수강권이 없습니다.</span></div>`;
+  const histHtml=myHist.length?myHist.map(h=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:${tCol[h.type]||'var(--text)'};">${tLbl[h.type]||h.type}</div>
+        <div style="font-size:11px;color:var(--muted);">${h.note||''}${h.classType?' · '+(h.classType==='private'?'프라이빗':'그룹'):''}</div>
+        <div style="font-size:11px;color:var(--muted);">${(h.createdAt||'').slice(0,16).replace('T',' ')}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span style="font-size:15px;font-weight:700;color:${tCol[h.type]||'var(--text)'};">${(h.sessions||0)>=0?'+':''}${h.sessions||0}회</span>
+        <button onclick="deletePassHistory('${h.id}')" style="border:1px solid var(--border);background:none;border-radius:4px;padding:2px 7px;font-size:11px;color:var(--muted);cursor:pointer;">삭제</button>
+      </div>
+    </div>`).join(''):'<div style="font-size:13px;color:var(--muted);padding:8px 0;">내역 없음</div>';
+  $('profileBody').innerHTML=cards+`<div style="font-size:11px;font-weight:700;color:var(--muted);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.06em;">수강권 변경 내역</div>${histHtml}`;
+}
+
+function renderProfileUsage(){
+  const td=todayStr();
+  const used=Object.values(S.reservations)
+    .filter(r=>r.memberId===_profileId&&r.type!=='walkin'&&r.status==='confirmed'&&r.date<=td)
+    .sort((a,b)=>b.date>a.date?1:-1);
+  $('profileBody').innerHTML=used.length?used.map(r=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
+      <div><div style="font-size:14px;font-weight:700;">${r.date} ${r.time}</div>
+      <div style="font-size:12px;color:var(--muted);">${r.title||'-'}</div></div>
+      <span class="badge badge-green">수강완료</span>
+    </div>`).join(''):'<div class="empty">이용 내역이 없습니다</div>';
+}
+
+function renderProfilePayments(){
+  const my=Object.values(S.payRequests).filter(r=>r.memberId===_profileId).sort((a,b)=>(b.createdAt||'')>(a.createdAt||'')?1:-1);
+  const sMap={pending:'검토중',confirmed:'승인됨',rejected:'반려됨'};
+  const bCls={pending:'badge-orange',confirmed:'badge-green',rejected:'badge-red'};
+  $('profileBody').innerHTML=my.length?my.map(r=>`
+    <div style="padding:10px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div style="font-size:14px;font-weight:700;">${r.classType==='private'?'프라이빗':'그룹'} ${r.passType}회권</div>
+          <div style="font-size:12px;color:var(--muted);">${(r.createdAt||'').slice(0,10)} 신청${r.note?' · '+r.note:''}</div>
+        </div>
+        <span class="badge ${bCls[r.status]||'badge-grey'}">${sMap[r.status]||r.status}</span>
+      </div>
+    </div>`).join(''):'<div class="empty">결제 내역이 없습니다</div>';
+}
+
+function renderProfileBulkBook(){
+  const m=S.members[_profileId];if(!m){$('profileBody').innerHTML='';return;}
+  const td=todayStr();
+  const grp=parseInt(m.regularSessions)||0,prv=parseInt(m.privateSessions)||0;
+  const remain=_bulkType==='private'?prv:grp;
+  const expiry=m.expiryDate||addDays(td,365);
+  const dows=['일','월','화','수','목','금','토'];
+  const sessions=Object.values(S.sessions).filter(s=>{
+    if(s.date<td||s.date>expiry||s.status==='cancelled')return false;
+    return (s.sessionType||'group')===_bulkType;
+  }).sort((a,b)=>a.date>b.date?1:a.date<b.date?-1:(a.time||'')>(b.time||'')?1:-1);
+  const myResIds=new Set(Object.values(S.reservations).filter(r=>r.memberId===_profileId&&r.status==='confirmed').map(r=>r.sessionId));
+  const filtered=_bulkDow!==null?sessions.filter(s=>{const[y,mo,d]=s.date.split('-').map(Number);return new Date(y,mo-1,d).getDay()===_bulkDow;}):sessions;
+  const selCount=_bulkSel.size;
+  $('profileBody').innerHTML=`
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <button class="btn btn-sm ${_bulkType==='group'?'btn-blue':'btn-outline'}" onclick="setBulkType('group')">그룹 (${grp}회)</button>
+      <button class="btn btn-sm ${_bulkType==='private'?'btn-blue':'btn-outline'}" onclick="setBulkType('private')">프라이빗 (${prv}회)</button>
+    </div>
+    ${remain<=0?'<div class="alert alert-warn"><span>⚠️</span><span>잔여 수강권이 없습니다.</span></div>':''}
+    <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">유효기간 ~${expiry} · 잔여 ${remain}회</div>
+    <div class="dow-filter-row">
+      <button class="dow-filter-btn ${_bulkDow===null?'active':''}" onclick="setBulkDow(null)">전체</button>
+      ${dows.map((d,i)=>`<button class="dow-filter-btn ${_bulkDow===i?'active':''}" onclick="setBulkDow(${i})">${d}</button>`).join('')}
+    </div>
+    ${selCount>0?`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span style="font-size:13px;color:var(--muted);">${selCount}개 선택됨</span>
+      <button class="btn btn-blue btn-sm" onclick="confirmBulkBook()">${selCount}개 일괄 예약</button>
+    </div>`:''}
+    ${filtered.map(s=>{
+      const isRes=myResIds.has(s.id);const isSel=_bulkSel.has(s.id);
+      const[y,mo,d]=s.date.split('-').map(Number);const dow=dows[new Date(y,mo-1,d).getDay()];
+      const cnt=Object.values(S.reservations).filter(r=>r.sessionId===s.id&&r.status==='confirmed').length;
+      const full=cnt>=(s.maxCapacity||16);
+      return `<div class="bulk-row ${isRes?'reserved':isSel?'selected':''}" onclick="toggleBulk('${s.id}',${isRes},${full})">
+        <div class="bulk-check">${isRes||isSel?'✓':''}</div>
+        <div style="flex:1;"><div style="font-size:14px;font-weight:700;">${s.date} (${dow}) ${s.time}</div>
+        <div style="font-size:12px;color:var(--muted);">${s.title||''} · ${cnt}/${s.maxCapacity||16}명</div></div>
+        ${isRes?'<span class="badge badge-green">예약됨</span>':full?'<span class="badge badge-red">마감</span>':''}
+      </div>`;
+    }).join('')||'<div class="empty" style="padding:30px 0;">해당 기간에 수업이 없습니다</div>'}`;
+}
+
+function setBulkType(t){_bulkType=t;_bulkSel=new Set();renderProfileBulkBook();}
+function setBulkDow(i){_bulkDow=i;renderProfileBulkBook();}
+function toggleBulk(sid,isRes,full){
+  if(isRes)return;if(full&&!_bulkSel.has(sid))return;
+  _bulkSel.has(sid)?_bulkSel.delete(sid):_bulkSel.add(sid);
+  renderProfileBulkBook();
+}
+async function confirmBulkBook(){
+  const m=S.members[_profileId];if(!m||!_bulkSel.size)return;
+  const passF=_bulkType==='private'?'privateSessions':'regularSessions';
+  let remain=parseInt(m[passF])||0;
+  if(!remain){toast('잔여 수강권이 없습니다.','err');return;}
+  if(_bulkSel.size>remain){toast(`잔여(${remain}회)보다 많습니다.`,'err');return;}
+  if(!confirm(`${_bulkSel.size}개 수업을 일괄 예약하시겠습니까?`))return;
+  try{
+    const updates={};
+    for(const sid of _bulkSel){
+      const sess=S.sessions[sid];if(!sess)continue;
+      const dup=Object.values(S.reservations).find(r=>r.sessionId===sid&&r.memberId===_profileId&&r.status==='confirmed');
+      if(dup)continue;
+      const rId=db.ref('reservations').push().key;
+      updates[`reservations/${rId}`]={id:rId,memberId:_profileId,sessionId:sid,memberName:m.name,memberPhone:m.phone||'',
+        date:sess.date,time:sess.time,title:sess.title,status:'confirmed',addedByAdmin:true,createdAt:new Date().toISOString()};
+      remain--;
+    }
+    updates[`members/${_profileId}/${passF}`]=remain;
+    await db.ref().update(updates);
+    _bulkSel=new Set();toast('일괄 예약 완료.','ok');renderProfileBulkBook();
+  }catch(e){toast('예약 실패: '+e.message,'err');}
+}
+
 /* ── TABS ── */
 function showTab(idx){
   document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===idx));
   document.querySelectorAll('#tabBar .tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
   if(idx===0){renderCal();renderSessPanel();}
+  const fab=$('fabWrap');
+  if(fab)fab.style.display=idx===0?'flex':'none';
 }
 
 /* ── MODAL CLOSE ON BACKDROP ── */
-['memberModal','walkinModal','memberInfoModal'].forEach(id=>{
+['memberModal','walkinModal','memberInfoModal','createSessModal'].forEach(id=>{
   document.getElementById(id)?.addEventListener('click',e=>{
     if(e.target===document.getElementById(id)){
       if(id==='memberModal')closeMemberModal();
       else if(id==='walkinModal')closeWalkinModal();
       else if(id==='memberInfoModal')closeMemberInfoModal();
+      else if(id==='createSessModal')closeCreateSessModal();
     }
   });
 });
