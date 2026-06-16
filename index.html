@@ -380,6 +380,72 @@ footer{
 .float-btn:hover{transform:scale(1.1);}
 .fb-phone{background:var(--blue);}
 .fb-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);}
+.fb-kakao{background:#FEE500;}
+
+/* ── COACH CAREER CHIPS ── */
+.coach-img-col{position:relative;}
+.coach-career-chips{
+  position:absolute;bottom:24px;left:0;
+  display:flex;flex-direction:column;gap:7px;
+  pointer-events:none;
+}
+.career-chip{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.93);backdrop-filter:blur(8px);
+  border-left:3px solid var(--blue);
+  padding:7px 16px 7px 12px;border-radius:0 10px 10px 0;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
+  transform:translateX(-110%);opacity:0;
+  transition:transform .55s cubic-bezier(.22,.9,.38,1),opacity .55s;
+}
+.career-chip.chip-in{transform:translateX(0);opacity:1;}
+.chip-yr{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.1em;white-space:nowrap;}
+.chip-txt{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;}
+
+/* ── VIDEO / REELS ── */
+.reels-section{margin-top:48px;}
+.reels-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.reels-title{font-size:16px;font-weight:800;color:var(--text);}
+.reels-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.reel-item{
+  aspect-ratio:9/16;overflow:hidden;border-radius:10px;
+  background:#111;position:relative;cursor:pointer;
+}
+.reel-item video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;}
+.reel-play-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.25);transition:opacity .25s;
+}
+.reel-play-overlay svg{width:44px;height:44px;fill:#fff;opacity:.85;}
+.reel-item.playing .reel-play-overlay{opacity:0;}
+
+/* ── GALLERY ACTIONS ── */
+.gal-actions{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap;}
+
+/* ── FOOTER SNS ── */
+.footer-sns{display:flex;gap:8px;align-items:center;}
+.sns-btn{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;text-decoration:none;
+  transition:transform .2s,opacity .2s;opacity:.75;
+}
+.sns-btn:hover{transform:scale(1.15);opacity:1;}
+.sns-phone{background:var(--blue);}
+.sns-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);}
+.sns-kakao{background:#FEE500;}
+.sns-yt{background:#FF0000;}
+
+/* ── CONTACT ICONS ── */
+.contact-item-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%;font-size:14px;
+  margin-right:2px;flex-shrink:0;
+}
+.ci-phone{background:var(--blue);color:#fff;}
+.ci-kakao{background:#FEE500;color:#3a1d1d;}
+.ci-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);color:#fff;}
+.ci-naver{background:#03C75A;color:#fff;font-size:11px;font-weight:800;}
 
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
@@ -406,8 +472,12 @@ footer{
   .hero-btns{flex-direction:column;}
   .btn-primary,.btn-secondary{width:100%;justify-content:center;}
   .insta-grid{gap:2px;}
+  .reels-grid{grid-template-columns:1fr;gap:10px;}
+  .reel-item{aspect-ratio:9/16;max-height:400px;}
   .contact-strip{flex-direction:column;align-items:center;gap:12px;}
-  .footer-inner{flex-direction:column;text-align:center;}
+  .footer-inner{flex-direction:column;gap:16px;}
+  .footer-sns{justify-content:center;}
+  .gal-actions{flex-direction:column;align-items:center;}
 }
 @media(max-width:400px){
   .curr-cards{grid-template-columns:1fr;}
@@ -440,14 +510,13 @@ footer{
     </div>
   </div>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#schedule" onclick="closeMnu()">📅 수업일정 (비로그인 확인 가능)</a>
-    <a href="#coach" onclick="closeMnu()">👤 코치소개</a>
-    <a href="#curriculum" onclick="closeMnu()">📚 커리큘럼</a>
-    <a href="#gallery" onclick="closeMnu()">📷 갤러리</a>
-    <a href="#cta" onclick="closeMnu()">📞 문의</a>
-    <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" style="color:var(--blue);font-weight:700;">🎫 원데이클래스 신청</a>
-    <a href="dashboard.html" style="color:var(--blue);">🔐 회원 로그인</a>
-    <a href="admin.html" style="color:var(--muted);font-size:13px;">⚙️ 관리자</a>
+    <a href="#schedule" onclick="closeMnu()">수업일정 (비로그인 확인 가능)</a>
+    <a href="#coach" onclick="closeMnu()">코치소개</a>
+    <a href="#curriculum" onclick="closeMnu()">커리큘럼</a>
+    <a href="#gallery" onclick="closeMnu()">갤러리</a>
+    <a href="#cta" onclick="closeMnu()">문의</a>
+    <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" style="color:var(--blue);font-weight:700;">원데이클래스 신청</a>
+    <a href="dashboard.html" style="color:var(--blue);">회원 로그인</a>
   </div>
 </nav>
 
@@ -463,11 +532,11 @@ footer{
         <strong style="color:var(--text);">FIVB 코치 레벨1 · 국가대표 7년 · 프로 10년</strong>
       </p>
       <div class="hero-btns reveal">
-        <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" class="btn-primary">🎫 원데이클래스 신청</a>
-        <a href="dashboard.html" class="btn-secondary">🔐 회원 로그인 · 예약</a>
+        <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" class="btn-primary">원데이클래스 신청</a>
+        <a href="dashboard.html" class="btn-secondary">회원 로그인 · 예약</a>
       </div>
       <div style="margin-top:14px;font-size:13px;color:var(--muted);" class="reveal">
-        📞 <a href="tel:01044631177" style="color:var(--blue);font-weight:600;">010-4463-1177</a>
+        <a href="tel:01044631177" style="color:var(--blue);font-weight:600;">010-4463-1177</a>
         &nbsp;·&nbsp; 매주 토요일 운영
       </div>
     </div>
@@ -532,9 +601,11 @@ footer{
     <div class="coach-grid">
       <div class="coach-img-col reveal">
         <img src="./1. 사진 자료/KakaoTalk_20260504_231115997.jpg" alt="김재휘 코치">
-        <div class="coach-img-badge">
-          <div class="cib-name">김재휘 코치</div>
-          <div class="cib-role">MAIN COACH · HIGH END</div>
+        <div class="coach-career-chips" id="coachChips">
+          <div class="career-chip"><span class="chip-yr">2016–2022</span><span class="chip-txt">국가대표 7년</span></div>
+          <div class="career-chip"><span class="chip-yr">프로 10년</span><span class="chip-txt">V리그 우승 4회</span></div>
+          <div class="career-chip"><span class="chip-yr">FIVB LV.1</span><span class="chip-txt">국제 코치 자격</span></div>
+          <div class="career-chip"><span class="chip-yr">아시안게임</span><span class="chip-txt">은메달</span></div>
         </div>
       </div>
       <div class="coach-text-col">
@@ -644,27 +715,45 @@ footer{
         <img src="./1. 사진 자료/KakaoTalk_20260504_231116561.jpg" alt="FIVB 자격증">
         <div class="insta-overlay"><span>🎖️</span></div>
       </div>
-      <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231117070.jpg')">
-        <img src="./1. 사진 자료/KakaoTalk_20260504_231117070.jpg" alt="국가대표 이력">
-        <div class="insta-overlay"><span>🇰🇷</span></div>
-      </div>
-      <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231114801.jpg')">
-        <img src="./1. 사진 자료/KakaoTalk_20260504_231114801.jpg" alt="코치 소개">
+      <div class="insta-item" onclick="openLb('./4. 추가 사진/KakaoTalk_20260612_202538794.jpg')">
+        <img src="./4. 추가 사진/KakaoTalk_20260612_202538794.jpg" alt="수업 현장">
         <div class="insta-overlay"><span>🏐</span></div>
       </div>
-      <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231119194.jpg')">
-        <img src="./1. 사진 자료/KakaoTalk_20260504_231119194.jpg" alt="프로 경력">
-        <div class="insta-overlay"><span>🏆</span></div>
-      </div>
-      <div class="insta-item" onclick="openLb('./2. 커리큘럼 사진/KakaoTalk_20260504_235923807.png')">
-        <img src="./2. 커리큘럼 사진/KakaoTalk_20260504_235923807.png" alt="하이앤드">
-        <div class="insta-overlay"><span>✨</span></div>
-      </div>
     </div>
-    <div style="text-align:center;margin-top:20px;">
-      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="btn-secondary" style="display:inline-flex;">
-        📷 인스타그램에서 더 보기
+    <div class="gal-actions reveal">
+      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="btn-secondary" style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        더 보기 +
       </a>
+      <a href="https://m.place.naver.com/place/2022442484/review/visitor" target="_blank" class="btn-secondary" style="display:inline-flex;align-items:center;gap:6px;background:#03C75A;color:#fff;border-color:#03C75A;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        리뷰 보기
+      </a>
+    </div>
+
+    <!-- REELS / VIDEO -->
+    <div class="reels-section reveal">
+      <div class="reels-header">
+        <div class="reels-title">하이라이트 영상</div>
+        <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="btn-secondary" style="padding:7px 16px;font-size:13px;display:inline-flex;align-items:center;gap:5px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+          인스타 더 보기 +
+        </a>
+      </div>
+      <div class="reels-grid">
+        <div class="reel-item">
+          <video src="./4. 추가 사진/KakaoTalk_20260612_202632894.mp4" loop muted playsinline preload="metadata"></video>
+          <div class="reel-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="reel-item">
+          <video src="./4. 추가 사진/KakaoTalk_20260612_202647869.mp4" loop muted playsinline preload="metadata"></video>
+          <div class="reel-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="reel-item">
+          <video src="./4. 추가 사진/KakaoTalk_20260612_202719480.mp4" loop muted playsinline preload="metadata"></video>
+          <div class="reel-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -681,7 +770,7 @@ footer{
     <p class="sec-desc reveal" style="text-align:center;max-width:480px;margin:0 auto;">
       첫 수업이 망설여지신다면 편하게 문의해 주세요
     </p>
-    <div class="cta-cards reveal">
+    <div class="cta-cards reveal" style="grid-template-columns:repeat(2,1fr);max-width:600px;">
       <div class="cta-card">
         <div class="cta-card-icon">🎫</div>
         <div class="cta-card-title">원데이클래스</div>
@@ -689,22 +778,29 @@ footer{
         <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" class="cta-card-btn primary">네이버 예약</a>
       </div>
       <div class="cta-card">
-        <div class="cta-card-icon">🔐</div>
+        <div class="cta-card-icon">🏐</div>
         <div class="cta-card-title">회원 로그인</div>
         <div class="cta-card-desc">정규 수강권을 보유한 회원은 로그인 후 수업 예약·취소 및 수강권을 관리할 수 있습니다.</div>
         <a href="dashboard.html" class="cta-card-btn secondary">회원 로그인</a>
       </div>
-      <div class="cta-card">
-        <div class="cta-card-icon">⚙️</div>
-        <div class="cta-card-title">관리자</div>
-        <div class="cta-card-desc">출석 체크, 회원 관리, 수업 일정 관리, 수강권 신청 처리를 진행합니다.</div>
-        <a href="admin.html" class="cta-card-btn secondary">관리자 로그인</a>
-      </div>
     </div>
     <div class="contact-strip reveal">
-      <div class="contact-item">📞 <a href="tel:01044631177">010-4463-1177</a></div>
-      <div class="contact-item">📷 <a href="https://www.instagram.com/highend_volleyball" target="_blank">@highend_volleyball</a></div>
-      <div class="contact-item">📝 <a href="https://blog.naver.com/highendv0lly" target="_blank">네이버 블로그</a></div>
+      <div class="contact-item">
+        <span class="contact-item-icon ci-phone">📞</span>
+        <a href="tel:01044631177">010-4463-1177</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-icon ci-kakao">💬</span>
+        <a href="https://pf.kakao.com/_pCEzX" target="_blank">카카오 채널</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-icon ci-insta">📷</span>
+        <a href="https://www.instagram.com/highend_volleyball" target="_blank">@highend_volleyball</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-icon ci-naver">N</span>
+        <a href="https://m.place.naver.com/place/2022442484" target="_blank">네이버 지도</a>
+      </div>
     </div>
   </div>
 </section>
@@ -712,21 +808,29 @@ footer{
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-links">
-      <a href="#hero">HOME</a>
-      <a href="#schedule">수업일정</a>
-      <a href="https://www.instagram.com/highend_volleyball" target="_blank">Instagram</a>
-      <a href="https://blog.naver.com/highendv0lly" target="_blank">Blog</a>
-      <a href="dashboard.html">회원 로그인</a>
-      <a href="admin.html">관리자</a>
+    <div>
+      <div class="footer-links">
+        <a href="#hero">HOME</a>
+        <a href="#schedule">수업일정</a>
+        <a href="#coach">코치소개</a>
+        <a href="#gallery">갤러리</a>
+        <a href="dashboard.html">회원 로그인</a>
+      </div>
+      <div class="footer-copy" style="margin-top:8px;">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
     </div>
-    <div class="footer-copy">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
+    <div class="footer-sns">
+      <a href="tel:01044631177" class="sns-btn sns-phone" title="전화">📞</a>
+      <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="sns-btn sns-kakao" title="카카오">💬</a>
+      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="sns-btn sns-insta" title="Instagram">📷</a>
+      <a href="https://www.youtube.com/@highend_volleyball" target="_blank" class="sns-btn sns-yt" title="YouTube">▶</a>
+    </div>
   </div>
 </footer>
 
 <!-- FLOAT -->
 <div class="float-bar">
   <a href="tel:01044631177" class="float-btn fb-phone" title="전화">📞</a>
+  <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="float-btn fb-kakao" title="카카오">💬</a>
   <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="float-btn fb-insta" title="인스타">📷</a>
 </div>
 
@@ -915,6 +1019,32 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 function openLb(src){document.getElementById('lbImg').src=src;document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
 function closeLb(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
+// ── COACH CAREER CHIPS ────────────────────────────────
+(function(){
+  const coachSec=document.getElementById('coach');
+  const chips=document.querySelectorAll('.career-chip');
+  if(!coachSec||!chips.length)return;
+  let fired=false;
+  const chipObs=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting&&!fired){
+      fired=true;
+      chips.forEach((c,i)=>setTimeout(()=>c.classList.add('chip-in'),i*130));
+    }
+  },{threshold:0.3});
+  chipObs.observe(coachSec);
+})();
+
+// ── VIDEO PLAY OVERLAY ────────────────────────────────
+document.querySelectorAll('.reel-item').forEach(item=>{
+  const vid=item.querySelector('video');
+  if(!vid)return;
+  item.addEventListener('click',()=>{
+    if(vid.paused){vid.play();item.classList.add('playing');}
+    else{vid.pause();item.classList.remove('playing');}
+  });
+  vid.addEventListener('ended',()=>item.classList.remove('playing'));
+});
 </script>
 </body>
 </html>
