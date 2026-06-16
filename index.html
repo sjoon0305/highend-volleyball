@@ -307,18 +307,11 @@ section{padding:80px 24px;}
   gap:4px;
 }
 .insta-item{
-  aspect-ratio:1;overflow:hidden;cursor:pointer;position:relative;
+  aspect-ratio:1;overflow:hidden;cursor:pointer;
   background:var(--surface2);border-radius:4px;
 }
 .insta-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s;}
 .insta-item:hover img{transform:scale(1.06);}
-.insta-overlay{
-  position:absolute;inset:0;background:rgba(26,83,212,.5);
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;transition:opacity .25s;
-}
-.insta-item:hover .insta-overlay{opacity:1;}
-.insta-overlay span{color:#fff;font-size:22px;}
 
 /* Lightbox */
 .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;padding:16px;}
@@ -370,82 +363,165 @@ footer{
 .footer-links a:hover{color:#fff;}
 .footer-copy{font-size:12px;}
 
-/* ── FLOAT ── */
-.float-bar{position:fixed;bottom:24px;right:18px;display:flex;flex-direction:column;gap:8px;z-index:999;}
+/* ── FLOAT BAR ── */
+.float-bar{
+  position:fixed;bottom:24px;right:16px;
+  display:flex;flex-direction:column;gap:9px;z-index:999;
+  align-items:center;
+}
 .float-btn{
-  width:50px;height:50px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:20px;
-  box-shadow:var(--shadow-lg);transition:transform .2s;text-decoration:none;
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 14px rgba(0,0,0,.22);
+  transition:transform .2s,box-shadow .2s;
+  text-decoration:none;overflow:hidden;
+  flex-shrink:0;
 }
-.float-btn:hover{transform:scale(1.1);}
-.fb-phone{background:var(--blue);}
-.fb-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);}
-.fb-kakao{background:#FEE500;}
+.float-btn:hover{transform:scale(1.12);box-shadow:0 5px 18px rgba(0,0,0,.3);}
+.float-btn img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.fb-phone{background:var(--blue);padding:12px;}
+.fb-phone img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
+.fb-kakao{background:#FEE500;padding:10px;}
+.fb-kakao img{object-fit:contain;border-radius:0;}
+.fb-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);padding:11px;}
+.fb-insta img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
+.fb-naver{background:#03C75A;padding:10px;}
+.fb-naver img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
+.fb-yt{background:#FF0000;padding:11px;}
+.fb-yt img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
 
-/* ── COACH CAREER CHIPS ── */
+/* ── COACH CAROUSEL ── */
 .coach-img-col{position:relative;}
-.coach-career-chips{
-  position:absolute;bottom:24px;left:0;
-  display:flex;flex-direction:column;gap:7px;
-  pointer-events:none;
+.coach-carousel{border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);touch-action:pan-y;}
+.ccar-track{display:flex;transition:transform .45s cubic-bezier(.25,.1,.25,1);will-change:transform;cursor:grab;user-select:none;}
+.ccar-track.dragging{transition:none;cursor:grabbing;}
+.ccar-slide{flex:0 0 100%;}
+.ccar-slide img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block;pointer-events:none;}
+.ccar-dots{display:flex;gap:5px;justify-content:center;margin-top:12px;}
+.ccar-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--border);
+  cursor:pointer;transition:background .25s,width .25s;
 }
-.career-chip{
-  display:flex;align-items:center;gap:10px;
-  background:rgba(255,255,255,.93);backdrop-filter:blur(8px);
-  border-left:3px solid var(--blue);
-  padding:7px 16px 7px 12px;border-radius:0 10px 10px 0;
-  box-shadow:0 2px 10px rgba(0,0,0,.12);
-  transform:translateX(-110%);opacity:0;
-  transition:transform .55s cubic-bezier(.22,.9,.38,1),opacity .55s;
-}
-.career-chip.chip-in{transform:translateX(0);opacity:1;}
-.chip-yr{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.1em;white-space:nowrap;}
-.chip-txt{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;}
+.ccar-dot.active{background:var(--blue);width:22px;border-radius:3px;}
 
-/* ── VIDEO / REELS ── */
+/* ── REELS SLIDER ── */
 .reels-section{margin-top:48px;}
-.reels-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.reels-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
 .reels-title{font-size:16px;font-weight:800;color:var(--text);}
-.reels-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.reel-item{
-  aspect-ratio:9/16;overflow:hidden;border-radius:10px;
-  background:#111;position:relative;cursor:pointer;
+.reels-outer{display:flex;flex-direction:column;align-items:center;}
+.reels-viewport{
+  width:100%;max-width:400px;
+  border-radius:16px;overflow:hidden;
+  touch-action:pan-y;cursor:grab;
+  box-shadow:0 8px 32px rgba(0,0,0,.18);
 }
-.reel-item video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;}
-.reel-play-overlay{
+.reels-viewport.dragging{cursor:grabbing;}
+.reels-track{display:flex;will-change:transform;transition:transform .42s cubic-bezier(.25,.1,.25,1);}
+.reels-track.no-trans{transition:none;}
+.reel-slide{flex:0 0 100%;position:relative;background:#111;}
+.reel-slide video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;pointer-events:none;}
+/* Play/pause overlay */
+.reel-play-layer{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,.25);transition:opacity .25s;
+  transition:opacity .3s;background:rgba(0,0,0,.08);
 }
-.reel-play-overlay svg{width:44px;height:44px;fill:#fff;opacity:.85;}
-.reel-item.playing .reel-play-overlay{opacity:0;}
+.reel-play-layer.hidden{opacity:0;pointer-events:none;}
+.reel-play-icon{
+  width:62px;height:62px;background:rgba(0,0,0,.42);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.reel-play-icon svg{width:30px;height:30px;fill:#fff;margin-left:4px;}
+/* Instagram CTA slide */
+.reel-slide-cta{
+  aspect-ratio:9/16;
+  background:linear-gradient(160deg,#405de6 0%,#833ab4 30%,#fd1d1d 65%,#fcb045 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  text-align:center;padding:36px 28px;
+}
+.reel-cta-icon{
+  width:72px;height:72px;background:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.reel-cta-icon img{width:40px;height:40px;object-fit:contain;}
+.reel-cta-text{color:#fff;font-size:22px;font-weight:900;line-height:1.4;text-shadow:0 2px 8px rgba(0,0,0,.2);}
+.reel-cta-sub{color:rgba(255,255,255,.82);font-size:14px;line-height:1.6;}
+.reel-cta-btn{
+  background:#fff;color:#833ab4;
+  padding:14px 38px;border-radius:50px;
+  font-size:15px;font-weight:800;text-decoration:none;
+  display:inline-block;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 4px 16px rgba(0,0,0,.15);
+}
+.reel-cta-btn:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(0,0,0,.22);}
+/* Reels nav row */
+.reels-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;}
+.reels-arr{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;color:var(--sub);
+  transition:background .15s,border-color .15s;flex-shrink:0;
+}
+.reels-arr:hover{background:var(--surface2);border-color:var(--blue);color:var(--blue);}
+/* Dots */
+.slider-dots{display:flex;gap:6px;align-items:center;}
+.s-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--border2);transition:background .25s,width .25s;cursor:pointer;
+}
+.s-dot.active{background:var(--blue);width:22px;border-radius:3px;}
 
 /* ── GALLERY ACTIONS ── */
-.gal-actions{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap;}
+.gal-actions{display:flex;justify-content:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gal-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 22px;border-radius:50px;font-size:14px;font-weight:700;
+  text-decoration:none;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 2px 10px rgba(0,0,0,.1);
+}
+.gal-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.15);}
+.gal-btn img{width:20px;height:20px;object-fit:contain;display:block;}
+.gal-btn-insta{
+  background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;
+}
+.gal-btn-naver{background:#03C75A;color:#fff;}
 
 /* ── FOOTER SNS ── */
-.footer-sns{display:flex;gap:8px;align-items:center;}
+.footer-sns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .sns-btn{
-  width:36px;height:36px;border-radius:50%;
+  width:40px;height:40px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;text-decoration:none;
-  transition:transform .2s,opacity .2s;opacity:.75;
+  text-decoration:none;transition:transform .2s,opacity .2s;
+  opacity:.8;overflow:hidden;flex-shrink:0;
 }
 .sns-btn:hover{transform:scale(1.15);opacity:1;}
-.sns-phone{background:var(--blue);}
-.sns-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);}
-.sns-kakao{background:#FEE500;}
-.sns-yt{background:#FF0000;}
+.sns-btn img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.sns-phone{background:var(--blue);padding:10px;}
+.sns-phone img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
+.sns-kakao{background:#FEE500;padding:8px;}
+.sns-kakao img{object-fit:contain;border-radius:0;}
+.sns-insta{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:9px;}
+.sns-insta img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
+.sns-naver{background:#03C75A;padding:9px;}
+.sns-naver img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
+.sns-yt{background:#FF0000;padding:9px;}
+.sns-yt img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
 
 /* ── CONTACT ICONS ── */
 .contact-item-icon{
   display:inline-flex;align-items:center;justify-content:center;
   width:28px;height:28px;border-radius:50%;font-size:14px;
-  margin-right:2px;flex-shrink:0;
+  margin-right:2px;flex-shrink:0;overflow:hidden;
 }
-.ci-phone{background:var(--blue);color:#fff;}
-.ci-kakao{background:#FEE500;color:#3a1d1d;}
-.ci-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);color:#fff;}
-.ci-naver{background:#03C75A;color:#fff;font-size:11px;font-weight:800;}
+.contact-item-icon img{width:100%;height:100%;object-fit:contain;}
+.ci-phone{background:var(--blue);padding:5px;}
+.ci-phone img{filter:brightness(0) invert(1);}
+.ci-kakao{background:#FEE500;padding:4px;}
+.ci-insta{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:5px;}
+.ci-insta img{filter:brightness(0) invert(1);}
+.ci-naver{background:#03C75A;padding:4px;}
+.ci-naver img{filter:brightness(0) invert(1);}
 
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
@@ -464,6 +540,10 @@ footer{
   .cta-cards{grid-template-columns:1fr;}
   .curr-imgs{grid-template-columns:1fr;}
 }
+@media(max-width:1000px){
+  .ccar-slide img{aspect-ratio:16/9;}
+  .float-btn{width:46px;height:46px;}
+}
 @media(max-width:600px){
   section{padding:60px 18px;}
   .hero-inner{padding:40px 18px;}
@@ -472,12 +552,13 @@ footer{
   .hero-btns{flex-direction:column;}
   .btn-primary,.btn-secondary{width:100%;justify-content:center;}
   .insta-grid{gap:2px;}
-  .reels-grid{grid-template-columns:1fr;gap:10px;}
-  .reel-item{aspect-ratio:9/16;max-height:400px;}
+  .reels-viewport{max-width:100%;}
   .contact-strip{flex-direction:column;align-items:center;gap:12px;}
   .footer-inner{flex-direction:column;gap:16px;}
   .footer-sns{justify-content:center;}
   .gal-actions{flex-direction:column;align-items:center;}
+  .float-bar{gap:6px;bottom:16px;right:10px;}
+  .float-btn{width:42px;height:42px;}
 }
 @media(max-width:400px){
   .curr-cards{grid-template-columns:1fr;}
@@ -600,12 +681,17 @@ footer{
   <div class="sec-inner">
     <div class="coach-grid">
       <div class="coach-img-col reveal">
-        <img src="./1. 사진 자료/KakaoTalk_20260504_231115997.jpg" alt="김재휘 코치">
-        <div class="coach-career-chips" id="coachChips">
-          <div class="career-chip"><span class="chip-yr">2016–2022</span><span class="chip-txt">국가대표 7년</span></div>
-          <div class="career-chip"><span class="chip-yr">프로 10년</span><span class="chip-txt">V리그 우승 4회</span></div>
-          <div class="career-chip"><span class="chip-yr">FIVB LV.1</span><span class="chip-txt">국제 코치 자격</span></div>
-          <div class="career-chip"><span class="chip-yr">아시안게임</span><span class="chip-txt">은메달</span></div>
+        <div class="coach-carousel" id="coachCarousel">
+          <div class="ccar-track" id="ccarTrack">
+            <div class="ccar-slide"><img src="./1. 사진 자료/KakaoTalk_20260504_231115997.jpg" alt="김재휘 코치 프로필"></div>
+            <div class="ccar-slide"><img src="./1. 사진 자료/KakaoTalk_20260504_231118165.jpg" alt="수업 현장"></div>
+            <div class="ccar-slide"><img src="./4. 추가 사진/KakaoTalk_20260612_202538794.jpg" alt="배구교실 홍보"></div>
+          </div>
+        </div>
+        <div class="ccar-dots" id="ccarDots">
+          <div class="ccar-dot active"></div>
+          <div class="ccar-dot"></div>
+          <div class="ccar-dot"></div>
         </div>
       </div>
       <div class="coach-text-col">
@@ -697,61 +783,84 @@ footer{
     <div class="insta-grid reveal">
       <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231114315.jpg')">
         <img src="./1. 사진 자료/KakaoTalk_20260504_231114315.jpg" alt="수업 현장">
-        <div class="insta-overlay"><span>🏐</span></div>
       </div>
       <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231118165.jpg')">
         <img src="./1. 사진 자료/KakaoTalk_20260504_231118165.jpg" alt="단체 사진">
-        <div class="insta-overlay"><span>👥</span></div>
       </div>
       <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231115997.jpg')">
         <img src="./1. 사진 자료/KakaoTalk_20260504_231115997.jpg" alt="코치 프로필">
-        <div class="insta-overlay"><span>⭐</span></div>
       </div>
       <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231117601.jpg')">
         <img src="./1. 사진 자료/KakaoTalk_20260504_231117601.jpg" alt="포스터">
-        <div class="insta-overlay"><span>📋</span></div>
       </div>
       <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231116561.jpg')">
         <img src="./1. 사진 자료/KakaoTalk_20260504_231116561.jpg" alt="FIVB 자격증">
-        <div class="insta-overlay"><span>🎖️</span></div>
       </div>
       <div class="insta-item" onclick="openLb('./4. 추가 사진/KakaoTalk_20260612_202538794.jpg')">
         <img src="./4. 추가 사진/KakaoTalk_20260612_202538794.jpg" alt="수업 현장">
-        <div class="insta-overlay"><span>🏐</span></div>
       </div>
     </div>
     <div class="gal-actions reveal">
-      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="btn-secondary" style="display:inline-flex;align-items:center;gap:6px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="gal-btn gal-btn-insta">
+        <img src="./5. 아이콘/인스타.png" alt="Instagram">
         더 보기 +
       </a>
-      <a href="https://m.place.naver.com/place/2022442484/review/visitor" target="_blank" class="btn-secondary" style="display:inline-flex;align-items:center;gap:6px;background:#03C75A;color:#fff;border-color:#03C75A;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      <a href="https://m.place.naver.com/place/2022442484/review/visitor" target="_blank" class="gal-btn gal-btn-naver">
+        <img src="./5. 아이콘/네이버.jpg" alt="Naver">
         리뷰 보기
       </a>
     </div>
 
-    <!-- REELS / VIDEO -->
+    <!-- REELS / VIDEO SLIDER -->
     <div class="reels-section reveal">
       <div class="reels-header">
         <div class="reels-title">하이라이트 영상</div>
-        <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="btn-secondary" style="padding:7px 16px;font-size:13px;display:inline-flex;align-items:center;gap:5px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-          인스타 더 보기 +
-        </a>
       </div>
-      <div class="reels-grid">
-        <div class="reel-item">
-          <video src="./4. 추가 사진/KakaoTalk_20260612_202632894.mp4" loop muted playsinline preload="metadata"></video>
-          <div class="reel-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="reels-outer">
+        <div class="reels-viewport" id="reelsViewport">
+          <div class="reels-track" id="reelsTrack">
+            <!-- Slide 1 -->
+            <div class="reel-slide" data-idx="0">
+              <video src="./4. 추가 사진/KakaoTalk_20260612_202632894.mp4" loop muted playsinline preload="auto"></video>
+              <div class="reel-play-layer" id="rpl0">
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="reel-slide" data-idx="1">
+              <video src="./4. 추가 사진/KakaoTalk_20260612_202647869.mp4" loop muted playsinline preload="metadata"></video>
+              <div class="reel-play-layer" id="rpl1">
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="reel-slide" data-idx="2">
+              <video src="./4. 추가 사진/KakaoTalk_20260612_202719480.mp4" loop muted playsinline preload="metadata"></video>
+              <div class="reel-play-layer" id="rpl2">
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+            </div>
+            <!-- Slide 4: Instagram CTA -->
+            <div class="reel-slide reel-slide-cta">
+              <div class="reel-cta-icon">
+                <img src="./5. 아이콘/인스타.png" alt="Instagram">
+              </div>
+              <div class="reel-cta-text">더 많은 영상<br>인스타그램에서</div>
+              <div class="reel-cta-sub">팔로우하고 최신 수업<br>현장을 확인하세요</div>
+              <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="reel-cta-btn">@highend_volleyball</a>
+            </div>
+          </div>
         </div>
-        <div class="reel-item">
-          <video src="./4. 추가 사진/KakaoTalk_20260612_202647869.mp4" loop muted playsinline preload="metadata"></video>
-          <div class="reel-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <div class="reel-item">
-          <video src="./4. 추가 사진/KakaoTalk_20260612_202719480.mp4" loop muted playsinline preload="metadata"></video>
-          <div class="reel-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <!-- Nav -->
+        <div class="reels-nav">
+          <button class="reels-arr" id="reelsPrev" aria-label="이전">&#8249;</button>
+          <div class="slider-dots" id="reelsDots">
+            <div class="s-dot active"></div>
+            <div class="s-dot"></div>
+            <div class="s-dot"></div>
+            <div class="s-dot"></div>
+          </div>
+          <button class="reels-arr" id="reelsNext" aria-label="다음">&#8250;</button>
         </div>
       </div>
     </div>
@@ -786,19 +895,19 @@ footer{
     </div>
     <div class="contact-strip reveal">
       <div class="contact-item">
-        <span class="contact-item-icon ci-phone">📞</span>
+        <span class="contact-item-icon ci-phone"><img src="./5. 아이콘/전화 아이콘.png" alt=""></span>
         <a href="tel:01044631177">010-4463-1177</a>
       </div>
       <div class="contact-item">
-        <span class="contact-item-icon ci-kakao">💬</span>
+        <span class="contact-item-icon ci-kakao"><img src="./5. 아이콘/kakaotalk.ico" alt=""></span>
         <a href="https://pf.kakao.com/_pCEzX" target="_blank">카카오 채널</a>
       </div>
       <div class="contact-item">
-        <span class="contact-item-icon ci-insta">📷</span>
+        <span class="contact-item-icon ci-insta"><img src="./5. 아이콘/인스타.png" alt=""></span>
         <a href="https://www.instagram.com/highend_volleyball" target="_blank">@highend_volleyball</a>
       </div>
       <div class="contact-item">
-        <span class="contact-item-icon ci-naver">N</span>
+        <span class="contact-item-icon ci-naver"><img src="./5. 아이콘/네이버.jpg" alt=""></span>
         <a href="https://m.place.naver.com/place/2022442484" target="_blank">네이버 지도</a>
       </div>
     </div>
@@ -819,19 +928,42 @@ footer{
       <div class="footer-copy" style="margin-top:8px;">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
     </div>
     <div class="footer-sns">
-      <a href="tel:01044631177" class="sns-btn sns-phone" title="전화">📞</a>
-      <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="sns-btn sns-kakao" title="카카오">💬</a>
-      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="sns-btn sns-insta" title="Instagram">📷</a>
-      <a href="https://www.youtube.com/@highend_volleyball" target="_blank" class="sns-btn sns-yt" title="YouTube">▶</a>
+      <a href="tel:01044631177" class="sns-btn sns-phone" title="전화">
+        <img src="./5. 아이콘/전화 아이콘.png" alt="전화">
+      </a>
+      <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="sns-btn sns-kakao" title="카카오">
+        <img src="./5. 아이콘/kakaotalk.ico" alt="카카오">
+      </a>
+      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="sns-btn sns-insta" title="Instagram">
+        <img src="./5. 아이콘/인스타.png" alt="인스타그램">
+      </a>
+      <a href="https://m.place.naver.com/place/2022442484" target="_blank" class="sns-btn sns-naver" title="네이버">
+        <img src="./5. 아이콘/네이버.jpg" alt="네이버">
+      </a>
+      <a href="https://www.youtube.com/@highend_volleyball" target="_blank" class="sns-btn sns-yt" title="YouTube">
+        <img src="./5. 아이콘/유튜브.png" alt="유튜브">
+      </a>
     </div>
   </div>
 </footer>
 
 <!-- FLOAT -->
 <div class="float-bar">
-  <a href="tel:01044631177" class="float-btn fb-phone" title="전화">📞</a>
-  <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="float-btn fb-kakao" title="카카오">💬</a>
-  <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="float-btn fb-insta" title="인스타">📷</a>
+  <a href="tel:01044631177" class="float-btn fb-phone" title="전화 문의">
+    <img src="./5. 아이콘/전화 아이콘.png" alt="전화">
+  </a>
+  <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="float-btn fb-kakao" title="카카오 채널">
+    <img src="./5. 아이콘/kakaotalk.ico" alt="카카오">
+  </a>
+  <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="float-btn fb-insta" title="인스타그램">
+    <img src="./5. 아이콘/인스타.png" alt="인스타그램">
+  </a>
+  <a href="https://m.place.naver.com/place/2022442484" target="_blank" class="float-btn fb-naver" title="네이버 지도">
+    <img src="./5. 아이콘/네이버.jpg" alt="네이버">
+  </a>
+  <a href="https://www.youtube.com/@highend_volleyball" target="_blank" class="float-btn fb-yt" title="유튜브">
+    <img src="./5. 아이콘/유튜브.png" alt="유튜브">
+  </a>
 </div>
 
 <script>
@@ -1020,31 +1152,100 @@ function openLb(src){document.getElementById('lbImg').src=src;document.getElemen
 function closeLb(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
 
-// ── COACH CAREER CHIPS ────────────────────────────────
+// ── COACH CAROUSEL ────────────────────────────────────
 (function(){
-  const coachSec=document.getElementById('coach');
-  const chips=document.querySelectorAll('.career-chip');
-  if(!coachSec||!chips.length)return;
-  let fired=false;
-  const chipObs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting&&!fired){
-      fired=true;
-      chips.forEach((c,i)=>setTimeout(()=>c.classList.add('chip-in'),i*130));
-    }
-  },{threshold:0.3});
-  chipObs.observe(coachSec);
+  const track=document.getElementById('ccarTrack');
+  const dotEls=document.querySelectorAll('.ccar-dot');
+  if(!track)return;
+  let cur=0,total=dotEls.length,startX=0,isDrag=false,moved=false;
+  function goTo(i){
+    cur=(i+total)%total;
+    track.style.transform=`translateX(-${cur*100}%)`;
+    dotEls.forEach((d,j)=>d.classList.toggle('active',j===cur));
+  }
+  dotEls.forEach((d,i)=>d.addEventListener('click',()=>goTo(i)));
+  const car=track.parentElement;
+  car.addEventListener('pointerdown',e=>{startX=e.clientX;isDrag=true;moved=false;track.classList.add('dragging');});
+  car.addEventListener('pointermove',e=>{if(isDrag&&Math.abs(e.clientX-startX)>8)moved=true;});
+  car.addEventListener('pointerup',e=>{
+    track.classList.remove('dragging');
+    if(!isDrag)return;isDrag=false;
+    if(moved&&Math.abs(e.clientX-startX)>40)goTo(cur+(startX-e.clientX>0?1:-1));
+  });
+  car.addEventListener('pointercancel',()=>{isDrag=false;track.classList.remove('dragging');});
 })();
 
-// ── VIDEO PLAY OVERLAY ────────────────────────────────
-document.querySelectorAll('.reel-item').forEach(item=>{
-  const vid=item.querySelector('video');
-  if(!vid)return;
-  item.addEventListener('click',()=>{
-    if(vid.paused){vid.play();item.classList.add('playing');}
-    else{vid.pause();item.classList.remove('playing');}
+// ── REELS SLIDER ─────────────────────────────────────
+(function(){
+  const viewport=document.getElementById('reelsViewport');
+  const track=document.getElementById('reelsTrack');
+  const dots=document.querySelectorAll('.s-dot');
+  if(!track||!viewport)return;
+  const slides=track.querySelectorAll('.reel-slide');
+  const videos=track.querySelectorAll('video');
+  let cur=0,total=slides.length,startX=0,isDrag=false,moved=false;
+
+  function setOverlay(idx,playing){
+    const el=document.getElementById('rpl'+idx);
+    if(el)el.classList.toggle('hidden',playing);
+  }
+
+  function goTo(i){
+    const prev=cur;
+    cur=Math.max(0,Math.min(total-1,i));
+    track.style.transform=`translateX(-${cur*100}%)`;
+    dots.forEach((d,j)=>d.classList.toggle('active',j===cur));
+    // pause previous video
+    if(prev!==cur&&videos[prev]){videos[prev].pause();setOverlay(prev,false);}
+    // play current video if it's a video slide
+    if(videos[cur]){
+      videos[cur].play().then(()=>setOverlay(cur,true)).catch(()=>{});
+    }
+  }
+
+  // Click to play/pause on video slides
+  slides.forEach((slide,i)=>{
+    if(slide.classList.contains('reel-slide-cta'))return;
+    const vid=videos[i];
+    if(!vid)return;
+    slide.addEventListener('click',e=>{
+      if(moved)return;
+      if(vid.paused){vid.play().then(()=>setOverlay(i,true)).catch(()=>{});}
+      else{vid.pause();setOverlay(i,false);}
+    });
   });
-  vid.addEventListener('ended',()=>item.classList.remove('playing'));
-});
+
+  // Dots
+  dots.forEach((d,i)=>d.addEventListener('click',()=>goTo(i)));
+
+  // Arrows
+  const prev=document.getElementById('reelsPrev');
+  const next=document.getElementById('reelsNext');
+  if(prev)prev.addEventListener('click',()=>goTo(cur-1));
+  if(next)next.addEventListener('click',()=>goTo(cur+1));
+
+  // Touch/pointer drag
+  viewport.addEventListener('pointerdown',e=>{startX=e.clientX;isDrag=true;moved=false;viewport.classList.add('dragging');});
+  viewport.addEventListener('pointermove',e=>{if(isDrag&&Math.abs(e.clientX-startX)>8)moved=true;});
+  viewport.addEventListener('pointerup',e=>{
+    viewport.classList.remove('dragging');
+    if(!isDrag)return;isDrag=false;
+    if(moved&&Math.abs(e.clientX-startX)>50)goTo(cur+(startX-e.clientX>0?1:-1));
+  });
+  viewport.addEventListener('pointercancel',()=>{isDrag=false;viewport.classList.remove('dragging');});
+
+  // Auto-play first video on page load
+  function tryAutoPlay(){
+    if(videos[0]){
+      videos[0].play().then(()=>setOverlay(0,true)).catch(()=>{
+        // Autoplay blocked — show play button
+        setOverlay(0,false);
+      });
+    }
+  }
+  // Try after slight delay to ensure video is ready
+  setTimeout(tryAutoPlay,400);
+})();
 </script>
 </body>
 </html>
