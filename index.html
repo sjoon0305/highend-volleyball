@@ -87,7 +87,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 }
 .hero-bg{
   position:absolute;inset:0;
-  background-image:url('./1. 코치 사진 자료/1.jpg');
+  background-image:url('./4. 수업 사진/1.jpg');
   background-size:cover;background-position:center 25%;
   animation:kb 22s ease-in-out infinite alternate;
 }
@@ -450,11 +450,12 @@ footer{
   text-align:center;padding:36px 28px;
 }
 .reel-cta-icon{
-  width:72px;height:72px;background:#fff;border-radius:50%;
+  width:72px;height:72px;
+  background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);
+  border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(0,0,0,.2);
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
 }
-.reel-cta-icon img{width:40px;height:40px;object-fit:contain;}
 .reel-cta-text{color:#fff;font-size:22px;font-weight:900;line-height:1.4;text-shadow:0 2px 8px rgba(0,0,0,.2);}
 .reel-cta-sub{color:rgba(255,255,255,.82);font-size:14px;line-height:1.6;}
 .reel-cta-btn{
@@ -809,17 +810,17 @@ footer{
       <div class="insta-item" onclick="openLb('./4. 수업 사진/2.jpg')">
         <img src="./4. 수업 사진/2.jpg" alt="수업 현장 2">
       </div>
-      <div class="insta-item" onclick="openLb('./4. 수업 사진/3.HEIC')">
-        <img src="./4. 수업 사진/3.HEIC" alt="수업 현장 3">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/3.jpg')">
+        <img src="./4. 수업 사진/3.jpg" alt="수업 현장 3">
       </div>
-      <div class="insta-item" onclick="openLb('./4. 수업 사진/4.HEIC')">
-        <img src="./4. 수업 사진/4.HEIC" alt="수업 현장 4">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/4.jpg')">
+        <img src="./4. 수업 사진/4.jpg" alt="수업 현장 4">
       </div>
-      <div class="insta-item" onclick="openLb('./4. 수업 사진/5.HEIC')">
-        <img src="./4. 수업 사진/5.HEIC" alt="수업 현장 5">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/5.jpg')">
+        <img src="./4. 수업 사진/5.jpg" alt="수업 현장 5">
       </div>
-      <div class="insta-item" onclick="openLb('./4. 수업 사진/6.HEIC')">
-        <img src="./4. 수업 사진/6.HEIC" alt="수업 현장 6">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/6.jpg')">
+        <img src="./4. 수업 사진/6.jpg" alt="수업 현장 6">
       </div>
     </div>
     <div class="gal-actions reveal">
@@ -1213,9 +1214,9 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
     setTimeout(startAuto,3000);
   });
   car.addEventListener('pointercancel',()=>{isDrag=false;track.classList.remove('dragging');setTimeout(startAuto,3000);});
-  // Auto-advance every 2 seconds
+  // Auto-advance every 4 seconds
   let autoTimer;
-  function startAuto(){autoTimer=setInterval(()=>goTo(cur+1),2000);}
+  function startAuto(){autoTimer=setInterval(()=>goTo(cur+1),4000);}
   function stopAuto(){clearInterval(autoTimer);}
   startAuto();
 })();
@@ -1229,10 +1230,25 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
   const slides=track.querySelectorAll('.reel-slide');
   const videos=track.querySelectorAll('video');
   let cur=0,total=slides.length,startX=0,isDrag=false,moved=false;
+  let sectionVisible=false;
+
+  // Ensure all videos loop
+  videos.forEach(v=>{v.loop=true;});
 
   function setOverlay(idx,playing){
     const el=document.getElementById('rpl'+idx);
     if(el)el.classList.toggle('hidden',playing);
+  }
+
+  function playVideo(idx){
+    const v=videos[idx];
+    if(!v)return;
+    v.play().then(()=>setOverlay(idx,true)).catch(()=>setOverlay(idx,false));
+  }
+
+  function pauseVideo(idx){
+    const v=videos[idx];
+    if(v&&!v.paused){v.pause();setOverlay(idx,false);}
   }
 
   function goTo(i){
@@ -1240,36 +1256,28 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
     cur=Math.max(0,Math.min(total-1,i));
     track.style.transform=`translateX(-${cur*100}%)`;
     dots.forEach((d,j)=>d.classList.toggle('active',j===cur));
-    // pause previous video
-    if(prev!==cur&&videos[prev]){videos[prev].pause();setOverlay(prev,false);}
-    // play current video if it's a video slide
-    if(videos[cur]){
-      videos[cur].play().then(()=>setOverlay(cur,true)).catch(()=>{});
-    }
+    if(prev!==cur)pauseVideo(prev);
+    if(sectionVisible)playVideo(cur);
   }
 
-  // Click to play/pause on video slides
+  // Click to toggle play/pause
   slides.forEach((slide,i)=>{
     if(slide.classList.contains('reel-slide-cta'))return;
     const vid=videos[i];
     if(!vid)return;
     slide.addEventListener('click',e=>{
       if(moved)return;
-      if(vid.paused){vid.play().then(()=>setOverlay(i,true)).catch(()=>{});}
+      if(vid.paused){playVideo(i);}
       else{vid.pause();setOverlay(i,false);}
     });
   });
 
-  // Dots
   dots.forEach((d,i)=>d.addEventListener('click',()=>goTo(i)));
+  const prevBtn=document.getElementById('reelsPrev');
+  const nextBtn=document.getElementById('reelsNext');
+  if(prevBtn)prevBtn.addEventListener('click',()=>goTo(cur-1));
+  if(nextBtn)nextBtn.addEventListener('click',()=>goTo(cur+1));
 
-  // Arrows
-  const prev=document.getElementById('reelsPrev');
-  const next=document.getElementById('reelsNext');
-  if(prev)prev.addEventListener('click',()=>goTo(cur-1));
-  if(next)next.addEventListener('click',()=>goTo(cur+1));
-
-  // Touch/pointer drag
   viewport.addEventListener('pointerdown',e=>{startX=e.clientX;isDrag=true;moved=false;viewport.classList.add('dragging');});
   viewport.addEventListener('pointermove',e=>{if(isDrag&&Math.abs(e.clientX-startX)>8)moved=true;});
   viewport.addEventListener('pointerup',e=>{
@@ -1279,17 +1287,19 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
   });
   viewport.addEventListener('pointercancel',()=>{isDrag=false;viewport.classList.remove('dragging');});
 
-  // Auto-play first video on page load
-  function tryAutoPlay(){
-    if(videos[0]){
-      videos[0].play().then(()=>setOverlay(0,true)).catch(()=>{
-        // Autoplay blocked — show play button
-        setOverlay(0,false);
-      });
-    }
-  }
-  // Try after slight delay to ensure video is ready
-  setTimeout(tryAutoPlay,400);
+  // IntersectionObserver: autoplay when section scrolls into view, pause when out
+  const section=track.closest('section')||track.closest('.reels-section')||viewport.parentElement;
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      sectionVisible=entry.isIntersecting;
+      if(sectionVisible){
+        playVideo(cur);
+      } else {
+        videos.forEach((v,i)=>pauseVideo(i));
+      }
+    });
+  },{threshold:0.3});
+  obs.observe(section);
 })();
 </script>
 </body>
