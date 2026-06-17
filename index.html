@@ -87,7 +87,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 }
 .hero-bg{
   position:absolute;inset:0;
-  background-image:url('./1. 사진 자료/KakaoTalk_20260504_231114315.jpg');
+  background-image:url('./1. 코치 사진 자료/1.jpg');
   background-size:cover;background-position:center 25%;
   animation:kb 22s ease-in-out infinite alternate;
 }
@@ -134,7 +134,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 .btn-secondary:hover{background:var(--blue);color:#fff;}
 .hero-image-wrap{position:relative;}
 .hero-img-main{
-  width:100%;border-radius:20px;object-fit:cover;aspect-ratio:4/5;
+  width:100%;border-radius:20px;display:block;
   box-shadow:var(--shadow-lg);
 }
 .hero-img-badge{
@@ -378,17 +378,17 @@ footer{
   flex-shrink:0;
 }
 .float-btn:hover{transform:scale(1.12);box-shadow:0 5px 18px rgba(0,0,0,.3);}
-.float-btn img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;}
-.fb-phone{background:var(--blue);padding:12px;}
-.fb-phone img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
-.fb-kakao{background:#FEE500;padding:10px;}
-.fb-kakao img{object-fit:contain;border-radius:0;}
-.fb-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);padding:11px;}
-.fb-insta img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
-.fb-naver{background:#03C75A;padding:10px;}
-.fb-naver img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
-.fb-yt{background:#FF0000;padding:11px;}
-.fb-yt img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
+.float-btn svg{width:24px;height:24px;display:block;flex-shrink:0;}
+.fb-phone{background:var(--blue);}
+.fb-phone svg{color:#fff;}
+.fb-kakao{background:#FEE500;}
+.fb-kakao svg{color:#3c1e08;width:26px;height:26px;}
+.fb-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);}
+.fb-insta svg{color:#fff;}
+.fb-naver{background:#03C75A;}
+.fb-naver svg{color:#fff;width:22px;height:22px;}
+.fb-yt{background:#FF0000;}
+.fb-yt svg{color:#fff;}
 
 /* ── COACH CAROUSEL ── */
 .coach-img-col{position:relative;}
@@ -406,8 +406,19 @@ footer{
 
 /* ── REELS SLIDER ── */
 .reels-section{margin-top:48px;}
-.reels-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.reels-header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:36px;}
 .reels-title{font-size:16px;font-weight:800;color:var(--text);}
+/* Reels below-slider more button */
+.reels-more{display:flex;justify-content:center;margin-top:22px;}
+.reels-more-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 24px;border-radius:50px;font-size:14px;font-weight:700;
+  text-decoration:none;color:#fff;
+  background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+  box-shadow:0 2px 10px rgba(0,0,0,.12);transition:transform .15s,box-shadow .15s;
+}
+.reels-more-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.2);}
+.reels-more-btn svg{width:18px;height:18px;display:block;color:#fff;}
 .reels-outer{display:flex;flex-direction:column;align-items:center;}
 .reels-viewport{
   width:100%;max-width:400px;
@@ -481,7 +492,7 @@ footer{
   box-shadow:0 2px 10px rgba(0,0,0,.1);
 }
 .gal-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.15);}
-.gal-btn img{width:20px;height:20px;object-fit:contain;display:block;}
+.gal-btn svg{width:18px;height:18px;display:block;flex-shrink:0;}
 .gal-btn-insta{
   background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;
 }
@@ -493,35 +504,42 @@ footer{
   width:40px;height:40px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   text-decoration:none;transition:transform .2s,opacity .2s;
-  opacity:.8;overflow:hidden;flex-shrink:0;
+  opacity:.82;flex-shrink:0;
 }
 .sns-btn:hover{transform:scale(1.15);opacity:1;}
-.sns-btn img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;}
-.sns-phone{background:var(--blue);padding:10px;}
-.sns-phone img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
-.sns-kakao{background:#FEE500;padding:8px;}
-.sns-kakao img{object-fit:contain;border-radius:0;}
-.sns-insta{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:9px;}
-.sns-insta img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
-.sns-naver{background:#03C75A;padding:9px;}
-.sns-naver img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
-.sns-yt{background:#FF0000;padding:9px;}
-.sns-yt img{object-fit:contain;border-radius:0;filter:brightness(0) invert(1);}
+.sns-btn svg{display:block;}
+.sns-phone{background:var(--blue);}
+.sns-phone svg{width:20px;height:20px;color:#fff;}
+.sns-kakao{background:#FEE500;}
+.sns-kakao svg{width:22px;height:22px;color:#3c1e08;}
+.sns-insta{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+.sns-insta svg{width:20px;height:20px;color:#fff;}
+.sns-naver{background:#03C75A;}
+.sns-naver svg{width:18px;height:18px;color:#fff;}
+.sns-yt{background:#FF0000;}
+.sns-yt svg{width:20px;height:20px;color:#fff;}
 
 /* ── CONTACT ICONS ── */
+.contact-strip{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:40px;padding-top:28px;border-top:1px solid var(--border);}
+.contact-item{
+  display:flex;align-items:center;gap:8px;font-size:14px;
+  text-decoration:none;color:var(--sub);font-weight:500;
+  transition:color .15s;
+}
+.contact-item:hover{color:var(--blue);}
 .contact-item-icon{
   display:inline-flex;align-items:center;justify-content:center;
-  width:28px;height:28px;border-radius:50%;font-size:14px;
-  margin-right:2px;flex-shrink:0;overflow:hidden;
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
 }
-.contact-item-icon img{width:100%;height:100%;object-fit:contain;}
-.ci-phone{background:var(--blue);padding:5px;}
-.ci-phone img{filter:brightness(0) invert(1);}
-.ci-kakao{background:#FEE500;padding:4px;}
-.ci-insta{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:5px;}
-.ci-insta img{filter:brightness(0) invert(1);}
-.ci-naver{background:#03C75A;padding:4px;}
-.ci-naver img{filter:brightness(0) invert(1);}
+.contact-item-icon svg{display:block;}
+.ci-phone{background:var(--blue);}
+.ci-phone svg{width:16px;height:16px;color:#fff;}
+.ci-kakao{background:#FEE500;}
+.ci-kakao svg{width:18px;height:18px;color:#3c1e08;}
+.ci-insta{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+.ci-insta svg{width:16px;height:16px;color:#fff;}
+.ci-naver{background:#03C75A;}
+.ci-naver svg{width:14px;height:14px;color:#fff;}
 
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
@@ -571,7 +589,7 @@ footer{
 <nav id="nav">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-      <img src="./1. 사진 자료/KakaoTalk_20260504_231126741.jpg" alt="HIGH END">
+      <img src="./1. 코치 사진 자료/하이엔드 발리볼 로고.jpg" alt="HIGH END">
       <div class="nav-logo-text">
         <div class="brand">HIGH END</div>
         <div class="sub">Volleyball Academy</div>
@@ -622,7 +640,7 @@ footer{
       </div>
     </div>
     <div class="hero-image-wrap reveal rd2">
-      <img src="./1. 사진 자료/KakaoTalk_20260504_231115997.jpg" alt="김재휘 코치" class="hero-img-main">
+      <img src="./1. 코치 사진 자료/1.jpg" alt="김재휘 코치" class="hero-img-main">
       <div class="hero-img-badge">
         <div class="hib-num">7년</div>
         <div class="hib-label">국가대표 경력</div>
@@ -683,13 +701,17 @@ footer{
       <div class="coach-img-col reveal">
         <div class="coach-carousel" id="coachCarousel">
           <div class="ccar-track" id="ccarTrack">
-            <div class="ccar-slide"><img src="./1. 사진 자료/KakaoTalk_20260504_231115997.jpg" alt="김재휘 코치 프로필"></div>
-            <div class="ccar-slide"><img src="./1. 사진 자료/KakaoTalk_20260504_231118165.jpg" alt="수업 현장"></div>
-            <div class="ccar-slide"><img src="./4. 추가 사진/KakaoTalk_20260612_202538794.jpg" alt="배구교실 홍보"></div>
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/1.jpg" alt="김재휘 코치 프로필"></div>
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/2.jpg" alt="코치 수업 장면"></div>
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/3.jpg" alt="코치 사진 3"></div>
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/4.jpg" alt="코치 사진 4"></div>
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/5.jpg" alt="코치 사진 5"></div>
           </div>
         </div>
         <div class="ccar-dots" id="ccarDots">
           <div class="ccar-dot active"></div>
+          <div class="ccar-dot"></div>
+          <div class="ccar-dot"></div>
           <div class="ccar-dot"></div>
           <div class="ccar-dot"></div>
         </div>
@@ -781,32 +803,32 @@ footer{
       <p class="sec-desc reveal">하이앤드 발리볼 아카데미의 생생한 수업 현장을 확인하세요</p>
     </div>
     <div class="insta-grid reveal">
-      <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231114315.jpg')">
-        <img src="./1. 사진 자료/KakaoTalk_20260504_231114315.jpg" alt="수업 현장">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/1.jpg')">
+        <img src="./4. 수업 사진/1.jpg" alt="수업 현장 1">
       </div>
-      <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231118165.jpg')">
-        <img src="./1. 사진 자료/KakaoTalk_20260504_231118165.jpg" alt="단체 사진">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/2.jpg')">
+        <img src="./4. 수업 사진/2.jpg" alt="수업 현장 2">
       </div>
-      <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231115997.jpg')">
-        <img src="./1. 사진 자료/KakaoTalk_20260504_231115997.jpg" alt="코치 프로필">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/3.HEIC')">
+        <img src="./4. 수업 사진/3.HEIC" alt="수업 현장 3">
       </div>
-      <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231117601.jpg')">
-        <img src="./1. 사진 자료/KakaoTalk_20260504_231117601.jpg" alt="포스터">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/4.HEIC')">
+        <img src="./4. 수업 사진/4.HEIC" alt="수업 현장 4">
       </div>
-      <div class="insta-item" onclick="openLb('./1. 사진 자료/KakaoTalk_20260504_231116561.jpg')">
-        <img src="./1. 사진 자료/KakaoTalk_20260504_231116561.jpg" alt="FIVB 자격증">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/5.HEIC')">
+        <img src="./4. 수업 사진/5.HEIC" alt="수업 현장 5">
       </div>
-      <div class="insta-item" onclick="openLb('./4. 추가 사진/KakaoTalk_20260612_202538794.jpg')">
-        <img src="./4. 추가 사진/KakaoTalk_20260612_202538794.jpg" alt="수업 현장">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/6.HEIC')">
+        <img src="./4. 수업 사진/6.HEIC" alt="수업 현장 6">
       </div>
     </div>
     <div class="gal-actions reveal">
       <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="gal-btn gal-btn-insta">
-        <img src="./5. 아이콘/인스타.png" alt="Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
         더 보기 +
       </a>
       <a href="https://m.place.naver.com/place/2022442484/review/visitor" target="_blank" class="gal-btn gal-btn-naver">
-        <img src="./5. 아이콘/네이버.jpg" alt="Naver">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12.47L5.84 2H2v20h4.46V11.53L14.16 22H18V2h-4.46z"/></svg>
         리뷰 보기
       </a>
     </div>
@@ -814,36 +836,45 @@ footer{
     <!-- REELS / VIDEO SLIDER -->
     <div class="reels-section reveal">
       <div class="reels-header">
-        <div class="reels-title">하이라이트 영상</div>
+        <div class="sec-label">HIGHLIGHTS</div>
+        <h2 class="sec-title" style="margin-top:8px;">하이라이트 영상</h2>
+        <p class="sec-desc" style="margin-top:8px;max-width:480px;">하이앤드 발리볼 아카데미의 생생한 수업 영상을 확인하세요</p>
       </div>
       <div class="reels-outer">
         <div class="reels-viewport" id="reelsViewport">
           <div class="reels-track" id="reelsTrack">
             <!-- Slide 1 -->
             <div class="reel-slide" data-idx="0">
-              <video src="./4. 추가 사진/KakaoTalk_20260612_202632894.mp4" loop muted playsinline preload="auto"></video>
+              <video src="./4. 수업 사진/동영상/1.mp4" loop muted playsinline preload="auto"></video>
               <div class="reel-play-layer" id="rpl0">
-                <div class="reel-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
               </div>
             </div>
             <!-- Slide 2 -->
             <div class="reel-slide" data-idx="1">
-              <video src="./4. 추가 사진/KakaoTalk_20260612_202647869.mp4" loop muted playsinline preload="metadata"></video>
+              <video src="./4. 수업 사진/동영상/2.mp4" loop muted playsinline preload="metadata"></video>
               <div class="reel-play-layer" id="rpl1">
-                <div class="reel-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
               </div>
             </div>
             <!-- Slide 3 -->
             <div class="reel-slide" data-idx="2">
-              <video src="./4. 추가 사진/KakaoTalk_20260612_202719480.mp4" loop muted playsinline preload="metadata"></video>
+              <video src="./4. 수업 사진/동영상/3.mp4" loop muted playsinline preload="metadata"></video>
               <div class="reel-play-layer" id="rpl2">
-                <div class="reel-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
               </div>
             </div>
-            <!-- Slide 4: Instagram CTA -->
+            <!-- Slide 4 -->
+            <div class="reel-slide" data-idx="3" style="background:#000;">
+              <video src="./4. 수업 사진/동영상/4.mp4" loop muted playsinline preload="metadata" style="width:100%;aspect-ratio:9/16;object-fit:contain;display:block;"></video>
+              <div class="reel-play-layer" id="rpl3">
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+            </div>
+            <!-- Slide 5: Instagram CTA -->
             <div class="reel-slide reel-slide-cta">
               <div class="reel-cta-icon">
-                <img src="./5. 아이콘/인스타.png" alt="Instagram">
+                <svg viewBox="0 0 24 24" fill="white" style="width:40px;height:40px;display:block;"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               </div>
               <div class="reel-cta-text">더 많은 영상<br>인스타그램에서</div>
               <div class="reel-cta-sub">팔로우하고 최신 수업<br>현장을 확인하세요</div>
@@ -859,9 +890,17 @@ footer{
             <div class="s-dot"></div>
             <div class="s-dot"></div>
             <div class="s-dot"></div>
+            <div class="s-dot"></div>
           </div>
           <button class="reels-arr" id="reelsNext" aria-label="다음">&#8250;</button>
         </div>
+      </div>
+      <!-- Instagram 더보기 -->
+      <div class="reels-more">
+        <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="reels-more-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          인스타그램에서 더 보기
+        </a>
       </div>
     </div>
   </div>
@@ -894,22 +933,22 @@ footer{
       </div>
     </div>
     <div class="contact-strip reveal">
-      <div class="contact-item">
-        <span class="contact-item-icon ci-phone"><img src="./5. 아이콘/전화 아이콘.png" alt=""></span>
-        <a href="tel:01044631177">010-4463-1177</a>
-      </div>
-      <div class="contact-item">
-        <span class="contact-item-icon ci-kakao"><img src="./5. 아이콘/kakaotalk.ico" alt=""></span>
-        <a href="https://pf.kakao.com/_pCEzX" target="_blank">카카오 채널</a>
-      </div>
-      <div class="contact-item">
-        <span class="contact-item-icon ci-insta"><img src="./5. 아이콘/인스타.png" alt=""></span>
-        <a href="https://www.instagram.com/highend_volleyball" target="_blank">@highend_volleyball</a>
-      </div>
-      <div class="contact-item">
-        <span class="contact-item-icon ci-naver"><img src="./5. 아이콘/네이버.jpg" alt=""></span>
-        <a href="https://m.place.naver.com/place/2022442484" target="_blank">네이버 지도</a>
-      </div>
+      <a href="tel:01044631177" class="contact-item">
+        <span class="contact-item-icon ci-phone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></span>
+        <span>010-4463-1177</span>
+      </a>
+      <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="contact-item">
+        <span class="contact-item-icon ci-kakao"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg></span>
+        <span>카카오 채널</span>
+      </a>
+      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="contact-item">
+        <span class="contact-item-icon ci-insta"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
+        <span>@highend_volleyball</span>
+      </a>
+      <a href="https://m.place.naver.com/place/2022442484" target="_blank" class="contact-item">
+        <span class="contact-item-icon ci-naver"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12.47L5.84 2H2v20h4.46V11.53L14.16 22H18V2h-4.46z"/></svg></span>
+        <span>네이버 지도</span>
+      </a>
     </div>
   </div>
 </section>
@@ -929,19 +968,19 @@ footer{
     </div>
     <div class="footer-sns">
       <a href="tel:01044631177" class="sns-btn sns-phone" title="전화">
-        <img src="./5. 아이콘/전화 아이콘.png" alt="전화">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
       </a>
       <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="sns-btn sns-kakao" title="카카오">
-        <img src="./5. 아이콘/kakaotalk.ico" alt="카카오">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg>
       </a>
       <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="sns-btn sns-insta" title="Instagram">
-        <img src="./5. 아이콘/인스타.png" alt="인스타그램">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
       </a>
       <a href="https://m.place.naver.com/place/2022442484" target="_blank" class="sns-btn sns-naver" title="네이버">
-        <img src="./5. 아이콘/네이버.jpg" alt="네이버">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12.47L5.84 2H2v20h4.46V11.53L14.16 22H18V2h-4.46z"/></svg>
       </a>
       <a href="https://www.youtube.com/@highend_volleyball" target="_blank" class="sns-btn sns-yt" title="YouTube">
-        <img src="./5. 아이콘/유튜브.png" alt="유튜브">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
       </a>
     </div>
   </div>
@@ -950,19 +989,19 @@ footer{
 <!-- FLOAT -->
 <div class="float-bar">
   <a href="tel:01044631177" class="float-btn fb-phone" title="전화 문의">
-    <img src="./5. 아이콘/전화 아이콘.png" alt="전화">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
   </a>
   <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="float-btn fb-kakao" title="카카오 채널">
-    <img src="./5. 아이콘/kakaotalk.ico" alt="카카오">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg>
   </a>
   <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="float-btn fb-insta" title="인스타그램">
-    <img src="./5. 아이콘/인스타.png" alt="인스타그램">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
   </a>
   <a href="https://m.place.naver.com/place/2022442484" target="_blank" class="float-btn fb-naver" title="네이버 지도">
-    <img src="./5. 아이콘/네이버.jpg" alt="네이버">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12.47L5.84 2H2v20h4.46V11.53L14.16 22H18V2h-4.46z"/></svg>
   </a>
   <a href="https://www.youtube.com/@highend_volleyball" target="_blank" class="float-btn fb-yt" title="유튜브">
-    <img src="./5. 아이콘/유튜브.png" alt="유튜브">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
   </a>
 </div>
 
@@ -1163,16 +1202,22 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
     track.style.transform=`translateX(-${cur*100}%)`;
     dotEls.forEach((d,j)=>d.classList.toggle('active',j===cur));
   }
-  dotEls.forEach((d,i)=>d.addEventListener('click',()=>goTo(i)));
+  dotEls.forEach((d,i)=>d.addEventListener('click',()=>{stopAuto();goTo(i);setTimeout(startAuto,3000);}));
   const car=track.parentElement;
-  car.addEventListener('pointerdown',e=>{startX=e.clientX;isDrag=true;moved=false;track.classList.add('dragging');});
+  car.addEventListener('pointerdown',e=>{startX=e.clientX;isDrag=true;moved=false;track.classList.add('dragging');stopAuto();});
   car.addEventListener('pointermove',e=>{if(isDrag&&Math.abs(e.clientX-startX)>8)moved=true;});
   car.addEventListener('pointerup',e=>{
     track.classList.remove('dragging');
     if(!isDrag)return;isDrag=false;
     if(moved&&Math.abs(e.clientX-startX)>40)goTo(cur+(startX-e.clientX>0?1:-1));
+    setTimeout(startAuto,3000);
   });
-  car.addEventListener('pointercancel',()=>{isDrag=false;track.classList.remove('dragging');});
+  car.addEventListener('pointercancel',()=>{isDrag=false;track.classList.remove('dragging');setTimeout(startAuto,3000);});
+  // Auto-advance every 2 seconds
+  let autoTimer;
+  function startAuto(){autoTimer=setInterval(()=>goTo(cur+1),2000);}
+  function stopAuto(){clearInterval(autoTimer);}
+  startAuto();
 })();
 
 // ── REELS SLIDER ─────────────────────────────────────
