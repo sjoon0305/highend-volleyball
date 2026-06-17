@@ -258,7 +258,7 @@ section{padding:80px 24px;}
 #coach{background:var(--bg);}
 .coach-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:center;}
 .coach-img-col{position:relative;}
-.coach-img-col img{width:100%;border-radius:18px;object-fit:cover;aspect-ratio:3/4;object-position:top;box-shadow:var(--shadow-lg);}
+.coach-img-col > img{width:100%;border-radius:18px;object-fit:cover;aspect-ratio:3/4;object-position:top;box-shadow:var(--shadow-lg);}
 .coach-img-badge{
   position:absolute;bottom:-14px;right:-14px;
   background:#fff;border:1px solid var(--border);border-radius:12px;
@@ -390,11 +390,16 @@ footer{
 
 /* ── COACH CAROUSEL ── */
 .coach-img-col{position:relative;}
-.coach-carousel{border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);touch-action:pan-y;}
+.coach-carousel{width:100%;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);touch-action:pan-y;}
 .ccar-track{display:flex;transition:transform .45s cubic-bezier(.25,.1,.25,1);will-change:transform;cursor:grab;user-select:none;}
 .ccar-track.dragging{transition:none;cursor:grabbing;}
-.ccar-slide{flex:0 0 100%;}
-.ccar-slide img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block;pointer-events:none;}
+.ccar-slide{flex:0 0 100%;position:relative;}
+/* 모바일 퍼스트: 기본값 16:9 (리일스와 동일 패턴) */
+.ccar-slide img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center 20%;display:block;pointer-events:none;}
+/* 데스크탑에서만 3:4 세로 비율로 복원 */
+@media(min-width:1001px){
+  .ccar-slide img{aspect-ratio:3/4;object-position:top;}
+}
 .ccar-dots{display:flex;gap:5px;justify-content:center;margin-top:12px;}
 .ccar-dot{
   width:7px;height:7px;border-radius:50%;background:var(--border);
@@ -551,9 +556,6 @@ footer{
   .hero-inner{grid-template-columns:1fr;} .hero-image-wrap{display:none;}
   .stats-inner{grid-template-columns:repeat(2,1fr);}
   .coach-grid{grid-template-columns:1fr;gap:28px;}
-  .coach-img-col img{aspect-ratio:16/9;object-position:top;}
-  /* 캐러셀 이미지: 높은 specificity로 확정 override */
-  .coach-carousel .ccar-slide img{aspect-ratio:16/9;height:auto;object-position:50% 20%;}
   /* 코치 텍스트 컬럼: 모바일에서 캐러셀 아래이므로 헤더 중앙 정렬 */
   .coach-text-col .sec-label,.coach-text-col .sec-title{text-align:center;}
   .curr-cards{grid-template-columns:repeat(2,1fr);}
