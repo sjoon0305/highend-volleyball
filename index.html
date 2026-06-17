@@ -394,12 +394,7 @@ footer{
 .ccar-track{display:flex;transition:transform .45s cubic-bezier(.25,.1,.25,1);will-change:transform;cursor:grab;user-select:none;}
 .ccar-track.dragging{transition:none;cursor:grabbing;}
 .ccar-slide{flex:0 0 100%;position:relative;}
-/* 모바일 퍼스트: 기본값 16:9 (리일스와 동일 패턴) */
-.ccar-slide img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center 20%;display:block;pointer-events:none;}
-/* 데스크탑에서만 3:4 세로 비율로 복원 */
-@media(min-width:1001px){
-  .ccar-slide img{aspect-ratio:3/4;object-position:top;}
-}
+.ccar-slide img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block;pointer-events:none;}
 .ccar-dots{display:flex;gap:5px;justify-content:center;margin-top:12px;}
 .ccar-dot{
   width:7px;height:7px;border-radius:50%;background:var(--border);
