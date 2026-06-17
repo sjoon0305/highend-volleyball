@@ -550,16 +550,20 @@ footer{
   .nav-links{display:none;} .hamburger{display:flex;}
   .hero-inner{grid-template-columns:1fr;} .hero-image-wrap{display:none;}
   .stats-inner{grid-template-columns:repeat(2,1fr);}
-  .coach-grid{grid-template-columns:1fr;gap:36px;}
+  .coach-grid{grid-template-columns:1fr;gap:28px;}
   .coach-img-col img{aspect-ratio:16/9;object-position:top;}
+  /* 캐러셀 이미지: 높은 specificity로 확정 override */
+  .coach-carousel .ccar-slide img{aspect-ratio:16/9;height:auto;object-position:50% 20%;}
+  /* 코치 텍스트 컬럼: 모바일에서 캐러셀 아래이므로 헤더 중앙 정렬 */
+  .coach-text-col .sec-label,.coach-text-col .sec-title{text-align:center;}
   .curr-cards{grid-template-columns:repeat(2,1fr);}
   .sched-grid{grid-template-columns:1fr;} .cal-wrap{width:100%;}
   .cta-cards{grid-template-columns:1fr;}
   .curr-imgs{grid-template-columns:1fr;}
-}
-@media(max-width:1000px){
-  .ccar-slide img{aspect-ratio:16/9;}
   .float-btn{width:46px;height:46px;}
+  /* 도트: 모바일 터치 영역 확대 */
+  .ccar-dot{width:9px;height:9px;}
+  .ccar-dot.active{width:26px;}
 }
 @media(max-width:600px){
   section{padding:60px 18px;}
@@ -568,7 +572,8 @@ footer{
   .coach-cards{grid-template-columns:1fr;}
   .hero-btns{flex-direction:column;}
   .btn-primary,.btn-secondary{width:100%;justify-content:center;}
-  .insta-grid{gap:2px;}
+  /* 갤러리: 3열→2열, 사진이 더 크고 보기 좋게 */
+  .insta-grid{grid-template-columns:repeat(2,1fr);gap:3px;}
   .reels-viewport{max-width:100%;}
   .contact-strip{flex-direction:column;align-items:center;gap:12px;}
   .footer-inner{flex-direction:column;gap:16px;}
