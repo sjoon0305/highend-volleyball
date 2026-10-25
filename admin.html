@@ -108,6 +108,23 @@ textarea{resize:vertical;min-height:80px;}
 .ag-check{display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1.5px solid var(--border);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;user-select:none;}
 .ag-check:hover{border-color:var(--blue);color:var(--blue);}
 .ag-check input{width:15px;height:15px;margin:0;accent-color:var(--blue);cursor:pointer;}
+/* 수업 추가 창: 클래스 선택 + 시간 체크박스 + 스크롤 시계 */
+.qa-classes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.qa-class{border:1.5px solid var(--border);background:var(--surface);border-radius:9px;padding:11px 6px;font-size:14px;font-weight:700;color:var(--sub);cursor:pointer;text-align:center;}
+.qa-class.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.qa-times{display:flex;gap:6px;flex-wrap:wrap;}
+.qa-times .ag-check{padding:8px 12px;font-size:14px;}
+.qa-custom{display:none;margin-top:10px;padding:12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface2);}
+.qa-custom.show{display:block;}
+.qa-custom input[type=text]{text-align:center;font-size:20px;font-weight:900;letter-spacing:.05em;}
+.wheel-wrap{position:relative;display:flex;justify-content:center;align-items:center;gap:6px;margin-top:10px;height:200px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;}
+.wheel-wrap::before{content:'';position:absolute;left:10px;right:10px;top:80px;height:40px;background:var(--blueL);border-radius:8px;pointer-events:none;}
+.wheel-wrap::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(var(--surface),transparent 35%,transparent 65%,var(--surface));}
+.wheel{position:relative;width:70px;height:200px;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;padding:80px 0;scroll-padding:80px 0;}
+.wheel::-webkit-scrollbar{display:none;}
+.wheel div{height:40px;line-height:40px;text-align:center;font-size:20px;font-weight:700;color:var(--muted);scroll-snap-align:start;cursor:pointer;}
+.wheel div.on{color:var(--blue);font-weight:900;}
+.wheel-colon{position:relative;font-size:22px;font-weight:900;color:var(--blue);}
 
 /* CALENDAR ADMIN */
 .cal-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
@@ -622,6 +639,40 @@ textarea{resize:vertical;min-height:80px;}
       <div style="display:flex;gap:8px;">
         <button class="btn btn-blue" style="flex:1;" onclick="saveWalkin()">추가하기</button>
         <button class="btn btn-outline" style="flex:1;" onclick="closeWalkinModal()">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 수업 추가 MODAL (캘린더 날짜별) -->
+<div class="modal-bg" id="quickAddModal">
+  <div class="modal" style="max-width:440px;">
+    <div class="modal-title" id="qaTitle">수업 추가</div>
+    <div class="form-grid">
+      <div>
+        <label class="label">1. 클래스 선택</label>
+        <div class="qa-classes" id="qaClasses"></div>
+      </div>
+      <div>
+        <label class="label">2. 시간 선택 (여러 개 체크하면 한 번에 등록)</label>
+        <div class="qa-times" id="qaTimes"></div>
+        <div class="qa-custom" id="qaCustom">
+          <input type="text" id="qaTimeInput" inputmode="numeric" maxlength="5" placeholder="12:00">
+          <div class="wheel-wrap">
+            <div class="wheel" id="qaWheelH"></div>
+            <div class="wheel-colon">:</div>
+            <div class="wheel" id="qaWheelM"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label class="label">최대 인원</label>
+        <input type="number" id="qaCap" min="1" max="50" value="16">
+      </div>
+      <div id="qaErr" class="alert alert-err" style="display:none;"></div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-blue" style="flex:1;" id="qaSaveBtn" onclick="saveQuickAdd()">등록하기</button>
+        <button class="btn btn-outline" style="flex:1;" onclick="closeQuickAdd()">취소</button>
       </div>
     </div>
   </div>
@@ -1212,10 +1263,117 @@ async function deleteSession(sessId){
     toast('수업이 삭제되었습니다.','ok');
   }catch(e){toast('오류: '+e.message,'err');}
 }
-async function quickAddSession(date){
-  const time=prompt(`${date}에 추가할 시작 시간을 입력하세요\n예) 12:00 / 13:30 / 16:30`);
-  if(!time||!time.match(/^\d{1,2}:\d{2}$/))return;
-  await addSessionDirect(date,time,`수업 (${time})`,16,'group');
+/* ── 수업 추가 창: 클래스 → 시간(체크박스 + 직접 입력/스크롤 시계) ── */
+const QA_CLASSES=[
+  {name:'유소년',type:'group',cap:16},
+  {name:'프라이빗레슨',type:'private',cap:1},
+  {name:'초급반',type:'group',cap:16},
+  {name:'중급반',type:'group',cap:16},
+  {name:'시합반',type:'group',cap:16}
+];
+const QA_PRESETS=['12:00','13:30','16:30'];
+const QA_HOURS=Array.from({length:18},(_,i)=>String(i+6).padStart(2,'0')); // 06~23시
+const QA_MINS=Array.from({length:12},(_,i)=>String(i*5).padStart(2,'0'));  // 5분 단위
+const WHEEL_ROW=40;
+let qaDate=null, qaClass=null, qaWheelTimer=null;
+
+function quickAddSession(date){
+  qaDate=date;qaClass=null;
+  const[,mm,dd]=date.split('-').map(Number);
+  const dow=['일','월','화','수','목','금','토'][new Date(date+'T12:00:00').getDay()];
+  $('qaTitle').textContent=`${mm}월 ${dd}일 (${dow}) 수업 추가`;
+  $('qaClasses').innerHTML=QA_CLASSES.map((c,i)=>
+    `<div class="qa-class" onclick="selectQaClass(${i})">${c.name}</div>`).join('');
+  $('qaTimes').innerHTML=QA_PRESETS.map(t=>
+    `<label class="ag-check"><input type="checkbox" class="qa-preset" value="${t}">${t}</label>`).join('')+
+    `<label class="ag-check"><input type="checkbox" id="qaCustomChk" onchange="toggleQaCustom(this.checked)">직접 입력</label>`;
+  $('qaCustom').classList.remove('show');
+  $('qaCap').value=16;
+  $('qaErr').style.display='none';
+  $('quickAddModal').classList.add('show');
+}
+function closeQuickAdd(){$('quickAddModal').classList.remove('show');qaDate=null;}
+function selectQaClass(i){
+  qaClass=QA_CLASSES[i];
+  document.querySelectorAll('.qa-class').forEach((el,j)=>el.classList.toggle('active',j===i));
+  $('qaCap').value=qaClass.cap;
+}
+function toggleQaCustom(on){
+  $('qaCustom').classList.toggle('show',on);
+  if(on){
+    if(!$('qaTimeInput').value)$('qaTimeInput').value='12:00';
+    setTimeout(()=>syncWheelsFromInput(),0); // 화면에 보인 뒤 스크롤 위치 맞춤
+  }
+}
+function buildWheel(el,items,onPick){
+  el.innerHTML=items.map((v,i)=>`<div data-i="${i}">${v}</div>`).join('');
+  el.onscroll=()=>{
+    clearTimeout(el._t);
+    const i=Math.max(0,Math.min(items.length-1,Math.round(el.scrollTop/WHEEL_ROW)));
+    el.querySelectorAll('div').forEach((d,j)=>d.classList.toggle('on',j===i));
+    if(el._sync){el._sync=false;return;} // 입력창에 맞춰 움직인 경우엔 입력값을 덮어쓰지 않음
+    el._t=setTimeout(()=>onPick(items[i]),60);
+  };
+  el.onclick=e=>{const i=e.target.dataset?.i;if(i!=null)el.scrollTo({top:i*WHEEL_ROW,behavior:'smooth'});};
+}
+function scrollWheelTo(el,items,val){
+  let i=items.indexOf(val);
+  if(i<0){ // 5분 단위가 아닌 값(예: 12:10은 있음, 12:07)은 가장 가까운 칸으로
+    const n=parseInt(val)||0;
+    i=items.reduce((b,v,j)=>Math.abs(parseInt(v)-n)<Math.abs(parseInt(items[b])-n)?j:b,0);
+  }
+  if(el.scrollTop!==i*WHEEL_ROW){el._sync=true;el.scrollTop=i*WHEEL_ROW;}
+  el.querySelectorAll('div').forEach((d,j)=>d.classList.toggle('on',j===i));
+}
+function syncWheelsFromInput(){
+  const m=($('qaTimeInput').value||'').match(/^(\d{1,2}):(\d{2})$/);
+  if(!m)return;
+  scrollWheelTo($('qaWheelH'),QA_HOURS,m[1].padStart(2,'0'));
+  scrollWheelTo($('qaWheelM'),QA_MINS,m[2]);
+}
+function setQaTimePart(part,v){
+  const[h,mi]=($('qaTimeInput').value.match(/^(\d{1,2}):(\d{2})$/)||[null,'12','00']).slice(1);
+  $('qaTimeInput').value=part==='h'?`${v}:${mi}`:`${h.padStart(2,'0')}:${v}`;
+}
+buildWheel($('qaWheelH'),QA_HOURS,v=>setQaTimePart('h',v));
+buildWheel($('qaWheelM'),QA_MINS,v=>setQaTimePart('m',v));
+$('qaTimeInput').addEventListener('input',e=>{
+  let d=e.target.value.replace(/\D/g,'').slice(0,4);
+  if(d.length>=3)d=d.slice(0,d.length-2)+':'+d.slice(-2); // 1230 → 12:30
+  e.target.value=d;
+  syncWheelsFromInput();
+});
+
+async function saveQuickAdd(){
+  const err=msg=>showAlert('qaErr',msg);
+  if(!qaClass){err('클래스를 선택해주세요.');return;}
+  const times=[...document.querySelectorAll('.qa-preset:checked')].map(i=>i.value);
+  if($('qaCustomChk')?.checked){
+    const m=($('qaTimeInput').value||'').match(/^(\d{1,2}):(\d{2})$/);
+    if(!m||+m[1]>23||+m[2]>59){err('직접 입력 시간을 12:30 형식으로 입력해주세요.');return;}
+    times.push(`${m[1].padStart(2,'0')}:${m[2]}`);
+  }
+  const uniq=[...new Set(times)].sort();
+  if(!uniq.length){err('시간을 하나 이상 선택해주세요.');return;}
+  const cap=parseInt($('qaCap').value)||qaClass.cap;
+  // 같은 날짜·시간·클래스가 이미 있으면 건너뜀
+  const exists=t=>Object.values(S.sessions).some(s=>s.date===qaDate&&s.time===t&&s.status!=='cancelled'&&s.title===`${qaClass.name} (${t})`);
+  const todo=uniq.filter(t=>!exists(t));
+  if(!todo.length){err('이미 같은 수업이 등록되어 있습니다.');return;}
+  const btn=$('qaSaveBtn');btn.disabled=true;
+  try{
+    const updates={},now=new Date().toISOString();
+    todo.forEach(t=>{
+      const id=db.ref('sessions').push().key;
+      updates[`sessions/${id}`]={id,date:qaDate,time:t,title:`${qaClass.name} (${t})`,
+        sessionType:qaClass.type,maxCapacity:cap,createdAt:now};
+    });
+    await db.ref().update(updates);
+    const skipped=uniq.length-todo.length;
+    toast(`${qaClass.name} ${todo.length}개 수업이 추가되었습니다.${skipped?` (중복 ${skipped}개 제외)`:''}`,'ok',3200);
+    closeQuickAdd();
+  }catch(e){err('오류: '+e.message);}
+  finally{btn.disabled=false;}
 }
 async function addSessionDirect(date,time,title,cap,type){
   try{
@@ -2207,10 +2365,11 @@ function showTab(idx){
 }
 
 /* ── MODAL CLOSE ON BACKDROP ── */
-['memberModal','walkinModal','memberInfoModal','createSessModal'].forEach(id=>{
+['memberModal','walkinModal','memberInfoModal','createSessModal','quickAddModal'].forEach(id=>{
   document.getElementById(id)?.addEventListener('click',e=>{
     if(e.target===document.getElementById(id)){
       if(id==='memberModal')closeMemberModal();
+      else if(id==='quickAddModal')closeQuickAdd();
       else if(id==='walkinModal')closeWalkinModal();
       else if(id==='memberInfoModal')closeMemberInfoModal();
       else if(id==='createSessModal')closeCreateSessModal();
