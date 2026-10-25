@@ -497,6 +497,19 @@ footer{
 }
 .gal-btn-naver{background:#03C75A;color:#fff;}
 
+.cta-cards.cta-cards-2{grid-template-columns:repeat(2,1fr);max-width:600px;}
+/* ── FOOTER CTA ── */
+.footer-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--blue);color:#fff;padding:12px 22px;border-radius:50px;
+  font-size:15px;font-weight:700;transition:background .15s,transform .15s;
+}
+.footer-cta:hover{background:var(--blueL);transform:translateY(-1px);}
+.footer-cta svg{width:18px;height:18px;display:block;flex-shrink:0;}
+.footer-cta small{font-size:14px;font-weight:500;opacity:.85;}
+/* 오른쪽 떠 있는 버튼과 겹치지 않게 */
+@media(min-width:601px) and (max-width:1380px){.footer-inner{padding-right:70px;}}
+
 /* ── FOOTER SNS ── */
 .footer-sns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .sns-btn{
@@ -574,7 +587,9 @@ footer{
   .reels-viewport{max-width:100%;}
   .contact-strip{flex-direction:column;align-items:center;gap:12px;}
   .footer-inner{flex-direction:column;gap:16px;}
-  .footer-sns{justify-content:center;}
+  .footer-cta{align-self:center;}
+  .cta-cards.cta-cards-2{grid-template-columns:1fr;}
+  footer{padding-bottom:84px;} /* 떠 있는 버튼에 가리지 않게 */
   .gal-actions{flex-direction:column;align-items:center;}
   .float-bar{gap:6px;bottom:16px;right:10px;}
   .float-btn{width:42px;height:42px;}
@@ -919,7 +934,7 @@ footer{
     <p class="sec-desc reveal" style="text-align:center;max-width:480px;margin:0 auto;">
       첫 수업이 망설여지신다면 편하게 문의해 주세요
     </p>
-    <div class="cta-cards reveal" style="grid-template-columns:repeat(2,1fr);max-width:600px;">
+    <div class="cta-cards cta-cards-2 reveal">
       <div class="cta-card">
         <div class="cta-card-icon">🎫</div>
         <div class="cta-card-title">원데이클래스</div>
@@ -932,24 +947,6 @@ footer{
         <div class="cta-card-desc">정규 수강권을 보유한 회원은 로그인 후 수업 예약·취소 및 수강권을 관리할 수 있습니다.</div>
         <a href="dashboard.html" class="cta-card-btn secondary">회원 로그인</a>
       </div>
-    </div>
-    <div class="contact-strip reveal">
-      <a href="tel:01044631177" class="contact-item">
-        <span class="contact-item-icon ci-phone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></span>
-        <span>010-4463-1177</span>
-      </a>
-      <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="contact-item">
-        <span class="contact-item-icon ci-kakao"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg></span>
-        <span>카카오 채널</span>
-      </a>
-      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="contact-item">
-        <span class="contact-item-icon ci-insta"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
-        <span>@highend_volleyball</span>
-      </a>
-      <a href="https://m.place.naver.com/place/2022442484" target="_blank" class="contact-item">
-        <span class="contact-item-icon ci-naver"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.54 12.47L7.84 2H4v20h4.46V11.53L16.16 22H20V2h-4.46z"/></svg></span>
-        <span>네이버 지도</span>
-      </a>
     </div>
   </div>
 </section>
@@ -967,23 +964,10 @@ footer{
       </div>
       <div class="footer-copy" style="margin-top:8px;">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
     </div>
-    <div class="footer-sns">
-      <a href="tel:01044631177" class="sns-btn sns-phone" title="전화">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-      </a>
-      <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="sns-btn sns-kakao" title="카카오">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg>
-      </a>
-      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="sns-btn sns-insta" title="Instagram">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-      </a>
-      <a href="https://m.place.naver.com/place/2022442484" target="_blank" class="sns-btn sns-naver" title="네이버">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.54 12.47L7.84 2H4v20h4.46V11.53L16.16 22H20V2h-4.46z"/></svg>
-      </a>
-      <a href="https://www.youtube.com/@highend_volleyball" target="_blank" class="sns-btn sns-yt" title="YouTube">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
-      </a>
-    </div>
+    <a href="tel:01044631177" class="footer-cta">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      수업 문의 <small>010-4463-1177</small>
+    </a>
   </div>
 </footer>
 
