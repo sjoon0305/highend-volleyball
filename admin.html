@@ -103,6 +103,11 @@ textarea{resize:vertical;min-height:80px;}
 .cho-btn:disabled{opacity:.3;cursor:default;}
 .cho-head{font-size:13px;font-weight:900;color:var(--blue);margin:14px 2px 6px;padding-bottom:4px;border-bottom:1.5px solid var(--border);}
 .cho-head:first-child{margin-top:0;}
+.ag-quick{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);}
+.ag-quick-lbl{font-size:11px;font-weight:700;color:var(--orange);margin-right:2px;}
+.ag-check{display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1.5px solid var(--border);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;user-select:none;}
+.ag-check:hover{border-color:var(--blue);color:var(--blue);}
+.ag-check input{width:15px;height:15px;margin:0;accent-color:var(--blue);cursor:pointer;}
 
 /* CALENDAR ADMIN */
 .cal-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
@@ -1349,6 +1354,18 @@ function ageGroupOf(m){
 function ageGroupLabel(k){return (AGE_GROUPS.find(g=>g.key===k)||{}).label||'미분류';}
 function setMemberFolder(k){memberFolder=k;memberCho='';renderMembers();}
 function setMemberCho(c){memberCho=memberCho===c?'':c;renderMembers();}
+// 미분류 회원 카드의 체크박스: 분류만 바로 저장 (수정 창 거치지 않음)
+async function quickSetAgeGroup(id,key,el){
+  const m=S.members[id];if(!m)return;
+  el.closest('.ag-quick').querySelectorAll('input').forEach(i=>{i.disabled=true;i.checked=i===el;});
+  try{
+    await db.ref(`members/${id}/ageGroup`).set(key);
+    toast(`${m.name} → ${ageGroupLabel(key)} 저장`,'ok');
+  }catch(e){
+    toast('저장 실패: '+e.message,'err');
+    renderMembers();
+  }
+}
 
 function renderMembers(){
   const raw=($('memberSearch')?.value||'').toLowerCase();
@@ -1416,6 +1433,11 @@ function memberCardHtml(m){
         <span class="mc-chip">예약 ${futureRes}건</span>
         ${expiryDays!==null?`<span class="mc-chip" style="color:${expiryDays<7?'var(--red)':expiryDays<30?'var(--orange)':'var(--muted)'};">${expiryDays<0?'만료됨':expiryDays+'일 남음'}</span>`:''}
       </div>
+      ${ag==='none'?`<div class="ag-quick" onclick="event.stopPropagation()">
+        <span class="ag-quick-lbl">분류 선택</span>
+        ${AGE_GROUPS.filter(g=>['youth','teen','adult'].includes(g.key)).map(g=>
+          `<label class="ag-check"><input type="checkbox" onchange="quickSetAgeGroup('${m.id}','${g.key}',this)">${g.label}</label>`).join('')}
+      </div>`:''}
     </div>`;
 }
 
