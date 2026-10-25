@@ -92,6 +92,17 @@ textarea{resize:vertical;min-height:80px;}
 .mc-info{font-size:12px;color:var(--muted);margin-top:2px;}
 .mc-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .mc-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--sub);}
+/* 회원 폴더(유소년/중·고등/성인) + 초성 바로가기 */
+.mf-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:8px;}
+.mf-tab{flex-shrink:0;display:flex;align-items:center;gap:6px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;white-space:nowrap;}
+.mf-tab.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.mf-cnt{font-size:11px;font-weight:700;opacity:.75;}
+.cho-bar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px;}
+.cho-btn{min-width:30px;height:30px;padding:0 6px;border-radius:7px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;}
+.cho-btn.active{background:var(--blueL);border-color:var(--blue);color:var(--blue);}
+.cho-btn:disabled{opacity:.3;cursor:default;}
+.cho-head{font-size:13px;font-weight:900;color:var(--blue);margin:14px 2px 6px;padding-bottom:4px;border-bottom:1.5px solid var(--border);}
+.cho-head:first-child{margin-top:0;}
 
 /* CALENDAR ADMIN */
 .cal-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
@@ -341,6 +352,8 @@ textarea{resize:vertical;min-height:80px;}
     <div style="margin-bottom:10px;">
       <input id="memberSearch" type="search" placeholder="이름 또는 전화번호 검색" oninput="renderMembers()">
     </div>
+    <div class="mf-tabs" id="memberFolders"></div>
+    <div class="cho-bar" id="choBar"></div>
     <div id="memberList"></div>
   </div>
 
@@ -534,6 +547,15 @@ textarea{resize:vertical;min-height:80px;}
         <div><label class="label">초기 비밀번호</label><input id="mPw" type="text" placeholder="0000"></div>
       </div>
       <div><label class="label">이메일 (선택)</label><input id="mEmail" type="email" placeholder="example@email.com"></div>
+      <div>
+        <label class="label">분류 폴더</label>
+        <select id="mAgeGroup">
+          <option value="">자동 (생년월일 기준)</option>
+          <option value="youth">유소년</option>
+          <option value="teen">중·고등</option>
+          <option value="adult">성인</option>
+        </select>
+      </div>
       <div class="grid2">
         <div>
           <label class="label">수업 유형</label>
@@ -1286,22 +1308,89 @@ async function toggleAttend(sessId,memberId){
 }
 
 /* ── MEMBERS ── */
+/* ── 회원 분류 폴더 + 초성 ── */
+const AGE_GROUPS=[
+  {key:'all',label:'전체',icon:'📁'},
+  {key:'youth',label:'유소년',icon:'🧒'},
+  {key:'teen',label:'중·고등',icon:'🎒'},
+  {key:'adult',label:'성인',icon:'🧑'},
+  {key:'none',label:'미분류',icon:'❔'}
+];
+const CHO_ALL=['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const CHO_MERGE={'ㄲ':'ㄱ','ㄸ':'ㄷ','ㅃ':'ㅂ','ㅆ':'ㅅ','ㅉ':'ㅈ'};
+const CHO_LIST=['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅅ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ','기타'];
+let memberFolder='all', memberCho='';
+function choOf(name){
+  const c=(name||'').trim().charCodeAt(0)-0xAC00;
+  if(c<0||c>11171)return '기타';
+  const ch=CHO_ALL[Math.floor(c/588)];
+  return CHO_MERGE[ch]||ch;
+}
+// 생년월일(19900115, 1990-01-15, 900115 등) → 출생 연도
+function birthYearOf(b){
+  const d=(b||'').replace(/\D/g,'');
+  if(d.length>=8)return parseInt(d.slice(0,4));
+  if(d.length===6){
+    const yy=parseInt(d.slice(0,2)),cur=new Date().getFullYear()%100;
+    return yy<=cur?2000+yy:1900+yy;
+  }
+  return null;
+}
+// 직접 지정한 분류 우선, 없으면 생년월일로 계산 (만 나이가 아닌 학년 기준: 초등 이하·중고등·성인)
+function ageGroupOf(m){
+  if(['youth','teen','adult'].includes(m.ageGroup))return m.ageGroup;
+  const by=birthYearOf(m.birthdate);
+  if(!by)return 'none';
+  const age=new Date().getFullYear()-by+1;
+  if(age<=13)return 'youth';
+  if(age<=19)return 'teen';
+  return 'adult';
+}
+function ageGroupLabel(k){return (AGE_GROUPS.find(g=>g.key===k)||{}).label||'미분류';}
+function setMemberFolder(k){memberFolder=k;memberCho='';renderMembers();}
+function setMemberCho(c){memberCho=memberCho===c?'':c;renderMembers();}
+
 function renderMembers(){
-  const q=($('memberSearch')?.value||'').toLowerCase().replace(/\D/g,'') ||
-           ($('memberSearch')?.value||'').toLowerCase();
   const raw=($('memberSearch')?.value||'').toLowerCase();
-  const list=Object.values(S.members).filter(m=>{
+  const all=Object.values(S.members).filter(m=>{
     if(m.isAdmin)return false;
     if(!raw)return true;
     return (m.name||'').toLowerCase().includes(raw)||
            (m.phone||'').replace(/\D/g,'').includes(raw.replace(/\D/g,''));
   }).sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'));
 
+  // 폴더 탭 (인원수 표시)
+  const cnt={all:all.length};
+  all.forEach(m=>{const g=ageGroupOf(m);cnt[g]=(cnt[g]||0)+1;});
+  $('memberFolders').innerHTML=AGE_GROUPS
+    .filter(g=>g.key!=='none'||cnt.none)
+    .map(g=>`<div class="mf-tab${memberFolder===g.key?' active':''}" onclick="setMemberFolder('${g.key}')">
+      ${g.icon} ${g.label} <span class="mf-cnt">${cnt[g.key]||0}</span></div>`).join('');
+
+  const inFolder=memberFolder==='all'?all:all.filter(m=>ageGroupOf(m)===memberFolder);
+
+  // 초성 바로가기 (해당 초성 회원이 없으면 비활성)
+  const choCnt={};
+  inFolder.forEach(m=>{const c=choOf(m.name);choCnt[c]=(choCnt[c]||0)+1;});
+  $('choBar').innerHTML=`<button class="cho-btn${!memberCho?' active':''}" onclick="setMemberCho('')">전체</button>`+
+    CHO_LIST.map(c=>`<button class="cho-btn${memberCho===c?' active':''}" onclick="setMemberCho('${c}')" ${choCnt[c]?'':'disabled'}>${c}</button>`).join('');
+
+  const list=memberCho?inFolder.filter(m=>choOf(m.name)===memberCho):inFolder;
   if(!list.length){
     $('memberList').innerHTML='<div class="empty"><div>회원이 없습니다</div></div>';return;
   }
 
-  $('memberList').innerHTML=list.map(m=>{
+  // 초성별 묶음 (ㄱ → ㄴ → ㄷ … 순서, 이름은 가나다순)
+  const byCho={};
+  list.forEach(m=>{const c=choOf(m.name);(byCho[c]=byCho[c]||[]).push(m);});
+  $('memberList').innerHTML=CHO_LIST.filter(c=>byCho[c]).map(c=>
+    `<div class="cho-head">${c} <span style="color:var(--muted);font-weight:700;font-size:11px;">${byCho[c].length}명</span></div>`+
+    byCho[c].map(memberCardHtml).join('')
+  ).join('');
+}
+
+function memberCardHtml(m){
+    const ag=ageGroupOf(m);
     const reg=parseInt(m.regularSessions)||0;
     const priv=parseInt(m.privateSessions)||0;
     const td=todayStr();
@@ -1320,6 +1409,7 @@ function renderMembers(){
         </div>
       </div>
       <div class="mc-chips">
+        <span class="mc-chip" style="color:${ag==='none'?'var(--muted)':'var(--text)'};">${ageGroupLabel(ag)}${ag!=='none'&&!m.ageGroup?' (자동)':''}</span>
         ${reg>0?`<span class="mc-chip" style="color:var(--blue);">그룹 ${reg}회</span>`:''}
         ${priv>0?`<span class="mc-chip" style="color:#7c3aed;">프라이빗 ${priv}회</span>`:''}
         ${reg===0&&priv===0?'<span class="mc-chip" style="color:var(--muted);">잔여 없음</span>':''}
@@ -1327,7 +1417,6 @@ function renderMembers(){
         ${expiryDays!==null?`<span class="mc-chip" style="color:${expiryDays<7?'var(--red)':expiryDays<30?'var(--orange)':'var(--muted)'};">${expiryDays<0?'만료됨':expiryDays+'일 남음'}</span>`:''}
       </div>
     </div>`;
-  }).join('');
 }
 
 function openAddMember(){
@@ -1335,6 +1424,7 @@ function openAddMember(){
   $('memberModalTitle').textContent='회원 등록';
   $('mName').value='';$('mPhone').value='';$('mBirth').value='';
   $('mPw').value='0000';$('mEmail').value='';
+  $('mAgeGroup').value=['youth','teen','adult'].includes(memberFolder)?memberFolder:'';
   $('mClass').value='group';$('mPass').value='8';
   $('mRegSess').value='0';$('mPrivSess').value='0';$('mExpiry').value='';
   $('memberSaveErr').style.display='none';
@@ -1348,6 +1438,7 @@ function openEditMember(id){
   $('mName').value=m.name||'';$('mPhone').value=m.phone||'';
   $('mBirth').value=m.birthdate||'';$('mPw').value=m.password||'0000';
   $('mEmail').value=m.email||'';
+  $('mAgeGroup').value=m.ageGroup||'';
   $('mClass').value=m.classType||'group';$('mPass').value=m.passType||'8';
   $('mRegSess').value=m.regularSessions!=null?m.regularSessions:0;
   $('mPrivSess').value=m.privateSessions!=null?m.privateSessions:0;
@@ -1371,6 +1462,7 @@ async function saveMember(){
     phone:rawPhone,
     birthdate:$('mBirth').value||'',
     email:($('mEmail').value||'').trim(),
+    ageGroup:$('mAgeGroup').value||'',
     password:($('mPw').value||'0000').trim(),
     classType:$('mClass').value,
     passType:$('mPass').value,
@@ -1591,10 +1683,11 @@ async function exportMembersCsv(){
   try{
     const snap=await db.ref('members').once('value');
     const members=snap.val()||{};
-    const rows=[['이름','전화번호','생년월일','수업유형','수강권','그룹잔여','프라이빗잔여','만료일']];
-    Object.values(members).filter(m=>!m.isAdmin).forEach(m=>{
+    const rows=[['이름','전화번호','생년월일','분류','수업유형','수강권','그룹잔여','프라이빗잔여','만료일']];
+    Object.values(members).filter(m=>!m.isAdmin)
+      .sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko')).forEach(m=>{
       rows.push([
-        m.name||'',m.phone||'',m.birthdate||'',
+        m.name||'',m.phone||'',m.birthdate||'',ageGroupLabel(ageGroupOf(m)),
         m.classType==='private'?'프라이빗':'그룹',
         m.passType||'',
         m.regularSessions||0,
