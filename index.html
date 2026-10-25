@@ -8,9 +8,18 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏐</text></svg>">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<link rel="preload" href="./fonts/Paperlogy-9Black.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/Paperlogy-4Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
+/* ── FONT: 페이퍼로지 (SIL OFL 1.1, fonts/OFL.txt) ── */
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-4Regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-5Medium.woff2') format('woff2');font-weight:500;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-6SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-7Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-8ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-9Black.woff2') format('woff2');font-weight:900;font-display:swap;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --bg:#f0f5fc;--surface:#fff;--surface2:#e8eff9;--surface3:#dde7f5;
@@ -24,7 +33,7 @@
   --radius:10px;
 }
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',-apple-system,sans-serif;line-height:1.6;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:'Paperlogy','Noto Sans KR',-apple-system,sans-serif;line-height:1.6;overflow-x:hidden;}
 img{max-width:100%;display:block;}
 a{text-decoration:none;color:inherit;}
 button{font-family:inherit;cursor:pointer;border:none;background:none;}
@@ -113,6 +122,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
   font-size:clamp(34px,5vw,62px);font-weight:900;color:var(--text);
   line-height:1.15;margin-bottom:14px;letter-spacing:-.02em;
 }
+.hero-title,.sec-title{letter-spacing:-.01em;}
 .hero-title em{color:var(--blue);font-style:normal;}
 .hero-sub{
   font-size:clamp(14px,1.8vw,17px);color:var(--sub);
@@ -582,6 +592,8 @@ footer{
   .ccar-dot.active{width:26px;}
 }
 @media(max-width:600px){
+  /* 휴대폰: 상단 원데이 버튼은 메뉴·첫 화면에 있으므로 숨겨 메뉴(☰) 버튼 자리 확보 */
+  .nav-right .btn-naver{display:none;}
   section{padding:60px 18px;}
   .hero-inner{padding:40px 18px;}
   .curr-cards{grid-template-columns:1fr 1fr;}
