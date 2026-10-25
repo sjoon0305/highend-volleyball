@@ -333,7 +333,8 @@ section{padding:80px 24px;}
   transition:border-color .2s,box-shadow .2s,transform .2s;
 }
 .cta-card:hover{border-color:var(--blue);box-shadow:var(--shadow);transform:translateY(-3px);}
-.cta-card-icon{font-size:32px;margin-bottom:12px;}
+.cta-card-icon{margin-bottom:12px;}
+.cta-card-icon svg{width:64px;height:64px;display:block;margin:0 auto;}
 .cta-card-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;}
 .cta-card-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
 .cta-card-btn{
@@ -501,12 +502,11 @@ footer{
 /* ── FOOTER CTA ── */
 .footer-cta{
   display:inline-flex;align-items:center;gap:10px;
-  background:var(--blue);color:#fff;padding:12px 22px;border-radius:50px;
-  font-size:15px;font-weight:700;transition:background .15s,transform .15s;
+  background:#FEE500;color:#3c1e08;padding:12px 22px;border-radius:50px;
+  font-size:15px;font-weight:700;transition:filter .15s,transform .15s;
 }
-.footer-cta:hover{background:var(--blueL);transform:translateY(-1px);}
+.footer-cta:hover{filter:brightness(.95);transform:translateY(-1px);}
 .footer-cta svg{width:18px;height:18px;display:block;flex-shrink:0;}
-.footer-cta small{font-size:14px;font-weight:500;opacity:.85;}
 /* 오른쪽 떠 있는 버튼과 겹치지 않게 */
 @media(min-width:601px) and (max-width:1380px){.footer-inner{padding-right:70px;}}
 
@@ -936,13 +936,13 @@ footer{
     </p>
     <div class="cta-cards cta-cards-2 reveal">
       <div class="cta-card">
-        <div class="cta-card-icon">🎫</div>
+        <div class="cta-card-icon"><svg viewBox="0 0 64 64" role="img" aria-label="원데이클래스 티켓"><g transform="rotate(-10 32 32)"><path d="M7 21a4 4 0 0 1 4-4h42a4 4 0 0 1 4 4v6a5 5 0 0 0 0 10v6a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-6a5 5 0 0 0 0-10z" fill="#0d1b2e" transform="translate(2.5 3)"/><path d="M7 21a4 4 0 0 1 4-4h42a4 4 0 0 1 4 4v6a5 5 0 0 0 0 10v6a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-6a5 5 0 0 0 0-10z" fill="#1a53d4"/><path d="M42 19.5v25" stroke="#fff" stroke-opacity=".6" stroke-width="1.8" stroke-dasharray="3 3"/><g fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(14 22) scale(0.83)"><circle cx="12" cy="12" r="10"/><path d="M11.1 7.1a16.55 16.55 0 0 1 10.9 4"/><path d="M12 12a12.6 12.6 0 0 1-8.7 5"/><path d="M16.8 13.6a16.55 16.55 0 0 1-9 7.5"/><path d="M20.7 17a12.8 12.8 0 0 0-8.7-5 13.3 13.3 0 0 1 0-10"/><path d="M6.3 3.8a16.55 16.55 0 0 0 1.9 11.5"/></g><text x="49.5" y="33" text-anchor="middle" font-family="Noto Sans KR,sans-serif" font-weight="900" font-size="12" fill="#fff">1</text><text x="49.5" y="41" text-anchor="middle" font-family="Noto Sans KR,sans-serif" font-weight="700" font-size="5.5" fill="#fff">DAY</text></g><circle cx="52" cy="12" r="7" fill="#c8231e" stroke="#fff" stroke-width="2"/><path d="M52 7.6l1.2 3 3.1.1-2.4 2 .8 3.1-2.7-1.8-2.7 1.8.8-3.1-2.4-2 3.1-.1z" fill="#fff"/></svg></div>
         <div class="cta-card-title">원데이클래스</div>
         <div class="cta-card-desc">처음 배구를 시작하는 분들을 위한 하루 체험 수업. 네이버에서 간편하게 신청하세요.</div>
         <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" class="cta-card-btn primary">네이버 예약</a>
       </div>
       <div class="cta-card">
-        <div class="cta-card-icon">🏐</div>
+        <div class="cta-card-icon"><svg viewBox="0 0 64 64" role="img" aria-label="회원 카드"><g transform="rotate(8 32 32)"><rect x="6" y="15" width="52" height="34" rx="6" fill="#1a53d4" transform="translate(2.5 3)"/><rect x="6" y="15" width="52" height="34" rx="6" fill="#0d1b2e"/><rect x="12" y="22" width="11" height="8" rx="2" fill="#f2c94c"/><rect x="12" y="37" width="20" height="2.6" rx="1.3" fill="#fff" fill-opacity=".55"/><rect x="12" y="42" width="13" height="2.6" rx="1.3" fill="#fff" fill-opacity=".35"/><path d="M46 20.5l8.5 2.8v6.2c0 5.3-3.6 9-8.5 10.4-4.9-1.4-8.5-5.1-8.5-10.4v-6.2z" fill="#1a53d4"/><text x="46" y="34.3" text-anchor="middle" font-family="Noto Sans KR,sans-serif" font-weight="900" font-size="10" fill="#fff">H</text></g><circle cx="52" cy="12" r="7" fill="#c8231e" stroke="#fff" stroke-width="2"/><path d="M48.8 12.2l2.2 2.2 4.1-4.3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="cta-card-title">회원 로그인</div>
         <div class="cta-card-desc">정규 수강권을 보유한 회원은 로그인 후 수업 예약·취소 및 수강권을 관리할 수 있습니다.</div>
         <a href="dashboard.html" class="cta-card-btn secondary">회원 로그인</a>
@@ -964,9 +964,9 @@ footer{
       </div>
       <div class="footer-copy" style="margin-top:8px;">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
     </div>
-    <a href="tel:01044631177" class="footer-cta">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-      수업 문의 <small>010-4463-1177</small>
+    <a href="https://pf.kakao.com/_pCEzX/chat" target="_blank" rel="noopener" class="footer-cta">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg>
+      카카오톡 수업 문의
     </a>
   </div>
 </footer>
