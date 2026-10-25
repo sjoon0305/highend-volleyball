@@ -499,14 +499,20 @@ footer{
 .gal-btn-naver{background:#03C75A;color:#fff;}
 
 .cta-cards.cta-cards-2{grid-template-columns:repeat(2,1fr);max-width:600px;}
-/* ── FOOTER CTA ── */
-.footer-cta{
-  display:inline-flex;align-items:center;gap:10px;
-  background:#FEE500;color:#3c1e08;padding:12px 22px;border-radius:50px;
-  font-size:15px;font-weight:700;transition:filter .15s,transform .15s;
+/* ── KAKAO 문의 배너 ── */
+.kakao-banner{
+  max-width:600px;margin:18px auto 0;background:#FEE500;border-radius:16px;
+  padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;
 }
-.footer-cta:hover{filter:brightness(.95);transform:translateY(-1px);}
-.footer-cta svg{width:18px;height:18px;display:block;flex-shrink:0;}
+.kb-title{font-size:17px;font-weight:900;color:#3c1e08;}
+.kb-sub{font-size:13px;color:#5a4410;margin-top:4px;}
+.kb-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0;
+  background:#3c1e08;color:#FEE500;padding:13px 20px;border-radius:12px;
+  font-size:15px;font-weight:800;white-space:nowrap;transition:transform .15s,opacity .15s;
+}
+.kb-btn:hover{transform:translateY(-1px);opacity:.92;}
+.kb-btn svg{width:20px;height:20px;display:block;}
 /* 오른쪽 떠 있는 버튼과 겹치지 않게 */
 @media(min-width:601px) and (max-width:1380px){.footer-inner{padding-right:70px;}}
 
@@ -587,7 +593,8 @@ footer{
   .reels-viewport{max-width:100%;}
   .contact-strip{flex-direction:column;align-items:center;gap:12px;}
   .footer-inner{flex-direction:column;gap:16px;}
-  .footer-cta{align-self:center;}
+  .kakao-banner{flex-direction:column;text-align:center;}
+  .kb-btn{width:100%;}
   .cta-cards.cta-cards-2{grid-template-columns:1fr;}
   footer{padding-bottom:84px;} /* 떠 있는 버튼에 가리지 않게 */
   .gal-actions{flex-direction:column;align-items:center;}
@@ -948,6 +955,16 @@ footer{
         <a href="dashboard.html" class="cta-card-btn secondary">회원 로그인</a>
       </div>
     </div>
+    <div class="kakao-banner reveal">
+      <div>
+        <div class="kb-title">궁금한 점이 있으신가요?</div>
+        <div class="kb-sub">카카오톡으로 메시지 남겨 주시면 확인 후 답변드립니다</div>
+      </div>
+      <a href="https://pf.kakao.com/_pCEzX/chat" target="_blank" rel="noopener" class="kb-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg>
+        1:1 채팅하기
+      </a>
+    </div>
   </div>
 </section>
 
@@ -964,10 +981,6 @@ footer{
       </div>
       <div class="footer-copy" style="margin-top:8px;">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
     </div>
-    <a href="https://pf.kakao.com/_pCEzX/chat" target="_blank" rel="noopener" class="footer-cta">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg>
-      카카오톡 수업 문의
-    </a>
   </div>
 </footer>
 
