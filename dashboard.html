@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#f0f5fc">
 <title>하이앤드 발리볼 | 회원 대시보드</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏐</text></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231a53d4%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2210%22/%3E%3Cpath%20d%3D%22M11.1%207.1a16.55%2016.55%200%200%201%2010.9%204%22/%3E%3Cpath%20d%3D%22M12%2012a12.6%2012.6%200%200%201-8.7%205%22/%3E%3Cpath%20d%3D%22M16.8%2013.6a16.55%2016.55%200%200%201-9%207.5%22/%3E%3Cpath%20d%3D%22M20.7%2017a12.8%2012.8%200%200%200-8.7-5%2013.3%2013.3%200%200%201%200-10%22/%3E%3Cpath%20d%3D%22M6.3%203.8a16.55%2016.55%200%200%200%201.9%2011.5%22/%3E%3C/svg%3E">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -154,6 +154,9 @@ textarea{resize:vertical;min-height:90px;}
 .history-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
 .history-icon.blue{background:var(--blueL);}
 .history-icon.red{background:var(--redL);}
+.history-icon .ln{width:20px;height:20px;color:var(--blue);}
+.alert .ln{width:18px;height:18px;display:block;flex-shrink:0;margin-top:1px;}
+.reserved-badge .ln{width:13px;height:13px;}
 .history-info{flex:1;min-width:0;}
 .history-title{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .history-sub{font-size:12px;color:var(--muted);margin-top:2px;}
@@ -214,7 +217,7 @@ textarea{resize:vertical;min-height:90px;}
 <div id="app" style="display:none;">
   <header class="header">
     <a href="index.html" class="header-logo">
-      <img class="header-logo-img" src="./1. 사진 자료/KakaoTalk_20260504_231126741.jpg" alt="logo" onerror="this.style.display='none'">
+      <img class="header-logo-img" src="./1. 코치 사진 자료/하이엔드 발리볼 로고.jpg" alt="logo" onerror="this.style.display='none'">
       <span class="header-brand">HIGH END</span>
     </a>
     <div style="display:flex;align-items:center;gap:8px;">
@@ -251,7 +254,7 @@ textarea{resize:vertical;min-height:90px;}
   <div class="page" id="page2">
     <div class="inner">
       <div class="alert alert-info">
-        <span>📅</span>
+        <span><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor"/></svg></span>
         <span>날짜를 선택하면 수업을 예약할 수 있습니다. 취소는 전날 22:00까지 가능합니다.</span>
       </div>
       <div class="cal-wrap">
@@ -276,7 +279,7 @@ textarea{resize:vertical;min-height:90px;}
     <div class="inner">
       <div class="section-title">추가 수강권 신청</div>
       <div class="alert alert-info" style="margin-bottom:14px;">
-        <span>📞</span>
+        <span><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
         <div><strong>수강료 문의</strong><br>전화: <a href="tel:010-4463-1177" style="color:var(--blue);font-weight:700;">010-4463-1177</a></div>
       </div>
       <div class="bank-info">
@@ -285,7 +288,7 @@ textarea{resize:vertical;min-height:90px;}
         <div class="bank-row"><span class="bank-key">예금주</span><span class="bank-val">김재휘</span></div>
       </div>
       <div class="alert alert-warn">
-        <span>⚠️</span>
+        <span><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5L2.8 19.5h18.4z"/><path d="M12 10v4.5"/><circle cx="12" cy="17" r=".9" fill="currentColor"/></svg></span>
         <span>이체 완료 후 아래 신청서를 제출해주세요. 관리자 확인 후 수강권이 발급됩니다.</span>
       </div>
       <div class="card">
@@ -347,7 +350,7 @@ textarea{resize:vertical;min-height:90px;}
         </div>
       </div>
       <div class="alert alert-info">
-        <span>💬</span>
+        <span><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h7"/></svg></span>
         <span>문의: <a href="tel:010-4463-1177" style="color:var(--blue);font-weight:700;">010-4463-1177</a> |
         <a href="https://www.instagram.com/highend_volleyball" target="_blank" style="color:var(--blue);font-weight:700;">인스타그램</a></span>
       </div>
@@ -358,6 +361,11 @@ textarea{resize:vertical;min-height:90px;}
 <div class="toast" id="toast"></div>
 
 <script>
+/* ── ICONS ── */
+const I_CARD='<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18"/><path d="M7 15h4"/></svg>';
+const I_PLUS='<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+const I_MINUS='<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg>';
+const I_CHECK='<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 /* ── FIREBASE ── */
 const firebaseConfig={
   apiKey:"AIzaSyBLP7b8C94e1g6eMlsEwntOAmGcVTm7gHg",
@@ -534,7 +542,7 @@ function renderPassCard(){
           <span>잔여 ${totalRemain}회</span><span>${safePct}% 남음</span>
         </div>
       </div>
-      <div class="pass-expiry">만료일 · ${exp}${isExpired?' ⚠️ 만료됨':''}</div>
+      <div class="pass-expiry">만료일 · ${exp}${isExpired?' · 만료됨':''}</div>
     </div>`;
 
   // passHistory section
@@ -543,10 +551,10 @@ function renderPassCard(){
   const histHtml=myHist.length?myHist.map(h=>`
     <div class="history-item">
       <div class="history-icon blue" style="background:${h.type==='admin_deduct'?'var(--redL)':h.type==='admin_add'?'#dcfce7':'var(--blueL)'};font-size:14px;">
-        ${h.type==='purchase'?'💳':h.type==='admin_add'?'➕':'➖'}
+        ${h.type==='purchase'?I_CARD:h.type==='admin_add'?I_PLUS:I_MINUS}
       </div>
       <div class="history-info">
-        <div class="history-title" style="color:${typeColor[h.type]||'var(--text)'};">${typeLabel[h.type]||h.type} ${h.sessions>0?'+':'-'}${Math.abs(h.sessions||0)}회</div>
+        <div class="history-title" style="color:${typeColor[h.type]||'var(--text)'};">${typeLabel[h.type]||h.type} ${h.type==='admin_deduct'?'-':'+'}${Math.abs(h.sessions||0)}회</div>
         <div class="history-sub">${(h.note||'').slice(0,40)||'-'}</div>
         <div class="history-sub" style="font-size:11px;">${(h.createdAt||'').slice(0,16).replace('T',' ')}</div>
       </div>
@@ -560,7 +568,7 @@ function renderPassCard(){
     .sort((a,b)=>b.date>a.date?1:-1);
   const usedHtml=usedRes.length?usedRes.slice(0,30).map(r=>`
     <div class="history-item">
-      <div class="history-icon blue" style="font-size:14px;">✓</div>
+      <div class="history-icon blue"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
       <div class="history-info">
         <div class="history-title">${r.title||'-'}</div>
         <div class="history-sub">${fmtDate(r.date)} · ${r.time||''}</div>
@@ -609,7 +617,7 @@ function renderHome(){
     .slice(0,5);
   const upcomingHtml=upcoming.length?upcoming.map(r=>`
     <div class="history-item">
-      <div class="history-icon blue" style="font-size:14px;">📅</div>
+      <div class="history-icon blue"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor"/></svg></div>
       <div class="history-info">
         <div class="history-title">${r.title||'-'}</div>
         <div class="history-sub">${fmtDate(r.date)} · ${r.time||''}</div>
@@ -624,10 +632,10 @@ function renderHome(){
 
   $('homeContent').innerHTML=`
     <div style="margin-bottom:16px;">
-      <div style="font-size:22px;font-weight:900;color:var(--text);letter-spacing:-.02em;">안녕하세요,<br>${m.name} 회원님 👋</div>
+      <div style="font-size:22px;font-weight:900;color:var(--text);letter-spacing:-.02em;">안녕하세요,<br>${m.name} 회원님</div>
     </div>
-    ${isExpired?`<div class="alert alert-err"><span>⚠️</span><span>수강권이 만료되었습니다. 수강권 신청 탭에서 재신청해주세요.</span></div>`:''}
-    ${noSessions&&!isExpired?`<div class="alert alert-warn"><span>📋</span><span>잔여 수업이 없습니다. 수강권을 신청해주세요.</span></div>`:''}
+    ${isExpired?`<div class="alert alert-err"><span><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5L2.8 19.5h18.4z"/><path d="M12 10v4.5"/><circle cx="12" cy="17" r=".9" fill="currentColor"/></svg></span><span>수강권이 만료되었습니다. 수강권 신청 탭에서 재신청해주세요.</span></div>`:''}
+    ${noSessions&&!isExpired?`<div class="alert alert-warn"><span><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M9 9h6M9 13h6M9 17h3"/></svg></span><span>잔여 수업이 없습니다. 수강권을 신청해주세요.</span></div>`:''}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
       <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;text-align:center;">
         <div style="font-size:11px;color:var(--blue);font-weight:700;letter-spacing:.05em;margin-bottom:4px;">그룹 잔여</div>
@@ -646,11 +654,11 @@ function renderHome(){
       ${upcoming.length?`<div style="margin-top:8px;"><button class="btn btn-outline btn-sm" style="width:100%;" onclick="showTab(2)">수업 예약하기</button></div>`:'<div style="margin-top:8px;"><button class="btn btn-blue btn-sm" style="width:100%;" onclick="showTab(2)">수업 예약하기</button></div>'}
     </div>
     <div class="alert alert-info" style="margin-bottom:14px;">
-      <span>📌</span>
+      <span><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg></span>
       <div><strong>수업 취소 안내</strong><br>수업 취소는 <strong>전날 22:00까지</strong> 가능합니다. 이후에는 취소가 불가하며 횟수가 차감됩니다.</div>
     </div>
     <div class="alert alert-info">
-      <span>💬</span>
+      <span><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h7"/></svg></span>
       <span>문의: <a href="tel:010-4463-1177" style="color:var(--blue);font-weight:700;">010-4463-1177</a> · <a href="https://www.instagram.com/highend_volleyball" target="_blank" style="color:var(--blue);font-weight:700;">인스타그램</a></span>
     </div>`;
 }
@@ -746,7 +754,7 @@ function renderSessionPanel(){
     }else if(myRes){
       const canC=canCancel(d);
       actionHtml=`<div style="display:flex;gap:6px;align-items:center;margin-top:10px;">
-        <span class="reserved-badge">✓ 예약완료</span>
+        <span class="reserved-badge">${I_CHECK} 예약완료</span>
         ${canC?`<button class="btn btn-ghost btn-sm" onclick="cancelReserv('${myRes.id}','${d}')">취소하기</button>`
                :`<span style="font-size:11px;color:var(--muted);">취소 마감됨</span>`}
       </div>`;
@@ -867,7 +875,7 @@ function renderPayHistory(){
     const dateStr=(r.createdAt||'').slice(0,10);
     const dateDisp=dateStr?fmtDate(dateStr):'-';
     return `<div class="history-item">
-      <div class="history-icon blue">💳</div>
+      <div class="history-icon blue"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18"/><path d="M7 15h4"/></svg></div>
       <div class="history-info">
         <div class="history-title">${r.classType==='private'?'프라이빗':'그룹'} ${r.passType}회권</div>
         <div class="history-sub"><span style="color:var(--blue);font-weight:700;">${dateDisp} 신청</span></div>
