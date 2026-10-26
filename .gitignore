@@ -14,3 +14,7 @@ GUIDE.md
 *.txt
 *.md
 !README.md
+
+# 검색봇·AI 안내 파일은 올림
+!robots.txt
+!llms.txt
