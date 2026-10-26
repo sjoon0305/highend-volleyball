@@ -46,7 +46,7 @@ PAGES = {
     'method': {'path': 'method/', 'title': '알고 하면 쉬운 배구 | 하이앤드 수업 방식', 'label': 'METHOD',
                'desc': '알고 하면 쉬운 배구. 왜 → 어떻게 → 해보기, 이유를 알고 하는 반복으로 가르칩니다. MAPS 워밍업과 생체역학 기반 정밀 교정. 상암 인근 하이앤드, 원데이 25,000원 · 010-4463-1177'},
     'class': {'path': 'class/', 'title': '배구 원데이 클래스 · 유소년 배구교실 · 개인레슨 | 하이앤드', 'label': 'CLASS',
-              'desc': '배구 원데이 클래스 25,000원(오픈 이벤트 50% 할인가), 유소년반 · 초급반 · 중급반 토요일 80분, 1:1 개인레슨. 상암 인근 · 현천동 180-1, 국가대표 출신 코치. 문의 010-4463-1177'},
+              'desc': '배구 원데이 클래스 25,000원(오픈 이벤트 50% 할인가), 유소년반 · 초급반 · 중급반 80분 정규수업, 국제학교 학생 배구 레슨, 1:1 개인레슨. 상암 인근 · 현천동 180-1, 국가대표 출신 코치. 문의 010-4463-1177'},
     'story': {'path': 'story/', 'title': '하이앤드 수업 이야기 · 배구 노트', 'label': 'STORY',
               'desc': '하이앤드 발리볼 아카데미 토요일 수업 이야기와 수업 사진 · 영상. 상암 인근 배구교실, 국가대표 출신 김재휘 코치. 원데이 클래스 25,000원 · 문의 010-4463-1177'},
     'contact': {'path': 'contact/', 'title': '오시는 길 · 자주 묻는 질문 | 하이앤드 발리볼 아카데미', 'label': 'CONTACT',
@@ -57,12 +57,17 @@ PAGES = {
 
 # ── 메뉴 ([ ] 확인 대기인 Hi:And Day · 배구 노트는 숨김) ──
 MENU = [
-    ('about', 'ABOUT', [('하이앤드 소개', '#intro'), ('김재휘 코치 경력', '#career'), ('코칭 스태프', '#staff'), ('시설 (200평 풀코트)', '#place')]),
-    ('method', 'METHOD', [('알고 하면 쉬운 배구', '#know'), ('MAPS 워밍업', '#maps'), ('정밀 교정', '#fix'), ('수업 80분 흐름', '#flow')]),
-    ('class', 'CLASS', [('원데이 클래스 예약', '#oneday'), ('유소년반', '#youth'), ('초급반 · 중급반', '#group'), ('개인레슨', '#private'), ('시간표 · 수강 안내', '#schedule')]),
+    ('about', 'ABOUT', [('하이앤드 소개', '#intro'), ('김재휘 코치 경력', '#career'), ('황준태 코치', '#hwang'), ('시설 (200평 풀코트)', '#place')]),
+    ('method', 'METHOD', [('알고 하면 쉬운 배구', '#know'), ('MAPS 워밍업', '#maps'), ('정밀 교정', '#fix'), ('수업 80분 흐름', '#flow'), ('4단계 성장 레벨', '#level')]),
+    ('class', 'CLASS', [('원데이 클래스 예약', '#oneday'), ('유소년반', '#youth'), ('초급반 · 중급반', '#group'), ('국제학교 · 해외 학생', '#intl'), ('개인레슨', '#private'), ('시간표 · 수강 안내', '#schedule')]),
     ('story', 'STORY', [('수업 이야기', '#class-story'), ('수업 사진 · 영상', '#gallery')]),
     ('contact', 'CONTACT', [('오시는 길', '#map'), ('상암·은평·고양 배구학원', '@local'), ('자주 묻는 질문', '#faq'), ('상담하기', '#ask')]),
 ]
+
+
+def ver(path):
+    import hashlib
+    return hashlib.md5(open(os.path.join(ROOT_DIR, path), 'rb').read()).hexdigest()[:8]
 
 
 def url(key, frag=''):
@@ -165,8 +170,8 @@ def head(key, root, extra_ld, extra_head=''):
 {SN['favicon']}
 <link rel="preload" href="{root}fonts/Paperlogy-9Black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{root}fonts/Paperlogy-4Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{root}assets/css/base.css">
-<link rel="stylesheet" href="{root}assets/css/site.css">
+<link rel="stylesheet" href="{root}assets/css/base.css?v={ver('assets/css/base.css')}">
+<link rel="stylesheet" href="{root}assets/css/site.css?v={ver('assets/css/site.css')}">
 {extra_head}{ld(graph)}
 </head>'''
 
@@ -220,10 +225,13 @@ def crumbs(key, root):
 
 
 def cta_band(root, title, sub='', buttons=None):
-    buttons = buttons or [('원데이 클래스 예약', rel(root, 'class', '#oneday'), 'w')]
-    b = ''.join(f'<a class="btn {c}" href="{h}">{escape(t)}</a>' for t, h, c in buttons)
-    s = f'<p>{sub}</p>' if sub else ''
-    return f'<section class="sec"><div class="wrap"><div class="band reveal"><h2>{title}</h2>{s}<div class="btns">{b}</div></div></div></section>'
+    # 모든 페이지 하단: 밝은 바탕 + 원데이 신청 박스 · 수업 문의 박스 (대표 지시 2026-10-26, buttons는 쓰지 않음)
+    s = f'<p class="cta2-sub">{sub}</p>' if sub else ''
+    return f'''<section class="sec cta2"><div class="wrap"><div class="cta2-in reveal"><h2>{title}</h2>{s}
+<div class="cta2-boxes">
+<a class="cta2-box p" href="{NAVER_BOOK}" target="_blank" rel="noopener"><b>원데이 클래스 신청하기</b><span class="go">네이버 예약 →</span></a>
+<a class="cta2-box s" href="{KAKAO_CHAT}" target="_blank" rel="noopener"><b>수업 문의하기</b><span class="go">카카오톡 상담 →</span></a>
+</div></div></div></section>'''
 
 
 def footer(root):
@@ -256,27 +264,42 @@ def footer(root):
 
 def page(key, body, extra_ld=(), scripts=(), extra_head=''):
     root = '' if key == 'home' else '../'
-    sc = ''.join(f'<script src="{s if s.startswith("http") else root + s}" defer></script>' for s in scripts)
+    sc = ''.join(f'<script src="{s if s.startswith("http") else root + s + "?v=" + ver(s)}" defer></script>' for s in scripts)
     return (head(key, root, list(extra_ld), extra_head) + '\n' + header(key, root) + '\n<main id="main">\n'
             + body(root) + '\n</main>\n' + footer(root) + '\n'
-            + f'<script src="{root}assets/js/site.js" defer></script>{sc}\n</body>\n</html>\n')
+            + f'<script src="{root}assets/js/site.js?v={ver("assets/js/site.js")}" defer></script>{sc}\n</body>\n</html>\n')
 
 
 # ════════════════════════ 페이지 본문 ════════════════════════
 
+HERO_VIDEO = 'intro'   # 'intro' = 하이라이트 첫 영상(아카데미 소개, 앞 10.4초) / 'court' = 가로 경기 영상
+HERO_VIDEOS = {'intro': ('hero-intro', '하이앤드 수업 장면 영상'), 'court': ('hero-court', '하이앤드 체육관 경기 장면 영상')}
+
+
 def home_body(r):
-    return f'''<section class="home-hero">
-  <div class="wrap">
-    <p class="eyebrow">HIGH END VOLLEYBALL ACADEMY</p>
-    <h1 class="h1">알고 하면<br>쉬운 배구</h1>
-    <p class="lead">상암 인근 배구 아카데미, 하이앤드입니다.<br>국가대표 출신 <strong>김재휘 코치</strong>가 초등부터 성인까지 이유를 알고 하는 배구를 가르칩니다.</p>
-    <div class="btns">
-      <a class="btn p" href="{rel(r, 'class', '#oneday')}">원데이 클래스 25,000원 예약</a>
-      <a class="btn s" href="{rel(r, 'method')}">하이앤드 수업 방식 보기</a>
+    vid, vlabel = HERO_VIDEOS[HERO_VIDEO]
+    return f'''<section id="hero">
+  <div class="hero-bg"><video id="heroVideo" muted loop playsinline preload="none" poster="{r}assets/img/{vid}-poster.webp" data-src="{r}assets/video/{vid}.mp4" aria-label="{vlabel}"></video></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">HIGH END VOLLEYBALL ACADEMY</div>
+      <h1 class="hero-title">국가대표와 함께하는<br><em>배구교실</em></h1>
+      <p class="hero-sub">속도보다 방향, 결과보다 지속<br>가장 완벽한 기본을 가르치겠습니다<br><br>
+        <strong style="color:var(--text);">FIVB 코치 레벨1 · 국가대표 7년 · 프로 10년</strong>
+      </p>
+      <div class="hero-btns">
+        <a href="{NAVER_BOOK}" target="_blank" rel="noopener" class="btn-primary">원데이클래스 신청</a>
+        <a href="{r}dashboard.html" class="btn-secondary">회원 로그인 · 예약</a>
+      </div>
+      <div class="hero-contact"><a href="tel:01044631177">010-4463-1177</a> &nbsp;·&nbsp; 매주 토요일 운영</div>
+    </div>
+    <div class="hero-image-wrap">
+      <img src="{r}assets/img/coach-kim-profile.webp" alt="메인코치 김재휘: 대한민국 국가대표 2016~2022, 현대캐피탈·KB손해보험·우리카드·삼성화재" class="hero-img-main" width="721" height="960" fetchpriority="high">
+      <div class="hero-img-badge"><div class="hib-num">7년</div><div class="hib-label">국가대표 경력</div></div>
     </div>
   </div>
 </section>
-<div class="wrap"><figure class="hero-photo">{img(r, 'class-2-1200', '하이앤드 발리볼 아카데미 수강생 단체 사진, 200평 풀코트 체육관', 1200, 900, lazy=False)}</figure></div>
 <section class="sec" aria-label="코치 경력 요약">
   <div class="wrap">
     <div class="stats">
@@ -312,15 +335,8 @@ def home_body(r):
 
 
 def about_body(r):
-    posters = [('coach-kim-profile', '메인코치 김재휘 프로필: 대한민국 국가대표 2016~2022, 현대캐피탈·KB손해보험·우리카드·삼성화재'),
-               ('coach-2', '김재휘 코치 국가대표 활동 이력: 2016~2022 AVC컵, 세계선수권, 아시안게임, VNL'),
-               ('coach-3', '김재휘 코치 프로배구단 선수 경력과 V리그 우승 기록'),
-               ('coach-4', '김재휘 코치 FIVB 코치코스 레벨1 수료 사진'),
-               ('coach-5', '국가대표 7년 · 프로 경력 10년 김재휘 코치에게 배우는 배구수업')]
-    slides = ''.join(f'<div class="ccar-slide">{img(r, n, a, 721 if i < 4 else 540, 960)}</div>' for i, (n, a) in enumerate(posters))
-    dots = ''.join(f'<div class="ccar-dot{" active" if i == 0 else ""}"></div>' for i in range(len(posters)))
     return f'''{crumbs('about', r)}
-{subnav('ABOUT', [('하이앤드 소개', '#intro'), ('김재휘 코치 경력', '#career'), ('코칭 스태프', '#staff'), ('시설', '#place')])}
+{subnav('ABOUT', [('하이앤드 소개', '#intro'), ('김재휘 코치 경력', '#career'), ('황준태 코치', '#hwang'), ('시설', '#place')])}
 <section class="ph" id="intro">
   <div class="wrap">
     <p class="eyebrow">ABOUT HIGH END</p>
@@ -335,8 +351,7 @@ def about_body(r):
     <h2>김재휘 코치</h2>
     <div class="career mt">
       <div class="reveal">
-        <div class="coach-carousel"><div class="ccar-track" id="ccarTrack">{slides}</div></div>
-        <div class="ccar-dots" id="ccarDots">{dots}</div>
+        <img class="coach-photo" src="{r}assets/img/coach-kim-profile.webp" alt="메인코치 김재휘 프로필: 대한민국 국가대표 2016~2022, 현대캐피탈·KB손해보험·우리카드·삼성화재" width="721" height="960" loading="lazy" decoding="async">
       </div>
       <div>
         <p class="role">대표 · 헤드코치 · 포지션 센터</p>
@@ -355,6 +370,24 @@ def about_body(r):
         <ul class="plain"><li>FIVB(국제배구연맹) 코치 레벨1</li><li>전문스포츠지도사 2급 (배구)</li></ul>
       </div>
     </div>
+    <div id="hwang" class="coach2">
+      <p class="eyebrow">COACH</p>
+      <h2>황준태 코치</h2>
+      <div class="career mt">
+        <div class="reveal">
+          <img class="coach-photo" src="{r}assets/img/coach-hwang-profile.jpg" alt="황준태 코치 프로필: 리베로, 서울 우리카드 배구단 2022~2024, 대통령배 배구대회 리베로상" width="720" height="960" loading="lazy" decoding="async">
+        </div>
+        <div>
+          <p class="role">코치 · 포지션 리베로</p>
+          <h3>프로배구 V리그</h3>
+          <ul class="plain"><li>서울 우리카드 배구단 (2022~2024)</li></ul>
+          <h3>수상</h3>
+          <ul class="plain"><li>제50회 대통령배 배구대회 리베로상</li><li>제52회 대통령배 배구대회 리베로상</li></ul>
+          <h3>학력</h3>
+          <ul class="plain"><li>경북사대부고 졸업</li><li>한양대학교 졸업</li></ul>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <section class="sec">
@@ -362,16 +395,6 @@ def about_body(r):
     <h2>선수 경험을 "가르치는 말"로 바꿉니다</h2>
     <p class="lead">국가대표와 V리그에서 쌓은 경험에, 국제 기준의 지도자 교육을 더했습니다. 하이앤드 수업은 "잘하는 사람의 감"이 아니라, 쉽게 이해할 수 있는 원리로 설명합니다. 국제학교와 해외 체류 학생을 지도한 경험도 있습니다.</p>
     <div class="btns"><a class="btn s" href="{rel(r, 'method')}">수업 방식 자세히 보기</a></div>
-  </div>
-</section>
-<section class="sec alt" id="staff">
-  <div class="wrap">
-    <p class="eyebrow">COACHING STAFF</p>
-    <h2>코칭 스태프</h2>
-    <div class="staff">
-      <div class="card reveal"><div class="avatar" aria-hidden="true">김</div><div><div class="nm">김재휘 <span>대표 · 헤드코치 · 센터</span></div><ul><li>국가대표 7년 (2016~2022)</li><li>프로(V리그) 10년 · V리그 우승 4회</li><li>FIVB 코치 레벨1 · 전문스포츠지도사 2급</li></ul></div></div>
-      <div class="card reveal"><div class="avatar" aria-hidden="true">황</div><div><div class="nm">황준태 <span>코치 · 리베로</span></div><ul><li>서울 우리카드 배구단 (2022~2024)</li><li>제50회 · 제52회 대통령배 배구대회 리베로상</li><li>경북사대부고 · 한양대학교 졸업</li></ul></div></div>
-    </div>
   </div>
 </section>
 <section class="sec" id="place">
@@ -390,7 +413,7 @@ def about_body(r):
 
 def method_body(r):
     return f'''{crumbs('method', r)}
-{subnav('METHOD', [('알고 하면 쉬운 배구', '#know'), ('MAPS 워밍업', '#maps'), ('정밀 교정', '#fix'), ('수업 80분 흐름', '#flow'), ('성장 단계', '#level')])}
+{subnav('METHOD', [('알고 하면 쉬운 배구', '#know'), ('MAPS 워밍업', '#maps'), ('정밀 교정', '#fix'), ('수업 80분 흐름', '#flow'), ('4단계 성장 레벨', '#level')])}
 <section class="ph" id="know">
   <div class="wrap">
     <p class="eyebrow">OUR METHOD</p>
@@ -432,7 +455,7 @@ def method_body(r):
 <section class="sec alt" id="flow">
   <div class="wrap">
     <p class="eyebrow">80 MINUTES</p>
-    <h2>토요일 80분, 이렇게 진행됩니다</h2>
+    <h2>80분 정규수업, 이렇게 진행됩니다</h2>
     <ol class="steps">
       <li class="reveal"><div class="k">STEP 1</div><div class="t">MAPS 워밍업</div><p>안전하게 움직이는 몸 만들기</p></li>
       <li class="reveal"><div class="k">STEP 2</div><div class="t">왜: 원리 이해</div><p>오늘 배울 동작의 이유</p></li>
@@ -443,13 +466,41 @@ def method_body(r):
 </section>
 <section class="sec" id="level">
   <div class="wrap">
-    <p class="eyebrow">LEVEL</p>
+    <p class="eyebrow">LEVEL · HIGH-END CURRICULUM</p>
     <h2>4단계 성장 레벨</h2>
-    <div class="grid4 mt">
-      <div class="lv reveal"><b>LV.1</b><div class="t">초급 · 입문</div></div>
-      <div class="lv reveal"><b>LV.2</b><div class="t">중급 · 기술 향상</div></div>
-      <div class="lv reveal"><b>LV.3</b><div class="t">심화 · 고급 기술</div></div>
-      <div class="lv reveal"><b>LV.4</b><div class="t">시합 · 대회 준비</div></div>
+    <p class="lead">국가대표 7년 · 프로(V리그) 10년, 선수 17년을 뛴 김재휘 코치가 직접 설계한 하이앤드 배구 커리큘럼입니다. 처음 배구를 배우는 분부터 배구부·엘리트 진학과 대회를 준비하는 학생까지, 지금 실력에 맞는 단계에서 시작해 한 단계씩 올라갑니다. 배구학원 · 배구교실 · 배구 아카데미를 찾는 초등학생부터 성인까지, 누구나 이유를 알고 배우는 배구를 경험할 수 있습니다.</p>
+    <div class="lvx-grid mt">
+      <article class="lvx reveal">
+        <div class="lvx-hd"><b>LV.1</b><div><h3>초급반</h3><p>기초 기술 습득 · 배구에 재미 붙이기</p></div></div>
+        <p class="lvx-who"><strong>이런 분께</strong> 배구를 처음 시작하는 분. 중학생 이상은 초급반, 처음 배우는 초등학생은 유소년반에서 시작합니다.</p>
+        <ul class="plain"><li>기본 매커니즘 습득: 패스, 서브, 리시브</li><li>배구 놀이를 바탕으로 한 신체 감각 강화</li><li>팀워크 경험으로 배구의 재미 발견</li></ul>
+        <p class="lvx-coach"><strong>코치 포인트</strong> 처음 배울 때 몸 방향을 바로 잡으면 나중에 고칠 것이 줄어듭니다. 공을 쫓기 전에 몸을 공 쪽으로 향하는 습관부터 만듭니다.</p>
+      </article>
+      <article class="lvx reveal">
+        <div class="lvx-hd"><b>LV.2</b><div><h3>중급반</h3><p>기술의 정교화 · 신체 밸런스 강화</p></div></div>
+        <p class="lvx-who"><strong>이런 분께</strong> 중학생 이상, 배구 경력 6개월 이상.</p>
+        <ul class="plain"><li>볼 컨트롤 정밀화와 신체 정렬 코칭</li><li>몸에 무리를 줄이는 효율적인 폼 만들기</li><li>기본 포지션 이해</li><li>상황별 협력 수비 시스템</li></ul>
+        <p class="lvx-coach"><strong>코치 포인트</strong> 팔(플랫폼)과 몸통의 정렬이 맞아야 몸통의 힘이 공에 전달됩니다. 테니스공 정렬 교정으로 그 차이를 스스로 느끼게 합니다.</p>
+      </article>
+      <article class="lvx reveal">
+        <div class="lvx-hd"><b>LV.3</b><div><h3>심화반 · 엘리트</h3><p>실전 퍼포먼스 극대화 · 전술 이해도와 배구 IQ 향상</p></div></div>
+        <p class="lvx-who"><strong>이런 분께</strong> 학교 배구부·엘리트 진학을 준비하는 학생, 경기 경험을 갖춘 분.</p>
+        <ul class="plain"><li>공격과 수비 전반의 고난도 기술</li><li>팀 포메이션 시스템 구축</li><li>실전 전술 지능(VQ) 향상</li><li>경기력을 높이는 피지컬 고도화</li></ul>
+        <p class="lvx-coach"><strong>코치 포인트</strong> 국가대표와 V리그에서 경험한 팀 시스템을 쉬운 말로 풀어 설명합니다. 왜 그 자리에 서야 하는지 알면 경기가 보이기 시작합니다.</p>
+      </article>
+      <article class="lvx reveal">
+        <div class="lvx-hd"><b>LV.4</b><div><h3>시합반</h3><p>연령별 대표팀 선발과 대회를 목표로 한 집중 코칭</p></div></div>
+        <p class="lvx-who"><strong>이런 분께</strong> 초등 고학년, 중·고등학생, 성인. 별도 상담으로 맞춤 진행합니다.</p>
+        <ul class="plain"><li>실전 경기 리딩 능력 훈련</li><li>실제 경기 수준의 기술과 전략 적용</li><li>경기 운영 능력과 상황 판단력 강화</li><li>팀워크 · 팀 전술 완성</li></ul>
+        <p class="lvx-coach"><strong>코치 포인트</strong> 대회에서는 기술보다 판단이 먼저 흔들립니다. 실제 경기 상황을 반복해 압박 속에서도 흔들리지 않는 판단을 만듭니다.</p>
+      </article>
+    </div>
+    <div class="lvx-common reveal">
+      <div><strong>모든 단계 공통</strong> MAPS 워밍업 → 왜: 원리 이해 → 어떻게: 정밀 교정 → 해보기: 게임. 부상 없이 오래 할 수 있는 배구, 즐겁게 지속할 수 있는 배구, 기본이 무너지지 않는 배구를 지향합니다.</div>
+    </div>
+    <div class="lvx-private reveal">
+      <div><b>1:1 개인레슨</b><p>영상 분석을 바탕으로 한 개인 맞춤 훈련. 국가대표 노하우로 핵심 기술을 익히고, 신체 조건에 맞는 폼으로 정밀하게 교정합니다.</p></div>
+      <a class="btn s" href="{rel(r, 'class', '#private')}">개인레슨 안내</a>
     </div>
   </div>
 </section>
@@ -469,7 +520,7 @@ CAL_PANEL = '''<div class="sched-grid" id="schedGrid">
 
 def class_body(r):
     return f'''{crumbs('class', r)}
-{subnav('CLASS', [('원데이 클래스 예약', '#oneday'), ('유소년반', '#youth'), ('초급반 · 중급반', '#group'), ('개인레슨', '#private'), ('시간표 · 수강 안내', '#schedule')])}
+{subnav('CLASS', [('원데이 클래스 예약', '#oneday'), ('유소년반', '#youth'), ('초급반 · 중급반', '#group'), ('국제학교 · 해외 학생', '#intl'), ('개인레슨', '#private'), ('시간표 · 수강 안내', '#schedule')])}
 <section class="ph" id="oneday">
   <div class="wrap">
     <p class="eyebrow">ONE DAY CLASS</p>
@@ -515,6 +566,20 @@ def class_body(r):
       <p>실력에 맞춰 단계별로 배웁니다. 처음 배우는 분은 초급반, 기본기를 갖추고 실전 실력을 높이고 싶은 분은 중급반입니다.</p>
       <ul class="ticks"><li>초급반 토요일 13:30 · 80분</li><li>중급반 토요일 16:30 · 80분</li><li>초급반: 중학생 이상, 처음 배우는 분</li><li>중급반: 중학생 이상, 배구 경력 6개월 이상</li></ul>
     </div>
+  </div>
+</section>
+<section class="sec intl" id="intl">
+  <div class="wrap">
+    <p class="eyebrow">INTERNATIONAL SCHOOL</p>
+    <h2>국제학교 · 해외 거주 학생 배구 레슨</h2>
+    <p class="lead">국제학교 · 외국인학교 학생과, 방학마다 한국을 찾는 해외 거주 학생도 함께 배웁니다. 국가대표 출신 김재휘 코치가 직접 지도합니다.</p>
+    <p class="intl-en" lang="en">Volleyball lessons for international school students and families visiting Korea during school breaks, coached by a former Korean national team player.</p>
+    <div class="intl-grid mt">
+      <div class="intl-card reveal"><span class="n">01</span><h3>익숙한 배구 용어로</h3><p>Underpass · Set · Spike · Serve. 해외 학교와 클럽에서 쓰던 용어를 함께 써서, 영어가 편한 아이들도 자연스럽게 적응합니다. 영어 수업이 아니라 익숙한 용어로 몸의 움직임을 이해하는 데 초점을 둡니다.</p></div>
+      <div class="intl-card reveal"><span class="n">02</span><h3>한 명 한 명, 기본기 교정</h3><p>팀 훈련과는 별개로 리시브할 때 발의 위치, 공을 맞히는 팔의 각도, 스파이크를 위한 몸의 움직임을 세밀하게 교정합니다. 작아 보이는 차이가 쌓여 실력의 차이가 됩니다.</p></div>
+      <div class="intl-card reveal"><span class="n">03</span><h3>방학마다 이어지는 성장</h3><p>첫 방학에는 기본기, 다음 방학에는 기술 향상, 그다음에는 실전. 매번 처음부터 다시 시작하지 않고 지난 훈련을 다음 방학으로 이어갑니다.</p></div>
+    </div>
+    <p class="note">방학 단기 집중 레슨 · 캠프 일정과 학교 배구팀 트라이아웃 준비는 상담으로 맞춰 드립니다. 국제학교 학생과 한국 학생이 함께하는 유소년반 수업도 있습니다.</p>
   </div>
 </section>
 <section class="sec alt" id="private">
@@ -745,7 +810,7 @@ FIREBASE = ['https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js',
 
 
 def build():
-    write('index.html', page('home', home_body))
+    write('index.html', home_legacy())
     write('about/index.html', page('about', about_body, [KIM, HWANG], ['assets/js/media.js']))
     write('method/index.html', page('method', method_body))
     # 달력: firebase를 먼저, defer 순서대로 실행
@@ -802,6 +867,7 @@ LLMS = '''# 하이앤드 발리볼 아카데미 (HIGH END Volleyball Academy)
 - 중급반 (중학생 이상, 배구 경력 6개월 이상): 토요일 16:30, 80분
 - 개인레슨 60분: 1회 25만 원, 10회 등록 시 회당 20만 원
 - 정규 수강권: 카카오톡 상담으로 안내
+- 국제학교 · 외국인학교 · 해외 거주 학생 배구 레슨: 익숙한 영어 배구 용어 사용, 방학 단기 집중 레슨 · 캠프, 학교 배구팀 트라이아웃 준비 (상담)
 
 ## 수업 방식
 - 알고 하면 쉬운 배구: 왜 → 어떻게 → 해보기
@@ -815,6 +881,7 @@ LLMS = '''# 하이앤드 발리볼 아카데미 (HIGH END Volleyball Academy)
 - 초등학생 배구, 유소년 배구교실, 어린이 배구, 초등학교 배구부 준비, 중학생 배구
 - 성인 배구 취미, 배구 초보, 배구 기본기, 배구 자세 교정
 - 국가대표 출신 코치 배구 레슨, 프로 출신 배구 코치
+- 국제학교 배구, 국제학교 배구 레슨, 외국인학교 배구, 해외 거주 학생 방학 배구 레슨, volleyball lessons for international school students
 - 지역: 상암, 수색, DMC, 은평, 고양, 덕양, 서울 서북부
 
 ## 위치 · 연락
@@ -832,6 +899,63 @@ LLMS = '''# 하이앤드 발리볼 아카데미 (HIGH END Volleyball Academy)
 - 자주 묻는 질문: [주소]/contact/#faq
 - 상암·은평·고양 배구학원: [주소]/sangam-volleyball-academy/
 '''
+
+# ════════════════════════ 홈 = 지금 실제 홈페이지 그대로 ════════════════════════
+# 대표 지시(2026-10-26): 첫 화면은 기존 홈페이지(tools/home_legacy.html) 그대로 두고,
+# 맨 위 메뉴만 새 페이지로 연결, 검색용 머리말만 추가
+
+HOME_CSS = '''<style>
+.nvi{position:relative;}
+.nav-links .nvi>a{display:block;font-weight:600;}
+.nvi:hover>a,.nvi:focus-within>a{color:var(--blue);background:rgba(26,83,212,.07);}
+.nvd{display:none;position:absolute;top:100%;left:0;min-width:190px;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-lg);padding:6px 0;z-index:200;}
+.nvi:hover .nvd,.nvi:focus-within .nvd{display:block;}
+.nav-links .nvd a{display:block;padding:9px 16px;border-radius:0;font-size:14px;white-space:nowrap;}
+.nav-links .nvd a:hover{background:var(--bg);color:var(--blue);}
+.mobile-menu a.mtop{font-weight:700;color:var(--text);}
+.mobile-menu a.msub{padding-left:36px;font-size:14px;}
+</style>
+'''
+
+def home_legacy():
+    s = open(os.path.join(ROOT_DIR, 'tools', 'home_legacy.html'), encoding='utf-8').read()
+
+    def swap(old, new):
+        nonlocal s
+        assert s.count(old) == 1, old[:60]
+        s = s.replace(old, new)
+
+    # 1) 머리말: 검색 제목·설명문·공유 미리보기·구조화 데이터
+    h = head('home', '', [])
+    seo = h[h.index('<title>'):h.index(SN['favicon'])].replace('<meta name="theme-color" content="#ffffff">\n', '')
+    swap('<title>하이앤드 발리볼 아카데미 | HIGH END VOLLEYBALL ACADEMY</title>', seo.strip())
+    site = {'@type': 'WebSite', '@id': BASE + '#site', 'url': BASE, 'name': NAME, 'inLanguage': 'ko-KR',
+            'publisher': {'@id': BASE + '#org'}}
+    swap('</head>', HOME_CSS + ld(org_graph() + [site]) + '\n</head>')
+
+    # 2) 맨 위 메뉴: 새 페이지로 연결 (마우스를 올리면 하위 메뉴)
+    def href(k, f):
+        return rel('', 'local') if f == '@local' else rel('', k, f)
+    desk = ''.join(
+        f'<div class="nvi"><a href="{rel("", k)}">{label}</a><div class="nvd">'
+        + ''.join(f'<a href="{href(k, f)}">{escape(t)}</a>' for t, f in subs) + '</div></div>'
+        for k, label, subs in MENU)
+    start = s.index('<div class="nav-links">')
+    end = s.index('</div>', start) + len('</div>')
+    s = s[:start] + f'<div class="nav-links">{desk}</div>' + s[end:]
+    mob = ''.join(
+        f'<a class="mtop" href="{rel("", k)}">{label}</a>'
+        + ''.join(f'<a class="msub" href="{href(k, f)}">{escape(t)}</a>' for t, f in subs)
+        for k, label, subs in MENU)
+    start = s.index('<div class="mobile-menu" id="mobileMenu">')
+    end = s.index('</div>', start)
+    tail = s[start:end]
+    keep = tail[tail.index('<a href="https://m.place.naver.com'):]   # 원데이·회원 로그인 버튼은 그대로
+    s = s[:start] + '<div class="mobile-menu" id="mobileMenu">\n    ' + mob + '\n    ' + keep + s[end:]
+
+    # 첫 화면 배경은 예전 사진 그대로 (대표 지시 2026-10-26: 사진 뒤 영상 빼기)
+    return s
+
 
 if __name__ == '__main__':
     build()

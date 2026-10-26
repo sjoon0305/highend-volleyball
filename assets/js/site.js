@@ -30,6 +30,16 @@
     },{threshold:0.15});
     targets.forEach(function(t){io2.observe(t);});
   }
+  // 첫 화면 배경 영상: 페이지가 다 열린 뒤 재생 (움직임 줄이기·데이터 절약 설정이면 사진만)
+  var hv=document.getElementById('heroVideo');
+  if(hv){
+    var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var save=navigator.connection&&navigator.connection.saveData;
+    if(!reduce&&!save){
+      var start=function(){hv.src=hv.getAttribute('data-src');var p=hv.play();if(p&&p.catch)p.catch(function(){});};
+      if(document.readyState==='complete')start();else window.addEventListener('load',start);
+    }
+  }
   // 예전 한 페이지 주소(#schedule 등)로 들어오면 새 페이지로 안내
   var old={'#schedule':'class/#schedule','#coach':'about/#career','#curriculum':'method/#level','#gallery':'story/#gallery','#cta':'contact/#ask'};
   if(document.body.getAttribute('data-page')==='home'&&old[location.hash]){location.replace(old[location.hash]);}

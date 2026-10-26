@@ -2,12 +2,12 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#ffffff">
 <title>상암·고양 배구학원 하이앤드 발리볼 아카데미 | 국가대표 출신 코치</title>
 <meta name="description" content="상암 인근 · 현천동 180-1 배구학원 하이앤드 발리볼 아카데미. 국가대표 7년 · 프로(V리그) 10년 김재휘 코치가 초등학생부터 성인까지 가르칩니다. 원데이 클래스 25,000원, 문의 010-4463-1177">
 <link rel="canonical" href="https://sjoon0305.github.io/highend-volleyball/">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="theme-color" content="#ffffff">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="하이앤드 발리볼 아카데미">
 <meta property="og:locale" content="ko_KR">
@@ -23,105 +23,1372 @@
 <meta name="twitter:description" content="상암 인근 · 현천동 180-1 배구학원 하이앤드 발리볼 아카데미. 국가대표 7년 · 프로(V리그) 10년 김재휘 코치가 초등학생부터 성인까지 가르칩니다. 원데이 클래스 25,000원, 문의 010-4463-1177">
 <meta name="twitter:image" content="https://sjoon0305.github.io/highend-volleyball/assets/img/og-image.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231a53d4%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2210%22/%3E%3Cpath%20d%3D%22M11.1%207.1a16.55%2016.55%200%200%201%2010.9%204%22/%3E%3Cpath%20d%3D%22M12%2012a12.6%2012.6%200%200%201-8.7%205%22/%3E%3Cpath%20d%3D%22M16.8%2013.6a16.55%2016.55%200%200%201-9%207.5%22/%3E%3Cpath%20d%3D%22M20.7%2017a12.8%2012.8%200%200%200-8.7-5%2013.3%2013.3%200%200%201%200-10%22/%3E%3Cpath%20d%3D%22M6.3%203.8a16.55%2016.55%200%200%200%201.9%2011.5%22/%3E%3C/svg%3E">
-<link rel="preload" href="fonts/Paperlogy-9Black.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/Paperlogy-4Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/site.css">
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<link rel="preload" href="./fonts/Paperlogy-9Black.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/Paperlogy-4Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+/* ── FONT: 페이퍼로지 (SIL OFL 1.1, fonts/OFL.txt) ── */
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-4Regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-5Medium.woff2') format('woff2');font-weight:500;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-6SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-7Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-8ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('./fonts/Paperlogy-9Black.woff2') format('woff2');font-weight:900;font-display:swap;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0f5fc;--surface:#fff;--surface2:#e8eff9;--surface3:#dde7f5;
+  --border:#cbd8ec;--border2:#b8ccde;
+  --blue:#1a53d4;--blueH:#1240b0;--blueL:#3b6ef5;--blueXL:#5b8af8;
+  --text:#0d1b2e;--sub:#3a5272;--muted:#6b82a0;
+  --green:#128f3d;--red:#c8231e;--orange:#c96208;
+  --shadow-sm:0 1px 4px rgba(26,83,212,.08);
+  --shadow:0 2px 12px rgba(26,83,212,.1);
+  --shadow-lg:0 8px 32px rgba(26,83,212,.14);
+  --radius:10px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Paperlogy','Noto Sans KR',-apple-system,sans-serif;line-height:1.6;overflow-x:hidden;}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+/* ── NAV ── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:#fff;border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-sm);
+  transition:box-shadow .25s;
+}
+#nav.elevated{box-shadow:var(--shadow);}
+.nav-inner{
+  max-width:1200px;margin:0 auto;height:60px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:16px;
+}
+.nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.nav-logo img{width:36px;height:36px;object-fit:contain;border-radius:7px;}
+.nav-logo-text .brand{font-size:17px;font-weight:900;color:var(--text);letter-spacing:.02em;}
+.nav-logo-text .sub{font-size:9px;letter-spacing:.2em;color:var(--blue);text-transform:uppercase;font-weight:600;}
+.nav-links{display:flex;gap:6px;align-items:center;}
+.nav-links a{
+  font-size:14px;font-weight:500;color:var(--sub);
+  padding:6px 12px;border-radius:6px;
+  transition:color .15s,background .15s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--blue);background:rgba(26,83,212,.07);}
+.nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.btn-naver{
+  background:var(--blue);color:#fff;
+  padding:7px 16px;border-radius:7px;font-size:13px;font-weight:700;
+  transition:background .15s;white-space:nowrap;
+}
+.btn-naver:hover{background:var(--blueH);}
+.btn-login-nav{
+  border:1px solid var(--border2);color:var(--sub);
+  padding:6px 14px;border-radius:7px;font-size:13px;font-weight:600;
+  transition:border-color .15s,color .15s;background:#fff;
+}
+.btn-login-nav:hover{border-color:var(--blue);color:var(--blue);}
+.hamburger{display:none;color:var(--text);padding:4px;}
+.hamburger .ln{width:26px;height:26px;display:block;}
+.mobile-menu{
+  display:none;background:#fff;border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.mobile-menu.open{display:block;}
+.mobile-menu a{
+  display:flex;align-items:center;padding:14px 20px;font-size:15px;font-weight:500;
+  border-bottom:1px solid var(--border);color:var(--sub);
+  transition:background .15s,color .15s;
+}
+.mobile-menu a:hover{background:var(--bg);color:var(--blue);}
+.mobile-menu a:last-child{border-bottom:none;}
+
+/* ── HERO ── */
+#hero{
+  position:relative;padding-top:60px;
+  min-height:100dvh;display:flex;align-items:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('./4. 수업 사진/1.jpg');
+  background-size:cover;background-position:center 25%;
+  animation:kb 22s ease-in-out infinite alternate;
+}
+@keyframes kb{from{transform:scale(1);}to{transform:scale(1.05);}}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(240,245,252,.92) 0%,rgba(240,245,252,.7) 50%,rgba(26,83,212,.08) 100%);
+}
+.hero-inner{
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;padding:60px 24px;
+  display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;
+}
+.hero-text{}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(26,83,212,.08);border:1px solid rgba(26,83,212,.2);
+  border-radius:20px;padding:5px 14px;
+  font-size:11px;letter-spacing:.2em;color:var(--blue);font-weight:700;
+  text-transform:uppercase;margin-bottom:18px;
+}
+.hero-title{
+  font-size:clamp(34px,5vw,62px);font-weight:900;color:var(--text);
+  line-height:1.15;margin-bottom:14px;letter-spacing:-.02em;
+}
+.hero-title,.sec-title{letter-spacing:-.01em;}
+.hero-title em{color:var(--blue);font-style:normal;}
+.hero-sub{
+  font-size:clamp(14px,1.8vw,17px);color:var(--sub);
+  line-height:1.85;margin-bottom:32px;font-weight:400;
+}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-primary{
+  background:var(--blue);color:#fff;
+  padding:14px 30px;border-radius:9px;font-size:15px;font-weight:700;
+  box-shadow:var(--shadow);transition:background .15s,box-shadow .15s,transform .1s;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.btn-primary:hover{background:var(--blueH);transform:translateY(-1px);box-shadow:var(--shadow-lg);}
+.btn-secondary{
+  background:#fff;color:var(--blue);border:2px solid var(--blue);
+  padding:12px 28px;border-radius:9px;font-size:15px;font-weight:700;
+  transition:background .15s,color .15s;display:inline-flex;align-items:center;gap:6px;
+}
+.btn-secondary:hover{background:var(--blue);color:#fff;}
+.hero-image-wrap{position:relative;}
+.hero-img-main{
+  width:100%;border-radius:20px;display:block;
+  box-shadow:var(--shadow-lg);
+}
+.hero-img-badge{
+  position:absolute;bottom:-16px;left:-16px;
+  background:#fff;border:1px solid var(--border);border-radius:14px;
+  padding:14px 18px;box-shadow:var(--shadow);
+}
+.hib-num{font-size:28px;font-weight:900;color:var(--blue);line-height:1;}
+.hib-label{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* ── STATS ── */
+.stats-strip{background:var(--blue);padding:20px 24px;}
+.stats-inner{
+  max-width:1000px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:12px;
+}
+.stat-n{font-family:'Bebas Neue','Noto Sans KR',sans-serif;font-size:40px;color:#fff;line-height:1;letter-spacing:.03em;}
+.stat-l{font-size:11px;color:rgba(255,255,255,.72);margin-top:3px;font-weight:500;}
+
+/* ── SECTION BASE ── */
+section{padding:80px 24px;}
+.sec-inner{max-width:1200px;margin:0 auto;}
+.sec-label{font-size:11px;letter-spacing:.25em;color:var(--blue);font-weight:700;text-transform:uppercase;margin-bottom:8px;}
+.sec-title{font-size:clamp(24px,4vw,40px);font-weight:900;color:var(--text);line-height:1.2;margin-bottom:12px;}
+.sec-desc{font-size:15px;color:var(--muted);line-height:1.8;}
+
+/* ── PUBLIC SCHEDULE ── */
+#schedule{background:var(--surface);}
+.sched-grid{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;}
+.cal-wrap{width:340px;flex-shrink:0;}
+.cal-nav-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:14px;
+}
+.cal-nav-row .month-title{font-size:17px;font-weight:700;color:var(--text);}
+.cal-nav-btn{
+  width:32px;height:32px;border-radius:8px;
+  border:1px solid var(--border);background:#fff;color:var(--sub);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  cursor:pointer;transition:border-color .15s,color .15s;
+}
+.cal-nav-btn:hover{border-color:var(--blue);color:var(--blue);}
+.cal-head{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  gap:2px;margin-bottom:4px;
+}
+.cal-hd{
+  text-align:center;font-size:11px;font-weight:700;color:var(--muted);
+  padding:6px 0;letter-spacing:.05em;
+}
+.cal-hd.sat{color:var(--blue);}
+.cal-hd.sun{color:var(--red);}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-day{
+  aspect-ratio:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  border-radius:8px;cursor:pointer;position:relative;
+  font-size:13px;color:var(--sub);
+  transition:background .15s,color .15s;
+}
+.cal-day:hover{background:var(--surface2);}
+.cal-day.empty{cursor:default;}
+.cal-day.empty:hover{background:none;}
+.cal-day.today .day-num{
+  background:var(--blue);color:#fff;
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-weight:700;
+}
+.cal-day.saturday{color:var(--blue);}
+.cal-day.sunday{color:var(--red);}
+.cal-day.has-sess{font-weight:700;}
+.cal-day.selected{background:rgba(26,83,212,.1);}
+.cal-day.past{opacity:.4;}
+.cal-sess-dot{
+  width:18px;height:3px;border-radius:2px;background:var(--blue);
+  margin-top:2px;opacity:.7;
+}
+.cal-day.full-dot .cal-sess-dot{background:var(--orange);}
+.cal-day.cancelled-dot .cal-sess-dot{background:var(--muted);opacity:.4;}
+
+/* Session panel */
+.sched-panel{
+  background:var(--bg);border-radius:var(--radius);padding:20px;
+  min-height:300px;
+}
+.panel-date-title{font-size:17px;font-weight:700;margin-bottom:14px;color:var(--text);}
+.sess-slot{
+  background:#fff;border:1px solid var(--border);border-radius:10px;
+  padding:16px;margin-bottom:10px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  transition:border-color .15s,box-shadow .15s;
+}
+.sess-slot:hover{border-color:var(--blueL);box-shadow:var(--shadow-sm);}
+.sess-slot.cancelled-slot{opacity:.55;background:var(--surface2);}
+.slot-time-big{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--text);letter-spacing:.03em;line-height:1;}
+.slot-info{flex:1;}
+.slot-title{font-size:15px;font-weight:700;margin-bottom:3px;}
+.slot-meta{font-size:13px;color:var(--muted);}
+.slot-avail{text-align:right;flex-shrink:0;}
+.avail-num{font-size:26px;font-weight:900;line-height:1;}
+.avail-label{font-size:11px;color:var(--muted);}
+.avail-bar{height:4px;background:var(--surface2);border-radius:2px;width:80px;margin-top:6px;}
+.avail-fill{height:100%;border-radius:2px;background:var(--green);}
+.avail-fill.warn{background:var(--orange);}
+.avail-fill.full{background:var(--red);}
+.no-sess-msg{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:200px;color:var(--muted);font-size:14px;gap:8px;
+}
+.no-sess-msg .icon{color:var(--blue);}
+.no-sess-msg .icon .ln{width:40px;height:40px;display:block;}
+.sched-login-note{
+  background:rgba(26,83,212,.06);border:1px solid rgba(26,83,212,.15);
+  border-radius:8px;padding:12px 16px;margin-top:14px;
+  font-size:13px;color:var(--blue);display:flex;align-items:center;gap:8px;
+}
+.legend{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);}
+.legend-dot{width:10px;height:3px;border-radius:2px;}
+
+/* ── COACH ── */
+#coach{background:var(--bg);}
+.coach-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:center;}
+.coach-img-col{position:relative;}
+.coach-img-col > img{width:100%;border-radius:18px;object-fit:cover;aspect-ratio:3/4;object-position:top;box-shadow:var(--shadow-lg);}
+.coach-img-badge{
+  position:absolute;bottom:-14px;right:-14px;
+  background:#fff;border:1px solid var(--border);border-radius:12px;
+  padding:14px 18px;box-shadow:var(--shadow);min-width:160px;
+}
+.cib-name{font-size:18px;font-weight:900;color:var(--text);}
+.cib-role{font-size:12px;color:var(--blue);font-weight:600;margin-top:2px;letter-spacing:.04em;}
+.coach-text-col{}
+.coach-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px;}
+.coach-card{
+  background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;
+  transition:border-color .2s,box-shadow .2s;
+}
+.coach-card:hover{border-color:var(--blueL);box-shadow:var(--shadow-sm);}
+.cc-icon{margin-bottom:9px;height:30px;display:flex;align-items:center;color:var(--blue);}
+.cc-icon .ln{width:30px;height:30px;display:block;}
+.cc-icon .flag{height:26px;width:auto;display:block;border:1px solid var(--border);border-radius:3px;}
+.curr-lv .star{width:20px;height:20px;}
+.lb-close .ln{width:30px;height:30px;display:block;}
+.sched-login-note .lock{width:17px;height:17px;flex-shrink:0;}
+.cc-title{font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;}
+.cc-body{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* ── CURRICULUM ── */
+#curriculum{background:var(--surface);}
+.curr-header{text-align:center;margin-bottom:48px;}
+.curr-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.curr-card{
+  background:var(--bg);border:1px solid var(--border);border-radius:14px;
+  padding:22px 14px;text-align:center;
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.curr-card:hover{border-color:var(--blue);box-shadow:var(--shadow);transform:translateY(-4px);}
+.curr-lv{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;background:var(--blue);border-radius:50%;
+  font-size:14px;font-weight:900;color:#fff;margin-bottom:12px;
+}
+.curr-name{font-size:18px;font-weight:900;color:var(--text);margin-bottom:5px;}
+.curr-target{font-size:12px;color:var(--blue);font-weight:700;margin-bottom:10px;letter-spacing:.04em;}
+.curr-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+.curr-imgs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:44px;}
+.curr-imgs img{border-radius:12px;width:100%;border:1px solid var(--border);}
+
+/* ── GALLERY (Instagram) ── */
+#gallery{background:var(--bg);}
+.gal-header{text-align:center;margin-bottom:36px;}
+.insta-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4px;
+}
+.insta-item{
+  aspect-ratio:1;overflow:hidden;cursor:pointer;
+  background:var(--surface2);border-radius:4px;
+}
+.insta-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s;}
+.insta-item:hover img{transform:scale(1.06);}
+
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;padding:16px;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:92vw;max-height:90dvh;object-fit:contain;border-radius:8px;}
+.lb-close{position:absolute;top:18px;right:22px;font-size:30px;color:#fff;opacity:.7;cursor:pointer;background:none;border:none;}
+.lb-close:hover{opacity:1;}
+
+/* ── CTA ── */
+#cta{background:var(--surface);}
+.cta-wrap{text-align:center;}
+.cta-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  max-width:840px;margin:36px auto 0;
+}
+.cta-card{
+  background:var(--bg);border:1px solid var(--border);border-radius:16px;
+  padding:28px 20px;text-align:center;
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.cta-card:hover{border-color:var(--blue);box-shadow:var(--shadow);transform:translateY(-3px);}
+.cta-card-icon{margin-bottom:12px;}
+.cta-card-icon svg{width:64px;height:64px;display:block;margin:0 auto;}
+.cta-card-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.cta-card-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
+.cta-card-btn{
+  display:inline-block;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:700;
+  transition:background .15s,color .15s;
+}
+.cta-card-btn.primary{background:var(--blue);color:#fff;}
+.cta-card-btn.primary:hover{background:var(--blueH);}
+.cta-card-btn.secondary{background:#fff;color:var(--blue);border:1px solid var(--blue);}
+.cta-card-btn.secondary:hover{background:var(--blue);color:#fff;}
+.contact-strip{
+  display:flex;gap:24px;justify-content:center;flex-wrap:wrap;
+  margin-top:40px;padding-top:28px;border-top:1px solid var(--border);
+}
+.contact-item{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);}
+.contact-item a{color:var(--sub);font-weight:500;transition:color .15s;}
+.contact-item a:hover{color:var(--blue);}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--text);color:rgba(255,255,255,.6);
+  padding:28px 24px;
+}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.55);transition:color .15s;}
+.footer-links a:hover{color:#fff;}
+.footer-copy{font-size:12px;}
+
+/* ── FLOAT BAR ── */
+.float-bar{
+  position:fixed;bottom:24px;right:16px;
+  display:flex;flex-direction:column;gap:9px;z-index:999;
+  align-items:center;
+}
+.float-btn{
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 14px rgba(0,0,0,.22);
+  transition:transform .2s,box-shadow .2s;
+  text-decoration:none;overflow:hidden;
+  flex-shrink:0;
+}
+.float-btn:hover{transform:scale(1.12);box-shadow:0 5px 18px rgba(0,0,0,.3);}
+.float-btn svg{width:24px;height:24px;display:block;flex-shrink:0;}
+.fb-phone{background:var(--blue);}
+.fb-phone svg{color:#fff;}
+.fb-kakao{background:#FEE500;}
+.fb-kakao svg{color:#3c1e08;width:26px;height:26px;}
+.fb-insta{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);}
+.fb-insta svg{color:#fff;}
+.fb-naver{background:#03C75A;}
+.fb-naver svg{color:#fff;width:22px;height:22px;}
+
+/* ── COACH CAROUSEL ── */
+.coach-img-col{position:relative;}
+.coach-carousel{width:100%;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);touch-action:pan-y;}
+.ccar-track{display:flex;transition:transform .45s cubic-bezier(.25,.1,.25,1);will-change:transform;cursor:grab;user-select:none;}
+.ccar-track.dragging{transition:none;cursor:grabbing;}
+.ccar-slide{flex:0 0 100%;position:relative;}
+.ccar-slide img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block;pointer-events:none;}
+.ccar-dots{display:flex;gap:5px;justify-content:center;margin-top:12px;}
+.ccar-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--border);
+  cursor:pointer;transition:background .25s,width .25s;
+}
+.ccar-dot.active{background:var(--blue);width:22px;border-radius:3px;}
+
+/* ── REELS SLIDER ── */
+.reels-section{margin-top:48px;}
+.reels-header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:36px;}
+.reels-title{font-size:16px;font-weight:800;color:var(--text);}
+/* Reels below-slider more button */
+.reels-more{display:flex;justify-content:center;margin-top:22px;}
+.reels-more-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 24px;border-radius:50px;font-size:14px;font-weight:700;
+  text-decoration:none;color:#fff;
+  background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+  box-shadow:0 2px 10px rgba(0,0,0,.12);transition:transform .15s,box-shadow .15s;
+}
+.reels-more-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.2);}
+.reels-more-btn svg{width:18px;height:18px;display:block;color:#fff;}
+.reels-outer{display:flex;flex-direction:column;align-items:center;}
+.reels-viewport{
+  width:100%;max-width:400px;
+  border-radius:16px;overflow:hidden;
+  touch-action:pan-y;cursor:grab;
+  box-shadow:0 8px 32px rgba(0,0,0,.18);
+}
+.reels-viewport.dragging{cursor:grabbing;}
+.reels-track{display:flex;will-change:transform;transition:transform .42s cubic-bezier(.25,.1,.25,1);}
+.reels-track.no-trans{transition:none;}
+.reel-slide{flex:0 0 100%;position:relative;background:#111;}
+.reel-slide video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;pointer-events:none;}
+/* Play/pause overlay */
+.reel-play-layer{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  transition:opacity .3s;background:rgba(0,0,0,.08);
+}
+.reel-play-layer.hidden{opacity:0;pointer-events:none;}
+.reel-play-icon{
+  width:62px;height:62px;background:rgba(0,0,0,.42);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.reel-play-icon svg{width:30px;height:30px;fill:#fff;margin-left:4px;}
+/* Instagram CTA slide */
+.reel-slide-cta{
+  aspect-ratio:9/16;
+  background:linear-gradient(160deg,#405de6 0%,#833ab4 30%,#fd1d1d 65%,#fcb045 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  text-align:center;padding:36px 28px;
+}
+.reel-cta-icon{
+  width:72px;height:72px;
+  background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.reel-cta-text{color:#fff;font-size:22px;font-weight:900;line-height:1.4;text-shadow:0 2px 8px rgba(0,0,0,.2);}
+.reel-cta-sub{color:rgba(255,255,255,.82);font-size:14px;line-height:1.6;}
+.reel-cta-btn{
+  background:#fff;color:#833ab4;
+  padding:14px 38px;border-radius:50px;
+  font-size:15px;font-weight:800;text-decoration:none;
+  display:inline-block;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 4px 16px rgba(0,0,0,.15);
+}
+.reel-cta-btn:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(0,0,0,.22);}
+/* Reels nav row */
+.reels-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;}
+.reels-arr{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;color:var(--sub);
+  transition:background .15s,border-color .15s;flex-shrink:0;
+}
+.reels-arr:hover{background:var(--surface2);border-color:var(--blue);color:var(--blue);}
+/* Dots */
+.slider-dots{display:flex;gap:6px;align-items:center;}
+.s-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--border2);transition:background .25s,width .25s;cursor:pointer;
+}
+.s-dot.active{background:var(--blue);width:22px;border-radius:3px;}
+
+/* ── GALLERY ACTIONS ── */
+.gal-actions{display:flex;justify-content:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gal-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 22px;border-radius:50px;font-size:14px;font-weight:700;
+  text-decoration:none;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 2px 10px rgba(0,0,0,.1);
+}
+.gal-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.15);}
+.gal-btn svg{width:18px;height:18px;display:block;flex-shrink:0;}
+.gal-btn-insta{
+  background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;
+}
+.gal-btn-naver{background:#03C75A;color:#fff;}
+
+.cta-cards.cta-cards-2{grid-template-columns:repeat(2,1fr);max-width:600px;}
+/* ── 오시는 길 (지도) ── */
+.loc-a{max-width:600px;margin:26px auto 0;text-align:center;scroll-margin-top:80px;}
+.loc-title{font-size:20px;font-weight:900;color:var(--text);}
+.loc-addr{display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:700;color:var(--text);margin-top:6px;}
+.loc-addr .ln{width:20px;height:20px;color:var(--blue);flex-shrink:0;}
+.loc-sub{font-size:13px;color:var(--muted);margin-top:4px;}
+.loc-map{margin:16px auto 0;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;background:#fff;box-shadow:var(--shadow-sm);}
+.loc-map iframe{display:block;width:100%;height:280px;border:0;}
+.loc-btns{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+.loc-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:50px;font-size:15px;font-weight:700;transition:transform .15s;}
+.loc-btn:hover{transform:translateY(-1px);}
+.loc-btn.naver{background:#03C75A;color:#fff;}
+.loc-btn.google{background:#fff;color:var(--text);border:1.5px solid var(--border);}
+.loc-btn svg{width:18px;height:18px;display:block;}
+.cta-card-desc .d-mo{display:none;}
+.float-bar{transition:opacity .25s,transform .25s;}
+.float-bar.away{opacity:0;transform:translateX(16px);pointer-events:none;}
+/* ── KAKAO 문의 배너 ── */
+.kakao-banner{
+  max-width:600px;margin:18px auto 0;background:#FEE500;border-radius:16px;
+  padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;
+}
+.kb-title{font-size:17px;font-weight:900;color:#3c1e08;}
+.kb-sub{font-size:13px;color:#5a4410;margin-top:4px;}
+.kb-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0;
+  background:#3c1e08;color:#FEE500;padding:13px 20px;border-radius:12px;
+  font-size:15px;font-weight:800;white-space:nowrap;transition:transform .15s,opacity .15s;
+}
+.kb-btn:hover{transform:translateY(-1px);opacity:.92;}
+.kb-btn svg{width:20px;height:20px;display:block;}
+/* 오른쪽 떠 있는 버튼과 겹치지 않게 */
+@media(min-width:601px) and (max-width:1380px){.footer-inner{padding-right:70px;}}
+
+/* ── FOOTER SNS ── */
+.footer-sns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.sns-btn{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;transition:transform .2s,opacity .2s;
+  opacity:.82;flex-shrink:0;
+}
+.sns-btn:hover{transform:scale(1.15);opacity:1;}
+.sns-btn svg{display:block;}
+.sns-phone{background:var(--blue);}
+.sns-phone svg{width:20px;height:20px;color:#fff;}
+.sns-kakao{background:#FEE500;}
+.sns-kakao svg{width:22px;height:22px;color:#3c1e08;}
+.sns-insta{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+.sns-insta svg{width:20px;height:20px;color:#fff;}
+.sns-naver{background:#03C75A;}
+.sns-naver svg{width:18px;height:18px;color:#fff;}
+.sns-yt{background:#FF0000;}
+.sns-yt svg{width:20px;height:20px;color:#fff;}
+
+/* ── CONTACT ICONS ── */
+.contact-strip{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:40px;padding-top:28px;border-top:1px solid var(--border);}
+.contact-item{
+  display:flex;align-items:center;gap:8px;font-size:14px;
+  text-decoration:none;color:var(--sub);font-weight:500;
+  transition:color .15s;
+}
+.contact-item:hover{color:var(--blue);}
+.contact-item-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+}
+.contact-item-icon svg{display:block;}
+.ci-phone{background:var(--blue);}
+.ci-phone svg{width:16px;height:16px;color:#fff;}
+.ci-kakao{background:#FEE500;}
+.ci-kakao svg{width:18px;height:18px;color:#3c1e08;}
+.ci-insta{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+.ci-insta svg{width:16px;height:16px;color:#fff;}
+.ci-naver{background:#03C75A;}
+.ci-naver svg{width:14px;height:14px;color:#fff;}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.rd1{transition-delay:.1s;} .rd2{transition-delay:.2s;} .rd3{transition-delay:.3s;} .rd4{transition-delay:.4s;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1000px){
+  .nav-links{display:none;} .hamburger{display:flex;}
+  .hero-inner{grid-template-columns:1fr;} .hero-image-wrap{display:none;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  .coach-grid{grid-template-columns:1fr;gap:28px;}
+  /* 코치 텍스트 컬럼: 모바일에서 캐러셀 아래이므로 헤더 중앙 정렬 */
+  .coach-text-col .sec-label,.coach-text-col .sec-title{text-align:center;}
+  .curr-cards{grid-template-columns:repeat(2,1fr);}
+  .sched-grid{grid-template-columns:1fr;} .cal-wrap{width:100%;}
+  .cta-cards{grid-template-columns:1fr;}
+  .curr-imgs{grid-template-columns:1fr;}
+  .float-btn{width:46px;height:46px;}
+  /* 도트: 모바일 터치 영역 확대 */
+  .ccar-dot{width:9px;height:9px;}
+  .ccar-dot.active{width:26px;}
+}
+@media(max-width:600px){
+  /* 휴대폰: 상단 원데이 버튼은 메뉴·첫 화면에 있으므로 숨겨 메뉴(☰) 버튼 자리 확보 */
+  .nav-right .btn-naver{display:none;}
+  section{padding:60px 18px;}
+  .hero-inner{padding:40px 18px;}
+  .curr-cards{grid-template-columns:1fr 1fr;}
+  .coach-cards{grid-template-columns:1fr;}
+  .hero-btns{flex-direction:column;}
+  .btn-primary,.btn-secondary{width:100%;justify-content:center;}
+  /* 갤러리: 3열→2열, 사진이 더 크고 보기 좋게 */
+  .insta-grid{grid-template-columns:repeat(2,1fr);gap:3px;}
+  .reels-viewport{max-width:100%;}
+  .contact-strip{flex-direction:column;align-items:center;gap:12px;}
+  .footer-inner{flex-direction:column;gap:16px;}
+  .kakao-banner{flex-direction:column;text-align:center;}
+  .kb-btn{width:100%;}
+  /* 휴대폰: 원데이·회원 카드 두 칸 유지, 문구만 짧게 */
+  .cta-cards.cta-cards-2{grid-template-columns:1fr 1fr;gap:10px;}
+  .cta-cards-2 .cta-card{padding:20px 10px 18px;}
+  .cta-cards-2 .cta-card-icon svg{width:50px;height:50px;}
+  .cta-cards-2 .cta-card-title{font-size:15px;}
+  .cta-cards-2 .cta-card-desc{font-size:12px;margin-bottom:12px;min-height:36px;}
+  .cta-card-desc .d-pc{display:none;}
+  .cta-card-desc .d-mo{display:inline;}
+  .cta-cards-2 .cta-card-btn{padding:9px 14px;font-size:13px;}
+  .cta-card-desc,.kb-sub,.loc-sub{word-break:keep-all;}
+  .kb-sub{font-size:12px;}
+  .loc-addr{font-size:15px;}
+  .loc-map iframe{height:240px;}
+  .loc-btns{gap:8px;}
+  .loc-btn{flex:1;padding:12px 10px;font-size:14px;white-space:nowrap;gap:6px;}
+  footer{padding-bottom:84px;} /* 떠 있는 버튼에 가리지 않게 */
+  .gal-actions{flex-direction:column;align-items:center;}
+  .float-bar{gap:6px;bottom:16px;right:10px;}
+  .float-btn{width:42px;height:42px;}
+}
+@media(max-width:400px){
+  .curr-cards{grid-template-columns:1fr;}
+}
+</style>
+<style>
+.nvi{position:relative;}
+.nav-links .nvi>a{display:block;font-weight:600;}
+.nvi:hover>a,.nvi:focus-within>a{color:var(--blue);background:rgba(26,83,212,.07);}
+.nvd{display:none;position:absolute;top:100%;left:0;min-width:190px;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-lg);padding:6px 0;z-index:200;}
+.nvi:hover .nvd,.nvi:focus-within .nvd{display:block;}
+.nav-links .nvd a{display:block;padding:9px 16px;border-radius:0;font-size:14px;white-space:nowrap;}
+.nav-links .nvd a:hover{background:var(--bg);color:var(--blue);}
+.mobile-menu a.mtop{font-weight:700;color:var(--text);}
+.mobile-menu a.msub{padding-left:36px;font-size:14px;}
+</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sjoon0305.github.io/highend-volleyball/#org","name":"하이앤드 발리볼 아카데미","alternateName":"HIGH END Volleyball Academy","url":"https://sjoon0305.github.io/highend-volleyball/","logo":"https://sjoon0305.github.io/highend-volleyball/assets/img/logo.png","email":"highendv0lly@gmail.com","telephone":"+82-10-4463-1177","sameAs":["https://www.instagram.com/highend_volleyball","https://www.youtube.com/@Highendvolleyball","https://naver.me/G8fjuvBh","https://m.blog.naver.com/highendv0lly","http://pf.kakao.com/_pCEzX"],"founder":{"@id":"https://sjoon0305.github.io/highend-volleyball/about/#kim"}},{"@type":"SportsActivityLocation","@id":"https://sjoon0305.github.io/highend-volleyball/#place","name":"하이앤드 발리볼 아카데미 상암점","url":"https://sjoon0305.github.io/highend-volleyball/","image":"https://sjoon0305.github.io/highend-volleyball/assets/img/og-image.jpg","telephone":"+82-10-4463-1177","email":"highendv0lly@gmail.com","description":"상암 인근 배구 아카데미. 국가대표 7년 · 프로(V리그) 10년, 선수 17년 김재휘 코치와 국가대표 · 프로 출신 코치진이 초등학생부터 성인까지 가르칩니다.","address":{"@type":"PostalAddress","streetAddress":"현천동 180-1","addressLocality":"고양시 덕양구","addressRegion":"경기도","addressCountry":"KR"},"geo":{"@type":"GeoCoordinates","latitude":37.595877,"longitude":126.8672995},"hasMap":"https://www.google.com/maps?cid=1837675666172275385","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Saturday","opens":"12:00","closes":"17:50"}],"priceRange":"₩25,000~₩250,000","sameAs":["https://www.instagram.com/highend_volleyball","https://www.youtube.com/@Highendvolleyball","https://naver.me/G8fjuvBh","https://m.blog.naver.com/highendv0lly","http://pf.kakao.com/_pCEzX"],"parentOrganization":{"@id":"https://sjoon0305.github.io/highend-volleyball/#org"}},{"@type":"WebSite","@id":"https://sjoon0305.github.io/highend-volleyball/#site","url":"https://sjoon0305.github.io/highend-volleyball/","name":"하이앤드 발리볼 아카데미","inLanguage":"ko-KR","publisher":{"@id":"https://sjoon0305.github.io/highend-volleyball/#org"}}]}</script>
 </head>
-<body data-page="home">
-<script>window.HE_ROOT="";</script>
-<a class="skip" href="#main">본문 바로가기</a>
-<header class="hd">
-  <div class="hd-in">
-    <a class="hd-logo" href="./" aria-current="page"><img src="assets/img/logo.webp" alt="하이앤드 발리볼 아카데미 로고" width="36" height="36"><span><b>HIGH END</b><small>VOLLEYBALL ACADEMY</small></span></a>
-    <nav class="gnb" aria-label="주요 메뉴">
-      <div class="nv on"><a href="./">HOME</a></div>
-      <div class="nv"><a href="about/">ABOUT</a><div class="dd"><a href="about/#intro">하이앤드 소개</a><a href="about/#career">김재휘 코치 경력</a><a href="about/#staff">코칭 스태프</a><a href="about/#place">시설 (200평 풀코트)</a></div></div><div class="nv"><a href="method/">METHOD</a><div class="dd"><a href="method/#know">알고 하면 쉬운 배구</a><a href="method/#maps">MAPS 워밍업</a><a href="method/#fix">정밀 교정</a><a href="method/#flow">수업 80분 흐름</a></div></div><div class="nv"><a href="class/">CLASS</a><div class="dd"><a href="class/#oneday">원데이 클래스 예약</a><a href="class/#youth">유소년반</a><a href="class/#group">초급반 · 중급반</a><a href="class/#private">개인레슨</a><a href="class/#schedule">시간표 · 수강 안내</a></div></div><div class="nv"><a href="story/">STORY</a><div class="dd"><a href="story/#class-story">수업 이야기</a><a href="story/#gallery">수업 사진 · 영상</a></div></div><div class="nv"><a href="contact/">CONTACT</a><div class="dd"><a href="contact/#map">오시는 길</a><a href="sangam-volleyball-academy/">상암·은평·고양 배구학원</a><a href="contact/#faq">자주 묻는 질문</a><a href="contact/#ask">상담하기</a></div></div>
-    </nav>
-    <div class="hd-act">
-      <a class="hd-btn p" href="class/#oneday">원데이 예약</a>
-      <a class="hd-btn s" href="dashboard.html">회원 로그인</a>
-      <button class="hd-menu" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mnav" data-close='<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+      <img src="./1. 코치 사진 자료/하이엔드 발리볼 로고.jpg" alt="HIGH END">
+      <div class="nav-logo-text">
+        <div class="brand">HIGH END</div>
+        <div class="sub">Volleyball Academy</div>
+      </div>
+    </a>
+    <div class="nav-links"><div class="nvi"><a href="about/">ABOUT</a><div class="nvd"><a href="about/#intro">하이앤드 소개</a><a href="about/#career">김재휘 코치 경력</a><a href="about/#hwang">황준태 코치</a><a href="about/#place">시설 (200평 풀코트)</a></div></div><div class="nvi"><a href="method/">METHOD</a><div class="nvd"><a href="method/#know">알고 하면 쉬운 배구</a><a href="method/#maps">MAPS 워밍업</a><a href="method/#fix">정밀 교정</a><a href="method/#flow">수업 80분 흐름</a><a href="method/#level">4단계 성장 레벨</a></div></div><div class="nvi"><a href="class/">CLASS</a><div class="nvd"><a href="class/#oneday">원데이 클래스 예약</a><a href="class/#youth">유소년반</a><a href="class/#group">초급반 · 중급반</a><a href="class/#intl">국제학교 · 해외 학생</a><a href="class/#private">개인레슨</a><a href="class/#schedule">시간표 · 수강 안내</a></div></div><div class="nvi"><a href="story/">STORY</a><div class="nvd"><a href="story/#class-story">수업 이야기</a><a href="story/#gallery">수업 사진 · 영상</a></div></div><div class="nvi"><a href="contact/">CONTACT</a><div class="nvd"><a href="contact/#map">오시는 길</a><a href="sangam-volleyball-academy/">상암·은평·고양 배구학원</a><a href="contact/#faq">자주 묻는 질문</a><a href="contact/#ask">상담하기</a></div></div></div>
+    <div class="nav-right">
+      <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" class="btn-naver">원데이클래스</a>
+      <a href="dashboard.html" class="btn-login-nav">로그인</a>
+      <button class="hamburger" id="menuBtn" aria-label="메뉴"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
     </div>
   </div>
-</header>
-<nav class="mnav" id="mnav" aria-label="휴대폰 메뉴">
-  <a class="m-home" href="./">HOME</a>
-  <details><summary>ABOUT</summary><a href="about/">ABOUT 전체 보기</a><a href="about/#intro">하이앤드 소개</a><a href="about/#career">김재휘 코치 경력</a><a href="about/#staff">코칭 스태프</a><a href="about/#place">시설 (200평 풀코트)</a></details><details><summary>METHOD</summary><a href="method/">METHOD 전체 보기</a><a href="method/#know">알고 하면 쉬운 배구</a><a href="method/#maps">MAPS 워밍업</a><a href="method/#fix">정밀 교정</a><a href="method/#flow">수업 80분 흐름</a></details><details><summary>CLASS</summary><a href="class/">CLASS 전체 보기</a><a href="class/#oneday">원데이 클래스 예약</a><a href="class/#youth">유소년반</a><a href="class/#group">초급반 · 중급반</a><a href="class/#private">개인레슨</a><a href="class/#schedule">시간표 · 수강 안내</a></details><details><summary>STORY</summary><a href="story/">STORY 전체 보기</a><a href="story/#class-story">수업 이야기</a><a href="story/#gallery">수업 사진 · 영상</a></details><details><summary>CONTACT</summary><a href="contact/">CONTACT 전체 보기</a><a href="contact/#map">오시는 길</a><a href="sangam-volleyball-academy/">상암·은평·고양 배구학원</a><a href="contact/#faq">자주 묻는 질문</a><a href="contact/#ask">상담하기</a></details>
-  <div class="m-cta"><a href="class/#oneday">원데이 예약</a><a href="dashboard.html">회원 로그인</a></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a class="mtop" href="about/">ABOUT</a><a class="msub" href="about/#intro">하이앤드 소개</a><a class="msub" href="about/#career">김재휘 코치 경력</a><a class="msub" href="about/#hwang">황준태 코치</a><a class="msub" href="about/#place">시설 (200평 풀코트)</a><a class="mtop" href="method/">METHOD</a><a class="msub" href="method/#know">알고 하면 쉬운 배구</a><a class="msub" href="method/#maps">MAPS 워밍업</a><a class="msub" href="method/#fix">정밀 교정</a><a class="msub" href="method/#flow">수업 80분 흐름</a><a class="msub" href="method/#level">4단계 성장 레벨</a><a class="mtop" href="class/">CLASS</a><a class="msub" href="class/#oneday">원데이 클래스 예약</a><a class="msub" href="class/#youth">유소년반</a><a class="msub" href="class/#group">초급반 · 중급반</a><a class="msub" href="class/#intl">국제학교 · 해외 학생</a><a class="msub" href="class/#private">개인레슨</a><a class="msub" href="class/#schedule">시간표 · 수강 안내</a><a class="mtop" href="story/">STORY</a><a class="msub" href="story/#class-story">수업 이야기</a><a class="msub" href="story/#gallery">수업 사진 · 영상</a><a class="mtop" href="contact/">CONTACT</a><a class="msub" href="contact/#map">오시는 길</a><a class="msub" href="sangam-volleyball-academy/">상암·은평·고양 배구학원</a><a class="msub" href="contact/#faq">자주 묻는 질문</a><a class="msub" href="contact/#ask">상담하기</a>
+    <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" style="color:var(--blue);font-weight:700;">원데이클래스 신청</a>
+    <a href="dashboard.html" style="color:var(--blue);">회원 로그인</a>
+  </div>
 </nav>
-<main id="main">
-<section class="home-hero">
-  <div class="wrap">
-    <p class="eyebrow">HIGH END VOLLEYBALL ACADEMY</p>
-    <h1 class="h1">알고 하면<br>쉬운 배구</h1>
-    <p class="lead">상암 인근 배구 아카데미, 하이앤드입니다.<br>국가대표 출신 <strong>김재휘 코치</strong>가 초등부터 성인까지 이유를 알고 하는 배구를 가르칩니다.</p>
-    <div class="btns">
-      <a class="btn p" href="class/#oneday">원데이 클래스 25,000원 예약</a>
-      <a class="btn s" href="method/">하이앤드 수업 방식 보기</a>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow reveal">HIGH END VOLLEYBALL ACADEMY</div>
+      <h1 class="hero-title reveal">국가대표와 함께하는<br><em>배구교실</em></h1>
+      <p class="hero-sub reveal">속도보다 방향, 결과보다 지속<br>가장 완벽한 기본을 가르치겠습니다<br><br>
+        <strong style="color:var(--text);">FIVB 코치 레벨1 · 국가대표 7년 · 프로 10년</strong>
+      </p>
+      <div class="hero-btns reveal">
+        <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" class="btn-primary">원데이클래스 신청</a>
+        <a href="dashboard.html" class="btn-secondary">회원 로그인 · 예약</a>
+      </div>
+      <div style="margin-top:14px;font-size:13px;color:var(--muted);" class="reveal">
+        <a href="tel:01044631177" style="color:var(--blue);font-weight:600;">010-4463-1177</a>
+        &nbsp;·&nbsp; 매주 토요일 운영
+      </div>
+    </div>
+    <div class="hero-image-wrap reveal rd2">
+      <img src="./1. 코치 사진 자료/1.jpg" alt="김재휘 코치" class="hero-img-main">
+      <div class="hero-img-badge">
+        <div class="hib-num">7년</div>
+        <div class="hib-label">국가대표 경력</div>
+      </div>
     </div>
   </div>
 </section>
-<div class="wrap"><figure class="hero-photo"><img src="assets/img/class-2-1200.webp" alt="하이앤드 발리볼 아카데미 수강생 단체 사진, 200평 풀코트 체육관" width="1200" height="900" fetchpriority="high"></figure></div>
-<section class="sec" aria-label="코치 경력 요약">
-  <div class="wrap">
-    <div class="stats">
-      <a class="stat reveal" href="about/#career"><b>7년</b><span>국가대표 (2016~2022)</span></a>
-      <a class="stat reveal" href="about/#career"><b>10년</b><span>프로(V리그) 선수</span></a>
-      <a class="stat reveal" href="about/#career"><b>4회</b><span>V리그 우승</span></a>
-      <a class="stat reveal" href="about/#career"><b>은메달</b><span>2018 아시안게임</span></a>
-      <a class="stat reveal" href="about/#career"><b>FIVB</b><span>코치 레벨1</span></a>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="reveal"><div class="stat-n">7년</div><div class="stat-l">국가대표 경력</div></div>
+    <div class="reveal rd1"><div class="stat-n">10년</div><div class="stat-l">프로 경력</div></div>
+    <div class="reveal rd2"><div class="stat-n">4회</div><div class="stat-l">V리그 우승</div></div>
+    <div class="reveal rd3"><div class="stat-n">FIVB</div><div class="stat-l">코치 자격 레벨1</div></div>
+  </div>
+</div>
+
+<!-- PUBLIC SCHEDULE -->
+<section id="schedule">
+  <div class="sec-inner">
+    <div style="margin-bottom:32px;">
+      <div class="sec-label reveal">CLASS SCHEDULE</div>
+      <h2 class="sec-title reveal">수업 일정 확인</h2>
+      <p class="sec-desc reveal">로그인 없이 수업 일정을 확인할 수 있습니다. 예약은 회원 로그인 후 이용하세요.</p>
+    </div>
+    <div class="sched-grid reveal" id="schedGrid">
+      <div class="cal-wrap">
+        <div class="cal-nav-row">
+          <button class="cal-nav-btn" id="calPrev">‹</button>
+          <div class="month-title" id="calTitle">로딩중...</div>
+          <button class="cal-nav-btn" id="calNext">›</button>
+        </div>
+        <div class="cal-head">
+          <div class="cal-hd sun">일</div><div class="cal-hd">월</div>
+          <div class="cal-hd">화</div><div class="cal-hd">수</div>
+          <div class="cal-hd">목</div><div class="cal-hd">금</div>
+          <div class="cal-hd sat">토</div>
+        </div>
+        <div class="cal-days" id="calDays"></div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>수업있음</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>거의 마감</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--muted);opacity:.5"></div>취소됨</div>
+        </div>
+      </div>
+      <div class="sched-panel" id="schedPanel">
+        <div class="no-sess-msg"><div class="icon"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor"/></svg></div><div>날짜를 선택하면<br>수업 일정이 표시됩니다</div></div>
+      </div>
     </div>
   </div>
 </section>
-<section class="sec alt">
-  <div class="wrap">
-    <h2 class="reveal">하이앤드를 알아보는 3가지 길</h2>
-    <div class="ways">
-      <a class="way reveal" href="about/"><div class="k">ABOUT</div><div class="t">누가<br>가르치나요?</div><div class="d">국가대표 7년 · 프로(V리그) 10년, 선수 17년</div></a>
-      <a class="way reveal" href="method/"><div class="k">METHOD</div><div class="t">어떻게<br>가르치나요?</div><div class="d">왜 → 어떻게 → 해보기</div></a>
-      <a class="way reveal" href="class/"><div class="k">CLASS</div><div class="t">어떤 수업이<br>있나요?</div><div class="d">원데이 · 유소년 · 초급·중급 · 개인레슨</div></a>
+
+<!-- COACH -->
+<section id="coach">
+  <div class="sec-inner">
+    <div class="coach-grid">
+      <div class="coach-img-col reveal">
+        <div class="coach-carousel" id="coachCarousel">
+          <div class="ccar-track" id="ccarTrack">
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/1.jpg" alt="김재휘 코치 프로필"></div>
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/2.jpg" alt="코치 수업 장면"></div>
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/3.jpg" alt="코치 사진 3"></div>
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/4.jpg" alt="코치 사진 4"></div>
+            <div class="ccar-slide"><img src="./1. 코치 사진 자료/5.jpg" alt="코치 사진 5"></div>
+          </div>
+        </div>
+        <div class="ccar-dots" id="ccarDots">
+          <div class="ccar-dot active"></div>
+          <div class="ccar-dot"></div>
+          <div class="ccar-dot"></div>
+          <div class="ccar-dot"></div>
+          <div class="ccar-dot"></div>
+        </div>
+      </div>
+      <div class="coach-text-col">
+        <div class="sec-label reveal">MAIN COACH</div>
+        <h2 class="sec-title reveal">배구 국가대표 7년<br>프로경력 10년</h2>
+        <p class="sec-desc reveal">선수 경험에만 의존하지 않고 국제 기준의 지도자 교육과 이론을 함께 갖췄습니다. 유소년·청소년·성인 대상 맞춤형 배구 지도 다수, 국제대회 경험을 바탕으로 한 고급 기술 지도 및 경기 전략 수립이 가능합니다.</p>
+        <div class="coach-cards">
+          <div class="coach-card reveal rd1">
+            <div class="cc-icon"><svg class="flag" viewBox="-36 -24 72 48" role="img" aria-label="태극기"><rect x="-36" y="-24" width="72" height="48" fill="#fff"/><g transform="rotate(-56.31)"><circle r="12" fill="#CD2E3A"/><path d="M0-12A6 6 0 0 0 0 0A6 6 0 0 1 0 12A12 12 0 0 1 0-12z" fill="#0047A0"/></g><g fill="#000"><g transform="rotate(123.69)"><rect x="-6" y="18" width="12" height="2"/><rect x="-6" y="21" width="12" height="2"/><rect x="-6" y="24" width="12" height="2"/></g><g transform="rotate(-56.31)"><rect x="-6" y="18" width="5.5" height="2"/><rect x="0.5" y="18" width="5.5" height="2"/><rect x="-6" y="21" width="5.5" height="2"/><rect x="0.5" y="21" width="5.5" height="2"/><rect x="-6" y="24" width="5.5" height="2"/><rect x="0.5" y="24" width="5.5" height="2"/></g><g transform="rotate(-123.69)"><rect x="-6" y="18" width="5.5" height="2"/><rect x="0.5" y="18" width="5.5" height="2"/><rect x="-6" y="21" width="12" height="2"/><rect x="-6" y="24" width="5.5" height="2"/><rect x="0.5" y="24" width="5.5" height="2"/></g><g transform="rotate(56.31)"><rect x="-6" y="18" width="12" height="2"/><rect x="-6" y="21" width="5.5" height="2"/><rect x="0.5" y="21" width="5.5" height="2"/><rect x="-6" y="24" width="12" height="2"/></g></g></svg></div>
+            <div class="cc-title">국가대표 이력</div>
+            <div class="cc-body">대한민국 국가대표 (2016~2022)<br>아시안게임 은메달·VNL·AVC컵 등<br>다수 국제대회 참가</div>
+          </div>
+          <div class="coach-card reveal rd2">
+            <div class="cc-icon"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.5h8v5.5a4 4 0 0 1-8 0z"/><path d="M8 5.5H5.2a3 3 0 0 0 3 4.3"/><path d="M16 5.5h2.8a3 3 0 0 1-3 4.3"/><path d="M12 13v4"/><path d="M8.5 20.5h7"/><path d="M9.5 17h5v3.5h-5z"/></svg></div>
+            <div class="cc-title">프로 경력</div>
+            <div class="cc-body">현대캐피탈·KB스타즈<br>우리카드·삼성화재<br>V리그 우승 4회</div>
+          </div>
+          <div class="coach-card reveal rd1">
+            <div class="cc-icon"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5l2.6 6.3"/><path d="M16 2.5l-2.6 6.3"/><circle cx="12" cy="14.5" r="6"/><path d="M12 11.6l.95 1.9 2.1.3-1.52 1.48.36 2.1L12 16.4l-1.89 1 .36-2.1-1.52-1.48 2.1-.3z" fill="currentColor" stroke-width="1"/></svg></div>
+            <div class="cc-title">국제 지도자 자격</div>
+            <div class="cc-body">FIVB 코치코스 레벨1<br>전문스포츠지도사 2급<br>국제 기준 기술 지도</div>
+          </div>
+          <div class="coach-card reveal rd2">
+            <div class="cc-icon"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M4 20L15.5 5"/><path d="M10.5 20a6.5 6.5 0 0 0-2.6-5.2"/><circle cx="15.5" cy="5" r="1.6" fill="currentColor"/><circle cx="4" cy="20" r="1.6" fill="currentColor"/><path d="M17 20v-2.2M20 20v-2.2"/></svg></div>
+            <div class="cc-title">지도 특징</div>
+            <div class="cc-body">엘리트 시스템 구축<br>4단계 성취 레벨 체계<br>세대별 맞춤 수업</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-<section class="sec">
-  <div class="wrap">
-    <h2 class="reveal">이런 분께 맞습니다</h2>
-    <div class="fits">
-      <a class="fit reveal" href="class/#youth"><div class="t">초등학생 배구교실을 찾는 학부모님</div><p>우리 아이가 제대로 배우고 있다는 안심. 처음부터 바른 자세와 기본기를 익힙니다.</p></a>
-      <a class="fit reveal" href="class/#youth"><div class="t">배구부 · 엘리트를 준비하는 중·고등학생</div><p>왜 이렇게 움직여야 하는지 알면, 내 몸이 이해되는 순간을 경험합니다.</p></a>
-      <a class="fit reveal" href="class/#group"><div class="t">취미로 배구를 배우고 싶은 성인</div><p>처음 배우는 분도, 기본기를 다시 잡고 싶은 분도. 안전하게 오래 하는 배구.</p></a>
+
+<!-- CURRICULUM -->
+<section id="curriculum">
+  <div class="sec-inner">
+    <div class="curr-header">
+      <div class="sec-label reveal">CURRICULUM</div>
+      <h2 class="sec-title reveal">단계별 맞춤 훈련 커리큘럼</h2>
+      <p class="sec-desc reveal" style="max-width:560px;margin:0 auto;">부상 없이 오래 할 수 있는 배구, 즐겁게 지속할 수 있는 배구<br>기본이 무너지지 않는 배구 — 그것이 하이앤드입니다</p>
+    </div>
+    <div class="curr-cards">
+      <div class="curr-card reveal">
+        <div class="curr-lv">1</div>
+        <div class="curr-name">초급반</div>
+        <div class="curr-target">기초 입문자</div>
+        <div class="curr-desc">기초 기술 습득, 배구에 재미 붙이기. 올바른 자세와 기본기 완성.</div>
+      </div>
+      <div class="curr-card reveal rd1">
+        <div class="curr-lv">2</div>
+        <div class="curr-name">중급반</div>
+        <div class="curr-target">기술 향상</div>
+        <div class="curr-desc">기술적 완성도 향상, 신체 밸런스 강화. 실전 적용 능력 개발.</div>
+      </div>
+      <div class="curr-card reveal rd2">
+        <div class="curr-lv">3</div>
+        <div class="curr-name">심화반</div>
+        <div class="curr-target">고급 기술</div>
+        <div class="curr-desc">국가대표 기준 고급 기술 습득. 실질적 팀플레이 완성 및 경기 분석.</div>
+      </div>
+      <div class="curr-card reveal rd3">
+        <div class="curr-lv">4</div>
+        <div class="curr-name">시합반</div>
+        <div class="curr-target">대회 준비</div>
+        <div class="curr-desc">대외 우승을 위한 집중 코칭. 실전 경기 전략 및 멘탈 훈련.</div>
+      </div>
+      <div class="curr-card reveal rd4">
+        <div class="curr-lv"><svg class="ln star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.5l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></svg></div>
+        <div class="curr-name">개인레슨</div>
+        <div class="curr-target">1:1 맞춤</div>
+        <div class="curr-desc">개인별 목표 맞춤 집중 지도. 국가대표 수준 기술 전수.</div>
+      </div>
+    </div>
+    <div class="curr-imgs">
+      <img src="./2. 커리큘럼 사진/KakaoTalk_20260504_235923807_01.png" alt="커리큘럼 상세" class="reveal">
+      <img src="./2. 커리큘럼 사진/KakaoTalk_20260504_235923807_02.png" alt="수업 안내" class="reveal rd1">
     </div>
   </div>
 </section>
-<section class="sec"><div class="wrap"><div class="band reveal"><h2>처음부터 제대로.</h2><p>토요일 12:00 · 13:30 · 16:30, 원데이 클래스로 먼저 만나 보세요.</p><div class="btns"><a class="btn w" href="class/#oneday">원데이 클래스 예약</a><a class="btn k" href="contact/">오시는 길 · 상담</a></div></div></div></section>
-</main>
-<footer class="ft">
-  <div class="wrap">
-    <div class="ft-top">
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="sec-inner">
+    <div class="gal-header">
+      <div class="sec-label reveal">GALLERY</div>
+      <h2 class="sec-title reveal">수업 현장</h2>
+      <p class="sec-desc reveal">하이앤드 발리볼 아카데미의 생생한 수업 현장을 확인하세요</p>
+    </div>
+    <div class="insta-grid reveal">
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/1.jpg')">
+        <img src="./4. 수업 사진/1.jpg" alt="수업 현장 1">
+      </div>
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/2.jpg')">
+        <img src="./4. 수업 사진/2.jpg" alt="수업 현장 2">
+      </div>
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/3.jpg')">
+        <img src="./4. 수업 사진/3.jpg" alt="수업 현장 3">
+      </div>
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/4.jpg')">
+        <img src="./4. 수업 사진/4.jpg" alt="수업 현장 4">
+      </div>
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/5.jpg')">
+        <img src="./4. 수업 사진/5.jpg" alt="수업 현장 5">
+      </div>
+      <div class="insta-item" onclick="openLb('./4. 수업 사진/6.jpg')">
+        <img src="./4. 수업 사진/6.jpg" alt="수업 현장 6">
+      </div>
+    </div>
+    <div class="gal-actions reveal">
+      <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="gal-btn gal-btn-insta">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        더 보기 +
+      </a>
+      <a href="https://m.place.naver.com/place/2022442484/review/visitor" target="_blank" class="gal-btn gal-btn-naver">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.54 12.47L7.84 2H4v20h4.46V11.53L16.16 22H20V2h-4.46z"/></svg>
+        리뷰 보기
+      </a>
+    </div>
+
+    <!-- REELS / VIDEO SLIDER -->
+    <div class="reels-section reveal">
+      <div class="reels-header">
+        <div class="sec-label">HIGHLIGHTS</div>
+        <h2 class="sec-title" style="margin-top:8px;">하이라이트 영상</h2>
+        <p class="sec-desc" style="margin-top:8px;max-width:480px;">하이앤드 발리볼 아카데미의 생생한 수업 영상을 확인하세요</p>
+      </div>
+      <div class="reels-outer">
+        <div class="reels-viewport" id="reelsViewport">
+          <div class="reels-track" id="reelsTrack">
+            <!-- Slide 1 -->
+            <div class="reel-slide" data-idx="0">
+              <video src="./4. 수업 사진/동영상/1.mp4" loop muted playsinline preload="auto"></video>
+              <div class="reel-play-layer" id="rpl0">
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="reel-slide" data-idx="1">
+              <video src="./4. 수업 사진/동영상/2.mp4" loop muted playsinline preload="metadata"></video>
+              <div class="reel-play-layer" id="rpl1">
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="reel-slide" data-idx="2">
+              <video src="./4. 수업 사진/동영상/3.mp4" loop muted playsinline preload="metadata"></video>
+              <div class="reel-play-layer" id="rpl2">
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+            </div>
+            <!-- Slide 4 -->
+            <div class="reel-slide" data-idx="3" style="background:#000;">
+              <video src="./4. 수업 사진/동영상/4.mp4" loop muted playsinline preload="metadata" style="width:100%;aspect-ratio:9/16;object-fit:contain;display:block;"></video>
+              <div class="reel-play-layer" id="rpl3">
+                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+              </div>
+            </div>
+            <!-- Slide 5: Instagram CTA -->
+            <div class="reel-slide reel-slide-cta">
+              <div class="reel-cta-icon">
+                <svg viewBox="0 0 24 24" fill="white" style="width:40px;height:40px;display:block;"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </div>
+              <div class="reel-cta-text">더 많은 영상<br>인스타그램에서</div>
+              <div class="reel-cta-sub">팔로우하고 최신 수업<br>현장을 확인하세요</div>
+              <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="reel-cta-btn">@highend_volleyball</a>
+            </div>
+          </div>
+        </div>
+        <!-- Nav -->
+        <div class="reels-nav">
+          <button class="reels-arr" id="reelsPrev" aria-label="이전">&#8249;</button>
+          <div class="slider-dots" id="reelsDots">
+            <div class="s-dot active"></div>
+            <div class="s-dot"></div>
+            <div class="s-dot"></div>
+            <div class="s-dot"></div>
+            <div class="s-dot"></div>
+          </div>
+          <button class="reels-arr" id="reelsNext" aria-label="다음">&#8250;</button>
+        </div>
+      </div>
+      <!-- Instagram 더보기 -->
+      <div class="reels-more">
+        <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="reels-more-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          인스타그램에서 더 보기
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="lightbox" id="lightbox" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()" aria-label="닫기"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="sec-inner cta-wrap">
+    <div class="sec-label reveal" style="text-align:center">CONTACT</div>
+    <h2 class="sec-title reveal" style="text-align:center">지금 바로 시작하세요</h2>
+    <p class="sec-desc reveal" style="text-align:center;max-width:480px;margin:0 auto;">
+      첫 수업이 망설여지신다면 편하게 문의해 주세요
+    </p>
+    <div class="cta-cards cta-cards-2 reveal">
+      <div class="cta-card">
+        <div class="cta-card-icon"><svg viewBox="0 0 64 64" role="img" aria-label="원데이클래스 티켓"><g transform="rotate(-10 32 32)"><path d="M7 21a4 4 0 0 1 4-4h42a4 4 0 0 1 4 4v6a5 5 0 0 0 0 10v6a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-6a5 5 0 0 0 0-10z" fill="#0d1b2e" transform="translate(2.5 3)"/><path d="M7 21a4 4 0 0 1 4-4h42a4 4 0 0 1 4 4v6a5 5 0 0 0 0 10v6a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-6a5 5 0 0 0 0-10z" fill="#1a53d4"/><path d="M42 19.5v25" stroke="#fff" stroke-opacity=".6" stroke-width="1.8" stroke-dasharray="3 3"/><g fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(14 22) scale(0.83)"><circle cx="12" cy="12" r="10"/><path d="M11.1 7.1a16.55 16.55 0 0 1 10.9 4"/><path d="M12 12a12.6 12.6 0 0 1-8.7 5"/><path d="M16.8 13.6a16.55 16.55 0 0 1-9 7.5"/><path d="M20.7 17a12.8 12.8 0 0 0-8.7-5 13.3 13.3 0 0 1 0-10"/><path d="M6.3 3.8a16.55 16.55 0 0 0 1.9 11.5"/></g><text x="49.5" y="33" text-anchor="middle" font-family="Noto Sans KR,sans-serif" font-weight="900" font-size="12" fill="#fff">1</text><text x="49.5" y="41" text-anchor="middle" font-family="Noto Sans KR,sans-serif" font-weight="700" font-size="5.5" fill="#fff">DAY</text></g><circle cx="52" cy="12" r="7" fill="#c8231e" stroke="#fff" stroke-width="2"/><path d="M52 7.6l1.2 3 3.1.1-2.4 2 .8 3.1-2.7-1.8-2.7 1.8.8-3.1-2.4-2 3.1-.1z" fill="#fff"/></svg></div>
+        <div class="cta-card-title">원데이클래스</div>
+        <div class="cta-card-desc"><span class="d-pc">처음 배구를 시작하는 분들을 위한 하루 체험 수업. 네이버에서 간편하게 신청하세요.</span><span class="d-mo">처음 시작하는 분을 위한 하루 체험 수업</span></div>
+        <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" class="cta-card-btn primary">네이버 예약</a>
+      </div>
+      <div class="cta-card">
+        <div class="cta-card-icon"><svg viewBox="0 0 64 64" role="img" aria-label="회원 카드"><g transform="rotate(8 32 32)"><rect x="6" y="15" width="52" height="34" rx="6" fill="#1a53d4" transform="translate(2.5 3)"/><rect x="6" y="15" width="52" height="34" rx="6" fill="#0d1b2e"/><rect x="12" y="22" width="11" height="8" rx="2" fill="#f2c94c"/><rect x="12" y="37" width="20" height="2.6" rx="1.3" fill="#fff" fill-opacity=".55"/><rect x="12" y="42" width="13" height="2.6" rx="1.3" fill="#fff" fill-opacity=".35"/><path d="M46 20.5l8.5 2.8v6.2c0 5.3-3.6 9-8.5 10.4-4.9-1.4-8.5-5.1-8.5-10.4v-6.2z" fill="#1a53d4"/><text x="46" y="34.3" text-anchor="middle" font-family="Noto Sans KR,sans-serif" font-weight="900" font-size="10" fill="#fff">H</text></g><circle cx="52" cy="12" r="7" fill="#c8231e" stroke="#fff" stroke-width="2"/><path d="M48.8 12.2l2.2 2.2 4.1-4.3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cta-card-title">회원 로그인</div>
+        <div class="cta-card-desc"><span class="d-pc">정규 수강권을 보유한 회원은 로그인 후 수업 예약·취소 및 수강권을 관리할 수 있습니다.</span><span class="d-mo">수업 예약·취소와 수강권 관리</span></div>
+        <a href="dashboard.html" class="cta-card-btn secondary">회원 로그인</a>
+      </div>
+    </div>
+    <div class="kakao-banner reveal">
       <div>
-        <div class="ft-name">하이앤드 발리볼 아카데미</div>
-        <div class="ft-info"><span>대표 김재휘</span><span>상암 인근 · 현천동 180-1</span><span><a href="tel:01044631177">010-4463-1177</a></span><span><a href="mailto:highendv0lly@gmail.com">highendv0lly@gmail.com</a></span></div>
-        <nav class="ft-nav" aria-label="하단 메뉴"><a href="./">HOME</a><a href="about/">ABOUT</a><a href="method/">METHOD</a><a href="class/">CLASS</a><a href="story/">STORY</a><a href="contact/">CONTACT</a><a href="sangam-volleyball-academy/">상암·은평·고양 배구학원</a><a href="dashboard.html">회원 로그인</a></nav>
+        <div class="kb-title">궁금한 점이 있으신가요?</div>
+        <div class="kb-sub">카카오톡으로 메시지 남겨 주시면 확인 후 답변드립니다</div>
       </div>
-      <div class="ft-sns">
-        <a href="http://pf.kakao.com/_pCEzX" target="_blank" rel="noopener" aria-label="카카오톡 채널"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg></a>
-        <a href="https://www.instagram.com/highend_volleyball" target="_blank" rel="noopener" aria-label="인스타그램"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-        <a href="https://www.youtube.com/@Highendvolleyball" target="_blank" rel="noopener" aria-label="유튜브"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.84.55 9.38.55 9.38.55s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.6 15.6V8.4l6.27 3.6-6.27 3.6z"/></svg></a>
-        <a href="https://m.blog.naver.com/highendv0lly" target="_blank" rel="noopener" aria-label="네이버 블로그"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v13H8l-4 3z"/><path d="M8 9h8M8 12.5h5"/></svg></a>
-        <a href="https://naver.me/G8fjuvBh" target="_blank" rel="noopener" aria-label="네이버 플레이스"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.54 12.47L7.84 2H4v20h4.46V11.53L16.16 22H20V2h-4.46z"/></svg></a>
+      <a href="https://pf.kakao.com/_pCEzX/chat" target="_blank" rel="noopener" class="kb-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg>
+        1:1 채팅하기
+      </a>
+    </div>
+    <!-- 오시는 길 -->
+    <div class="loc-a reveal" id="location">
+      <div class="loc-title">오시는 길</div>
+      <div class="loc-addr"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>경기 고양시 덕양구 대덕로86번길 116-11</div>
+      <div class="loc-sub">상암 인근 · 현천동 180-1 (네이버 지도에서 「하이앤드 발리볼」 검색)</div>
+      <div class="loc-map"><iframe src="https://maps.google.com/maps?cid=1837675666172275385&amp;z=16&amp;hl=ko&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="하이앤드 발리볼 아카데미 상암점 위치"></iframe></div>
+      <div class="loc-btns">
+        <a class="loc-btn naver" href="https://map.naver.com/p/entry/place/2022442484" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.54 12.47L7.84 2H4v20h4.46V11.53L16.16 22H20V2h-4.46z"/></svg>네이버 지도 열기</a>
+        <a class="loc-btn google" href="https://www.google.com/maps?cid=1837675666172275385" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.3c0-.8-.1-1.5-.2-2.3H12v4.3h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2-1.9 3.2-4.7 3.2-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.2a6.6 6.6 0 0 1 0-4.3V7.1H2.1a11 11 0 0 0 0 9.9z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3 .6 4.2 1.6l3.1-3.1A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></svg>Google 지도</a>
       </div>
     </div>
-    <div class="ft-copy">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-links">
+        <a href="#hero">HOME</a>
+        <a href="#schedule">수업일정</a>
+        <a href="#coach">코치소개</a>
+        <a href="#gallery">갤러리</a>
+        <a href="dashboard.html">회원 로그인</a>
+      </div>
+      <div class="footer-copy" style="margin-top:8px;">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
+    </div>
   </div>
 </footer>
+
+<!-- FLOAT -->
 <div class="float-bar">
-  <a href="tel:01044631177" class="float-btn fb-phone" title="전화 문의" aria-label="전화 문의"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></a>
-  <a href="http://pf.kakao.com/_pCEzX" target="_blank" rel="noopener" class="float-btn fb-kakao" title="카카오 채널" aria-label="카카오톡 채널"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg></a>
-  <a href="https://www.instagram.com/highend_volleyball" target="_blank" rel="noopener" class="float-btn fb-insta" title="인스타그램" aria-label="인스타그램"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-  <a href="https://naver.me/G8fjuvBh" target="_blank" rel="noopener" class="float-btn fb-naver" title="네이버 플레이스" aria-label="네이버 플레이스"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.54 12.47L7.84 2H4v20h4.46V11.53L16.16 22H20V2h-4.46z"/></svg></a>
+  <a href="tel:01044631177" class="float-btn fb-phone" title="전화 문의">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+  </a>
+  <a href="https://pf.kakao.com/_pCEzX" target="_blank" class="float-btn fb-kakao" title="카카오 채널">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg>
+  </a>
+  <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="float-btn fb-insta" title="인스타그램">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  </a>
+  <a href="https://m.place.naver.com/place/2022442484" target="_blank" class="float-btn fb-naver" title="네이버 지도">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.54 12.47L7.84 2H4v20h4.46V11.53L16.16 22H20V2h-4.46z"/></svg>
+  </a>
 </div>
-<script src="assets/js/site.js" defer></script>
+
+<script>
+// ── FIREBASE (READ ONLY) ──────────────────────────────
+const firebaseConfig={apiKey:"AIzaSyBLP7b8C94e1g6eMlsEwntOAmGcVTm7gHg",authDomain:"highend-volleyball-60f04.firebaseapp.com",databaseURL:"https://highend-volleyball-60f04-default-rtdb.firebaseio.com",projectId:"highend-volleyball-60f04",storageBucket:"highend-volleyball-60f04.firebasestorage.app",messagingSenderId:"815322795093",appId:"1:815322795093:web:4339fb5d71f1a4406b98dc"};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+
+let pubSessions={}, pubReservations={};
+let calY=new Date().getFullYear(), calM=new Date().getMonth();
+let selDate=null, _nearestDone=false;
+
+function todayStr(){const t=new Date();return`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;}
+function calcEnd(t){if(!t)return'';const[h,m]=t.split(':').map(Number);const e=new Date(2000,0,1,h,m+80);return`${String(e.getHours()).padStart(2,'0')}:${String(e.getMinutes()).padStart(2,'0')}`;}
+
+function autoSelectNearest(){
+  if(_nearestDone||!Object.keys(pubSessions).length)return;
+  const td=todayStr();
+  const future=Object.values(pubSessions)
+    .filter(s=>s.date>=td&&s.status!=='cancelled')
+    .sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  if(!future.length)return;
+  _nearestDone=true;
+  const d=future[0].date;
+  const[y,m]=d.split('-').map(Number);
+  calY=y;calM=m-1;selDate=d;
+  renderCal();renderPanel(d);
+}
+
+db.ref('sessions').on('value',s=>{pubSessions=s.val()||{};renderCal();autoSelectNearest();});
+db.ref('reservations').on('value',s=>{pubReservations=s.val()||{};renderCal();if(selDate)renderPanel(selDate);});
+
+function renderCal(){
+  const y=calY,m=calM;
+  const firstDay=new Date(y,m,1).getDay();
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const today=todayStr();
+  const ms=`${y}-${String(m+1).padStart(2,'0')}`;
+
+  const $title=document.getElementById('calTitle');
+  const $days=document.getElementById('calDays');
+  if(!$title||!$days) return;
+  $title.textContent=`${y}년 ${m+1}월`;
+
+  // sessions in this month, keyed by date
+  const daySessions={};
+  Object.values(pubSessions).forEach(s=>{
+    if(s.date&&s.date.startsWith(ms)){
+      if(!daySessions[s.date]) daySessions[s.date]=[];
+      daySessions[s.date].push(s);
+    }
+  });
+
+  let html='';
+  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const ds=`${ms}-${String(d).padStart(2,'0')}`;
+    const dow=new Date(ds+'T12:00:00').getDay();
+    const isSat=dow===6, isSun=dow===0;
+    const isToday=ds===today;
+    const isPast=ds<today;
+    const sessions=daySessions[ds]||[];
+    const activeSess=sessions.filter(s=>s.status!=='cancelled');
+    const cancelledSess=sessions.filter(s=>s.status==='cancelled');
+    const hasSess=activeSess.length>0;
+    const hasCancelled=cancelledSess.length>0 && !hasSess;
+    const isSelected=selDate===ds;
+
+    // check if any sessions almost full
+    let dotClass='';
+    if(hasSess){
+      const anyAlmostFull=activeSess.some(s=>{
+        const rc=Object.values(pubReservations).filter(r=>r.sessionId===s.id&&r.status!=='cancelled').length;
+        const cap=s.maxCapacity||16;
+        return rc/cap>=0.7;
+      });
+      dotClass=anyAlmostFull?'full-dot':'';
+    } else if(hasCancelled) dotClass='cancelled-dot';
+
+    html+=`<div class="cal-day${isSat?' saturday':''}${isSun?' sunday':''}${isToday?' today':''}${isPast?' past':''}${hasSess||hasCancelled?' has-sess':''}${isSelected?' selected':''} ${dotClass}" data-date="${ds}">
+      <span class="day-num">${d}</span>
+      ${(hasSess||hasCancelled)?'<div class="cal-sess-dot"></div>':''}
+    </div>`;
+  }
+  $days.innerHTML=html;
+
+  // attach events
+  $days.querySelectorAll('.cal-day[data-date]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      selDate=el.dataset.date;
+      renderCal();
+      renderPanel(el.dataset.date);
+    });
+  });
+
+  if(selDate) renderPanel(selDate);
+}
+
+function renderPanel(date){
+  const $panel=document.getElementById('schedPanel');
+  if(!$panel) return;
+  const sessions=Object.values(pubSessions)
+    .filter(s=>s.date===date)
+    .sort((a,b)=>a.time.localeCompare(b.time));
+
+  if(!sessions.length){
+    $panel.innerHTML=`<div class="no-sess-msg"><div class="icon"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor"/></svg></div><div>${new Date(date+'T12:00:00').toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'long'})}<br>등록된 수업이 없습니다</div></div>`;
+    return;
+  }
+
+  const dt=new Date(date+'T12:00:00');
+  const dtStr=dt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+  const today=todayStr();
+  const isPast=date<today;
+
+  let html=`<div class="panel-date-title">${dtStr}</div>`;
+  sessions.forEach(s=>{
+    const isCancelled=s.status==='cancelled';
+    const rc=Object.values(pubReservations).filter(r=>r.sessionId===s.id&&r.status!=='cancelled').length;
+    const cap=s.maxCapacity||16;
+    const isFull=rc>=cap;
+    const isAlmost=!isFull&&rc>5;
+
+    html+=`<div class="sess-slot${isCancelled?' cancelled-slot':''}">
+      <div>
+        <div class="slot-time-big">${s.time}</div>
+        <div style="font-size:11px;color:var(--muted);">~${calcEnd(s.time)}</div>
+      </div>
+      <div class="slot-info">
+        <div class="slot-title">${s.title||'정규반'} ${isCancelled?'<span style="color:var(--red);font-size:12px;">(취소됨)</span>':''}</div>
+        <div class="slot-meta">${s.sessionType||'정규반'} · 최대 ${cap}명</div>
+      </div>
+      ${!isCancelled?`
+      <div class="slot-avail" style="text-align:right;flex-shrink:0;">
+        ${isFull
+          ?'<span style="background:var(--redL);color:var(--red);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;">마감</span>'
+          :isAlmost
+          ?'<span style="background:var(--orangeL);color:var(--orange);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;">거의 마감</span>'
+          :'<span style="background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;">여유</span>'}
+      </div>`:`<div style="font-size:12px;color:var(--muted);">취소</div>`}
+    </div>`;
+  });
+
+  if(!isPast){
+    html+=`<div class="sched-login-note"><svg class="ln lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10.5" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.4" fill="currentColor"/><path d="M12 16.2v2"/></svg> 예약을 하려면 <a href="dashboard.html" style="font-weight:700;color:var(--blue);text-decoration:underline;">회원 로그인</a>이 필요합니다</div>`;
+  }
+  $panel.innerHTML=html;
+}
+
+function changeMonth(d){calM+=d;if(calM<0){calM=11;calY--;}if(calM>11){calM=0;calY++;}selDate=null;renderCal();}
+document.getElementById('calPrev').onclick=()=>changeMonth(-1);
+document.getElementById('calNext').onclick=()=>changeMonth(1);
+
+// ── NAV ──────────────────────────────────────────────
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('elevated',scrollY>60));
+
+const ICON_MENU='<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>';
+const ICON_CLOSE='<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+// ── MOBILE MENU ───────────────────────────────────────
+const mMenu=document.getElementById('mobileMenu');
+let mOpen=false;
+document.getElementById('menuBtn').addEventListener('click',()=>{
+  mOpen=!mOpen;
+  mMenu.classList.toggle('open',mOpen);
+  document.getElementById('menuBtn').innerHTML=mOpen?ICON_CLOSE:ICON_MENU;
+});
+function closeMnu(){mOpen=false;mMenu.classList.remove('open');document.getElementById('menuBtn').innerHTML=ICON_MENU;}
+
+// ── ACTIVE NAV ────────────────────────────────────────
+const secs=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  const y=scrollY+130;
+  secs.forEach(s=>{
+    const link=document.querySelector(`.nav-links a[href="#${s.id}"]`);
+    if(link) link.classList.toggle('active',y>=s.offsetTop&&y<s.offsetTop+s.offsetHeight);
+  });
+});
+
+// ── REVEAL ────────────────────────────────────────────
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+},{threshold:0.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ── LIGHTBOX ──────────────────────────────────────────
+function openLb(src){document.getElementById('lbImg').src=src;document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
+function closeLb(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
+// ── COACH CAROUSEL ────────────────────────────────────
+(function(){
+  const track=document.getElementById('ccarTrack');
+  const dotEls=document.querySelectorAll('.ccar-dot');
+  if(!track)return;
+  let cur=0,total=dotEls.length,startX=0,isDrag=false,moved=false;
+  function goTo(i){
+    cur=(i+total)%total;
+    track.style.transform=`translateX(-${cur*100}%)`;
+    dotEls.forEach((d,j)=>d.classList.toggle('active',j===cur));
+  }
+  dotEls.forEach((d,i)=>d.addEventListener('click',()=>{stopAuto();goTo(i);setTimeout(startAuto,3000);}));
+  const car=track.parentElement;
+  car.addEventListener('pointerdown',e=>{startX=e.clientX;isDrag=true;moved=false;track.classList.add('dragging');stopAuto();});
+  car.addEventListener('pointermove',e=>{if(isDrag&&Math.abs(e.clientX-startX)>8)moved=true;});
+  car.addEventListener('pointerup',e=>{
+    track.classList.remove('dragging');
+    if(!isDrag)return;isDrag=false;
+    if(moved&&Math.abs(e.clientX-startX)>40)goTo(cur+(startX-e.clientX>0?1:-1));
+    setTimeout(startAuto,3000);
+  });
+  car.addEventListener('pointercancel',()=>{isDrag=false;track.classList.remove('dragging');setTimeout(startAuto,3000);});
+  // Auto-advance every 4 seconds
+  let autoTimer;
+  function startAuto(){autoTimer=setInterval(()=>goTo(cur+1),4000);}
+  function stopAuto(){clearInterval(autoTimer);}
+  startAuto();
+})();
+
+// ── FLOAT BAR: 오시는 길·푸터에서는 숨김 (지도 버튼 가림 방지) ──
+(function(){
+  const bar=document.querySelector('.float-bar');
+  const targets=[document.getElementById('location'),document.querySelector('footer')].filter(Boolean);
+  if(!bar||!targets.length||!('IntersectionObserver' in window))return;
+  const seen=new Set();
+  const io2=new IntersectionObserver(es=>{
+    es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));
+    bar.classList.toggle('away',seen.size>0);
+  },{threshold:0.15});
+  targets.forEach(t=>io2.observe(t));
+})();
+// ── REELS SLIDER ─────────────────────────────────────
+(function(){
+  const viewport=document.getElementById('reelsViewport');
+  const track=document.getElementById('reelsTrack');
+  const dots=document.querySelectorAll('.s-dot');
+  if(!track||!viewport)return;
+  const slides=track.querySelectorAll('.reel-slide');
+  const videos=track.querySelectorAll('video');
+  let cur=0,total=slides.length,startX=0,isDrag=false,moved=false;
+  let sectionVisible=false;
+
+  // Ensure all videos loop
+  videos.forEach(v=>{v.loop=true;});
+
+  function setOverlay(idx,playing){
+    const el=document.getElementById('rpl'+idx);
+    if(el)el.classList.toggle('hidden',playing);
+  }
+
+  function playVideo(idx){
+    const v=videos[idx];
+    if(!v)return;
+    v.play().then(()=>setOverlay(idx,true)).catch(()=>setOverlay(idx,false));
+  }
+
+  function pauseVideo(idx){
+    const v=videos[idx];
+    if(v&&!v.paused){v.pause();setOverlay(idx,false);}
+  }
+
+  function goTo(i){
+    const prev=cur;
+    cur=Math.max(0,Math.min(total-1,i));
+    track.style.transform=`translateX(-${cur*100}%)`;
+    dots.forEach((d,j)=>d.classList.toggle('active',j===cur));
+    if(prev!==cur)pauseVideo(prev);
+    if(sectionVisible)playVideo(cur);
+  }
+
+  // Click to toggle play/pause
+  slides.forEach((slide,i)=>{
+    if(slide.classList.contains('reel-slide-cta'))return;
+    const vid=videos[i];
+    if(!vid)return;
+    slide.addEventListener('click',e=>{
+      if(moved)return;
+      if(vid.paused){playVideo(i);}
+      else{vid.pause();setOverlay(i,false);}
+    });
+  });
+
+  dots.forEach((d,i)=>d.addEventListener('click',()=>goTo(i)));
+  const prevBtn=document.getElementById('reelsPrev');
+  const nextBtn=document.getElementById('reelsNext');
+  if(prevBtn)prevBtn.addEventListener('click',()=>goTo(cur-1));
+  if(nextBtn)nextBtn.addEventListener('click',()=>goTo(cur+1));
+
+  viewport.addEventListener('pointerdown',e=>{startX=e.clientX;isDrag=true;moved=false;viewport.classList.add('dragging');});
+  viewport.addEventListener('pointermove',e=>{if(isDrag&&Math.abs(e.clientX-startX)>8)moved=true;});
+  viewport.addEventListener('pointerup',e=>{
+    viewport.classList.remove('dragging');
+    if(!isDrag)return;isDrag=false;
+    if(moved&&Math.abs(e.clientX-startX)>50)goTo(cur+(startX-e.clientX>0?1:-1));
+  });
+  viewport.addEventListener('pointercancel',()=>{isDrag=false;viewport.classList.remove('dragging');});
+
+  // IntersectionObserver: autoplay when section scrolls into view, pause when out
+  const section=track.closest('section')||track.closest('.reels-section')||viewport.parentElement;
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      sectionVisible=entry.isIntersecting;
+      if(sectionVisible){
+        playVideo(cur);
+      } else {
+        videos.forEach((v,i)=>pauseVideo(i));
+      }
+    });
+  },{threshold:0.3});
+  obs.observe(section);
+})();
+</script>
 </body>
 </html>
