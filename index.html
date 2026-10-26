@@ -516,6 +516,23 @@ footer{
 .gal-btn-naver{background:#03C75A;color:#fff;}
 
 .cta-cards.cta-cards-2{grid-template-columns:repeat(2,1fr);max-width:600px;}
+/* ── 오시는 길 (지도) ── */
+.loc-a{max-width:600px;margin:26px auto 0;text-align:center;scroll-margin-top:80px;}
+.loc-title{font-size:20px;font-weight:900;color:var(--text);}
+.loc-addr{display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:700;color:var(--text);margin-top:6px;}
+.loc-addr .ln{width:20px;height:20px;color:var(--blue);flex-shrink:0;}
+.loc-sub{font-size:13px;color:var(--muted);margin-top:4px;}
+.loc-map{margin:16px auto 0;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;background:#fff;box-shadow:var(--shadow-sm);}
+.loc-map iframe{display:block;width:100%;height:280px;border:0;}
+.loc-btns{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+.loc-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:50px;font-size:15px;font-weight:700;transition:transform .15s;}
+.loc-btn:hover{transform:translateY(-1px);}
+.loc-btn.naver{background:#03C75A;color:#fff;}
+.loc-btn.google{background:#fff;color:var(--text);border:1.5px solid var(--border);}
+.loc-btn svg{width:18px;height:18px;display:block;}
+.cta-card-desc .d-mo{display:none;}
+.float-bar{transition:opacity .25s,transform .25s;}
+.float-bar.away{opacity:0;transform:translateX(16px);pointer-events:none;}
 /* ── KAKAO 문의 배너 ── */
 .kakao-banner{
   max-width:600px;margin:18px auto 0;background:#FEE500;border-radius:16px;
@@ -614,7 +631,21 @@ footer{
   .footer-inner{flex-direction:column;gap:16px;}
   .kakao-banner{flex-direction:column;text-align:center;}
   .kb-btn{width:100%;}
-  .cta-cards.cta-cards-2{grid-template-columns:1fr;}
+  /* 휴대폰: 원데이·회원 카드 두 칸 유지, 문구만 짧게 */
+  .cta-cards.cta-cards-2{grid-template-columns:1fr 1fr;gap:10px;}
+  .cta-cards-2 .cta-card{padding:20px 10px 18px;}
+  .cta-cards-2 .cta-card-icon svg{width:50px;height:50px;}
+  .cta-cards-2 .cta-card-title{font-size:15px;}
+  .cta-cards-2 .cta-card-desc{font-size:12px;margin-bottom:12px;min-height:36px;}
+  .cta-card-desc .d-pc{display:none;}
+  .cta-card-desc .d-mo{display:inline;}
+  .cta-cards-2 .cta-card-btn{padding:9px 14px;font-size:13px;}
+  .cta-card-desc,.kb-sub,.loc-sub{word-break:keep-all;}
+  .kb-sub{font-size:12px;}
+  .loc-addr{font-size:15px;}
+  .loc-map iframe{height:240px;}
+  .loc-btns{gap:8px;}
+  .loc-btn{flex:1;padding:12px 10px;font-size:14px;white-space:nowrap;gap:6px;}
   footer{padding-bottom:84px;} /* 떠 있는 버튼에 가리지 않게 */
   .gal-actions{flex-direction:column;align-items:center;}
   .float-bar{gap:6px;bottom:16px;right:10px;}
@@ -964,13 +995,13 @@ footer{
       <div class="cta-card">
         <div class="cta-card-icon"><svg viewBox="0 0 64 64" role="img" aria-label="원데이클래스 티켓"><g transform="rotate(-10 32 32)"><path d="M7 21a4 4 0 0 1 4-4h42a4 4 0 0 1 4 4v6a5 5 0 0 0 0 10v6a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-6a5 5 0 0 0 0-10z" fill="#0d1b2e" transform="translate(2.5 3)"/><path d="M7 21a4 4 0 0 1 4-4h42a4 4 0 0 1 4 4v6a5 5 0 0 0 0 10v6a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-6a5 5 0 0 0 0-10z" fill="#1a53d4"/><path d="M42 19.5v25" stroke="#fff" stroke-opacity=".6" stroke-width="1.8" stroke-dasharray="3 3"/><g fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(14 22) scale(0.83)"><circle cx="12" cy="12" r="10"/><path d="M11.1 7.1a16.55 16.55 0 0 1 10.9 4"/><path d="M12 12a12.6 12.6 0 0 1-8.7 5"/><path d="M16.8 13.6a16.55 16.55 0 0 1-9 7.5"/><path d="M20.7 17a12.8 12.8 0 0 0-8.7-5 13.3 13.3 0 0 1 0-10"/><path d="M6.3 3.8a16.55 16.55 0 0 0 1.9 11.5"/></g><text x="49.5" y="33" text-anchor="middle" font-family="Noto Sans KR,sans-serif" font-weight="900" font-size="12" fill="#fff">1</text><text x="49.5" y="41" text-anchor="middle" font-family="Noto Sans KR,sans-serif" font-weight="700" font-size="5.5" fill="#fff">DAY</text></g><circle cx="52" cy="12" r="7" fill="#c8231e" stroke="#fff" stroke-width="2"/><path d="M52 7.6l1.2 3 3.1.1-2.4 2 .8 3.1-2.7-1.8-2.7 1.8.8-3.1-2.4-2 3.1-.1z" fill="#fff"/></svg></div>
         <div class="cta-card-title">원데이클래스</div>
-        <div class="cta-card-desc">처음 배구를 시작하는 분들을 위한 하루 체험 수업. 네이버에서 간편하게 신청하세요.</div>
+        <div class="cta-card-desc"><span class="d-pc">처음 배구를 시작하는 분들을 위한 하루 체험 수업. 네이버에서 간편하게 신청하세요.</span><span class="d-mo">처음 시작하는 분을 위한 하루 체험 수업</span></div>
         <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" class="cta-card-btn primary">네이버 예약</a>
       </div>
       <div class="cta-card">
         <div class="cta-card-icon"><svg viewBox="0 0 64 64" role="img" aria-label="회원 카드"><g transform="rotate(8 32 32)"><rect x="6" y="15" width="52" height="34" rx="6" fill="#1a53d4" transform="translate(2.5 3)"/><rect x="6" y="15" width="52" height="34" rx="6" fill="#0d1b2e"/><rect x="12" y="22" width="11" height="8" rx="2" fill="#f2c94c"/><rect x="12" y="37" width="20" height="2.6" rx="1.3" fill="#fff" fill-opacity=".55"/><rect x="12" y="42" width="13" height="2.6" rx="1.3" fill="#fff" fill-opacity=".35"/><path d="M46 20.5l8.5 2.8v6.2c0 5.3-3.6 9-8.5 10.4-4.9-1.4-8.5-5.1-8.5-10.4v-6.2z" fill="#1a53d4"/><text x="46" y="34.3" text-anchor="middle" font-family="Noto Sans KR,sans-serif" font-weight="900" font-size="10" fill="#fff">H</text></g><circle cx="52" cy="12" r="7" fill="#c8231e" stroke="#fff" stroke-width="2"/><path d="M48.8 12.2l2.2 2.2 4.1-4.3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="cta-card-title">회원 로그인</div>
-        <div class="cta-card-desc">정규 수강권을 보유한 회원은 로그인 후 수업 예약·취소 및 수강권을 관리할 수 있습니다.</div>
+        <div class="cta-card-desc"><span class="d-pc">정규 수강권을 보유한 회원은 로그인 후 수업 예약·취소 및 수강권을 관리할 수 있습니다.</span><span class="d-mo">수업 예약·취소와 수강권 관리</span></div>
         <a href="dashboard.html" class="cta-card-btn secondary">회원 로그인</a>
       </div>
     </div>
@@ -983,6 +1014,17 @@ footer{
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.73 1.63 5.13 4.1 6.55l-1.05 3.91c-.09.34.22.62.53.42L10.04 19c.64.09 1.3.13 1.96.13C17.52 19.13 22 15.65 22 10.8 22 6.48 17.52 3 12 3z"/></svg>
         1:1 채팅하기
       </a>
+    </div>
+    <!-- 오시는 길 -->
+    <div class="loc-a reveal" id="location">
+      <div class="loc-title">오시는 길</div>
+      <div class="loc-addr"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>경기 고양시 덕양구 대덕로86번길 116-11</div>
+      <div class="loc-sub">상암 인근 · 현천동 180-1 (네이버 지도에서 「하이앤드 발리볼」 검색)</div>
+      <div class="loc-map"><iframe src="https://maps.google.com/maps?q=%EA%B2%BD%EA%B8%B0%20%EA%B3%A0%EC%96%91%EC%8B%9C%20%EB%8D%95%EC%96%91%EA%B5%AC%20%EB%8C%80%EB%8D%95%EB%A1%9C86%EB%B2%88%EA%B8%B8%20116-11&amp;z=16&amp;hl=ko&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="하이앤드 발리볼 아카데미 상암점 위치"></iframe></div>
+      <div class="loc-btns">
+        <a class="loc-btn naver" href="https://map.naver.com/p/entry/place/2022442484" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.54 12.47L7.84 2H4v20h4.46V11.53L16.16 22H20V2h-4.46z"/></svg>네이버 지도 열기</a>
+        <a class="loc-btn google" href="https://www.google.com/maps?cid=1837675666172275385" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.3c0-.8-.1-1.5-.2-2.3H12v4.3h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2-1.9 3.2-4.7 3.2-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.2a6.6 6.6 0 0 1 0-4.3V7.1H2.1a11 11 0 0 0 0 9.9z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3 .6 4.2 1.6l3.1-3.1A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></svg>Google 지도</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1236,6 +1278,18 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
   startAuto();
 })();
 
+// ── FLOAT BAR: 오시는 길·푸터에서는 숨김 (지도 버튼 가림 방지) ──
+(function(){
+  const bar=document.querySelector('.float-bar');
+  const targets=[document.getElementById('location'),document.querySelector('footer')].filter(Boolean);
+  if(!bar||!targets.length||!('IntersectionObserver' in window))return;
+  const seen=new Set();
+  const io2=new IntersectionObserver(es=>{
+    es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));
+    bar.classList.toggle('away',seen.size>0);
+  },{threshold:0.15});
+  targets.forEach(t=>io2.observe(t));
+})();
 // ── REELS SLIDER ─────────────────────────────────────
 (function(){
   const viewport=document.getElementById('reelsViewport');
