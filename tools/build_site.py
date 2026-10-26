@@ -905,6 +905,7 @@ LLMS = '''# 하이앤드 발리볼 아카데미 (HIGH END Volleyball Academy)
 # 맨 위 메뉴만 새 페이지로 연결, 검색용 머리말만 추가
 
 HOME_CSS = '''<style>
+#hero .hero-bg{background-image:url('assets/img/hero-group.jpg');background-position:center 62%;}
 .nvi{position:relative;}
 .nav-links .nvi>a{display:block;font-weight:600;}
 .nvi:hover>a,.nvi:focus-within>a{color:var(--blue);background:rgba(26,83,212,.07);}
@@ -953,7 +954,16 @@ def home_legacy():
     keep = tail[tail.index('<a href="https://m.place.naver.com'):]   # 원데이·회원 로그인 버튼은 그대로
     s = s[:start] + '<div class="mobile-menu" id="mobileMenu">\n    ' + mob + '\n    ' + keep + s[end:]
 
-    # 첫 화면 배경은 예전 사진 그대로 (대표 지시 2026-10-26: 사진 뒤 영상 빼기)
+    # 첫 화면 배경: 단체 사진으로 교체, 흐림 효과는 기존 그대로 (대표 지시 2026-10-26)
+    # 첫 화면 오른쪽 대표 사진 카드 빼기
+    start = s.index('    <div class="hero-image-wrap')
+    end = s.index('  </div>\n</section>', start)
+    s = s[:start].rstrip() + '\n' + s[end:]
+    # 코치 소개: 사진 넘김 빼고 메인 사진 1장 고정 (넘김 스크립트는 사진 칸이 없으면 스스로 멈춤)
+    start = s.index('<div class="coach-carousel" id="coachCarousel">')
+    end = s.index('\n      </div>\n      <div class="coach-text-col">', start)
+    s = (s[:start] + '<img src="./1. 코치 사진 자료/1.jpg" alt="메인코치 김재휘: 대한민국 국가대표 2016~2022, 현대캐피탈·KB손해보험·우리카드·삼성화재" loading="lazy">'
+         + s[end:])
     return s
 
 
