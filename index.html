@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="상암·고양 프리미엄 배구 아카데미 하이앤드 | 국가대표·프로 출신 코치진의 배구 학원·배구교실">
 <meta name="twitter:description" content="국가대표·프로 선수의 훈련 방식을 시스템으로 만든 프리미엄 배구 아카데미 하이앤드. 상암 인근 · 현천동 180-1, 국가대표·프로 출신 코치진이 초등학생부터 성인까지 가르칩니다. 원데이 클래스 25,000원, 문의 010-4463-1177">
 <meta name="twitter:image" content="https://sjoon0305.github.io/highend-volleyball/assets/img/og-image.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231a53d4%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2210%22/%3E%3Cpath%20d%3D%22M11.1%207.1a16.55%2016.55%200%200%201%2010.9%204%22/%3E%3Cpath%20d%3D%22M12%2012a12.6%2012.6%200%200%201-8.7%205%22/%3E%3Cpath%20d%3D%22M16.8%2013.6a16.55%2016.55%200%200%201-9%207.5%22/%3E%3Cpath%20d%3D%22M20.7%2017a12.8%2012.8%200%200%200-8.7-5%2013.3%2013.3%200%200%201%200-10%22/%3E%3Cpath%20d%3D%22M6.3%203.8a16.55%2016.55%200%200%200%201.9%2011.5%22/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon-64.png"><link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <link rel="preload" href="./fonts/Paperlogy-9Black.woff2" as="font" type="font/woff2" crossorigin>
@@ -673,6 +673,12 @@ footer{
 }
 </style>
 <style>
+/* 한글 줄바꿈: 단어 중간에서 끊지 않기 */
+body{word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3,.lead,.sec-title,.sec-desc,.hero-title,.hero-desc{text-wrap:balance}
+p,li,dd,summary{text-wrap:balance}
+@media (max-width:600px){br.bk{display:none}}
+
 #hero .hero-bg{background-image:url('assets/img/hero-group.jpg');background-position:center 62%;}
 .nvi{position:relative;}
 .nav-links .nvi>a{display:block;font-weight:600;}
@@ -690,32 +696,22 @@ footer{
 .mobile-menu a.msub3{padding-left:56px;font-size:13px;}
 .mobile-menu .mgrp{display:block;padding:12px 20px 4px 36px;font-size:13px;font-weight:700;color:var(--muted);border-bottom:none;}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sjoon0305.github.io/highend-volleyball/#org","name":"하이앤드 발리볼 아카데미","alternateName":"HIGH END Volleyball Academy","url":"https://sjoon0305.github.io/highend-volleyball/","logo":"https://sjoon0305.github.io/highend-volleyball/assets/img/logo.png","email":"highendv0lly@gmail.com","telephone":"+82-10-4463-1177","sameAs":["https://www.instagram.com/highend_volleyball","https://www.youtube.com/@Highendvolleyball","https://naver.me/G8fjuvBh","https://m.blog.naver.com/highendv0lly","http://pf.kakao.com/_pCEzX"],"founder":{"@id":"https://sjoon0305.github.io/highend-volleyball/about/coaches/#kim"}},{"@type":"SportsActivityLocation","@id":"https://sjoon0305.github.io/highend-volleyball/#place","name":"하이앤드 발리볼 아카데미 상암점","url":"https://sjoon0305.github.io/highend-volleyball/","image":"https://sjoon0305.github.io/highend-volleyball/assets/img/og-image.jpg","telephone":"+82-10-4463-1177","email":"highendv0lly@gmail.com","description":"국가대표·프로 선수의 훈련 방식을 시스템으로 만든 상암 인근 프리미엄 배구 아카데미. 국가대표·프로 출신 하이앤드 코치진이 초등학생부터 성인까지 가르칩니다.","address":{"@type":"PostalAddress","streetAddress":"현천동 180-1","addressLocality":"고양시 덕양구","addressRegion":"경기도","addressCountry":"KR"},"geo":{"@type":"GeoCoordinates","latitude":37.595877,"longitude":126.8672995},"hasMap":"https://www.google.com/maps?cid=1837675666172275385","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Saturday","opens":"12:00","closes":"17:50"}],"priceRange":"₩25,000~₩250,000","sameAs":["https://www.instagram.com/highend_volleyball","https://www.youtube.com/@Highendvolleyball","https://naver.me/G8fjuvBh","https://m.blog.naver.com/highendv0lly","http://pf.kakao.com/_pCEzX"],"parentOrganization":{"@id":"https://sjoon0305.github.io/highend-volleyball/#org"}},{"@type":"WebSite","@id":"https://sjoon0305.github.io/highend-volleyball/#site","url":"https://sjoon0305.github.io/highend-volleyball/","name":"하이앤드 발리볼 아카데미","inLanguage":"ko-KR","publisher":{"@id":"https://sjoon0305.github.io/highend-volleyball/#org"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sjoon0305.github.io/highend-volleyball/#org","name":"하이앤드 발리볼 아카데미","alternateName":"HIGH END Volleyball Academy","url":"https://sjoon0305.github.io/highend-volleyball/","logo":"https://sjoon0305.github.io/highend-volleyball/assets/img/logo-square.png","email":"highendv0lly@gmail.com","telephone":"+82-10-4463-1177","sameAs":["https://www.instagram.com/highend_volleyball","https://www.youtube.com/@Highendvolleyball","https://naver.me/G8fjuvBh","https://m.blog.naver.com/highendv0lly","http://pf.kakao.com/_pCEzX"],"founder":{"@id":"https://sjoon0305.github.io/highend-volleyball/about/coaches/#kim"}},{"@type":"SportsActivityLocation","@id":"https://sjoon0305.github.io/highend-volleyball/#place","name":"하이앤드 발리볼 아카데미 상암점","url":"https://sjoon0305.github.io/highend-volleyball/","image":"https://sjoon0305.github.io/highend-volleyball/assets/img/og-image.jpg","telephone":"+82-10-4463-1177","email":"highendv0lly@gmail.com","description":"국가대표·프로 선수의 훈련 방식을 시스템으로 만든 상암 인근 프리미엄 배구 아카데미. 국가대표·프로 출신 하이앤드 코치진이 초등학생부터 성인까지 가르칩니다.","address":{"@type":"PostalAddress","streetAddress":"현천동 180-1","addressLocality":"고양시 덕양구","addressRegion":"경기도","addressCountry":"KR"},"geo":{"@type":"GeoCoordinates","latitude":37.595877,"longitude":126.8672995},"hasMap":"https://www.google.com/maps?cid=1837675666172275385","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Saturday","opens":"12:00","closes":"17:50"}],"priceRange":"₩25,000~₩250,000","sameAs":["https://www.instagram.com/highend_volleyball","https://www.youtube.com/@Highendvolleyball","https://naver.me/G8fjuvBh","https://m.blog.naver.com/highendv0lly","http://pf.kakao.com/_pCEzX"],"parentOrganization":{"@id":"https://sjoon0305.github.io/highend-volleyball/#org"}},{"@type":"WebSite","@id":"https://sjoon0305.github.io/highend-volleyball/#site","url":"https://sjoon0305.github.io/highend-volleyball/","name":"하이앤드 발리볼 아카데미","inLanguage":"ko-KR","publisher":{"@id":"https://sjoon0305.github.io/highend-volleyball/#org"}}]}</script>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
-    <a href="#hero" class="nav-logo">
-      <img src="./1. 코치 사진 자료/하이엔드 발리볼 로고.jpg" alt="HIGH END">
-      <div class="nav-logo-text">
-        <div class="brand">HIGH END</div>
-        <div class="sub">Volleyball Academy</div>
-      </div>
-    </a>
-    <div class="nav-links"><div class="nvi"><a href="about/">ABOUT US</a><ul class="nvd"><li><a href="about/">하이앤드 소개</a></li><li><a href="about/coaches/">코칭 스태프</a></li><li><a href="about/facility/">시설</a></li></ul></div><div class="nvi"><a href="method/">METHOD</a><ul class="nvd"><li><a href="method/">알고 하면 쉬운 배구</a></li><li><a href="method/maps/">MAPS 워밍업</a></li><li><a href="method/correction/">정밀 교정</a></li><li><a href="method/flow/">수업 80분 흐름</a></li><li><a href="method/level/">성장 레벨</a></li></ul></div><div class="nvi"><a href="class/">CLASS</a><ul class="nvd"><li><a href="class/oneday/">원데이클래스<span class="arr" aria-hidden="true">›</span></a><ul class="g3h"><li><a href="class/oneday/">원데이클래스</a></li><li><a href="class/oneday/apply/">원데이클래스 신청</a></li></ul></li><li><a href="class/regular/youth/">정규 클래스<span class="arr" aria-hidden="true">›</span></a><ul class="g3h"><li><a href="class/regular/youth/">유소년반</a></li><li><a href="class/regular/beginner/">초급반</a></li><li><a href="class/regular/intermediate/">중급반</a></li></ul></li><li><a href="class/team/competition/">팀 클래스<span class="arr" aria-hidden="true">›</span></a><ul class="g3h"><li><a href="class/team/competition/">시합반</a></li></ul></li><li><a href="class/group/club/">단체 클래스<span class="arr" aria-hidden="true">›</span></a><ul class="g3h"><li><a href="class/group/club/">동호회 · 단체 레슨</a></li><li><a href="class/international/">국제학교 · 해외 학생</a></li></ul></li><li><a href="class/private/">개인레슨</a></li><li><a href="class/guide/">수강 · 결제 안내</a></li><li><a href="class/photos/">클래스 사진</a></li></ul></div><div class="nvi"><a href="story/">STORY</a><ul class="nvd"><li><a href="story/">수업 이야기</a></li></ul></div><div class="nvi"><a href="contact/">CONTACT</a><ul class="nvd"><li><a href="contact/">오시는 길</a></li><li><a href="sangam-volleyball-academy/">상암·은평·고양 배구학원</a></li><li><a href="contact/faq/">자주 묻는 질문</a></li><li><a href="contact/ask/">상담하기</a></li></ul></div></div>
+    <div class="hm-brand"><button class="hamburger hm-all" id="menuBtn" type="button" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="drawer" data-drawer-open><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button><a href="#hero" class="nav-logo"><img class="lg-emb" src="assets/img/logo-emblem.webp" alt="" width="36" height="40"><img class="lg-word" src="assets/img/logo-text-dark.webp" alt="HIGH END VOLLEYBALL ACADEMY 하이앤드 발리볼 아카데미" width="88" height="26"></a></div>
+    <div class="nav-links"><div class="nvi"><a href="about/">ABOUT US</a><ul class="nvd"><li><a href="about/">하이앤드 소개</a></li><li><a href="about/coaches/">코칭 스태프</a></li><li><a href="about/facility/">시설</a></li></ul></div><div class="nvi"><a href="method/">METHOD</a><ul class="nvd"><li><a href="method/">알고 하면 쉬운 배구</a></li><li><a href="method/maps/">MAPS 워밍업</a></li><li><a href="method/correction/">정밀 교정</a></li><li><a href="method/flow/">수업 80분 흐름</a></li><li><a href="method/level/">성장 레벨</a></li></ul></div><div class="nvi"><a href="class/">CLASS</a><ul class="nvd"><li><a href="class/oneday/">원데이클래스<span class="arr" aria-hidden="true">›</span></a><ul class="g3h"><li><a href="class/oneday/">원데이클래스</a></li><li><a href="class/oneday/apply/">원데이클래스 신청</a></li></ul></li><li><a href="class/regular/youth/">정규 클래스<span class="arr" aria-hidden="true">›</span></a><ul class="g3h"><li><a href="class/regular/youth/">유소년반</a></li><li><a href="class/regular/beginner/">초급반</a></li><li><a href="class/regular/intermediate/">중급반</a></li></ul></li><li><a href="class/team/competition/">팀 클래스<span class="arr" aria-hidden="true">›</span></a><ul class="g3h"><li><a href="class/team/competition/">시합반</a></li></ul></li><li><a href="class/group/club/">단체 클래스<span class="arr" aria-hidden="true">›</span></a><ul class="g3h"><li><a href="class/group/club/">동호회 · 단체 레슨</a></li><li><a href="class/international/">국제학교 · 해외 학생</a></li></ul></li><li><a href="class/private/">개인레슨</a></li><li><a href="class/guide/">수강 · 결제 안내</a></li><li><a href="class/photos/">클래스 사진</a></li></ul></div><div class="nvi"><a href="story/">STORY</a><ul class="nvd"><li><a href="story/">수업 이야기</a></li><li><a href="story/hiandday/">Hi : And Day</a></li></ul></div><div class="nvi"><a href="contact/">CONTACT</a><ul class="nvd"><li><a href="contact/">오시는 길</a></li><li><a href="sangam-volleyball-academy/">상암·은평·고양 배구학원</a></li><li><a href="contact/faq/">자주 묻는 질문</a></li><li><a href="contact/ask/">상담하기</a></li></ul></div></div>
     <div class="nav-right">
       <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" class="btn-naver">원데이클래스</a>
       <a href="dashboard.html" class="btn-login-nav">로그인</a>
-      <button class="hamburger" id="menuBtn" aria-label="메뉴"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+
     </div>
   </div>
-  <div class="mobile-menu" id="mobileMenu">
-    <a class="mtop" href="about/">ABOUT US</a><a class="msub" href="about/">하이앤드 소개</a><a class="msub" href="about/coaches/">코칭 스태프</a><a class="msub" href="about/facility/">시설</a><a class="mtop" href="method/">METHOD</a><a class="msub" href="method/">알고 하면 쉬운 배구</a><a class="msub" href="method/maps/">MAPS 워밍업</a><a class="msub" href="method/correction/">정밀 교정</a><a class="msub" href="method/flow/">수업 80분 흐름</a><a class="msub" href="method/level/">성장 레벨</a><a class="mtop" href="class/">CLASS</a><span class="mgrp">원데이클래스</span><a class="msub3" href="class/oneday/">원데이클래스</a><a class="msub3" href="class/oneday/apply/">원데이클래스 신청</a><span class="mgrp">정규 클래스</span><a class="msub3" href="class/regular/youth/">유소년반</a><a class="msub3" href="class/regular/beginner/">초급반</a><a class="msub3" href="class/regular/intermediate/">중급반</a><span class="mgrp">팀 클래스</span><a class="msub3" href="class/team/competition/">시합반</a><span class="mgrp">단체 클래스</span><a class="msub3" href="class/group/club/">동호회 · 단체 레슨</a><a class="msub3" href="class/international/">국제학교 · 해외 학생</a><a class="msub" href="class/private/">개인레슨</a><a class="msub" href="class/guide/">수강 · 결제 안내</a><a class="msub" href="class/photos/">클래스 사진</a><a class="mtop" href="story/">STORY</a><a class="msub" href="story/">수업 이야기</a><a class="mtop" href="contact/">CONTACT</a><a class="msub" href="contact/">오시는 길</a><a class="msub" href="sangam-volleyball-academy/">상암·은평·고양 배구학원</a><a class="msub" href="contact/faq/">자주 묻는 질문</a><a class="msub" href="contact/ask/">상담하기</a>
-    <a href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" style="color:var(--blue);font-weight:700;">원데이클래스 신청</a>
-    <a href="dashboard.html" style="color:var(--blue);">회원 로그인</a>
-  </div>
+  
 </nav>
 
 <!-- HERO -->
@@ -757,7 +753,7 @@ footer{
     <div style="margin-bottom:32px;">
       <div class="sec-label reveal">CLASS SCHEDULE</div>
       <h2 class="sec-title reveal">수업 일정 확인</h2>
-      <p class="sec-desc reveal">로그인 없이 수업 일정을 확인할 수 있습니다. 예약은 회원 로그인 후 이용하세요.</p>
+      <p class="sec-desc reveal">로그인 없이 수업 일정을 확인할 수 있습니다. <br>예약은 회원 로그인 후 이용하세요.</p>
     </div>
     <div class="sched-grid reveal" id="schedGrid">
       <div class="cal-wrap">
@@ -796,7 +792,7 @@ footer{
       <div class="coach-text-col">
         <div class="sec-label reveal">MAIN COACH</div>
         <h2 class="sec-title reveal">배구 국가대표 7년<br>프로경력 10년</h2>
-        <p class="sec-desc reveal">선수 경험에만 의존하지 않고 국제 기준의 지도자 교육과 이론을 함께 갖췄습니다. 유소년·청소년·성인 대상 맞춤형 배구 지도 다수, 국제대회 경험을 바탕으로 한 고급 기술 지도 및 경기 전략 수립이 가능합니다.</p>
+        <p class="sec-desc reveal">선수 경험에만 의존하지 않고 <br class="bk">국제 기준의 지도자 교육과 이론을 함께 갖췄습니다. <br>유소년·청소년·성인 대상 맞춤형 배구 지도 다수, <br class="bk">국제대회 경험을 바탕으로 한 고급 기술 지도 및 경기 전략 수립이 가능합니다.</p>
         <div class="coach-cards">
           <div class="coach-card reveal rd1">
             <div class="cc-icon"><svg class="flag" viewBox="-36 -24 72 48" role="img" aria-label="태극기"><rect x="-36" y="-24" width="72" height="48" fill="#fff"/><g transform="rotate(-56.31)"><circle r="12" fill="#CD2E3A"/><path d="M0-12A6 6 0 0 0 0 0A6 6 0 0 1 0 12A12 12 0 0 1 0-12z" fill="#0047A0"/></g><g fill="#000"><g transform="rotate(123.69)"><rect x="-6" y="18" width="12" height="2"/><rect x="-6" y="21" width="12" height="2"/><rect x="-6" y="24" width="12" height="2"/></g><g transform="rotate(-56.31)"><rect x="-6" y="18" width="5.5" height="2"/><rect x="0.5" y="18" width="5.5" height="2"/><rect x="-6" y="21" width="5.5" height="2"/><rect x="0.5" y="21" width="5.5" height="2"/><rect x="-6" y="24" width="5.5" height="2"/><rect x="0.5" y="24" width="5.5" height="2"/></g><g transform="rotate(-123.69)"><rect x="-6" y="18" width="5.5" height="2"/><rect x="0.5" y="18" width="5.5" height="2"/><rect x="-6" y="21" width="12" height="2"/><rect x="-6" y="24" width="5.5" height="2"/><rect x="0.5" y="24" width="5.5" height="2"/></g><g transform="rotate(56.31)"><rect x="-6" y="18" width="12" height="2"/><rect x="-6" y="21" width="5.5" height="2"/><rect x="0.5" y="21" width="5.5" height="2"/><rect x="-6" y="24" width="12" height="2"/></g></g></svg></div>
@@ -830,38 +826,38 @@ footer{
     <div class="curr-header">
       <div class="sec-label reveal">CURRICULUM</div>
       <h2 class="sec-title reveal">단계별 맞춤 훈련 커리큘럼</h2>
-      <p class="sec-desc reveal" style="max-width:560px;margin:0 auto;">안전하게 오래 하는 배구, 즐겁게 지속하는 배구<br>기본이 무너지지 않는 배구 — 그것이 하이앤드입니다</p>
+      <p class="sec-desc reveal" style="max-width:560px;margin:0 auto;">안전하게 오래 하는 배구, 즐겁게 지속하는 배구 <br class="bk">기본이 무너지지 않는 배구 — 그것이 하이앤드입니다</p>
     </div>
     <div class="curr-cards">
       <div class="curr-card reveal">
         <div class="curr-lv">1</div>
         <div class="curr-name">초급반</div>
         <div class="curr-target">기초 입문자</div>
-        <div class="curr-desc">기초 기술 습득, 배구에 재미 붙이기. 올바른 자세와 기본기 완성.</div>
+        <div class="curr-desc">기초 기술 습득, 배구에 재미 붙이기. <br>올바른 자세와 기본기 완성.</div>
       </div>
       <div class="curr-card reveal rd1">
         <div class="curr-lv">2</div>
         <div class="curr-name">중급반</div>
         <div class="curr-target">기술 향상</div>
-        <div class="curr-desc">기술적 완성도 향상, 신체 밸런스 강화. 실전 적용 능력 개발.</div>
+        <div class="curr-desc">기술적 완성도 향상, 신체 밸런스 강화. <br>실전 적용 능력 개발.</div>
       </div>
       <div class="curr-card reveal rd2">
         <div class="curr-lv">3</div>
         <div class="curr-name">심화반</div>
         <div class="curr-target">고급 기술</div>
-        <div class="curr-desc">국가대표·프로 선수의 훈련 방식을 바탕으로 한 고급 기술 습득. 실질적 팀플레이 완성 및 경기 분석.</div>
+        <div class="curr-desc">국가대표·프로 선수의 훈련 방식을 바탕으로 한 고급 기술 습득. <br>실질적 팀플레이 완성 및 경기 분석.</div>
       </div>
       <div class="curr-card reveal rd3">
         <div class="curr-lv">4</div>
         <div class="curr-name">시합반</div>
         <div class="curr-target">대회 준비</div>
-        <div class="curr-desc">대외 우승을 위한 집중 코칭. 실전 경기 전략 및 멘탈 훈련.</div>
+        <div class="curr-desc">대회를 목표로 한 집중 코칭. <br>실전 경기 전략 및 멘탈 훈련.</div>
       </div>
       <div class="curr-card reveal rd4">
         <div class="curr-lv"><svg class="ln star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.5l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></svg></div>
         <div class="curr-name">개인레슨</div>
         <div class="curr-target">1:1 맞춤</div>
-        <div class="curr-desc">개인별 목표 맞춤 집중 지도. 국가대표·프로 출신 코치진의 1:1 기술 지도.</div>
+        <div class="curr-desc">개인별 목표 맞춤 집중 지도. <br>국가대표·프로 출신 코치진의 1:1 기술 지도.</div>
       </div>
     </div>
     <div class="curr-imgs">
@@ -1222,15 +1218,7 @@ window.addEventListener('scroll',()=>nav.classList.toggle('elevated',scrollY>60)
 
 const ICON_MENU='<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>';
 const ICON_CLOSE='<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-// ── MOBILE MENU ───────────────────────────────────────
-const mMenu=document.getElementById('mobileMenu');
-let mOpen=false;
-document.getElementById('menuBtn').addEventListener('click',()=>{
-  mOpen=!mOpen;
-  mMenu.classList.toggle('open',mOpen);
-  document.getElementById('menuBtn').innerHTML=mOpen?ICON_CLOSE:ICON_MENU;
-});
-function closeMnu(){mOpen=false;mMenu.classList.remove('open');document.getElementById('menuBtn').innerHTML=ICON_MENU;}
+function closeMnu(){}
 
 // ── ACTIVE NAV ────────────────────────────────────────
 const secs=document.querySelectorAll('section[id]');
@@ -1375,5 +1363,44 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
   obs.observe(section);
 })();
 </script>
+<div class="drw" id="drawer" hidden>
+  <div class="drw-bg" data-drawer-close></div>
+  <nav class="drw-in" aria-label="전체 메뉴">
+    <button class="drw-x" type="button" aria-label="메뉴 닫기" data-drawer-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    <a class="drw-brand" href="./"><img src="assets/img/logo-emblem.webp" alt="" width="64" height="70"><span>하이앤드</span></a>
+    <a class="drw-top" href="./" aria-current="page">HOME</a>
+    <a class="drw-top" href="about/">ABOUT US</a><a class="drw-top" href="method/">METHOD</a><a class="drw-top" href="class/">CLASS</a><a class="drw-top" href="story/">STORY</a><a class="drw-top" href="contact/">CONTACT</a>
+    <div class="drw-cta"><a href="class/oneday/apply/">원데이 예약</a><a href="dashboard.html">회원 로그인</a></div>
+  </nav>
+</div>
+<style>/* ☰ 전체 메뉴 (로켓츠식 왼쪽 메뉴) */
+.drw{position:fixed;inset:0;z-index:2000}
+.drw[hidden]{display:none}
+.drw-bg{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .28s}
+.drw-in{position:absolute;top:0;left:0;bottom:0;width:min(330px,86vw);background:#2d2e30;overflow-y:auto;padding:30px 22px 36px;text-align:center;transform:translateX(-100%);transition:transform .28s ease;word-break:keep-all}
+.drw.show .drw-bg{opacity:1}
+.drw.show .drw-in{transform:none}
+.drw-x{position:absolute;top:6px;right:6px;width:38px;height:38px;padding:8px;color:#9ea2a9;background:none;border:0;cursor:pointer}
+.drw-x svg{width:100%;height:100%}
+.drw-x:hover,.drw-x:focus-visible{color:#fff}
+.drw-brand{display:flex;flex-direction:column;align-items:center;gap:10px;margin:0 0 16px;text-decoration:none}
+.drw-brand img{width:auto;height:70px}
+.drw-brand span{font-family:'Paperlogy','Noto Sans KR',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.01em;color:#fff}
+.drw-top{display:block;width:100%;padding:6px 0;background:none;border:0;cursor:pointer;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14.5px;font-weight:400;letter-spacing:.11em;text-transform:uppercase;color:#a6aab1;text-decoration:none;transition:color .2s}
+.drw-top:hover,.drw-top:focus-visible,.drw-top[aria-current]{color:#fff}
+.drw-top:focus{outline:none}
+.drw-top:focus-visible{outline:1px solid #6b7078;outline-offset:3px;border-radius:4px}
+.drw-x:focus{outline:none}
+.drw-cta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:26px}
+.drw-cta a{padding:9px 4px;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none}
+.drw-cta a:first-child{background:#ffd23f;color:#0d1b2e}
+.drw-cta a:last-child{border:1px solid #6b7078;color:#fff}
+@media (prefers-reduced-motion:reduce){.drw-in,.drw-bg{transition:none}}
+.hm-brand{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.nav-logo{gap:8px}.nav-logo img.lg-emb{width:auto;height:40px;border-radius:0;object-fit:contain}.nav-logo img.lg-word{width:auto;height:26px;border-radius:0}
+.hamburger.hm-all{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin-right:4px;color:var(--text)}
+.hamburger.hm-all svg{width:26px;height:26px}
+</style>
+<script src="assets/js/drawer.js?v=bd2098c6" defer></script>
 </body>
 </html>

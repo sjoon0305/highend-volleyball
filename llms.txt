@@ -50,6 +50,7 @@
 ## 주요 페이지
 - 하이앤드 소개: https://sjoon0305.github.io/highend-volleyball/about/
 - 코칭 스태프 (김재휘 헤드코치 · 황준태 코치): https://sjoon0305.github.io/highend-volleyball/about/coaches/
+- Hi : And Day (국가대표 출신 · 현역 프로배구 선수와 함께하는 하이앤드 특별 배구 클래스, 2026.07.25): https://sjoon0305.github.io/highend-volleyball/story/hiandday/
 - 하이앤드 코칭 시스템: https://sjoon0305.github.io/highend-volleyball/method/
 - 4단계 성장 레벨: https://sjoon0305.github.io/highend-volleyball/method/level/
 - 클래스 전체 안내: https://sjoon0305.github.io/highend-volleyball/class/

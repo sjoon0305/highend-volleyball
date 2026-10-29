@@ -1,24 +1,5 @@
-/* 하이앤드 공통 동작: ☰ 전체 메뉴, 나타나기 효과, "문의" 버튼 */
+/* 하이앤드 공통 동작: 나타나기 효과, "문의" 버튼 (☰ 메뉴는 drawer.js) */
 (function(){
-  // ☰ 전체 메뉴 (PC: 한눈에 / 휴대폰: 눌러서 펼침)
-  var btn=document.getElementById('menuBtn'), panel=document.getElementById('allmenu');
-  if(btn&&panel){
-    var openIcon=btn.innerHTML, closeIcon=btn.getAttribute('data-close');
-    var setOpen=function(open){
-      panel.hidden=!open;
-      btn.innerHTML=open?closeIcon:openIcon;
-      btn.setAttribute('aria-expanded',open?'true':'false');
-      btn.setAttribute('aria-label',open?'전체 메뉴 닫기':'전체 메뉴 열기');
-      document.body.style.overflow=open?'hidden':'';
-    };
-    btn.addEventListener('click',function(){setOpen(panel.hidden);});
-    panel.addEventListener('click',function(e){
-      if(e.target===panel)setOpen(false);
-      var top=e.target.closest('.am-top');
-      if(top){var col=top.parentNode,o=col.classList.toggle('open');top.setAttribute('aria-expanded',o?'true':'false');}
-    });
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden){setOpen(false);btn.focus();}});
-  }
   // 나타나기 효과: 화면에 조금이라도 들어오면 바로 표시, 3초 뒤엔 남은 것도 모두 표시
   var els=document.querySelectorAll('.reveal');
   var showAll=function(){els.forEach(function(el){el.classList.add('visible');});};

@@ -10,6 +10,7 @@
 import hashlib
 import json
 import os
+import re
 from html import escape
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -117,15 +118,16 @@ PAGES = {
     'guide': P(path='class/guide/', crumb='수강 · 결제 안내', title='배구 수업 시간표 · 수강 · 결제 안내 | 하이앤드',
                desc='하이앤드 토요일 정규수업 시간표(유소년반 12:00 · 초급반 13:30 · 중급반 16:30, 80분)와 수업 일정 달력, 정규 수강권 · 결제 안내. 회원 로그인 후 수업 예약',
                banner=('SCHEDULE & PAYMENT', '수강 · 결제 안내', '시간표와 수업 일정, 수강권 · 결제 방법')),
-    'photos': P(path='class/photos/', crumb='클래스 사진', title='배구 수업 사진 | 하이앤드 수업 현장',
-                desc='하이앤드 발리볼 아카데미 토요일 수업 현장 사진과 영상. 리시브 · 패스 · 토스 · 스파이크를 배우는 유소년반 · 초급반 · 중급반 수업 모습.',
-                banner=('HIGH END PHOTOS', '클래스 사진', '토요일 수업 현장 사진과 영상')),
+    'photos': P(path='class/photos/', crumb='클래스 사진', title='클래스 사진 HIGHEND PHOTOS | 배구 수업 사진 · 프리미엄 배구 아카데미 하이앤드',
+                desc='하이앤드는 원데이 클래스부터 정규 수업까지 수업 사진을 촬영해 회원 가족과 나누고 있습니다. 유소년반 · 초급반 · 중급반 배구 수업 현장 사진과 영상, 지점별 클래스 사진 보기.',
+                banner=('HIGHEND PHOTOS', '클래스 사진', '원데이 클래스부터 정규 수업까지, 하이앤드 수업 현장')),
     # STORY
     'story': P(path='story/', crumb='STORY', title='하이앤드 수업 이야기 | 배구 수업 기록',
                desc='하이앤드 발리볼 아카데미 토요일 수업 이야기. 네이버 블로그 수업기록, 방문자 리뷰, 인스타그램 · 유튜브. 상암 인근 프리미엄 배구 아카데미 하이앤드',
                banner=('CLASS STORY', '수업 이야기', '매주 토요일 수업에서 있었던 일을 기록합니다'), cta='다음 이야기의 주인공이 되어 보세요'),
-    'hiand': P(path='story/hiand-day/', crumb='Hi:And Day', hidden=True, title='Hi:And Day | 하이앤드',
-               desc='하이앤드 행사 Hi:And Day', banner=('EVENT', 'Hi:And Day', '하이앤드 행사 소식은 인스타그램에서 확인하세요')),
+    'hiand': P(path='story/hiandday/', crumb='Hi : And Day', title='Hi : And Day | 프로배구 선수와 함께하는 배구 클래스 · 하이앤드 배구아카데미',
+               desc='국가대표·프로배구 선수에게 직접 배우는 하이앤드 발리볼 아카데미의 특별 배구 클래스. 유소년·초등학생 배구교실부터 중·고등 배구까지, 아이의 배구선수 꿈이 시작되는 하루.',
+               banner=('HI : AND DAY', 'Hi : And Day', '〔 프로 선수들과 함께하는 특별한 배구 경험 〕')),
     'note': P(path='story/note/', crumb='배구 노트', hidden=True, title='배구 노트 | 하이앤드',
               desc='하이앤드 배구 노트', banner=('VOLLEYBALL NOTE', '배구 노트', '하이앤드 코치진의 배구 이야기를 준비하고 있습니다')),
     # CONTACT
@@ -156,7 +158,7 @@ NAV = [
                         (None, '팀 클래스', [('competition', '시합반')]),
                         (None, '단체 클래스', [('club', '동호회 · 단체 레슨'), ('intl', '국제학교 · 해외 학생')]),
                         ('private', '개인레슨'), ('guide', '수강 · 결제 안내'), ('photos', '클래스 사진')]),
-    ('story', 'STORY', [('story', '수업 이야기'), ('hiand', 'Hi:And Day'), ('note', '배구 노트')]),
+    ('story', 'STORY', [('story', '수업 이야기'), ('hiand', 'Hi : And Day'), ('note', '배구 노트')]),
     ('contact', 'CONTACT', [('contact', '오시는 길'), ('local', '상암·은평·고양 배구학원'), ('faq', '자주 묻는 질문'), ('ask', '상담하기')]),
 ]
 
@@ -234,7 +236,7 @@ SAME_AS = [INSTA, YOUTUBE, NAVER_PLACE, BLOG, KAKAO]
 def org_graph():
     return [
         {'@type': 'Organization', '@id': BASE + '#org', 'name': NAME, 'alternateName': NAME_EN, 'url': BASE,
-         'logo': BASE + 'assets/img/logo.png', 'email': EMAIL, 'telephone': PHONE_INTL, 'sameAs': SAME_AS,
+         'logo': BASE + 'assets/img/logo-square.png', 'email': EMAIL, 'telephone': PHONE_INTL, 'sameAs': SAME_AS,
          'founder': {'@id': url('coaches') + '#kim'}},
         {'@type': 'SportsActivityLocation', '@id': BASE + '#place', 'name': NAME + ' 상암점', 'url': BASE,
          'image': BASE + 'assets/img/og-image.jpg', 'telephone': PHONE_INTL, 'email': EMAIL,
@@ -291,6 +293,12 @@ def faq_html(faqs, first_open=True):
 
 
 # ════════════════════════ 공통 틀 ════════════════════════
+
+def icons(root):
+    """브라우저 탭 아이콘 · 휴대폰 홈 화면 아이콘 (하이앤드 엠블럼)"""
+    return (f'<link rel="icon" type="image/png" sizes="64x64" href="{root}assets/img/favicon-64.png">'
+            f'<link rel="apple-touch-icon" href="{root}assets/img/apple-touch-icon.png">')
+
 def head(key, root, extra_ld):
     p = PAGES[key]
     graph = org_graph() + [x for x in [breadcrumb_ld(key)] + list(extra_ld) if x]
@@ -322,7 +330,7 @@ def head(key, root, extra_ld):
 <meta name="twitter:title" content="{escape(p['title'])}">
 <meta name="twitter:description" content="{escape(p['desc'])}">
 <meta name="twitter:image" content="{BASE}assets/img/og-image.jpg">
-{SN['favicon']}
+{icons(root)}
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preload" href="{root}fonts/Paperlogy-9Black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{root}fonts/Paperlogy-4Regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -345,23 +353,12 @@ def header(key, root):
                 lis.append(f'<li><a href="{rel(root, it[0])}"{" aria-current=page" if it[0] == key else ""}>{escape(it[1])}</a></li>')
         on = ' on' if top == cur_top else ''
         g1.append(f'<div class="g1{on}"><a class="g1a" href="{rel(root, top)}">{label}</a><ul class="g2">{"".join(lis)}</ul></div>')
-    # ☰ 전체 메뉴 (PC: 한눈에 펼침 / 휴대폰: 눌러서 펼침)
-    cols = []
-    for top, label, subs in NAV:
-        items = []
-        for it in nav_items(subs):
-            if it[0] is None:
-                kids = ''.join(f'<a class="am3" href="{rel(root, k)}">{escape(t)}</a>' for k, t in it[2])
-                items.append(f'<div class="am-grp"><span class="am-gl">{escape(it[1])}</span>{kids}</div>')
-            else:
-                items.append(f'<a class="am2" href="{rel(root, it[0])}">{escape(it[1])}</a>')
-        cols.append(f'<div class="am-col"><button class="am-top" type="button" aria-expanded="false">{label}</button><div class="am-list">{"".join(items)}</div></div>')
     return f'''<body data-page="{key}">
 <a class="skip" href="#main">본문 바로가기</a>
 <header class="hd3">
   <div class="hd3-in">
-    <button class="hd3-all" id="menuBtn" type="button" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="allmenu" data-close='{SN['close']}'>{SN['menu']}</button>
-    <a class="hd3-logo" href="{rel(root, 'home')}"><img src="{root}assets/img/logo.webp" alt="하이앤드 발리볼 아카데미 로고" width="34" height="34"><span><b>HIGH END</b><small>VOLLEYBALL ACADEMY</small></span></a>
+    <button class="hd3-all" id="menuBtn" type="button" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="drawer" data-drawer-open>{SN['menu']}</button>
+    <a class="hd3-logo" href="{rel(root, 'home')}"><img class="lg-emb" src="{root}assets/img/logo-emblem.webp" alt="" width="36" height="40"><img class="lg-word" src="{root}assets/img/logo-text-white.webp" alt="HIGH END VOLLEYBALL ACADEMY 하이앤드 발리볼 아카데미" width="88" height="26"></a>
     <nav class="gnb3" aria-label="주요 메뉴">{"".join(g1)}</nav>
     <div class="hd3-act">
       <a class="hd3-book" href="{rel(root, 'oneday-apply')}">원데이 예약</a>
@@ -369,14 +366,26 @@ def header(key, root):
     </div>
   </div>
 </header>
-<div class="allmenu" id="allmenu" hidden>
-  <nav class="am-in" aria-label="전체 메뉴">
-    <a class="am-home" href="{rel(root, 'home')}">HOME</a>
-    <div class="am-cols">{"".join(cols)}</div>
-    <div class="am-cta"><a href="{rel(root, 'oneday-apply')}">원데이 클래스 신청</a><a href="{root}dashboard.html">회원 로그인</a></div>
+{drawer_html(root, key)}'''
+
+
+
+def drawer_html(root, key=''):
+    """☰ 를 누르면 왼쪽에서 나오는 전체 메뉴 (로켓츠식): 대메뉴만 보이고, 누르면 그 페이지로 이동"""
+    cur_top = place_of(key)[0] if key and key != 'home' else ''
+    cols = [f'<a class="drw-top" href="{rel(root, top)}"{" aria-current=page" if top == cur_top else ""}>{label}</a>'
+            for top, label, subs in NAV]
+    home_on = ' aria-current="page"' if key == 'home' else ''
+    return f'''<div class="drw" id="drawer" hidden>
+  <div class="drw-bg" data-drawer-close></div>
+  <nav class="drw-in" aria-label="전체 메뉴">
+    <button class="drw-x" type="button" aria-label="메뉴 닫기" data-drawer-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    <a class="drw-brand" href="{rel(root, 'home')}"><img src="{root}assets/img/logo-emblem.webp" alt="" width="64" height="70"><span>하이앤드</span></a>
+    <a class="drw-top" href="{rel(root, 'home')}"{home_on}>HOME</a>
+    {"".join(cols)}
+    <div class="drw-cta"><a href="{rel(root, 'oneday-apply')}">원데이 예약</a><a href="{root}dashboard.html">회원 로그인</a></div>
   </nav>
 </div>'''
-
 
 def sechead(key, root):
     """로켓츠 방식: 가운데 대메뉴 이름(양옆 선) + 2단계 탭 줄 + (묶음 안이면) 3단계 줄"""
@@ -460,11 +469,12 @@ def page(key, body, extra_ld=(), scripts=(), root=None):
     root = rootof(key) if root is None else root
     sc = ''.join(f'<script src="{s if s.startswith("http") else root + s + "?v=" + ver(s)}" defer></script>' for s in scripts)
     p = PAGES[key]
-    cta = cta_band(root, p.get('cta', '처음부터 제대로.'), p.get('cta_sub', '')) if key != 'notfound' else ''
+    cta = cta_band(root, p.get('cta', '처음부터 제대로.'), p.get('cta_sub', '')) if key not in ('notfound', 'hiand') else ''  # Hi : And Day는 맨 아래가 카카오 채널 소식받기
     return (head(key, root, extra_ld) + '\n' + header(key, root) + '\n<main id="main">\n'
             + sechead(key, root) + '\n' + crumbs(key, root) + '\n' + pagehead(key, root) + '\n'
             + body(root) + '\n' + cta + '\n</main>\n' + footer(root) + '\n'
-            + f'<script src="{root}assets/js/site.js?v={ver("assets/js/site.js")}" defer></script>{sc}\n</body>\n</html>\n')
+            + f'<script src="{root}assets/js/site.js?v={ver("assets/js/site.js")}" defer></script>'
+            + f'<script src="{root}assets/js/drawer.js?v={ver("assets/js/drawer.js")}" defer></script>{sc}\n</body>\n</html>\n')
 
 
 def go(r, key, text, cls='s'):
@@ -484,7 +494,7 @@ def linkcards(r, items):
 def about_body(r):
     return f'''<section class="sec about-intro">
   <div class="wrap center">
-    <img class="ai-logo reveal" src="{r}assets/img/logo.webp" alt="하이앤드 발리볼 아카데미 엠블럼" width="160" height="160" loading="lazy">
+    <img class="ai-logo reveal" src="{r}assets/img/logo-emblem.webp" alt="하이앤드 발리볼 아카데미 엠블럼" width="160" height="176" loading="lazy">
     <h2 class="ai-title">가장 완벽한 기본</h2>
     <p class="ai-tag">프리미엄 배구 아카데미, 하이앤드</p>
     <p class="ai-p">하이앤드 발리볼 아카데미는 국가대표·프로 선수의 훈련 방식을 시스템으로 만든 프리미엄 배구 아카데미입니다.<br>처음 배구를 시작하는 <strong>초등학생부터</strong> 학교 배구부·엘리트를 준비하는 학생, <strong>취미로 배우는 성인까지</strong> 지금 실력에 맞는 단계에서 배웁니다.</p>
@@ -669,12 +679,12 @@ def flow_body(r):
 def level_body(r):
     return f'''<section class="sec">
   <div class="wrap">
-    <p class="lead">배구는 나이보다 <strong>"지금 할 수 있는 동작"</strong>이 중요합니다. 하이앤드 성장 레벨은 국가대표·프로 선수의 훈련 방식을 바탕으로, 처음 배우는 분부터 배구부·엘리트 진학과 대회를 준비하는 학생까지 지금 실력에 맞는 단계에서 시작해 한 단계씩 올라가도록 만들었습니다. 프리미엄 배구 학원 · 배구교실 · 배구 아카데미를 찾는 초등학생부터 성인까지, 누구나 이유를 알고 배우는 배구를 경험할 수 있습니다.</p>
+    <p class="lead">배구는 나이보다 <strong>"지금 할 수 있는 동작"</strong>이 중요합니다. 하이앤드 성장 레벨은 국가대표·프로 선수의 훈련 방식을 바탕으로 만들었습니다. 처음 배우는 분부터 배구부·엘리트 진학과 대회를 준비하는 학생까지, 지금 실력에 맞는 단계에서 시작해 한 단계씩 올라갑니다. 프리미엄 배구 학원 · 배구교실 · 배구 아카데미를 찾는 초등학생부터 성인까지, 누구나 이유를 알고 배우는 배구를 경험할 수 있습니다.</p>
     <div class="lvx-grid mt">
       <article class="lvx reveal">
         <div class="lvx-hd"><b>LV.1</b><div><h2>입문 · 초급반</h2><p>기초 기술 습득 · 배구에 재미 붙이기</p></div></div>
         <p class="lvx-who"><strong>이런 분께</strong> 배구를 처음 시작하는 분. 중학생 이상은 초급반, 처음 배우는 초등학생은 유소년반에서 시작합니다.</p>
-        <ul class="plain"><li>기본 매커니즘 습득: 패스, 서브, 리시브</li><li>배구 놀이를 바탕으로 한 신체 감각 강화</li><li>팀워크 경험으로 배구의 재미 발견</li></ul>
+        <ul class="plain"><li>기본 메커니즘 습득: 패스, 서브, 리시브</li><li>배구 놀이를 바탕으로 한 신체 감각 강화</li><li>팀워크 경험으로 배구의 재미 발견</li></ul>
         <p class="lvx-coach"><strong>이 단계를 마치면</strong> 기본 자세로 공을 받아 위로 띄우고, 언더핸드 서브로 네트를 넘길 수 있습니다.</p>
       </article>
       <article class="lvx reveal">
@@ -815,7 +825,7 @@ def beginner_body(r):
     <figure class="reveal">{img(r, 'class-3', '수강생들이 콘을 두고 리시브 자세를 연습하는 초급반 수업 장면', 1200, 1600)}</figure>
     <div class="reveal">
       <h2>기초 기술 습득 · 배구에 재미 붙이기</h2>
-      <p>배구를 처음 시작하는 중학생 이상을 위한 반입니다. 패스, 서브, 리시브의 기본 매커니즘을 익히고, 팀워크 경험으로 배구의 재미를 발견합니다.</p>
+      <p>배구를 처음 시작하는 중학생 이상을 위한 반입니다. 패스, 서브, 리시브의 기본 메커니즘을 익히고, 팀워크 경험으로 배구의 재미를 발견합니다.</p>
       <ul class="ticks"><li>토요일 13:30 · 80분 정규수업</li><li>대상: 중학생 이상, 처음 배우는 분</li><li>처음 배우는 초등학생은 유소년반에서 시작합니다</li></ul>
       <div class="btns">{go(r, 'oneday-apply', '원데이 클래스로 시작', 'p')}{go(r, 'intermediate', '중급반 보기')}</div>
     </div>
@@ -885,7 +895,7 @@ def intl_body(r):
   <div class="wrap">
     <h2>국제학교 · 해외 거주 학생 배구 레슨</h2>
     <p class="lead">국제학교 · 외국인학교 학생과, 방학마다 한국을 찾는 해외 거주 학생도 함께 배웁니다. 국가대표·프로 출신 하이앤드 코치진이 지도합니다.</p>
-    <p class="intl-en" lang="en">Volleyball lessons for international school students and families visiting Korea during school breaks, coached by a former Korean national team player.</p>
+    <p class="intl-en" lang="en">Volleyball lessons for international school students and families visiting Korea during school breaks, coached by HIGH END's former Korean national team and professional players.</p>
     <div class="intl-grid mt">
       <div class="intl-card reveal"><span class="n">01</span><h3>익숙한 배구 용어로</h3><p>Underpass · Set · Spike · Serve. 해외 학교와 클럽에서 쓰던 용어를 함께 써서, 영어가 편한 아이들도 자연스럽게 적응합니다. 영어 수업이 아니라 익숙한 용어로 몸의 움직임을 이해하는 데 초점을 둡니다.</p></div>
       <div class="intl-card reveal"><span class="n">02</span><h3>한 명 한 명, 기본기 교정</h3><p>팀 훈련과는 별개로 리시브할 때 발의 위치, 공을 맞히는 팔의 각도, 스파이크를 위한 몸의 움직임을 세밀하게 교정합니다. 작아 보이는 차이가 쌓여 실력의 차이가 됩니다.</p></div>
@@ -926,9 +936,12 @@ PHOTOS_0820 = ['워밍업 중인 수강생들', '네트 앞에서 수업을 준�
                '네트 앞에서 함께 점프하는 수강생들', '혼자 공을 다루는 연습']
 
 
+PHOTO_DRIVE = 'https://drive.google.com/drive/folders/1XPur9pc9yPQ7SnZm183PMINXb00BF4Ch'
+
+
 def photos_body(r):
     grid = ''.join(
-        f'<button class="insta-item" type="button" onclick="openLb(\'{r}assets/img/0820-{i + 1:02d}.jpg\')" aria-label="사진 크게 보기: {escape(a)}">{img(r, f"0820-{i + 1:02d}", "하이앤드 토요일 수업: " + a, 1200, 900)}</button>'
+        f'<a class="ig-item" href="{INSTA}" target="_blank" rel="noopener" aria-label="인스타그램에서 보기: {escape(a)}">{img(r, f"0820-{i + 1:02d}", "하이앤드 토요일 수업: " + a, 1200, 900)}</a>'
         for i, a in enumerate(PHOTOS_0820))
     more = [('class-1', '체육관에서 수강생들이 리시브를 연습하는 토요일 수업 장면', 720, 960),
             ('class-2', '수업을 마친 하이앤드 수강생 단체 사진', 1600, 1200),
@@ -937,16 +950,40 @@ def photos_body(r):
             ('class-5', '코치 설명을 듣는 어린이 수강생들', 1200, 1600),
             ('class-6', '점프해서 스파이크를 하는 수강생', 1200, 1600)]
     grid += ''.join(
-        f'<button class="insta-item" type="button" onclick="openLb(\'{r}assets/img/{n}.webp\')" aria-label="사진 크게 보기: {escape(a)}">{img(r, n, a, w, h)}</button>'
+        f'<a class="ig-item" href="{INSTA}" target="_blank" rel="noopener" aria-label="인스타그램에서 보기: {escape(a)}">{img(r, n, a, w, h)}</a>'
         for n, a, w, h in more)
     vids = ''.join(
         f'<div class="reel-slide" data-idx="{i}"><video src="{r}4.%20%EC%88%98%EC%97%85%20%EC%82%AC%EC%A7%84/%EB%8F%99%EC%98%81%EC%83%81/{i + 1}.mp4" loop muted playsinline preload="none" aria-label="하이앤드 수업 영상 {i + 1}"></video><div class="reel-play-layer" id="rpl{i}"><div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div></div>'
         for i in range(4))
     dots = ''.join(f'<div class="s-dot{" active" if i == 0 else ""}"></div>' for i in range(5))
-    return f'''<section class="sec">
+    # HIGHEND PHOTOS 사진 3장 (드라이브 2026-10-29_홈페이지_클래스사진 → WebP 800px). 파일이 없으면 빈 자리
+    alts = ['하이앤드 배구 수업에서 배구공을 잡고 언더핸드 서브를 준비하는 학생',
+            '하이앤드 배구 수업에서 웃으며 배구공을 튀기며 이동하는 수강생',
+            '하이앤드 유소년 배구 수업에서 코트 위 위치를 손으로 가리키며 확인하는 아이들']
+    slots = ''
+    for n in range(1, 4):
+        f = f'photos-{n}.webp'
+        if os.path.exists(os.path.join(ROOT_DIR, 'assets', 'img', f)):
+            inner = f'<img src="{r}assets/img/{f}" alt="{alts[n - 1]}" width="800" height="1067" loading="lazy" decoding="async">'
+        else:
+            inner = f'<div class="hp-empty" aria-hidden="true"><span>사진 {n}</span></div>'
+        slots += f'<figure class="hp-card reveal"><a href="{PHOTO_DRIVE}" target="_blank" rel="noopener" aria-label="클래스 사진 {n}: 구글 드라이브에서 지점별 클래스 사진 보기 (새 탭)">{inner}</a></figure>'
+    return f'''<section class="sec hp">
+  <div class="wrap center">
+    <h2 class="hp-title">HIGHEND PHOTOS</h2>
+    <p class="hp-desc">하이앤드는 원데이 클래스부터 정규 수업까지 수업 사진을 촬영해 회원 가족과 나누고 있습니다.</p>
+    <a class="hp-btn" href="{PHOTO_DRIVE}" target="_blank" rel="noopener">📷 지점별 클래스 사진 보러가기 &gt;</a>
+    <div class="hp-grid">{slots}</div>
+  </div>
+</section>
+<section class="sec ig">
   <div class="wrap">
-    <p class="lead">토요일 유소년반 · 초급반 · 중급반 수업 현장입니다. 기본기부터 차근차근 배우는 모습을 담았습니다.</p>
-    <div class="insta-grid mt">{grid}</div>
+    <div class="ig-head">
+      <p class="eyebrow">수업 현장</p>
+      <h2 class="ig-title">INSTAGRAM</h2>
+      <a class="ig-id" href="{INSTA}" target="_blank" rel="noopener">@highend_volleyball</a>
+    </div>
+    <div class="ig-grid">{grid}</div>
     <h2 class="mt">수업 영상</h2>
     <div class="reels-section">
       <div class="reels-outer">
@@ -958,8 +995,122 @@ def photos_body(r):
     </div>
     <div class="links mt"><a class="chip-link" href="{INSTA}" target="_blank" rel="noopener">{SN['insta']}인스타그램에서 더 보기</a><a class="chip-link" href="{BLOG}" target="_blank" rel="noopener">{SN['blog']}블로그 수업기록</a></div>
   </div>
+</section>'''
+
+
+# ════════════════════════ 본문: Hi : And Day ════════════════════════
+HIAND_FAQ = [
+    ('배구를 처음 하는 아이도 참여할 수 있나요?', '네. 유소년·초보 클래스가 따로 있어 배구를 처음 배우는 초등학생도 함께할 수 있습니다.'),
+    ('누가 참여할 수 있나요?', '정규 수강권을 가진 하이앤드 수강생이 대상입니다. 하이앤드가 처음이라면 원데이 클래스로 수업을 먼저 경험해 보세요.'),
+    ('정원은 몇 명인가요?', '클래스당 20명이며, 행사 공지 후 선착순으로 신청받습니다.'),
+    ('다음 Hi : And Day는 언제인가요?', '일정이 정해지면 카카오 채널과 인스타그램으로 가장 먼저 알려 드립니다.'),
+]
+HIAND_PHOTOS = [
+    ('hiand-1', 'Hi : And Day 2026.07.25 참가 수강생들과 초청 프로배구 선수·하이앤드 코치진 단체 사진'),
+    ('hiand-2', 'Hi : And Day 2026.07.25 초청 프로배구 선수들과 하이앤드 코치진 기념 사진'),
+    ('hiand-3', 'Hi : And Day 2026.07.25 유소년·초보 클래스 어린이 수강생들과 선수들의 단체 사진'),
+    ('hiand-4', 'Hi : And Day 2026.07.25 초청 선수와 브이 포즈로 기념 촬영하는 어린이 수강생'),
+]
+HIAND_EVENT = {
+    '@type': 'Event', 'name': 'Hi : And Day', 'startDate': '2026-07-25',
+    'eventStatus': 'https://schema.org/EventScheduled',
+    'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+    'description': '국가대표 출신 및 현역 프로배구 선수와 함께하는 하이앤드 발리볼 아카데미의 특별 배구 클래스.',
+    'image': [BASE + 'assets/img/hiand-banner.webp'] + [BASE + f'assets/img/{n}.webp' for n, _ in HIAND_PHOTOS],
+    'location': {'@type': 'Place', 'name': '하이앤드 발리볼 아카데미',
+                 'address': {'@type': 'PostalAddress', 'streetAddress': '상암 인근 · 현천동 180-1', 'addressCountry': 'KR'}},
+    'organizer': {'@type': 'Organization', '@id': BASE + '#org', 'name': '하이앤드 발리볼 아카데미', 'url': BASE},
+}
+HIAND_STEPS = ['수비 · 리시브', '토스', '공격', '서브', '선수와 미니 랠리']
+
+
+def hiand_body(r):
+    steps = ''.join(f'<li class="reveal"><span class="hd-ico" aria-hidden="true">{i + 1}</span><b>{t}</b></li>'
+                    for i, t in enumerate(HIAND_STEPS))
+    gal = ''.join(f'<figure class="hd-ph reveal"><a href="{INSTA}" target="_blank" rel="noopener" aria-label="인스타그램에서 Hi : And Day 사진 더 보기 (새 탭)">{img(r, n, a, 1200, 801)}</a></figure>' for n, a in HIAND_PHOTOS)
+    return f'''<section class="hd-sec sec hd-top">
+  <div class="wrap">
+    <figure class="hd-banner"><a href="{INSTA}" target="_blank" rel="noopener" aria-label="인스타그램에서 Hi : And Day 소식 보기 (새 탭)">{img(r, 'hiand-banner', 'Hi : And Day 초청 프로배구 선수들과 하이앤드 코치진이 하이앤드 발리볼 아카데미 코트에서 함께한 단체 사진', 1200, 600, lazy=False)}</a></figure>
+    <p class="lead center hd-lead">국가대표 출신 및 현역 프로 선수들과 함께하며<br>배구 실전 기술은 물론, 선수들의 훈련 방법과 노하우를<br>가까이에서 배우고 한 단계 더 성장하는 시간을 가져보세요!</p>
+    <div class="hd-intro">
+      <p>화면 속에서만 보던 선수들의 리시브, 토스, 스파이크를 같은 코트에서 직접 보고 따라 해 봅니다.</p>
+      <p>선수들이 어떤 순서로 연습하고, 공 하나를 받을 때 무엇을 생각하며 움직이는지 가까이에서 느낄 수 있습니다.</p>
+      <p>평소 하이앤드 수업에서 다져 온 기본기가 실전에서 어떻게 쓰이는지 확인하는 하루입니다.</p>
+    </div>
+  </div>
 </section>
-<div class="lightbox" id="lightbox" onclick="closeLb()"><button class="lb-close" onclick="closeLb()" aria-label="닫기">{SN['close']}</button><img id="lbImg" src="data:," alt="크게 본 수업 사진"></div>'''
+<section class="hd-sec sec alt">
+  <div class="wrap hd-narrow">
+    <h2>우리 아이의 꿈이 시작되는 하루</h2>
+    <p>TV와 경기장에서 응원하던 선수가 바로 내 앞에서 공을 띄워 줍니다.</p>
+    <p>좋아하는 선수에게 직접 리시브를 배우고, 함께 랠리를 하고, 사인을 받는 순간.</p>
+    <p>배구를 막 시작한 초등학생에게도, 학교 배구부를 준비하는 중학생에게도<br>"나도 배구선수가 되고 싶다"는 꿈이 또렷해지는 경험이 됩니다.</p>
+    <p class="hd-callout">Hi : And Day는 하이앤드 수강생이 좋아하는 선수에게 직접 배울 수 있는,<br>하이앤드만의 특별 프로그램입니다.</p>
+  </div>
+</section>
+<section class="hd-sec sec">
+  <div class="wrap">
+    <h2>왜 프로 선수와 함께 배우나요</h2>
+    <div class="grid3 mt">
+      <div class="card reveal"><h3 class="t">눈으로 보는 기준</h3><p>프로 선수의 리시브 자세, 스텝, 스윙을 가까이에서 보면<br>내가 연습하는 동작의 완성형이 보입니다.</p></div>
+      <div class="card reveal"><h3 class="t">이유를 알고 하는 연습</h3><p>하이앤드 코치진이 선수의 동작을 쉬운 말로 풀어 설명해, 보는 데서 끝나지 않고 내 몸에 적용합니다. 알고 하면 쉬운 배구입니다.</p></div>
+      <div class="card reveal"><h3 class="t">꾸준함의 동기</h3><p>다음 Hi : And Day까지 무엇을 연습할지, 아이 스스로 목표가 생깁니다.</p></div>
+    </div>
+  </div>
+</section>
+<section class="hd-sec sec alt">
+  <div class="wrap">
+    <h2>이렇게 진행됩니다</h2>
+    <ol class="hd-steps mt">{steps}</ol>
+    <p class="center">초청 선수와 하이앤드 코치진이 함께 진행합니다.<br>수업이 끝나면 단체 사진, 사인회, 기념 촬영이 이어집니다.</p>
+  </div>
+</section>
+<section class="hd-sec sec">
+  <div class="wrap hd-narrow">
+    <h2>매년 이어 갈 하이앤드의 대표 행사</h2>
+    <p>하이앤드 배구아카데미는 전·현직 국가대표와 프로배구 선수를 초청하는 Hi : And Day를 매년 이어 갈 대표 행사로 만들어 가고 있습니다.</p>
+    <p>배구교실에서 배운 기본기를, 1년에 한 번 꿈꾸던 선수 앞에서 보여 주는 날. 그 하루가 다음 1년의 연습을 이끌어 줍니다.</p>
+  </div>
+</section>
+<section class="hd-sec sec alt">
+  <div class="wrap hd-narrow">
+    <h2>참여 안내</h2>
+    <dl class="hd-info">
+      <div><dt>대상</dt><dd>정규 수강권을 가진 하이앤드 수강생</dd></div>
+      <div><dt>정원</dt><dd>클래스당 20명</dd></div>
+      <div><dt>신청</dt><dd>행사 공지 후 선착순</dd></div>
+    </dl>
+  </div>
+</section>
+<section class="hd-sec sec">
+  <div class="wrap">
+    <h2>지난 Hi : And Day · 2026.07.25 (토)</h2>
+    <dl class="hd-info">
+      <div><dt>초청 선수</dt><dd>허수봉 · 이시우 · 김지한 · 이승원 · 박주형 · 박준혁</dd></div>
+      <div><dt>1부</dt><dd>중학생 이상 (배구 경력 6개월 이상)</dd></div>
+      <div><dt>2부</dt><dd>유소년 · 초보 (전 연령)</dd></div>
+    </dl>
+    <div class="hd-gallery mt">{gal}</div>
+  </div>
+</section>
+<section class="hd-sec sec alt">
+  <div class="wrap hd-narrow">
+    <h2>자주 묻는 질문</h2>
+    {faq_html(HIAND_FAQ, first_open=False)}
+  </div>
+</section>
+<section class="hd-sec sec">
+  <div class="wrap hd-narrow">
+    <h2>상암·은평·고양에서 배구학원을 찾고 계신다면</h2>
+    <p>하이앤드 발리볼 아카데미는 상암 인근 · 현천동 180-1에 있는 프리미엄 배구 아카데미입니다.</p>
+    <p>유소년 배구교실, 초·중·고 배구 레슨, 성인 배구, 배구 개인레슨을 운영하며, 국가대표·프로 출신 하이앤드 코치진이 가르칩니다.</p>
+    <div class="hd-news reveal">
+      <p><strong>다음 Hi : And Day는 추후 공지합니다.</strong><br>카카오 채널을 추가하시면 가장 먼저 소식을 받아보실 수 있습니다.</p>
+      <a class="hp-btn" href="{KAKAO}" target="_blank" rel="noopener">카카오 채널 소식받기</a>
+    </div>
+  </div>
+</section>'''
+
 
 
 # ════════════════════════ 본문: STORY ════════════════════════
@@ -1136,13 +1287,115 @@ BUILD = {
     'youth': (youth_body, [YOUTH], []), 'beginner': (beginner_body, [BEGINNER], []), 'intermediate': (intermediate_body, [INTER], []),
     'regular-reviews': (reviews_body, [], []), 'competition': (competition_body, [], []), 'club': (club_body, [], []), 'private': (private_body, [PRIVATE], []), 'intl': (intl_body, [], []),
     'guide': (guide_body, [], FIREBASE + ['assets/js/schedule.js']), 'photos': (photos_body, [], ['assets/js/media.js']),
-    'story': (story_body, [], []), 'hiand': (soon_body, [], []), 'note': (soon_body, [], []),
+    'story': (story_body, [], []), 'hiand': (hiand_body, [faq_ld(HIAND_FAQ), HIAND_EVENT], []), 'note': (soon_body, [], []),
     'contact': (contact_body, [], []), 'local': (local_body, [faq_ld(LOCAL_FAQ)], []), 'faq': (faq_body, [faq_ld(CONTACT_FAQ)], []),
     'ask': (ask_body, [], []),
 }
 
 
+# ── 읽기 쉬운 줄바꿈 (대표 지시 2026-10-29, 직원지식/공통_홈페이지글_줄바꿈규칙.md) ──
+SENT_END = re.compile(r'([가-힣)]\.|[!?])[ \t]+(?=\S)')
+CLAUSE = re.compile(r'([가-힣]{1,6}(?:지|고|해|면|며|서|데|도|만|게|니),)[ \t]+')
+
+
+def _brk_sentences(inner):
+    return SENT_END.sub(lambda m: m.group(1) + ' <br>', inner)
+
+
+CONNECT = set('고며서면지해데니게도만요다')
+
+
+def _brk_long(part):
+    """긴 한 문장(34자 넘음)은 쉼표에서 끊는다.
+    1순위: '~하고, ~하며, ~해서,' 같은 이어지는 말 뒤 / 2순위(45자 넘는데 1순위가 없을 때): 가운데에 가까운 쉼표"""
+    toks = re.split(r'(<[^>]+>)', part)
+    text = ''.join(t for t in toks if not t.startswith('<'))
+    if len(text) <= 34 or ', ' not in text:
+        return part
+    depth, commas = 0, []
+    for i, ch in enumerate(text):       # 괄호 안 쉼표에서는 끊지 않음
+        depth += (ch == '(') - (ch == ')')
+        if ch == ',' and depth == 0 and text[i + 1:i + 2] == ' ':
+            commas.append(i)
+    picks, last = [], 0
+    for c in commas:
+        if text[c - 1] in CONNECT and c + 1 - last >= 14 and len(text) - (c + 2) >= 12:
+            picks.append(c); last = c + 2
+    if not picks and len(text) > 44:
+        ok = [c for c in commas if c >= 14 and len(text) - c >= 14]
+        if ok:
+            picks = [min(ok, key=lambda c: abs(c - len(text) / 2))]
+    if not picks:
+        return part
+    cut = {c + 1 for c in picks}    # 쉼표 다음 공백 자리를 줄바꿈으로
+    out, k = [], 0
+    for t in toks:
+        if t.startswith('<'):
+            out.append(t)
+            continue
+        seg = []
+        for ch in t:
+            seg.append(' <br>' if k in cut else ch)
+            k += 1
+        out.append(''.join(seg))
+    return ''.join(out)
+
+
+# 쉼표 없는 긴 문장: 뜻이 나뉘는 자리에서 줄바꿈 ("앞|뒤" → "앞<br>뒤")
+MANUAL_BREAKS = [
+    '훈련 방식을|시스템으로 만든', 'Hi : And Day를|매년 이어 갈', '움직이도록|몸을 준비하는', '몸을|어릴 때부터',
+    '정규 수업까지|수업 사진을', '아카데미는|상암 인근 · 현천동 180-1에 있는', '기본기가|실전에서 어떻게',
+    '16:30 중|원하시는 시간을', '캠프 일정과|학교 배구팀', 'Serve.|해외 학교와', '갔는지"|스스로 알아차리는',
+    '의존하지 않고|국제 기준의', '따로 있어|배구를 처음', '단체 레슨은|인원과 목표에', '하이앤드 코치진은|먼저 묻고',
+    '기록하던 습관을|하이앤드 운동일지로', '학생과|방학마다 한국을', '6대6 경기를 하며|대회를 준비합니다',
+]
+
+
+def _soft(html_part):
+    """문장 중간 줄바꿈은 <br class="bk"> (휴대폰처럼 좁은 화면에서는 숨겨 자연스럽게 이어 씀)"""
+    parts = re.split(r'<br\s*/?>', html_part)
+    out = parts[0]
+    for nxt in parts[1:]:
+        prev = re.sub(r'<[^>]+>', '', out).rstrip()
+        if prev[-1:] in '.!?…':
+            out += '<br>' + nxt
+        else:
+            out += ('' if out.endswith(' ') else ' ') + '<br class="bk">' + nxt
+    return out
+
+
+def _brk(inner):
+    out = '<br>'.join(_brk_long(x) for x in _brk_sentences(inner).split('<br>'))
+    for pair in MANUAL_BREAKS:
+        a, b = pair.split('|')
+        out = out.replace(f'{a} {b}', f'{a} <br>{b}')
+    return _soft(out)
+
+
+def readable(html_text):
+    """문단(p) 안에서 문장이 끝나면 다음 줄로. 좁은 카드 안에서는 쉼표에서도 끊는다.
+    script·style·head와 첫 화면(hero) 문단은 건드리지 않는다."""
+    head_end = html_text.find('</head>')
+    if head_end < 0:
+        return html_text
+    head_part, body = html_text[:head_end], html_text[head_end:]
+    keep = []
+    body = re.sub(r'<(script|style)\b.*?</\1>', lambda m: keep.append(m.group(0)) or f'\x00{len(keep) - 1}\x00', body, flags=re.S)
+
+    def para(m):
+        attrs, inner = m.group(1) or '', m.group(2)
+        if 'hero' in attrs:
+            return m.group(0)
+        return f'<p{attrs}>{_brk(inner)}</p>'
+    body = re.sub(r'<p(\s[^>]*)?>(.*?)</p>', para, body, flags=re.S)
+    body = re.sub(r'(<div class="curr-desc">)(.*?)(</div>)', lambda m: m.group(1) + _brk(m.group(2)) + m.group(3), body, flags=re.S)
+    body = re.sub(r'\x00(\d+)\x00', lambda m: keep[int(m.group(1))], body)
+    return head_part + body
+
+
 def write(path, text):
+    if path.endswith('.html'):
+        text = readable(text)
     full = os.path.join(ROOT_DIR, path)
     os.makedirs(os.path.dirname(full) or ROOT_DIR, exist_ok=True)
     with open(full, 'w', encoding='utf-8') as f:
@@ -1172,6 +1425,11 @@ def build():
 
     # llms.txt
     write('llms.txt', LLMS.replace('[주소]', BASE.rstrip('/')))
+    # 예전 주소(story/hiand-day/) → 새 주소로 넘겨 주기
+    new = url('hiand')
+    write('story/hiand-day/index.html', f'<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>Hi : And Day</title>'
+          f'<meta name="robots" content="noindex"><link rel="canonical" href="{new}"><meta http-equiv="refresh" content="0; url={new}">'
+          f'</head><body><p><a href="{new}">Hi : And Day 페이지로 이동</a></p></body></html>')
     print(f'생성 완료: 공개 페이지 {len(keys)}개 (홈 포함), 숨긴 페이지 {len([k for k in BUILD if not shown(k)])}개, 404, robots, sitemap, llms')
 
 
@@ -1227,6 +1485,7 @@ LLMS = '''# 하이앤드 발리볼 아카데미 (HIGH END Volleyball Academy)
 ## 주요 페이지
 - 하이앤드 소개: [주소]/about/
 - 코칭 스태프 (김재휘 헤드코치 · 황준태 코치): [주소]/about/coaches/
+- Hi : And Day (국가대표 출신 · 현역 프로배구 선수와 함께하는 하이앤드 특별 배구 클래스, 2026.07.25): [주소]/story/hiandday/
 - 하이앤드 코칭 시스템: [주소]/method/
 - 4단계 성장 레벨: [주소]/method/level/
 - 클래스 전체 안내: [주소]/class/
@@ -1251,6 +1510,12 @@ LLMS = '''# 하이앤드 발리볼 아카데미 (HIGH END Volleyball Academy)
 # 흰색 메뉴바는 그대로 두고 하위 메뉴만 3단계로, 검색용 머리말 추가
 
 HOME_CSS = '''<style>
+/* 한글 줄바꿈: 단어 중간에서 끊지 않기 */
+body{word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3,.lead,.sec-title,.sec-desc,.hero-title,.hero-desc{text-wrap:balance}
+p,li,dd,summary{text-wrap:balance}
+@media (max-width:600px){br.bk{display:none}}
+
 #hero .hero-bg{background-image:url('assets/img/hero-group.jpg');background-position:center 62%;}
 .nvi{position:relative;}
 .nav-links .nvi>a{display:block;font-weight:600;}
@@ -1279,6 +1544,7 @@ def home_legacy():
         assert s.count(old) == 1, old[:60]
         s = s.replace(old, new)
 
+    swap('대외 우승을 위한 집중 코칭. 실전 경기 전략 및 멘탈 훈련.', '대회를 목표로 한 집중 코칭. 실전 경기 전략 및 멘탈 훈련.')
     # 0) 브랜드 표기 기준 v2 (2026-10-27)
     swap('부상 없이 오래 할 수 있는 배구, 즐겁게 지속할 수 있는 배구', '안전하게 오래 하는 배구, 즐겁게 지속하는 배구')
     swap('국가대표 기준 고급 기술 습득. 실질적 팀플레이 완성 및 경기 분석.', '국가대표·프로 선수의 훈련 방식을 바탕으로 한 고급 기술 습득. 실질적 팀플레이 완성 및 경기 분석.')
@@ -1286,10 +1552,11 @@ def home_legacy():
 
     # 1) 머리말: 검색 제목·설명문·공유 미리보기·구조화 데이터
     h = head('home', '', [])
-    seo = h[h.index('<title>'):h.index(SN['favicon'])].replace('<meta name="theme-color" content="#003960">\n', '')
+    seo = h[h.index('<title>'):h.index('<link rel="icon"')].replace('<meta name="theme-color" content="#003960">\n', '')
     swap('<title>하이앤드 발리볼 아카데미 | HIGH END VOLLEYBALL ACADEMY</title>', seo.strip())
     site = {'@type': 'WebSite', '@id': BASE + '#site', 'url': BASE, 'name': NAME, 'inLanguage': 'ko-KR',
             'publisher': {'@id': BASE + '#org'}}
+    swap(SN['favicon'], icons(''))
     swap('</head>', HOME_CSS + ld(org_graph() + [site]) + '\n</head>')
 
     # 2) 흰색 메뉴바 그대로, 하위 메뉴만 3단계 (마우스·키보드로 열림)
@@ -1331,6 +1598,30 @@ def home_legacy():
     end = s.index('\n      </div>\n      <div class="coach-text-col">', start)
     s = (s[:start] + '<img src="./1. 코치 사진 자료/1.jpg" alt="메인코치 김재휘: 대한민국 국가대표 2016~2022, 현대캐피탈·KB손해보험·우리카드·삼성화재" loading="lazy">'
          + s[end:])
+    # 6) 상단 로고: AI 사무실 로고 파일(엠블럼 + 글자 로고)
+    lo = s.index('<a href="#hero" class="nav-logo">')
+    lo_end = s.index('</a>', lo)
+    s = (s[:lo] + '<a href="#hero" class="nav-logo"><img class="lg-emb" src="assets/img/logo-emblem.webp" alt="" width="36" height="40">'
+         '<img class="lg-word" src="assets/img/logo-text-dark.webp" alt="HIGH END VOLLEYBALL ACADEMY 하이앤드 발리볼 아카데미" width="88" height="26">' + s[lo_end:])
+    # 7) ☰ 전체 메뉴: 하위 페이지와 같은 로켓츠식 왼쪽 메뉴 (PC·휴대폰 모두 로고 왼쪽에 ☰)
+    hb_start = s.index('<button class="hamburger" id="menuBtn"')
+    hb_end = s.index('</button>', hb_start) + len('</button>')
+    s = s[:hb_start].rstrip() + '\n' + s[hb_end:]
+    lg = s.index('<a href="#hero" class="nav-logo">')
+    lg_end = s.index('</a>', lg) + len('</a>')
+    s = (s[:lg] + '<div class="hm-brand">'
+         + f'<button class="hamburger hm-all" id="menuBtn" type="button" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="drawer" data-drawer-open>{SN["menu"]}</button>'
+         + s[lg:lg_end] + '</div>' + s[lg_end:])
+    mm = s.index('<div class="mobile-menu" id="mobileMenu">')
+    s = s[:mm] + s[s.index('</div>', mm) + len('</div>'):]
+    a = s.index("// ── MOBILE MENU")
+    b = s.index("function closeMnu()", a)
+    b = s.index("\n", b) + 1
+    s = s[:a] + "function closeMnu(){}\n" + s[b:]
+    css = open(os.path.join(ROOT_DIR, 'assets', 'css', 'site.css'), encoding='utf-8').read()
+    css = css[css.index('/* ☰ 전체 메뉴 (로켓츠식 왼쪽 메뉴) */'):css.index('/* ☰ 끝 */')]
+    css += '.hm-brand{display:flex;align-items:center;gap:6px;flex-shrink:0}\n.nav-logo{gap:8px}.nav-logo img.lg-emb{width:auto;height:40px;border-radius:0;object-fit:contain}.nav-logo img.lg-word{width:auto;height:26px;border-radius:0}\n.hamburger.hm-all{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin-right:4px;color:var(--text)}\n.hamburger.hm-all svg{width:26px;height:26px}\n'
+    swap('</body>', f'{drawer_html("", "home")}\n<style>{css}</style>\n<script src="assets/js/drawer.js?v={ver("assets/js/drawer.js")}" defer></script>\n</body>')
     return s
 
 
