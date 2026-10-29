@@ -454,7 +454,13 @@ def footer(root):
     <div class="ft-copy">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
   </div>
 </footer>
-<div class="fab" id="fab">
+{fab_html()}'''
+
+
+
+def fab_html():
+    """떠 있는 \"문의\" 버튼 하나 → 누르면 카카오톡·전화·인스타·네이버 (홈·하위 페이지 공통)"""
+    return f'''<div class="fab" id="fab">
   <div class="fab-list" id="fabList">
     <a href="{KAKAO_CHAT}" target="_blank" rel="noopener" class="fab-i kakao" aria-label="카카오톡 상담">{SN['kakao']}<span>카카오톡</span></a>
     <a href="tel:01044631177" class="fab-i phone" aria-label="전화 문의">{SN['phone']}<span>전화</span></a>
@@ -463,7 +469,6 @@ def footer(root):
   </div>
   <button class="fab-btn" id="fabBtn" type="button" aria-expanded="false" aria-controls="fabList">{CHAT_ICON}<span>문의</span></button>
 </div>'''
-
 
 def page(key, body, extra_ld=(), scripts=(), root=None):
     root = rootof(key) if root is None else root
@@ -1603,6 +1608,27 @@ def home_legacy():
     lo_end = s.index('</a>', lo)
     s = (s[:lo] + '<a href="#hero" class="nav-logo"><img class="lg-emb" src="assets/img/logo-emblem.webp" alt="" width="36" height="40">'
          '<img class="lg-word" src="assets/img/logo-text-dark.webp" alt="HIGH END VOLLEYBALL ACADEMY 하이앤드 발리볼 아카데미" width="88" height="26">' + s[lo_end:])
+    # 6-1) 떠 있는 아이콘 4개 → 하위 페이지와 같은 "문의" 버튼 하나
+    fb = s.index('<!-- FLOAT -->')
+    fb_end = s.index('</div>', s.index('<div class="float-bar">', fb)) + len('</div>')
+    s = s[:fb] + fab_html() + s[fb_end:]
+    a = s.index("// ── FLOAT BAR")
+    b = s.index("// ── REELS SLIDER", a)
+    s = s[:a] + """// ── 문의 버튼: 누르면 4개 펼침, 오시는 길·푸터에서는 숨김 ──
+(function(){
+  const fab=document.getElementById('fab'),fb=document.getElementById('fabBtn');
+  if(!fab||!fb)return;
+  fb.addEventListener('click',()=>{const o=fab.classList.toggle('open');fb.setAttribute('aria-expanded',o?'true':'false');});
+  const targets=[document.getElementById('location'),document.querySelector('footer')].filter(Boolean);
+  if(!targets.length||!('IntersectionObserver' in window))return;
+  const seen=new Set();
+  const io2=new IntersectionObserver(es=>{
+    es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));
+    fab.classList.toggle('away',seen.size>0);
+  },{threshold:0.15});
+  targets.forEach(t=>io2.observe(t));
+})();
+""" + s[b:]
     # 7) ☰ 전체 메뉴: 하위 페이지와 같은 로켓츠식 왼쪽 메뉴 (PC·휴대폰 모두 로고 왼쪽에 ☰)
     hb_start = s.index('<button class="hamburger" id="menuBtn"')
     hb_end = s.index('</button>', hb_start) + len('</button>')
@@ -1620,6 +1646,9 @@ def home_legacy():
     s = s[:a] + "function closeMnu(){}\n" + s[b:]
     css = open(os.path.join(ROOT_DIR, 'assets', 'css', 'site.css'), encoding='utf-8').read()
     css = css[css.index('/* ☰ 전체 메뉴 (로켓츠식 왼쪽 메뉴) */'):css.index('/* ☰ 끝 */')]
+    site_css = open(os.path.join(ROOT_DIR, 'assets', 'css', 'site.css'), encoding='utf-8').read()
+    css += site_css[site_css.index('/* 떠 있는 "문의" 버튼'):site_css.index('/* 나타나기 효과')]
+    css += '#fab{--navy:#003960}\n'
     css += '.hm-brand{display:flex;align-items:center;gap:6px;flex-shrink:0}\n.nav-logo{gap:8px}.nav-logo img.lg-emb{width:auto;height:40px;border-radius:0;object-fit:contain}.nav-logo img.lg-word{width:auto;height:26px;border-radius:0}\n.hamburger.hm-all{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin-right:4px;color:var(--text)}\n.hamburger.hm-all svg{width:26px;height:26px}\n'
     swap('</body>', f'{drawer_html("", "home")}\n<style>{css}</style>\n<script src="assets/js/drawer.js?v={ver("assets/js/drawer.js")}" defer></script>\n</body>')
     return s
