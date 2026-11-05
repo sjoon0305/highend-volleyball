@@ -49,10 +49,10 @@ CHAT_ICON = ('<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentCol
 P = lambda **k: k  # noqa: E731
 PAGES = {
     'home': P(path='', crumb='HOME', title='상암·고양 프리미엄 배구 아카데미 하이앤드 | 국가대표·프로 출신 코치진의 배구 학원·배구교실',
-              desc='국가대표·프로 선수의 훈련 방식을 시스템으로 만든 프리미엄 배구 아카데미 하이앤드. 상암 인근 · 현천동 180-1, 국가대표·프로 출신 코치진이 초등학생부터 성인까지 가르칩니다. 원데이 클래스 25,000원, 문의 010-4463-1177'),
+              desc='국가대표·프로 선수의 훈련 방식을 시스템으로 만든 프리미엄 배구 아카데미 하이앤드. 상암 인근 · 현천동 180-1, 국가대표·프로 출신 코치진이 초등학생부터 성인까지 가르칩니다. 원데이 클래스는 네이버 예약, 문의 010-4463-1177'),
     # ABOUT US
-    'about': P(path='about/', crumb='ABOUT US', title='하이앤드 소개 | 상암·고양 프리미엄 배구 아카데미',
-               desc='가장 완벽한 기본, 그것이 우리가 말하는 하이앤드입니다. 국가대표·프로 선수의 훈련 방식을 시스템으로 만든 상암 인근 프리미엄 배구 아카데미(배구 학원·배구교실). 초등학생부터 성인까지, 원데이 25,000원 · 010-4463-1177',
+    'about': P(path='about/', crumb='ABOUT US', title='하이앤드 소개 | 국가대표·프로 출신 코치진의 프리미엄 배구아카데미 · 상암배구학원',
+               desc='국가대표·프로 선수의 훈련 방식을 시스템으로 만든 프리미엄 배구아카데미. 상암 인근에서 초등배구·성인배구·국제학교배구·배구개인레슨을 지도합니다.',
                banner=('ABOUT US', '하이앤드 소개', '가장 완벽한 기본, 그것이 우리가 말하는 하이앤드입니다'),
                cta='국가대표·프로 출신 코치진에게 배워 보세요'),
     'coaches': P(path='about/coaches/', crumb='코칭 스태프',
@@ -64,7 +64,7 @@ PAGES = {
                   banner=('FACILITY', '시설', '200평 풀코트에서 배웁니다'), bg='class-1'),
     # METHOD
     'method': P(path='method/', crumb='METHOD', title='알고 하면 쉬운 배구 | 하이앤드 코칭 시스템 · 프리미엄 배구 아카데미',
-                desc='이유를 알고 하는 반복이 몸을 바꿉니다. 국가대표·프로 선수의 훈련 방식을 시스템으로 만든 하이앤드 코칭 시스템: 몸 방향, 플랫폼, 왜 → 어떻게 → 해보기, 묻기 → 짚기 → 영상 확인, 운동일지 Today & Next Ball.',
+                desc='이유를 알고 하는 반복이 몸을 바꿉니다. 국가대표·프로 선수의 훈련 방식을 시스템으로 만든 하이앤드 코칭 시스템: 몸 방향, 플랫폼, Why ? → How ? → Play !, Ask → Point → Watch, 운동일지 Today & Next Ball.',
                 banner=('HIGH END COACHING SYSTEM', '알고 하면 쉬운 배구', '이유를 알고 하는 반복이 몸을 바꿉니다. 국가대표·프로 선수의 훈련 방식을 시스템으로 만든 하이앤드 코칭 시스템입니다.'),
                 cta='이유를 알면, 배구가 쉬워집니다'),
     'maps': P(path='method/maps/', crumb='MAPS 워밍업', title='MAPS 워밍업 | 안전하게 오래 하는 배구 준비 운동 · 하이앤드',
@@ -80,41 +80,41 @@ PAGES = {
                desc='하이앤드 성장 레벨 LV.1 입문 · LV.2 기본 · LV.3 심화 · LV.4 시합. 나이보다 지금 할 수 있는 동작을 기준으로 단계를 나누고, 단계마다 맞는 반을 안내합니다.',
                banner=('LEVEL', '4단계 성장 레벨', '지금 어디에 있는지, 다음에 무엇을 배우면 되는지 알 수 있습니다.'), cta='이유를 알면, 배구가 쉬워집니다'),
     # CLASS
-    'class': P(path='class/', crumb='CLASS', title='배구 클래스 안내 | 원데이 · 유소년 · 초급 · 중급 · 개인레슨 · 하이앤드',
-               desc='프리미엄 배구 학원 · 배구교실 하이앤드 클래스 전체 안내: 원데이 클래스 25,000원(오픈 이벤트 50% 할인가), 유소년반 · 초급반 · 중급반 80분 정규수업, 1:1 개인레슨, 국제학교 학생 배구 레슨. 상암 인근 · 현천동 180-1',
+    'class': P(path='class/', crumb='CLASS', title='클래스 안내 | 배구교실·배구레슨·배구개인레슨 · 하이앤드',
+               desc='상암배구학원 하이앤드 클래스 안내. 배구교실·배구레슨 원데이 클래스(정규 수업 그대로 체험), 유소년반(초등학생)·초급반·중급반 80분 정규수업, 배구개인레슨, 국제학교배구. 상암 인근 · 현천동 180-1',
                banner=('CLASS', '클래스 전체 안내', '나에게 맞는 수업을 골라 보세요'), bg='class-4', cta='어떤 반이 맞을지 모르겠다면',
                cta_sub='나이와 배구 경력, 가능한 시간을 남겨 주시면 맞는 반을 추천해 드립니다.'),
-    'oneday': P(path='class/oneday/', crumb='원데이 안내', title='배구 원데이 클래스 25,000원 | 하이앤드',
-                desc='배구 원데이 클래스 25,000원(오픈 이벤트 50% 할인가). 토요일 12:00 · 13:30 · 16:30, 정규 수업에 그대로 함께합니다. 정규 등록 시 원데이비 차감. 상암 인근 · 현천동 180-1',
+    'oneday': P(path='class/oneday/', crumb='원데이 클래스', tab=False, title='배구 원데이 클래스 | 상암배구학원 하이앤드',
+                desc='배구 배우는 곳을 찾는다면 배구원데이클래스로 시작하세요. 토요일 12:00 · 13:30 · 16:30 정규 수업에 그대로 함께하는 배구입문 체험 수업. 네이버 예약으로 신청, 정규 등록 시 원데이 비용 차감.',
                 banner=('ONE DAY CLASS', '원데이 클래스', '처음이라면, 실제 수업 그대로 경험해 보세요'), bg='class-5'),
-    'oneday-apply': P(path='class/oneday/apply/', crumb='원데이 신청', title='원데이 클래스 신청 | 네이버 예약 · 하이앤드',
-                      desc='하이앤드 배구 원데이 클래스 신청은 네이버 예약으로 받습니다. 25,000원, 토요일 12:00 · 13:30 · 16:30. 준비물: 실내 운동화, 물, 편한 운동복. 수업 10분 전 도착.',
+    'oneday-apply': P(path='class/oneday/apply/', crumb='원데이 신청', tab=False, title='원데이 클래스 신청 | 네이버 예약 · 하이앤드',
+                      desc='하이앤드 배구 원데이 클래스 신청은 네이버 예약으로 받습니다. 토요일 12:00 · 13:30 · 16:30 정규 수업에 그대로 함께합니다. 준비물: 실내 운동화, 물, 편한 운동복. 수업 10분 전 도착.',
                       banner=('APPLY', '원데이 클래스 신청', '네이버 예약으로 간편하게 신청하세요')),
     'oneday-reviews': P(path='class/oneday/reviews/', crumb='원데이 후기', hidden=True, title='원데이 클래스 후기 | 하이앤드',
                         desc='하이앤드 원데이 클래스 후기', banner=('REVIEW', '원데이 클래스 후기', '네이버 방문자 리뷰에서 확인하세요')),
-    'youth': P(path='class/regular/youth/', crumb='유소년반', title='유소년 배구교실 · 초등학생 배구 | 하이앤드 유소년반',
-               desc='초등학생 배구교실부터 학교 배구부 · 엘리트 진학 준비까지. 프리미엄 배구 아카데미 하이앤드 유소년반(초·중·고) 80분 정규수업. 국가대표·프로 출신 코치진이 바른 자세와 기본기를 처음부터 가르칩니다.',
-               banner=('YOUTH', '유소년반', '초등학생부터 중·고등학생까지, 처음부터 제대로'), bg='class-5'),
-    'beginner': P(path='class/regular/beginner/', crumb='초급반', title='배구 초급반 · 배구 처음 배우기 | 하이앤드',
-                  desc='배구를 처음 배우는 중학생 이상을 위한 하이앤드 초급반. 기초 기술 습득과 배구에 재미 붙이기, 80분 정규수업. 국가대표 · 프로 출신 코치진이 가르칩니다.',
+    'youth': P(path='class/regular/youth/', crumb='유소년반', title='유소년반 | 초등배구 · 어린이배구 · 유소년배구 (초등학생 대상)',
+               desc='초등배구·어린이배구를 찾는 학부모님께. 하이앤드 유소년반은 초등학생 대상 80분 정규수업(토요일 12:00)으로, 국가대표·프로 출신 코치진이 바른 자세와 기본기를 처음부터 가르치는 유소년배구 교실입니다.',
+               banner=('YOUTH', '유소년반', '초등학생, 처음부터 제대로'), bg='class-5'),
+    'beginner': P(path='class/regular/beginner/', crumb='초급반', title='초급반 | 중학생·성인 배구입문 레슨',
+                  desc='배구입문 레슨: 배구를 처음 배우는 중학생배구·성인배구 초급반. 패스·서브·리시브 기본기와 배구의 재미, 토요일 13:30 80분 정규수업. 국가대표·프로 출신 하이앤드 코치진이 가르칩니다.',
                   banner=('BEGINNER', '초급반', '중학생 이상, 배구를 처음 배우는 분'), bg='class-3'),
-    'intermediate': P(path='class/regular/intermediate/', crumb='중급반', title='배구 중급반 · 기술 향상 | 하이앤드',
-                      desc='중학생 이상, 배구 경력 6개월 이상을 위한 하이앤드 중급반. 볼 컨트롤 정밀화와 신체 정렬 코칭, 80분 정규수업. 국가대표 · 프로 출신 코치진이 가르칩니다.',
+    'intermediate': P(path='class/regular/intermediate/', crumb='중급반', title='중급반 | 배구동호회 준비 · 성인배구레슨',
+                      desc='배구 경력 6개월 이상 중학생·고등학생배구·성인배구 중급반. 배구동호회 활동을 준비하는 분께 볼 컨트롤 정밀화와 신체 정렬 코칭, 토요일 16:30 80분 정규수업.',
                       banner=('INTERMEDIATE', '중급반', '중학생 이상, 배구 경력 6개월 이상'), bg='class-4'),
     'regular-reviews': P(path='class/regular/reviews/', crumb='정규 후기', hidden=True, title='정규 클래스 후기 | 하이앤드',
                          desc='하이앤드 정규 클래스 후기', banner=('REVIEW', '정규 클래스 후기', '네이버 방문자 리뷰에서 확인하세요')),
-    'competition': P(path='class/team/competition/', crumb='시합반', title='배구 시합반 · 대회 준비 | 하이앤드 팀 클래스',
-                     desc='하이앤드 시합반: 연령별 대표팀 선발과 대회를 목표로 한 집중 코칭. 실전 경기 리딩, 경기 운영과 상황 판단, 팀 전술. 초등 고학년 · 중고등 · 성인, 상담으로 맞춤 진행.',
-                     banner=('TEAM CLASS', '시합반', '연령별 대표팀 선발과 대회를 목표로 한 집중 코칭')),
-    'club': P(path='class/group/club/', crumb='동호회 · 단체 레슨', title='배구 동호회 · 단체 레슨 | 하이앤드 단체 클래스',
-              desc='배구 동호회, 학교, 기관 단체 레슨은 인원과 목표에 맞춰 상담으로 진행합니다. 국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 상암 인근 하이앤드 발리볼 아카데미',
-              banner=('GROUP CLASS', '동호회 · 단체 레슨', '인원과 목표에 맞춰 상담으로 진행합니다')),
-    'private': P(path='class/private/', crumb='개인레슨', title='배구 개인레슨 1:1 | 국가대표·프로 출신 코치진 · 하이앤드',
-                 desc='프리미엄 배구 아카데미 하이앤드의 1:1 개인레슨 60분. 1회 25만 원, 10회 등록 시 회당 20만 원. 서브 · 리시브 · 스파이크 약점을 내 몸에 맞게 교정합니다. 상암 인근 하이앤드',
+    'competition': P(path='class/team/competition/', crumb='시합반', title='시합반 | U15·U18 유소년 배구클럽 · 엘리트배구',
+                     desc='배구선수반을 찾는다면 하이앤드 시합반. U15(13세 이상·중학생)·U18(16세 이상·고등학생) 연령별 대표팀 선발과 대회를 목표로 한 집중 코칭. 엘리트유소년배구 준비, 초등 고학년·성인은 상담으로 맞춤 진행.',
+                     banner=('COMPETITION CLASS', '시합반', 'U15 · U18 연령별 대표팀 선발과 대회를 목표로 한 집중 코칭')),
+    'team': P(path='class/team-class/', crumb='팀클래스', title='팀클래스 | 동호회·학교·기업 단체 배구 레슨 · 하이앤드',
+              desc='하이앤드 팀클래스: 배구동호회·학교스포츠클럽·기업 단체레슨을 주 1회 정기 수업으로 인원과 목표에 맞춰 진행합니다. 수강료는 카카오톡 상담으로 안내. 국가대표·프로 출신 하이앤드 코치진.',
+              banner=('TEAM CLASS', '팀클래스', '동호회 · 학교 · 기업 단체, 함께 배우는 배구')),
+    'private': P(path='class/private/', crumb='개인레슨', title='배구개인레슨 | 1:1 포지션별 원포인트 레슨',
+                 desc='배구개인레슨 60분 1회 25만 원(10회 등록 시 회당 20만 원). 포지션별 원포인트레슨으로 서브·리시브·스파이크타점교정·점프서브까지 내 몸에 맞게 교정합니다. 국가대표·프로 출신 하이앤드 코치진.',
                  banner=('PRIVATE LESSON', '1:1 개인레슨', '60분 동안 한 사람만 봅니다'), bg='class-6'),
-    'intl': P(path='class/international/', crumb='국제학교 · 해외 학생', title='국제학교 배구 레슨 · 해외 거주 학생 방학 배구 | 하이앤드',
-              desc='국제학교 · 외국인학교 학생과 방학마다 한국을 찾는 해외 거주 학생을 위한 배구 레슨. 익숙한 영어 배구 용어, 한 명 한 명 기본기 교정, 방학 단기 집중 레슨. 국가대표·프로 출신 하이앤드 코치진 지도',
-              banner=('INTERNATIONAL SCHOOL', '국제학교 · 해외 학생', 'Volleyball lessons for international school students')),
+    'intl': P(path='class/international/', crumb='INTERNATIONAL', title='국제학교배구 · 외국인학교배구 | 바시티 트라이아웃 준비',
+              desc='국제학교배구·외국인학교배구 레슨. 바시티(Varsity)·JV 대표팀 트라이아웃 준비, 방학 단기 집중 레슨, 익숙한 영어 배구 용어. Volleyball lesson Seoul for international school students. 국가대표·프로 출신 하이앤드 코치진.',
+              banner=('INTERNATIONAL SCHOOL', 'INTERNATIONAL', '국제학교 · 외국인학교 · 해외 학생'), en=None),
     'guide': P(path='class/guide/', crumb='수강 · 결제 안내', title='배구 수업 시간표 · 수강 · 결제 안내 | 하이앤드',
                desc='하이앤드 토요일 정규수업 시간표(유소년반 12:00 · 초급반 13:30 · 중급반 16:30, 80분)와 수업 일정 달력, 정규 수강권 · 결제 안내. 회원 로그인 후 수업 예약',
                banner=('SCHEDULE & PAYMENT', '수강 · 결제 안내', '시간표와 수업 일정, 수강권 · 결제 방법')),
@@ -128,6 +128,11 @@ PAGES = {
     'hiand': P(path='story/hiandday/', crumb='Hi : And Day', title='Hi : And Day | 프로배구 선수와 함께하는 배구 클래스 · 하이앤드 배구아카데미',
                desc='국가대표·프로배구 선수에게 직접 배우는 하이앤드 발리볼 아카데미의 특별 배구 클래스. 유소년·초등학생 배구교실부터 중·고등 배구까지, 아이의 배구선수 꿈이 시작되는 하루.',
                banner=('HI : AND DAY', 'Hi : And Day', '〔 프로 선수들과 함께하는 특별한 배구 경험 〕')),
+    'school': P(path='story/school-class/', crumb='국가대표가 찾아가는 배구교실',
+                title='국가대표가 찾아가는 배구교실 | 유소년 배구 저변 확대 배구교실 · 하이앤드',
+                desc='국가대표가 찾아가는 배구교실: 국가대표 출신 하이앤드 코치진이 학교 체육관을 찾아가 여는 유소년 배구 저변 확대 배구교실. 2026년 가재울중·등촌고·은평중에서 수업했습니다.',
+                banner=('SCHOOL VOLLEYBALL CLASS', '국가대표가 찾아가는 배구교실', '국가대표 출신 코치진이 학교로 찾아가는 배구교실'),
+                cta='우리 학교에도 찾아가는 배구교실을 신청해 보세요'),
     'note': P(path='story/note/', crumb='배구 노트', hidden=True, title='배구 노트 | 하이앤드',
               desc='하이앤드 배구 노트', banner=('VOLLEYBALL NOTE', '배구 노트', '하이앤드 코치진의 배구 이야기를 준비하고 있습니다')),
     # CONTACT
@@ -135,7 +140,7 @@ PAGES = {
                  desc='하이앤드 발리볼 아카데미 오시는 길: 상암 인근 · 현천동 180-1, 건물 앞 주차 가능. 네이버 지도 · 구글 지도, 토요일 정규수업. 문의 010-4463-1177',
                  banner=('LOCATION', '오시는 길', ADDR), cta='가까운 곳에서, 처음부터 제대로'),
     'local': P(path='sangam-volleyball-academy/', crumb='상암·은평·고양 배구학원', title='상암·은평·고양 배구학원 | 하이앤드 발리볼 아카데미',
-               desc='상암·은평·고양 프리미엄 배구 아카데미 하이앤드(배구 학원·배구교실). 상암 인근 · 현천동 180-1, 국가대표·프로 출신 코치진이 초등학생부터 성인까지 가르칩니다. 원데이 25,000원, 토요일 수업 · 010-4463-1177',
+               desc='상암·은평·고양 프리미엄 배구 아카데미 하이앤드(배구 학원·배구교실). 상암 인근 · 현천동 180-1, 국가대표·프로 출신 코치진이 초등학생부터 성인까지 가르칩니다. 원데이 클래스 네이버 예약, 토요일 수업 · 010-4463-1177',
                banner=('LOCAL VOLLEYBALL ACADEMY', '상암·은평·고양 배구학원', '가까운 곳에서 만나는 프리미엄 배구 아카데미'), bg='class-2-1200',
                cta='가까운 곳에서, 처음부터 제대로'),
     'faq': P(path='contact/faq/', crumb='자주 묻는 질문', title='자주 묻는 질문 | 배구학원 수강료 · 준비물 · 주차 · 하이앤드',
@@ -153,12 +158,11 @@ NAV = [
     ('about', 'ABOUT US', [('about', '하이앤드 소개'), ('coaches', '코칭 스태프'), ('facility', '시설')]),
     ('method', 'METHOD', [('method', '알고 하면 쉬운 배구'), ('maps', 'MAPS 워밍업'), ('correction', '정밀 교정'),
                           ('flow', '수업 80분 흐름'), ('level', '성장 레벨')]),
-    ('class', 'CLASS', [(None, '원데이클래스', [('oneday', '원데이클래스'), ('oneday-apply', '원데이클래스 신청'), ('oneday-reviews', '원데이클래스 후기')]),
-                        (None, '정규 클래스', [('youth', '유소년반'), ('beginner', '초급반'), ('intermediate', '중급반'), ('regular-reviews', '정규 클래스 후기')]),
-                        (None, '팀 클래스', [('competition', '시합반')]),
-                        (None, '단체 클래스', [('club', '동호회 · 단체 레슨'), ('intl', '국제학교 · 해외 학생')]),
+    ('class', 'CLASS', [(None, '원데이 클래스', [('oneday', '원데이클래스'), ('oneday-apply', '원데이클래스 신청'), ('oneday-reviews', '원데이클래스 후기')]),
+                        (None, '정규 클래스', [('youth', '유소년반'), ('beginner', '초급반'), ('intermediate', '중급반'), ('competition', '시합반'), ('team', '팀클래스'), ('regular-reviews', '정규 클래스 후기')]),
+                        ('intl', 'INTERNATIONAL'),
                         ('private', '개인레슨'), ('guide', '수강 · 결제 안내'), ('photos', '클래스 사진')]),
-    ('story', 'STORY', [('story', '수업 이야기'), ('hiand', 'Hi : And Day'), ('note', '배구 노트')]),
+    ('story', 'STORY', [('story', '수업 이야기'), ('hiand', 'Hi : And Day'), ('school', '국가대표가 찾아가는 배구교실'), ('note', '배구 노트')]),
     ('contact', 'CONTACT', [('contact', '오시는 길'), ('local', '상암·은평·고양 배구학원'), ('faq', '자주 묻는 질문'), ('ask', '상담하기')]),
 ]
 
@@ -172,10 +176,10 @@ def nav_items(subs):
     out = []
     for it in subs:
         if it[0] is None:
-            kids = [(k, t) for k, t in it[2] if shown(k)]
+            kids = [(k, t) for k, t in it[2] if shown(k) and PAGES[k].get('tab', True)]
             if kids:
                 out.append((None, it[1], kids))
-        elif shown(it[0]):
+        elif shown(it[0]) and PAGES[it[0]].get('tab', True):
             out.append(it)
     return out
 
@@ -247,7 +251,7 @@ def org_graph():
          'hasMap': GOOGLE_MAP,
          'openingHoursSpecification': [{'@type': 'OpeningHoursSpecification', 'dayOfWeek': 'https://schema.org/Saturday',
                                         'opens': '12:00', 'closes': '17:50'}],
-         'priceRange': '₩25,000~₩250,000', 'sameAs': SAME_AS, 'parentOrganization': {'@id': BASE + '#org'}},
+         'sameAs': SAME_AS, 'parentOrganization': {'@id': BASE + '#org'}},
     ]
 
 
@@ -266,8 +270,8 @@ def trail(key):
         subs = [g for g in NAV if g[0] == top][0][2]
         kids = [k for it in subs if it[0] is None and it[1] == group for k, _ in it[2] if shown(k)]
         out.append((group, kids[0] if kids else key))
-    if key != top:
-        out.append((PAGES[key]['crumb'], key))
+    if key != top and not (group and out[-1][1] == key and not PAGES[key].get('tab', True)):
+        out.append((PAGES[key]['crumb'], key))   # 탭에 안 보이는 묶음(원데이)의 첫 페이지는 묶음 이름과 겹치지 않게
     return out
 
 
@@ -307,6 +311,10 @@ def head(key, root, extra_ld):
                       'publisher': {'@id': BASE + '#org'}})
     robots = 'noindex,follow' if p.get('hidden') else 'index,follow,max-image-preview:large'
     canon = '' if key == 'notfound' else f'<link rel="canonical" href="{url(key)}">\n'
+    # 영어 페이지가 생기면 PAGES의 en='en/international/' 처럼 적어 두면 서로 연결됨 (hreflang)
+    if PAGES[key].get('en'):
+        canon += (f'<link rel="alternate" hreflang="ko" href="{url(key)}">\n'
+                  f'<link rel="alternate" hreflang="en" href="{BASE}{PAGES[key]["en"]}">\n')
     return f'''<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -361,7 +369,6 @@ def header(key, root):
     <a class="hd3-logo" href="{rel(root, 'home')}"><img class="lg-emb" src="{root}assets/img/logo-emblem.webp" alt="" width="36" height="40"><img class="lg-word" src="{root}assets/img/logo-text-white.webp" alt="HIGH END VOLLEYBALL ACADEMY 하이앤드 발리볼 아카데미" width="88" height="26"></a>
     <nav class="gnb3" aria-label="주요 메뉴">{"".join(g1)}</nav>
     <div class="hd3-act">
-      <a class="hd3-book" href="{rel(root, 'oneday-apply')}">원데이 예약</a>
       <a class="hd3-login" href="{root}dashboard.html" aria-label="회원 로그인">{USER_ICON}<span>로그인</span></a>
     </div>
   </div>
@@ -383,7 +390,7 @@ def drawer_html(root, key=''):
     <a class="drw-brand" href="{rel(root, 'home')}"><img src="{root}assets/img/logo-emblem.webp" alt="" width="64" height="70"><span>하이앤드</span></a>
     <a class="drw-top" href="{rel(root, 'home')}"{home_on}>HOME</a>
     {"".join(cols)}
-    <div class="drw-cta"><a href="{rel(root, 'oneday-apply')}">원데이 예약</a><a href="{root}dashboard.html">회원 로그인</a></div>
+    <div class="drw-cta"><a href="{root}dashboard.html">회원 로그인</a></div>
   </nav>
 </div>'''
 
@@ -503,6 +510,7 @@ def about_body(r):
     <h2 class="ai-title">가장 완벽한 기본</h2>
     <p class="ai-tag">프리미엄 배구 아카데미, 하이앤드</p>
     <p class="ai-p">하이앤드 발리볼 아카데미는 국가대표·프로 선수의 훈련 방식을 시스템으로 만든 프리미엄 배구 아카데미입니다.<br>처음 배구를 시작하는 <strong>초등학생부터</strong> 학교 배구부·엘리트를 준비하는 학생, <strong>취미로 배우는 성인까지</strong> 지금 실력에 맞는 단계에서 배웁니다.</p>
+    <p class="ai-p ai-why">서울배구학원과 배구아카데미를 알아보는 분들이 하이앤드를 찾는 이유는 하나입니다.<br><strong>국가대표·프로 출신 코치진이 처음부터 원리를 알려 주기 때문입니다.</strong></p>
     <p class="ai-p">200평 풀코트에서 <strong>MAPS 워밍업</strong>으로 몸을 준비하고, 줄 서서 기다리지 않고 모두가 동시에 움직이며, <strong>이유를 알고 하는 반복</strong>으로 기본기를 만듭니다.<br>원데이 클래스, 정규 클래스, 시합반, 1:1 개인레슨, 국제학교 학생 레슨까지 다양한 프로그램으로 배구의 즐거움을 전하고 있습니다.</p>
     <div class="pillars">
       <div class="pillar reveal"><b>01</b><span>안전하게 오래 하는 배구</span></div>
@@ -518,6 +526,7 @@ def about_body(r):
     <h2>"만약 내가 16살 때 올바른 방법으로 배구를 배웠더라면…"</h2>
     <p class="lead">하이앤드는 이 질문에서 시작했습니다. 16살, 그때 알았더라면 좋았을 배구를 가르칩니다.</p>
     <p class="note">헤드코치 김재휘 (국가대표 7년 · 프로(V리그) 10년, 선수 17년) · <a href="{rel(r, 'coaches')}">코칭 스태프 보기</a></p>
+    <p class="ai-give">수업 밖에서도 배구를 나눕니다.<br>2026년에는 가재울중·등촌고·은평중을 찾아가 배구교실을 열었습니다.<br><a href="{rel(r, 'school')}">국가대표가 찾아가는 배구교실 보기 →</a></p>
   </div>
 </section>
 <section class="sec alt">
@@ -531,7 +540,7 @@ def about_body(r):
     <h2>더 알아보기</h2>
     {linkcards(r, [('coaches', '코칭 스태프', '국가대표·프로 출신 하이앤드 코치진.', 'career'),
                    ('facility', '시설', '200평 풀코트, 건물 앞 주차 가능.', 'place'),
-                   ('method', '하이앤드 코칭 시스템', '알고 하면 쉬운 배구: 왜 → 어떻게 → 해보기.', ''),
+                   ('method', '하이앤드 코칭 시스템', '알고 하면 쉬운 배구, Why ? → How ? → Play !', ''),
                    ('class', '클래스 안내', '원데이 · 정규 · 시합반 · 개인레슨.', '')])}
   </div>
 </section>'''
@@ -601,9 +610,9 @@ def method_body(r):
   <div class="wrap">
     <p class="lead">같은 동작을 백 번 반복해도, 왜 하는지 모르면 몸은 쉽게 바뀌지 않습니다. 하이앤드는 <strong>이유를 알고 하는 반복</strong>으로 가르칩니다. 동작마다 이유를 말로 설명하고, 코치가 몸으로 직접 보여 줍니다.</p>
     <div class="grid3 mt">
-      <div class="card reveal"><div class="big-letter">왜</div><p style="margin-top:12px">오늘 배울 동작이 왜 필요한지, 몸이 어떻게 움직여야 하는지 먼저 이해합니다.</p></div>
-      <div class="card reveal"><div class="big-letter">어떻게</div><p style="margin-top:12px">한 사람씩 자세를 보고, 몸에 맞게 정밀하게 교정합니다.</p></div>
-      <div class="card reveal"><div class="big-letter">해보기</div><p style="margin-top:12px">배운 원리를 게임과 실전 상황에서 직접 써 봅니다.</p></div>
+      <div class="card reveal"><div class="big-letter lbl2">Why ?<small>왜 필요한지</small></div><p style="margin-top:12px">오늘 배울 동작이 왜 필요한지, 몸이 어떻게 움직여야 하는지 먼저 이해합니다.</p></div>
+      <div class="card reveal"><div class="big-letter lbl2">How ?<small>어떻게 움직이는지</small></div><p style="margin-top:12px">한 사람씩 자세를 보고, 몸에 맞게 정밀하게 교정합니다.</p></div>
+      <div class="card reveal"><div class="big-letter lbl2">Play !<small>직접 해 보기</small></div><p style="margin-top:12px">배운 원리를 게임과 실전 상황에서 직접 써 봅니다.</p></div>
     </div>
     <div class="principle reveal"><div class="t">하이앤드가 가장 먼저 가르치는 원리</div><p>몸 방향이 공에서 멀어지면, 플랫폼(두 팔로 만든 판)과 공을 보낼 곳이 몸에서 멀어집니다. 그러면 몸통의 힘이 공에 전달되기 어렵습니다. 리시브, 토스, 스파이크 모두 <strong>몸 방향</strong>에서 시작합니다.</p></div>
   </div>
@@ -613,9 +622,9 @@ def method_body(r):
     <h2>스스로 고칠 수 있는 선수</h2>
     <p class="lead">코치가 없을 때도 "방금 공이 왜 저쪽으로 갔는지" 스스로 알아차리는 것이 목표입니다. 그래서 교정할 때 세 가지를 함께 씁니다.</p>
     <div class="grid3 mt">
-      <div class="card reveal"><div class="big-letter">묻기</div><p style="margin-top:12px">"방금 어땠어요?" 수강생이 먼저 느낀 점을 말합니다.</p></div>
-      <div class="card reveal"><div class="big-letter">짚기</div><p style="margin-top:12px">코치가 원인과 고칠 점 하나를 짚어 줍니다.</p></div>
-      <div class="card reveal"><div class="big-letter">영상</div><p style="margin-top:12px">찍은 영상을 함께 보며 내 몸이 실제로 어떻게 움직였는지 확인합니다.</p></div>
+      <div class="card reveal"><div class="big-letter lbl2">Ask<small>먼저 묻기</small></div><p style="margin-top:12px">"방금 어땠어요?" 수강생이 먼저 느낀 점을 말합니다.</p></div>
+      <div class="card reveal"><div class="big-letter lbl2">Point<small>코치가 짚기</small></div><p style="margin-top:12px">코치가 원인과 고칠 점 하나를 짚어 줍니다.</p></div>
+      <div class="card reveal"><div class="big-letter lbl2">Watch<small>영상으로 확인</small></div><p style="margin-top:12px">찍은 영상을 함께 보며 내 몸이 실제로 어떻게 움직였는지 확인합니다.</p></div>
     </div>
     <div class="principle reveal"><div class="t">하이앤드 운동일지 "Today &amp; Next Ball"</div><p>국가대표·프로 선수들이 피드백을 기록하던 습관을 하이앤드 운동일지로 만들었습니다. 개인레슨과 시합반은 매 수업이 끝나면 오늘의 좋았던 순간, 배운 점, 고칠 점을 적고 <strong>다음 공(Next Ball)</strong>을 준비합니다.</p></div>
   </div>
@@ -624,8 +633,8 @@ def method_body(r):
   <div class="wrap">
     <h2>하이앤드 코칭 시스템을 이루는 것</h2>
     {linkcards(r, [('maps', 'MAPS 워밍업', '가동성 · 활성화 · 순발력 · 안정성. 안전하게 오래 하는 몸 만들기.', 'maps'),
-                   ('correction', '정밀 교정', '묻기 → 짚기 → 영상 확인. 리시브와 스파이크를 한 사람씩.', 'fix'),
-                   ('flow', '수업 80분 흐름', 'MAPS 워밍업 → 왜 → 어떻게 → 해보기.', 'flow'),
+                   ('correction', '정밀 교정', 'Ask → Point → Watch. 리시브와 스파이크를 한 사람씩.', 'fix'),
+                   ('flow', '수업 80분 흐름', 'MAPS 워밍업 → 왜? → 어떻게? → 해보기!', 'flow'),
                    ('level', '성장 레벨', 'LV.1~4. 지금 할 수 있는 동작을 기준으로.', 'level')])}
   </div>
 </section>'''
@@ -667,9 +676,9 @@ def flow_body(r):
   <div class="wrap">
     <ol class="steps">
       <li class="reveal"><div class="k">STEP 1</div><h2 class="t">MAPS 워밍업</h2><p>가동성 → 활성화 → 순발력 → 안정성. 안전하게 움직이는 몸 준비</p></li>
-      <li class="reveal"><div class="k">STEP 2</div><h2 class="t">왜: 원리 이해</h2><p>오늘 배울 동작과 그 이유를 짧게. 목표를 알고 연습해야 오래 남습니다</p></li>
-      <li class="reveal"><div class="k">STEP 3</div><h2 class="t">어떻게: 교정 반복</h2><p>처음엔 같은 동작을 반복하고, 익숙해지면 공의 방향 · 높이 · 순서를 바꿔 가며</p></li>
-      <li class="reveal"><div class="k">STEP 4</div><h2 class="t">해보기: 게임</h2><p>작은 게임에서 실전 게임으로. 배운 동작을 판단과 함께 써 봅니다</p></li>
+      <li class="reveal"><div class="k">STEP 2</div><h2 class="t">Why ? · 원리 이해</h2><p>오늘 배울 동작과 그 이유를 짧게. 목표를 알고 연습해야 오래 남습니다</p></li>
+      <li class="reveal"><div class="k">STEP 3</div><h2 class="t">How ? · 교정 반복</h2><p>처음엔 같은 동작을 반복하고, 익숙해지면 공의 방향 · 높이 · 순서를 바꿔 가며</p></li>
+      <li class="reveal"><div class="k">STEP 4</div><h2 class="t">Play ! · 게임</h2><p>작은 게임에서 실전 게임으로. 배운 동작을 판단과 함께 써 봅니다</p></li>
     </ol>
     <div class="grid3 mt">
       <div class="card reveal"><h2 class="t">매 수업 같은 순서</h2><p>토요일 정규수업은 매번 이 순서로 진행합니다.</p></div>
@@ -735,27 +744,31 @@ CAL_PANEL = '''<div class="sched-grid" id="schedGrid">
 
 
 def class_body(r):
-    cards = [('oneday', '0820-03', '원데이클래스', '처음이라면 · 25,000원', 'oneday'),
-             ('youth', 'class-5', '유소년반', '초·중·고 · 80분 정규수업', 'youth'),
-             ('beginner', 'class-3', '초급반', '중학생 이상 입문 · 80분', 'group'),
-             ('intermediate', 'class-4', '중급반', '중학생 이상 · 경력 6개월 이상', ''),
-             ('competition', 'class-6', '시합반', '팀 클래스 · 대회 준비', ''),
-             ('club', 'class-2', '동호회 · 단체 레슨', '단체 클래스 · 상담', ''),
-             ('intl', '0820-09', '국제학교 · 해외 학생', '방학 단기 집중 레슨', 'intl'),
-             ('private', '0820-04', '1:1 개인레슨', '60분 · 한 사람만 보는 수업', 'private'),
-             ('guide', 'class-1', '수강 · 결제 안내', '시간표 · 수업 일정 달력', 'schedule'),
-             ('photos', '0820-07', '클래스 사진', '토요일 수업 현장', '')]
+    # A안: 위 60% 수업 사진 / 아래 40% 남색 칸(반 이름 · 설명 · 자세히 보기)
+    cards = [('oneday', 'class-oneday', '원데이 클래스', '토요일 정규 수업에 그대로 함께 · 80분', 'oneday'),
+             ('youth', 'class-5', '유소년반', '초등학생 · 토요일 12:00 · 80분', 'youth'),
+             ('beginner', 'class-3', '초급반', '중학생 이상 입문 · 토요일 13:30', 'group'),
+             ('intermediate', 'class-4', '중급반', '중학생 이상 · 경력 6개월 이상 · 토요일 16:30', ''),
+             ('competition', 'class-6', '시합반', 'U15 중학생 · U18 고등학생 · 대회 준비', ''),
+             ('team', 'class-2', '팀클래스', '동호회 · 학교 · 기업 단체 · 주 1회', ''),
+             ('intl', '0820-09', 'INTERNATIONAL', '국제학교 · 외국인학교 · 방학 단기 집중', 'intl'),
+             ('private', '0820-04', '개인레슨', '60분 · 한 사람만 보는 수업', 'private')]
     out = []
     for key, im, t, d, aid in cards:
         a = f' id="{aid}"' if aid else ''
         ext = 'jpg' if im.startswith('0820') else 'webp'
-        out.append(f'<a class="ccard reveal"{a} href="{rel(r, key)}"><span class="ccard-img" style="background-image:url(\'{r}assets/img/{im}.{ext}\')" role="img" aria-label="{escape(t)} 수업 사진"></span><span class="ccard-txt"><b>{escape(t)}</b><span>{escape(d)}</span></span></a>')
+        out.append(f'<a class="ccard reveal"{a} href="{rel(r, key)}"><span class="ccard-img" style="background-image:url(\'{r}assets/img/{im}.{ext}\')" role="img" aria-label="{escape(t)} 수업 사진"></span>'
+                   f'<span class="ccard-txt"><b{" class=en" if t.isascii() else ""}>{escape(t)}</b><span>{escape(d)}</span><em>자세히 보기 →</em></span></a>')
     return f'''<section class="sec">
   <div class="wrap">
     <p class="lead">국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 처음이라면 원데이 클래스로, 실력과 나이에 맞춰 정규 클래스로 이어집니다.</p>
-    <div class="ccards mt">{"".join(out)}</div>
+    <h2 class="cgrp">정규 클래스</h2>
+    <div class="ccards">{"".join(out[:6])}</div>
+    <h2 class="cgrp">INTERNATIONAL · 개인레슨</h2>
+    <div class="ccards">{"".join(out[6:])}</div>
+    <div class="ccard-more"><a id="schedule" href="{rel(r, 'guide')}">수강 · 결제 안내 · 시간표 →</a><a href="{rel(r, 'photos')}">클래스 사진 →</a></div>
   </div>
-</section>'''
+</section>'''.replace('<section class="sec">', '<section class="sec sec-tight">', 1)
 
 
 def oneday_body(r):
@@ -763,12 +776,12 @@ def oneday_body(r):
   <div class="wrap">
     <div class="oneday">
       <div class="price-card reveal">
-        <span class="tag">오픈 이벤트 50% 할인가</span>
-        <div class="pr">25,000원</div>
+        <span class="tag">원데이 클래스</span>
+        <div class="pr pr-txt">토요일 정규 수업에 그대로 함께하는 체험 수업</div>
         <ul class="ticks">
           <li>토요일 12:00 · 13:30 · 16:30</li>
           <li>처음 배구를 하는 초등학생부터 성인까지</li>
-          <li>정규 등록 시 원데이 비용 25,000원 차감</li>
+          <li>네이버 예약으로 신청 · 정규 등록 시 원데이 비용 차감</li>
           <li>수업 시작 10분 전 도착 · 실내 운동화, 물, 편한 운동복</li>
         </ul>
         <a class="btn w" href="{rel(r, 'oneday-apply')}">원데이 클래스 신청</a>
@@ -777,7 +790,7 @@ def oneday_body(r):
         <div class="cta-card-icon" style="margin-bottom:10px">{SN['ticket']}</div>
         <h2 class="t">원데이 클래스에서 하는 것</h2>
         <p>원데이 클래스는 정규 수업에 그대로 함께합니다. 실제 수업을 그대로 경험해 보세요.</p>
-        <ol class="plain" style="margin-top:10px"><li>MAPS 워밍업</li><li>왜: 오늘 배울 동작의 원리</li><li>어떻게: 한 사람씩 정밀 교정</li><li>해보기: 게임</li></ol>
+        <ol class="plain" style="margin-top:10px"><li>MAPS 워밍업</li><li>Why ? 오늘 배울 동작의 원리</li><li>How ? 한 사람씩 정밀 교정</li><li>Play ! 게임</li></ol>
       </div>
     </div>
   </div>
@@ -789,16 +802,16 @@ def apply_body(r):
   <div class="wrap">
     <div class="apply reveal">
       <div class="apply-main">
-        <span class="tag">오픈 이벤트 50% 할인가</span>
-        <div class="pr">25,000원</div>
-        <p>토요일 12:00 · 13:30 · 16:30 중 원하시는 시간을 네이버 예약에서 골라 주세요.</p>
+        <span class="tag">원데이 클래스</span>
+        <div class="pr pr-txt">토요일 정규 수업에 그대로 함께하는 체험 수업</div>
+        <p>네이버 예약으로 신청해 주세요. 토요일 12:00 · 13:30 · 16:30 중 원하시는 시간을 네이버 예약에서 골라 주세요.</p>
         <a class="btn naverbook" href="{NAVER_BOOK}" target="_blank" rel="noopener">{SN['naverN']}네이버 예약으로 신청하기</a>
       </div>
       <ul class="apply-list">
         <li><b>준비물</b>실내 운동화, 물, 편한 운동복</li>
         <li><b>도착</b>수업 시작 10분 전까지 와 주세요</li>
         <li><b>주차</b>건물 앞 주차 가능</li>
-        <li><b>정규 등록</b>원데이 후 정규 수업을 등록하시면 원데이 비용 25,000원을 차감해 드립니다</li>
+        <li><b>정규 등록</b>원데이 후 정규 수업을 등록하시면 원데이 비용을 차감해 드립니다</li>
         <li><b>문의</b><a href="{KAKAO_CHAT}" target="_blank" rel="noopener">카카오톡 상담</a> · <a href="tel:01044631177">{PHONE}</a></li>
       </ul>
     </div>
@@ -816,8 +829,8 @@ def youth_body(r):
     <figure class="reveal">{img(r, 'class-5', '어린이 수강생들이 코치의 설명을 듣고 있는 유소년반 수업 장면', 1200, 1600)}</figure>
     <div class="reveal">
       <h2>초등학생 배구교실부터 엘리트 진학 준비까지</h2>
-      <p>바른 자세와 기본기를 처음부터 제대로 익힙니다. 초등학생 학부모님께는 "우리 아이가 제대로 배우고 있다"는 안심을, 중·고등학생에게는 "내 몸이 이해되는 순간"을 드리고 싶습니다.</p>
-      <ul class="ticks"><li>토요일 12:00 · 80분 정규수업</li><li>대상: 초·중·고</li><li>형제는 수강권을 함께 쓸 수 있습니다</li></ul>
+      <p>바른 자세와 기본기를 처음부터 제대로 익힙니다. 학부모님께 "우리 아이가 제대로 배우고 있다"는 안심을 드리고 싶습니다.</p>
+      <ul class="ticks"><li>토요일 12:00 · 80분 정규수업</li><li>대상: 초등학생</li><li>형제는 수강권을 함께 쓸 수 있습니다</li></ul>
       <div class="btns">{go(r, 'oneday-apply', '원데이 클래스로 시작', 'p')}{go(r, 'level', '성장 레벨 보기')}</div>
     </div>
   </div>
@@ -860,23 +873,39 @@ def competition_body(r):
       <h2>실전에서 흔들리지 않는 판단</h2>
       <p>연령별 대표팀 선발과 대회를 목표로 하는 학생과 성인을 위한 반입니다. 하이앤드 코치진이 국가대표와 V리그에서 경험한 팀 시스템을 쉬운 말로 풀어, 왜 그 자리에 서야 하는지부터 이해하게 합니다.</p>
       <ul class="ticks"><li>실전 경기 리딩 능력 훈련</li><li>실제 경기 수준의 기술과 전략 적용</li><li>경기 운영 능력과 상황 판단력 강화</li><li>팀워크 · 팀 전술 완성</li></ul>
-      <p class="note">대상: 초등 고학년, 중·고등학생, 성인 · 수업 시간과 구성은 별도 상담으로 맞춰 드립니다.</p>
+      <dl class="hd-info cm-age">
+        <div><dt>U15</dt><dd>13세 이상 · 중학생</dd></div>
+        <div><dt>U18</dt><dd>16세 이상 · 고등학생</dd></div>
+        <div><dt>그 밖에</dt><dd>초등 고학년 · 성인은 상담으로 맞춰 드립니다</dd></div>
+      </dl>
+      <p class="note">수업 시간과 구성은 별도 상담으로 맞춰 드립니다.</p>
       <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡으로 상담</a>{go(r, 'level', '4단계 성장 레벨 보기')}</div>
     </div>
   </div>
 </section>'''
 
 
-def club_body(r):
+def team_body(r):
     return f'''<section class="sec">
   <div class="wrap split rev">
     <figure class="reveal">{img(r, 'class-2', '함께 수업을 마친 하이앤드 수강생 단체 사진', 1600, 1200)}</figure>
     <div class="reveal">
-      <h2>함께 배우는 배구</h2>
-      <p>배구 동호회, 학교, 기관 단체 레슨은 인원과 목표에 맞춰 상담으로 진행합니다. 국가대표·프로 출신 하이앤드 코치진이 기본기부터 팀 전술까지 가르칩니다.</p>
-      <ul class="ticks"><li>배구 동호회 단체 레슨</li><li>학교 · 기관 배구 수업 (상담)</li><li>지역 학교 배구 수업 진행 중</li></ul>
-      <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}단체 레슨 문의</a>{go(r, 'intl', '국제학교 · 해외 학생')}</div>
+      <h2>함께 배우는 팀클래스</h2>
+      <p>같은 동호회, 같은 학교, 같은 회사 사람들이 한 팀으로 배우는 수업입니다. 인원과 목표에 맞춰 주 1회 정기 수업으로 진행합니다. 국가대표·프로 출신 하이앤드 코치진이 기본기부터 팀 전술까지 가르칩니다.</p>
+      <ul class="ticks"><li>주 1회 정기 수업 · 1시간 30분</li><li>일정 · 인원 · 수업 장소는 상담으로 맞춰 드립니다</li><li>수강료는 카카오톡 상담으로 안내드립니다</li></ul>
+      <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡 상담</a></div>
     </div>
+  </div>
+</section>
+<section class="sec alt">
+  <div class="wrap">
+    <h2>이런 팀이 함께 배웁니다</h2>
+    <div class="grid3 mt">
+      <div class="card reveal"><h3 class="t">배구 동호회</h3><p>동호회 활동을 시작하거나, 팀의 기본기와 포지션 역할을 다시 다지고 싶은 모임.</p></div>
+      <div class="card reveal"><h3 class="t">학교 · 학교스포츠클럽</h3><p>체육 시간, 방과후, 학교스포츠클럽 배구 수업. 2026년에는 <a href="{rel(r, 'school')}">국가대표가 찾아가는 배구교실</a>(가재울중 · 등촌고 · 은평중)도 열었습니다.</p></div>
+      <div class="card reveal"><h3 class="t">기업 · 단체</h3><p>회사 동호회, 기관 단체 수업. 처음 배구를 하는 사람도 함께할 수 있게 수준에 맞춰 나눠서 지도합니다.</p></div>
+    </div>
+    <div class="btns">{go(r, 'intl', 'INTERNATIONAL 국제학교 레슨')}{go(r, 'competition', '시합반 보기')}</div>
   </div>
 </section>'''
 
@@ -900,11 +929,29 @@ def intl_body(r):
   <div class="wrap">
     <h2>국제학교 · 해외 거주 학생 배구 레슨</h2>
     <p class="lead">국제학교 · 외국인학교 학생과, 방학마다 한국을 찾는 해외 거주 학생도 함께 배웁니다. 국가대표·프로 출신 하이앤드 코치진이 지도합니다.</p>
-    <p class="intl-en" lang="en">Volleyball lessons for international school students and families visiting Korea during school breaks, coached by HIGH END's former Korean national team and professional players.</p>
+    <p class="intl-en" lang="en">HIGH END Volleyball Academy offers volleyball lessons in Seoul for international and foreign school students (students from YISS, SFS, Dwight School Seoul, SIS, KIS, SPPS and Cheongna Dalton School have trained with us) — private lessons, school-break intensive training, and Varsity / JV tryout preparation, coached by former Korean national team and professional players. Located near Sangam (Hyeoncheon-dong 180-1).</p>
     <div class="intl-grid mt">
       <div class="intl-card reveal"><span class="n">01</span><h3>익숙한 배구 용어로</h3><p>Underpass · Set · Spike · Serve. 해외 학교와 클럽에서 쓰던 용어를 함께 써서, 영어가 편한 아이들도 자연스럽게 적응합니다. 영어 수업이 아니라 익숙한 용어로 몸의 움직임을 이해하는 데 초점을 둡니다.</p></div>
       <div class="intl-card reveal"><span class="n">02</span><h3>한 명 한 명, 기본기 교정</h3><p>팀 훈련과는 별개로 리시브할 때 발의 위치, 공을 맞히는 팔의 각도, 스파이크를 위한 몸의 움직임을 세밀하게 교정합니다. 작아 보이는 차이가 쌓여 실력의 차이가 됩니다.</p></div>
       <div class="intl-card reveal"><span class="n">03</span><h3>방학마다 이어지는 성장</h3><p>첫 방학에는 기본기, 다음 방학에는 기술 향상, 그다음에는 실전. 매번 처음부터 다시 시작하지 않고 지난 훈련을 다음 방학으로 이어갑니다.</p></div>
+    </div>
+    <div class="intl-more mt">
+      <div class="intl-box reveal">
+        <h2>바시티(Varsity) · JV 팀 트라이아웃 준비</h2>
+        <p>국제학교·외국인학교 배구팀 트라이아웃은 짧은 시간 안에 기본기와 포지션 역할을 보여 줘야 합니다.</p>
+        <p>하이앤드는 트라이아웃 전에 리시브·토스·서브를 다시 점검하고, 포지션에 맞는 움직임을 개인레슨으로 준비합니다.</p>
+        <p>국제학교·외국인학교 배구팀은 시즌마다 트라이아웃으로 선수를 뽑습니다.<br>바시티 팀에 들어가면 학교 대표로 경기에 나설 수 있어,<br>트라이아웃 전에 미리 준비하는 것이 중요합니다.</p>
+        <p>트라이아웃까지 남은 시간은 길지 않은 경우가 많습니다.<br>하이앤드는 국가대표·프로 선수의 훈련 방식을 바탕으로,<br>포지션에 꼭 필요한 기술부터 우선순위를 정해 집중해서 준비합니다.</p>
+        <ul class="ticks intl-ticks"><li>지금 실력을 먼저 확인하고, 트라이아웃에서 보는 리시브·토스·서브부터 점검</li><li>동작마다 이유를 설명하고 영상으로 함께 확인해 스스로 고칠 수 있게</li><li>1:1 개인레슨으로 포지션에 맞는 움직임을 반복</li></ul>
+      </div>
+      <div class="intl-box reveal">
+        <h2>하이앤드에서 배운 학생들의 학교</h2>
+        <ul class="intl-schools">
+          <li>서울용산국제학교 (YISS)</li><li>서울외국인학교 (SFS)</li><li>드와이트 외국인학교 (Dwight School Seoul)</li><li>서울국제학교 (SIS)</li>
+          <li>한국외국인학교 (KIS)</li><li>세인트폴 서울 (SPPS)</li><li>청라달튼외국인학교 (CDS)</li>
+        </ul>
+        <p>학교마다 시즌과 팀 구성이 달라, 다니는 학교에 맞춰 준비합니다.</p>
+      </div>
     </div>
     <p class="note">방학 단기 집중 레슨 · 캠프 일정과 학교 배구팀 트라이아웃 준비는 상담으로 맞춰 드립니다. 국제학교 학생과 한국 학생이 함께하는 유소년반 수업도 있습니다.</p>
   </div>
@@ -919,7 +966,7 @@ def guide_body(r):
       <caption class="skip">하이앤드 토요일 정규 수업 시간표</caption>
       <thead><tr><th scope="col">토요일</th><th scope="col">수업</th><th scope="col">대상</th><th scope="col">원데이</th></tr></thead>
       <tbody>
-        <tr><td>12:00</td><td><a href="{rel(r, 'youth')}">유소년반</a> (80분)</td><td>초·중·고</td><td>가능</td></tr>
+        <tr><td>12:00</td><td><a href="{rel(r, 'youth')}">유소년반</a> (80분)</td><td>초등학생</td><td>가능</td></tr>
         <tr><td>13:30</td><td><a href="{rel(r, 'beginner')}">초급반</a> (80분)</td><td>중학생 이상 · 입문</td><td>가능</td></tr>
         <tr><td>16:30</td><td><a href="{rel(r, 'intermediate')}">중급반</a> (80분)</td><td>중학생 이상 · 경력 6개월 이상</td><td>가능</td></tr>
       </tbody>
@@ -1118,6 +1165,88 @@ def hiand_body(r):
 
 
 
+# ════════════════════════ 본문: 국가대표가 찾아가는 배구교실 ════════════════════════
+SCHOOL_VISITS = [
+    ('2026.07.21', '등촌고등학교', '서울 강서구', 'deungchon'),
+    ('2026.07.21', '은평중학교', '서울 은평구', 'eunpyeong'),
+    ('2026.08.28', '가재울중학교', '서울 서대문구', 'gajaeul'),
+]
+SCHOOL_ALTS = {
+    'deungchon': ['등촌고등학교 국가대표가 찾아가는 배구교실: 체육관 코트에서 공을 주고받으며 연습하는 학생들',
+                  '등촌고등학교 국가대표가 찾아가는 배구교실: 넓은 체육관에서 짝을 지어 패스를 연습하는 학생들'],
+    'eunpyeong': ['은평중학교 국가대표가 찾아가는 배구교실: 배구공을 앞에 두고 자세를 배우는 학생들',
+                  '은평중학교 국가대표가 찾아가는 배구교실: 체육관에서 서브와 패스를 연습하는 학생들'],
+    'gajaeul': ['가재울중학교 국가대표가 찾아가는 배구교실: 배구부 학생들과 함께한 체육관 수업',
+                '가재울중학교 국가대표가 찾아가는 배구교실: 네트 앞에서 랠리를 연습하는 학생들'],
+}
+
+
+def school_body(r):
+    rows = ''.join(f'<tr><td>{d}</td><td>{n}</td><td>{a}</td></tr>' for d, n, a, _ in SCHOOL_VISITS)
+    gal = ''
+    for d, n, a, k in SCHOOL_VISITS:
+        figs = ''.join(f'<figure class="sc-ph reveal">{img(r, f"school-{k}-{i + 1}", SCHOOL_ALTS[k][i], 1600, 1200)}</figure>' for i in range(2))
+        gal += f'<div class="sc-school"><h3>{n} <span>{d} · {a}</span></h3><div class="sc-grid">{figs}</div></div>'
+    return f'''<section class="hd-sec sec hd-top">
+  <div class="wrap">
+    <figure class="hd-banner">{img(r, 'school-main-banner', '국가대표가 찾아가는 배구교실 가재울중학교 단체 사진', 1200, 600, lazy=False)}</figure>
+  </div>
+  <div class="wrap hd-narrow">
+    <p class="lead center hd-lead">배구를 좋아하는 아이들이 더 많아지면 좋겠다는 마음으로,<br>하이앤드 코치진이 학교 체육관을 직접 찾아갑니다.</p>
+  </div>
+</section>
+<section class="hd-sec sec alt">
+  <div class="wrap hd-narrow">
+    <h2>왜 학교로 찾아가나요</h2>
+    <p>배구는 축구나 농구보다 처음 접할 기회가 적은 운동입니다.<br>학교에 공과 네트는 있어도,<br>기본기를 처음부터 제대로 알려 줄 사람을 만나기는 쉽지 않습니다.</p>
+    <p>처음 배우는 순간이 가장 중요합니다.<br>그때 생긴 습관이 몇 년이 지나도 몸에 남기 때문입니다.<br>하이앤드가 "만약 내가 16살 때 올바른 방법으로 배구를 배웠더라면"이라는 질문에서 시작한 것도 같은 이유입니다.</p>
+    <p>유소년 배구의 저변을 넓히는 일은<br>배구를 먼저 해 본 사람이 해야 할 일이라고 생각합니다.<br>국가대표와 프로 코트에서 배운 것을<br>이제 막 배구를 시작하는 아이들에게 돌려주고 싶습니다.</p>
+  </div>
+</section>
+<section class="hd-sec sec">
+  <div class="wrap hd-narrow">
+    <h2>배구를 좋아하는 아이가 많아지면</h2>
+    <p>배구를 한 번 제대로 경험한 아이는<br>학교스포츠클럽에서, 동네 체육관에서, 다시 공을 찾습니다.<br>그렇게 배구를 즐기는 아이가 많아질수록<br>학교 배구부와 지역 클럽이 살아나고,<br>그 안에서 다음 세대 선수도 자랍니다.</p>
+    <p>하이앤드의 꿈은<br>상암과 고양의 아이들이 처음부터 원리를 알고 배구를 배우는 동네를 만드는 것입니다.<br>찾아가는 배구교실은 그 꿈을 학교 체육관에서부터 시작하는 일입니다.</p>
+  </div>
+</section>
+<section class="hd-sec sec alt">
+  <div class="wrap">
+    <h2>2026년 찾아간 학교</h2>
+    <div class="tbl-wrap sc-tbl"><table class="tbl">
+      <caption class="skip">2026년 국가대표가 찾아가는 배구교실 학교 목록</caption>
+      <thead><tr><th scope="col">날짜</th><th scope="col">학교</th><th scope="col">지역</th></tr></thead>
+      <tbody>{rows}</tbody>
+    </table></div>
+    {gal}
+  </div>
+</section>
+<section class="hd-sec sec">
+  <div class="wrap hd-narrow">
+    <h2>이렇게 수업합니다</h2>
+    <p>하이앤드 정규 수업과 같은 순서로 진행합니다.</p>
+    <p>워밍업으로 몸을 준비하고,<br>왜 그렇게 움직이는지 먼저 이야기한 뒤,<br>어떻게 하는지 코치가 몸으로 보여 주고,<br>마지막에는 다 같이 해 봅니다.</p>
+    <p>처음 배구공을 만져 보는 학생도<br>학교 배구부·스포츠클럽 학생도 함께할 수 있도록<br>수준에 맞춰 나눠서 지도합니다.</p>
+  </div>
+</section>
+<section class="hd-sec sec alt">
+  <div class="wrap hd-narrow">
+    <h2>우리 학교에도 와 주실 수 있나요?</h2>
+    <p>학교 체육 시간, 방과후, 학교스포츠클럽 수업으로<br>찾아가는 배구교실을 신청하실 수 있습니다.</p>
+    <p>일정과 인원을 카카오톡 채널로 남겨 주시면<br>확인 후 안내드리겠습니다.</p>
+    <div class="hd-news"><a class="hp-btn" href="{KAKAO_CHAT}" target="_blank" rel="noopener">카카오톡 상담 →</a></div>
+  </div>
+</section>
+<section class="hd-sec sec">
+  <div class="wrap hd-narrow">
+    <h2>서울 서북권 · 고양에서 배구를 찾고 계신다면</h2>
+    <p>하이앤드 발리볼 아카데미 상암점은 상암배구, 상암배구학원을 찾는 분들뿐 아니라<br>수색배구, DMC배구, 은평배구, 서대문배구, 마포배구, 강서배구,<br>고양배구, 행신배구, 향동배구, 덕은배구, 창릉배구, 도래울배구, 삼송배구를<br>알아보시는 분들도 찾아오고 있습니다.</p>
+    <p>유소년 배구교실부터 배구개인레슨, 성인 배구, 국제학교배구까지<br>수준과 목적에 맞춰 수업합니다.</p>
+  </div>
+</section>'''
+
+
+
 # ════════════════════════ 본문: STORY ════════════════════════
 def story_body(r):
     return f'''<section class="sec">
@@ -1131,6 +1260,13 @@ def story_body(r):
     </div>
     <div class="mt" id="gallery">{linkcards(r, [('photos', '수업 사진', '토요일 수업 현장 사진을 모았습니다.', ''), ('class', '클래스 안내', '원데이 · 유소년반 · 초급반 · 중급반 · 개인레슨.', '')])}</div>
   </div>
+</section>
+<section class="hd-sec sec">
+  <div class="wrap hd-narrow">
+    <h2>서울 서북권 · 고양에서 배구를 찾고 계신다면</h2>
+    <p>하이앤드 발리볼 아카데미 상암점은 상암배구, 상암배구학원을 찾는 분들뿐 아니라<br>수색배구, DMC배구, 은평배구, 서대문배구, 마포배구, 강서배구,<br>고양배구, 행신배구, 향동배구, 덕은배구, 창릉배구, 도래울배구, 삼송배구를<br>알아보시는 분들도 찾아오고 있습니다.</p>
+    <p>유소년 배구교실부터 배구개인레슨, 성인 배구, 국제학교배구까지<br>수준과 목적에 맞춰 수업합니다.</p>
+  </div>
 </section>'''
 
 
@@ -1140,23 +1276,75 @@ def soon_body(r):
 
 # ════════════════════════ 본문: CONTACT ════════════════════════
 CONTACT_FAQ = [
-    ('배구를 처음 하는 초등학생도 배울 수 있나요?', '네. 유소년반은 처음 배우는 초등학생부터 시작합니다. 먼저 원데이 클래스(25,000원)로 수업을 경험해 보실 수 있습니다.'),
-    ('누가 가르치나요?', '국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 헤드코치 김재휘(국가대표 7년 · 프로(V리그) 10년, 선수 17년)는 FIVB 코치 레벨1, 전문스포츠지도사 2급(배구) 자격이 있습니다.'),
-    ('수업은 언제 있나요?', '매주 토요일 12:00 유소년반, 13:30 초급반, 16:30 중급반이 있고 각 80분입니다. 개인레슨(60분)은 따로 예약합니다.'),
-    ('수강료는 얼마인가요?', '원데이 클래스는 25,000원(오픈 이벤트 50% 할인가)입니다. 개인레슨은 1회 25만 원, 10회 등록 시 회당 20만 원입니다. 정규 수강권은 카카오톡 상담으로 안내드립니다.'),
-    ('준비물은 무엇인가요?', '실내 운동화, 물, 편한 운동복을 준비해 주세요. 수업 시작 10분 전까지 도착해 주세요.'),
-    ('주차할 수 있나요?', '건물 앞에 주차할 수 있습니다.'),
-    ('원데이 클래스 후 정규 등록하면 어떻게 되나요?', '정규 수업을 등록하시면 원데이 비용 25,000원을 차감해 드립니다.'),
+    ('서울에서 배구학원을 찾고 있는데, 하이앤드는 어떤 곳인가요?', '하이앤드 발리볼 아카데미는 국가대표·프로 선수의 훈련 방식을 시스템으로 만든 프리미엄 배구아카데미입니다. 국가대표·프로 출신 하이앤드 코치진이 초등학생부터 성인까지 가르치고, 상암 인근 · 현천동 180-1에 있습니다.'),
+    ('배구아카데미 수업은 어떤 순서로 진행되나요?', '정규 수업은 매번 MAPS 워밍업 → 왜 → 어떻게 → 해보기(게임) 순서로 진행합니다. 줄 서서 기다리지 않고 모두 동시에 움직이는 훈련이라 공을 만지는 시간이 많습니다.'),
+    ('배구레슨 반과 시간은 어떻게 되나요?', '토요일 정규 수업은 80분이며 유소년반(초등학생) 12:00, 초급반(중학생 이상 입문) 13:30, 중급반(중학생 이상, 경력 6개월 이상) 16:30입니다. 평일 반은 4명 이상 모이면 개설하고, 1:1 개인레슨은 따로 시간을 맞춰 드립니다.'),
+    ('배구학원 수강료와 결제는 어떻게 하나요?', '원데이 클래스 금액과 일정은 네이버 예약에서 확인하실 수 있고, 개인레슨은 60분 1회 25만 원(10회 등록 시 회당 20만 원)입니다. 정규 수강권은 카카오톡 상담으로 안내드리며, 결제는 계좌이체 · 현금 · 카드 모두 가능합니다.'),
+    ('처음 배구레슨을 받을 때 무엇을 준비하나요?', '실내 운동화, 물, 편한 운동복을 준비하시고 수업 시작 10분 전까지 와 주세요. 처음이라면 원데이 클래스(네이버 예약)로 시작하시고, 정규 수업을 등록하시면 원데이 비용을 차감해 드립니다.'),
+    ('서울배구학원을 찾는데 어느 지역에서 다니기 좋나요?', '상암 인근 · 현천동 180-1에 있어 상암·수색·DMC·은평·서대문·마포와 고양(덕양구·향동·덕은·행신·도래울·창릉)에서 오기 좋습니다. 건물 앞 주차가 가능합니다.'),
+    ('하이앤드 코치는 누구인가요?', '국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 헤드코치 김재휘는 국가대표 7년(2016~2022) · 프로(V리그) 10년, 선수 17년 경력에 2018 아시안게임 은메달, V리그 우승 4회, FIVB 코치 레벨1, 전문스포츠지도사 2급(배구) 자격이 있습니다.'),
     ('형제가 함께 다녀도 되나요?', '네. 형제는 모든 수강권을 함께 나눠 쓸 수 있습니다.'),
-    ('결제는 어떻게 하나요?', '원데이 클래스는 네이버 예약으로 신청하고, 그 밖의 수강료는 계좌이체 · 현금 · 카드 모두 가능합니다.'),
-    ('국제학교 학생도 배울 수 있나요?', '네. 국제학교 · 외국인학교 학생과 방학마다 한국을 찾는 해외 거주 학생도 함께 배웁니다. 익숙한 영어 배구 용어를 함께 쓰고, 방학 단기 집중 레슨은 상담으로 일정을 맞춰 드립니다.'),
 ]
+# 클래스 페이지별 자주 묻는 질문 (답이 None이면 대표 확인 전이라 싣지 않음)
+CLASS_FAQ = {
+    'youth': [
+        ('초등학생 운동으로 배구를 시작해도 괜찮을까요?', '네. 하이앤드 유소년반은 초등학생 대상 토요일 12:00, 80분 정규수업입니다. MAPS 워밍업으로 몸을 준비한 뒤 왜 → 어떻게 → 해보기(게임) 순서로, 줄 서서 기다리지 않고 모두 함께 움직이며 배웁니다. 처음이라면 원데이 클래스(네이버 예약)로 먼저 경험해 보세요. 초등학생운동으로 배구를 고민하신다면 원데이 클래스로 먼저 경험해 보세요.'),
+        ('배구가 키 크는 운동에 도움이 되나요?', '배구는 점프와 전신을 함께 쓰는 운동이라 성장기 아이들이 즐겁게 몸을 쓰기 좋습니다. 다만 키 성장은 사람마다 다릅니다. 하이앤드는 MAPS 워밍업으로 몸을 먼저 준비해 안전하게 오래 하는 배구를 가르칩니다. 키크는운동을 찾으신다면, 아이가 즐겁고 꾸준하게 할 수 있는 운동인지가 가장 중요합니다.'),
+        ('유소년 배구는 몇 살부터 배울 수 있나요?', None),
+    ],
+    'beginner': [
+        ('중학생이 처음 배구를 배워도 되나요?', '네. 초급반은 배구를 처음 배우는 중학생 이상을 위한 토요일 13:30, 80분 정규수업입니다. 패스 · 서브 · 리시브 기본기를 왜 그렇게 움직이는지부터 이해하며 익힙니다. 중학생운동, 중등배구를 처음 시작하는 학생도 기본기부터 차근차근 배웁니다.'),
+        ('취미로 배구를 처음 시작해도 괜찮을까요?', '네. 성인도 초급반에서 처음부터 배울 수 있습니다. 국가대표·프로 출신 하이앤드 코치진이 동작마다 이유를 설명하고 몸으로 보여 줍니다. 처음이라면 원데이 클래스(네이버 예약)로 실제 수업을 먼저 경험해 보세요. 취미배구를 처음 시작하는 성인에게도 맞는 수업입니다.'),
+    ],
+    'intermediate': [
+        ('배구를 조금 해 봤는데 어느 반이 맞나요?', '중학생 이상이고 배구 경력이 6개월 이상이면 중급반(토요일 16:30, 80분)이 맞습니다. 경력이 그보다 짧거나 기본기를 처음부터 다지고 싶다면 초급반(토요일 13:30)을 권합니다. 어느 반이 맞을지 모르겠다면 카카오톡으로 상담해 주세요.'),
+        ('배구교실과 배구학원 수업은 무엇이 다른가요?', '이름보다 수업 방식이 중요합니다. 하이앤드는 정규 수업마다 MAPS 워밍업 → 왜 → 어떻게 → 해보기(게임) 순서로 진행하고, 줄 서서 기다리지 않고 모두 동시에 움직이는 훈련을 합니다. 국가대표·프로 출신 하이앤드 코치진이 이유를 알고 하는 반복으로 기본기를 만듭니다.'),
+    ],
+    'competition': [
+        ('대회에 나가고 싶은 중·고등학생도 배울 수 있나요?', '네. 시합반은 U15(13세 이상) · U18(16세 이상) 연령별 대표팀 선발과 대회를 목표로 한 반입니다. 수업 시간과 구성은 카카오톡 상담으로 맞춰 드립니다.'),
+        ('시합반은 어떤 훈련을 하나요?', '6인제 실전 훈련을 중심으로 경기 리딩, 상황 판단, 팀 전술을 익힙니다. 하이앤드 코치진이 국가대표와 V리그에서 경험한 팀 시스템을 쉬운 말로 풀어, 왜 그 자리에 서야 하는지부터 이해하게 합니다.'),
+    ],
+    'team': [
+        ('배구동호회 팀 단위로 배울 수 있나요?', '네. 팀클래스는 배구동호회처럼 한 팀이 함께 배우는 주 1회 정기 수업입니다. 인원과 목표에 맞춰 진행하고, 수강료와 일정은 카카오톡 상담으로 안내드립니다.'),
+        ('배구클럽이나 학교·회사 팀도 수업이 가능한가요?', '네. 배구클럽, 학교 · 학교스포츠클럽, 기업 단체 모두 팀클래스로 수업할 수 있습니다. 처음 배구를 하는 사람도 함께할 수 있게 수준에 맞춰 나눠서 지도합니다.'),
+        ('함께 배구할 사람들을 만날 수 있나요?', '팀클래스에서는 같은 팀이 한 주에 한 번 함께 배웁니다. 또 하이앤드 수강생이 함께하는 행사 Hi : And Day에서 국가대표 출신 · 현역 프로 선수들과 함께 배구를 경험할 수 있습니다.'),
+    ],
+    'private': [
+        ('배구 개인레슨은 어떻게 진행되나요?', '1:1 개인레슨은 60분 동안 코치가 한 사람만 봅니다. 지금 실력을 확인하고 서브 · 리시브 · 스파이크 등 약점을 영상으로 함께 확인하며 교정합니다. 1회 25만 원, 10회 등록 시 회당 20만 원입니다.'),
+        ('짧은 기간에 집중해서 배구레슨을 받을 수 있나요?', None),
+    ],
+    'intl': [
+        ('국제학교 학생도 서울에서 배구학원을 다닐 수 있나요?', '네. 국제학교 · 외국인학교 학생과 방학마다 한국을 찾는 해외 거주 학생도 상암 인근 · 현천동 180-1의 하이앤드에서 배웁니다. 해외 학교에서 쓰는 영어 배구 용어를 함께 쓰고, 1:1 개인레슨과 방학 단기 집중 레슨을 상담으로 맞춰 드립니다.'),
+        ('학교 배구팀 트라이아웃을 준비할 수 있나요?', '네. 바시티(Varsity) · JV 팀 트라이아웃 전에 리시브 · 토스 · 서브를 먼저 점검하고, 포지션에 맞는 움직임을 1:1 개인레슨으로 반복합니다. 동작마다 이유를 설명하고 영상으로 함께 확인해 스스로 고칠 수 있게 돕습니다.'),
+    ],
+}
+
+
+def class_faq(key):
+    return [(q, a) for q, a in CLASS_FAQ.get(key, []) if a]
+
+
+def with_faq(key, body):
+    """클래스 페이지 본문 아래에 '자주 묻는 질문' 칸 붙이기"""
+    def wrapped(r):
+        faqs = class_faq(key)
+        if not faqs:
+            return body(r)
+        return body(r) + f'''
+<section class="sec sec-tight" id="faq">
+  <div class="wrap hd-narrow">
+    <h2>자주 묻는 질문</h2>
+    {faq_html(faqs, first_open=False)}
+    <p class="faq-more"><a href="{rel(r, 'faq')}">전체 자주 묻는 질문 보기 →</a></p>
+  </div>
+</section>'''
+    return wrapped
 
 LOCAL_FAQ = [
     ('상암·은평·고양 근처에 배구학원이 있나요?', '상암 인근 · 현천동 180-1에 프리미엄 배구 아카데미 하이앤드가 있습니다. 매주 토요일 유소년반(12:00), 초급반(13:30), 중급반(16:30) 수업을 하고, 개인레슨은 따로 예약합니다.'),
     ('국가대표 출신 코치에게 배울 수 있나요?', '네. 하이앤드는 국가대표·프로 출신 코치진이 가르칩니다. 헤드코치 김재휘(국가대표 7년 · 프로(V리그) 10년)는 2018 아시안게임 은메달, V리그 우승 4회 경력과 FIVB 코치 레벨1 자격이 있습니다.'),
-    ('초등학생 배구교실도 있나요?', '네. 유소년반(초·중·고)은 토요일 12:00, 80분 수업입니다. 처음 배우는 초등학생도 원데이 클래스로 시작할 수 있습니다.'),
-    ('배구학원 비용은 얼마인가요?', '원데이 클래스 25,000원(오픈 이벤트 50% 할인가), 개인레슨 1회 25만 원(10회 등록 시 회당 20만 원)입니다. 정규 수강권은 카카오톡 상담으로 안내드립니다.'),
+    ('초등학생 배구교실도 있나요?', '네. 유소년반(초등학생)은 토요일 12:00, 80분 수업입니다. 처음 배우는 초등학생도 원데이 클래스로 시작할 수 있습니다.'),
+    ('배구학원 비용은 얼마인가요?', '원데이 클래스 금액과 일정은 네이버 예약에서 확인하실 수 있습니다. 개인레슨은 1회 25만 원(10회 등록 시 회당 20만 원)입니다. 정규 수강권은 카카오톡 상담으로 안내드립니다.'),
     ('주차할 수 있나요?', '건물 앞에 주차할 수 있습니다.'),
 ]
 
@@ -1193,7 +1381,11 @@ def contact_body(r):
 
 
 def faq_body(r):
-    return f'''<section class="sec"><div class="wrap">{faq_html(CONTACT_FAQ)}<div class="btns">{go(r, 'ask', '더 궁금한 점 문의하기')}</div></div></section>'''
+    links = ''.join(f'<a href="{rel(r, k)}#faq">{escape(PAGES[k]["crumb"])}</a>' for k in CLASS_FAQ if class_faq(k))
+    return f'''<section class="sec"><div class="wrap">{faq_html(CONTACT_FAQ)}
+  <h2 class="cgrp">반별 자주 묻는 질문</h2>
+  <div class="faq-links">{links}</div>
+  <div class="btns">{go(r, 'ask', '더 궁금한 점 문의하기')}</div></div></section>'''
 
 
 def ask_body(r):
@@ -1215,15 +1407,14 @@ def local_body(r):
   <div class="wrap">
     <p class="lead">상암 인근 · 현천동 180-1의 프리미엄 배구 아카데미 하이앤드입니다. 국가대표·프로 선수의 훈련 방식을 시스템으로 만들었고, 국가대표·프로 출신 코치진이 초등학생부터 성인까지 배구를 가르칩니다.</p>
     {linkcards(r, [('coaches', '국가대표·프로 출신 코치진', '헤드코치 국가대표 7년 · 프로(V리그) 10년. 아시안게임 은메달, V리그 우승 4회.', ''),
-                   ('method', '알고 하면 쉬운 배구', '왜 → 어떻게 → 해보기. 이유를 알고 하는 반복으로 기본기를 만듭니다.', ''),
-                   ('oneday', '원데이 클래스 25,000원', '토요일 12:00 · 13:30 · 16:30. 정규 수업에 그대로 함께합니다.', '')])}
+                   ('method', '알고 하면 쉬운 배구', 'Why ? → How ? → Play ! 이유를 알고 하는 반복으로 기본기를 만듭니다.', ''),
+                   ('oneday', '원데이 클래스', '처음이라면 · 정규 수업 그대로 체험. 토요일 12:00 · 13:30 · 16:30, 네이버 예약.', '')])}
   </div>
 </section>
 <section class="sec alt">
   <div class="wrap">
-    <h2>상암 · 은평 · 고양 덕양 가까이에 있습니다</h2>
-    <div class="areas"><div>상암 · 수색 · DMC</div><div>은평</div><div>고양 덕양</div></div>
-    <p class="note">건물 앞 주차 가능 · 수업 시작 10분 전 도착 · <a href="{rel(r, 'contact')}">오시는 길</a></p>
+    <h2>서울 서북권 · 고양에서 배구를 찾고 계신다면</h2>
+    <p>하이앤드 발리볼 아카데미 상암점은 상암배구, 상암배구학원을 찾는 분들뿐 아니라<br>수색배구, DMC배구, 은평배구, 서대문배구, 마포배구, 강서배구,<br>고양배구, 행신배구, 향동배구, 덕은배구, 창릉배구, 도래울배구, 삼송배구를<br>알아보시는 분들도 찾아오고 있습니다.</p>
   </div>
 </section>
 <section class="sec">
@@ -1268,9 +1459,8 @@ def course(key, name, desc, times, offer=None):
 ONEDAY = course('oneday', '배구 원데이 클래스',
                 '처음 배구를 하는 초등학생부터 성인까지 정규 수업에 그대로 함께하는 하루 수업. MAPS 워밍업, 원리 이해, 정밀 교정, 게임 순서로 진행합니다.',
                 ('12:00', '13:30', '16:30'),
-                {'@type': 'Offer', 'price': '25000', 'priceCurrency': 'KRW', 'category': '오픈 이벤트 50% 할인가',
-                 'url': NAVER_BOOK, 'availability': 'https://schema.org/InStock'})
-YOUTH = course('youth', '유소년 배구교실 (유소년반)', '초·중·고 대상 80분 정규수업. 바른 자세와 기본기를 처음부터 제대로 익힙니다.', ('12:00',))
+                {'@type': 'Offer', 'url': NAVER_BOOK, 'availability': 'https://schema.org/InStock'})
+YOUTH = course('youth', '유소년 배구교실 (유소년반)', '초등학생 대상 80분 정규수업. 바른 자세와 기본기를 처음부터 제대로 익힙니다.', ('12:00',))
 BEGINNER = course('beginner', '배구 초급반', '중학생 이상, 배구를 처음 배우는 분을 위한 80분 정규수업.', ('13:30',))
 INTER = course('intermediate', '배구 중급반', '중학생 이상, 배구 경력 6개월 이상을 위한 80분 정규수업.', ('16:30',))
 PRIVATE = {'@type': 'Service', '@id': url('private') + '#service', 'name': '배구 1:1 개인레슨 (60분)', 'url': url('private'),
@@ -1289,17 +1479,17 @@ BUILD = {
     'flow': (flow_body, [], []), 'level': (level_body, [], []),
     'class': (class_body, [ONEDAY, YOUTH, BEGINNER, INTER, PRIVATE], []), 'oneday': (oneday_body, [ONEDAY], []),
     'oneday-apply': (apply_body, [], []), 'oneday-reviews': (reviews_body, [], []),
-    'youth': (youth_body, [YOUTH], []), 'beginner': (beginner_body, [BEGINNER], []), 'intermediate': (intermediate_body, [INTER], []),
-    'regular-reviews': (reviews_body, [], []), 'competition': (competition_body, [], []), 'club': (club_body, [], []), 'private': (private_body, [PRIVATE], []), 'intl': (intl_body, [], []),
+    'youth': (with_faq('youth', youth_body), [YOUTH] + ([faq_ld(class_faq('youth'))] if class_faq('youth') else []), []), 'beginner': (with_faq('beginner', beginner_body), [BEGINNER] + ([faq_ld(class_faq('beginner'))] if class_faq('beginner') else []), []), 'intermediate': (with_faq('intermediate', intermediate_body), [INTER] + ([faq_ld(class_faq('intermediate'))] if class_faq('intermediate') else []), []),
+    'regular-reviews': (reviews_body, [], []), 'competition': (with_faq('competition', competition_body), [] + ([faq_ld(class_faq('competition'))] if class_faq('competition') else []), []), 'team': (with_faq('team', team_body), [] + ([faq_ld(class_faq('team'))] if class_faq('team') else []), []), 'private': (with_faq('private', private_body), [PRIVATE] + ([faq_ld(class_faq('private'))] if class_faq('private') else []), []), 'intl': (with_faq('intl', intl_body), [] + ([faq_ld(class_faq('intl'))] if class_faq('intl') else []), []),
     'guide': (guide_body, [], FIREBASE + ['assets/js/schedule.js']), 'photos': (photos_body, [], ['assets/js/media.js']),
-    'story': (story_body, [], []), 'hiand': (hiand_body, [faq_ld(HIAND_FAQ), HIAND_EVENT], []), 'note': (soon_body, [], []),
+    'story': (story_body, [], []), 'hiand': (hiand_body, [faq_ld(HIAND_FAQ), HIAND_EVENT], []), 'school': (school_body, [], []), 'note': (soon_body, [], []),
     'contact': (contact_body, [], []), 'local': (local_body, [faq_ld(LOCAL_FAQ)], []), 'faq': (faq_body, [faq_ld(CONTACT_FAQ)], []),
     'ask': (ask_body, [], []),
 }
 
 
 # ── 읽기 쉬운 줄바꿈 (대표 지시 2026-10-29, 직원지식/공통_홈페이지글_줄바꿈규칙.md) ──
-SENT_END = re.compile(r'([가-힣)]\.|[!?])[ \t]+(?=\S)')
+SENT_END = re.compile(r'([가-힣)]\.|(?<=\S)[!?])[ \t]+(?=[^\s→])')  # "왜? → 어떻게?"처럼 화살표가 이어지면 문장 끝이 아님
 CLAUSE = re.compile(r'([가-힣]{1,6}(?:지|고|해|면|며|서|데|도|만|게|니),)[ \t]+')
 
 
@@ -1430,11 +1620,12 @@ def build():
 
     # llms.txt
     write('llms.txt', LLMS.replace('[주소]', BASE.rstrip('/')))
-    # 예전 주소(story/hiand-day/) → 새 주소로 넘겨 주기
-    new = url('hiand')
-    write('story/hiand-day/index.html', f'<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>Hi : And Day</title>'
-          f'<meta name="robots" content="noindex"><link rel="canonical" href="{new}"><meta http-equiv="refresh" content="0; url={new}">'
-          f'</head><body><p><a href="{new}">Hi : And Day 페이지로 이동</a></p></body></html>')
+    # 예전 주소 → 새 주소로 자동 이동
+    for old, key, label in [('story/hiand-day/', 'hiand', 'Hi : And Day'), ('class/group/club/', 'team', '팀클래스')]:
+        new = url(key)
+        write(old + 'index.html', f'<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>{label}</title>'
+              f'<meta name="robots" content="noindex"><link rel="canonical" href="{new}"><meta http-equiv="refresh" content="0; url={new}">'
+              f'</head><body><p><a href="{new}">{label} 페이지로 이동</a></p></body></html>')
     print(f'생성 완료: 공개 페이지 {len(keys)}개 (홈 포함), 숨긴 페이지 {len([k for k in BUILD if not shown(k)])}개, 404, robots, sitemap, llms')
 
 
@@ -1454,32 +1645,36 @@ LLMS = '''# 하이앤드 발리볼 아카데미 (HIGH END Volleyball Academy)
 - 황준태 (코치 · 리베로): 서울 우리카드 배구단 2022~2024, 제50회·제52회 대통령배 배구대회 리베로상
 
 ## 프로그램
-- 원데이 클래스: 25,000원 (오픈 이벤트 50% 할인가), 토요일 12:00 · 13:30 · 16:30, 네이버 예약. 정규 등록 시 원데이비 차감
-- 유소년반 (초·중·고): 토요일 12:00, 80분
+- 원데이 클래스: 토요일 정규 수업에 그대로 함께하는 체험 수업, 토요일 12:00 · 13:30 · 16:30, 네이버 예약으로 신청 (금액은 네이버 예약에서 확인). 정규 등록 시 원데이 비용 차감
+- 유소년반 (초등학생): 토요일 12:00, 80분
 - 초급반 (중학생 이상 입문): 토요일 13:30, 80분
 - 중급반 (중학생 이상, 배구 경력 6개월 이상): 토요일 16:30, 80분
 - 개인레슨 60분: 1회 25만 원, 10회 등록 시 회당 20만 원
 - 정규 수강권: 카카오톡 상담으로 안내
-- 시합반 (팀 클래스): 연령별 대표팀 선발 · 대회 목표, 초등 고학년 · 중고등 · 성인, 상담
-- 동호회 · 단체 레슨: 동호회 · 학교 · 기관, 상담
-- 국제학교 · 외국인학교 · 해외 거주 학생 배구 레슨: 익숙한 영어 배구 용어 사용, 방학 단기 집중 레슨 · 캠프, 학교 배구팀 트라이아웃 준비 (상담)
+- 시합반: U15(13세 이상 · 중학생) · U18(16세 이상 · 고등학생) 연령별 대표팀 선발 · 대회 목표, 초등 고학년 · 성인은 상담
+- 팀클래스: 배구 동호회 · 학교 · 기업 단체, 주 1회 정기 수업, 수강료는 카카오톡 상담
+- 국제학교 · 외국인학교 · 해외 거주 학생 배구 레슨: 익숙한 영어 배구 용어 사용, 방학 단기 집중 레슨 · 캠프, 바시티(Varsity)·JV 팀 트라이아웃 준비 (상담)
+- 하이앤드에서 배운 학생들의 학교: 서울용산국제학교(YISS), 서울외국인학교(SFS), 드와이트 외국인학교(Dwight School Seoul), 서울국제학교(SIS), 한국외국인학교(KIS), 세인트폴 서울(SPPS), 청라달튼외국인학교(CDS)
+- 국가대표가 찾아가는 배구교실 (국가대표 출신 코치진이 학교로 찾아가는 배구교실): 2026년 등촌고등학교(7/21), 은평중학교(7/21), 가재울중학교(8/28). 학교 체육 시간·방과후·학교스포츠클럽 신청은 카카오톡 상담
 
 ## 수업 방식
-- 하이앤드 코칭 시스템 "알고 하면 쉬운 배구": 하이앤드 3단계 수업 (Why · How · Play = 왜 → 어떻게 → 해보기)
+- 하이앤드 코칭 시스템 "알고 하면 쉬운 배구": 하이앤드 3단계 수업 (왜? 필요한지 → 어떻게? 움직이는지 → 해보기! 직접 해 보기)
 - 하이앤드 MAPS 워밍업 (Mobility · Activation · Plyometrics · Stability)
-- 하이앤드 정밀 교정: 묻기 → 짚기 → 영상 확인 (리시브 몸 방향 · 플랫폼, 스파이크 치킨윙 교정)
+- 하이앤드 정밀 교정: Ask 먼저 묻기 → Point 코치가 짚기 → Watch 영상으로 확인 (리시브 몸 방향 · 플랫폼, 스파이크 치킨윙 교정)
 - 하이앤드 운동일지 "Today & Next Ball"
 - 줄 서서 기다리지 않고 모두 동시에 움직이는 80분 정규수업
 - 하이앤드 성장 레벨 LV.1 입문 · LV.2 기본 · LV.3 심화 · LV.4 시합
 - 200평 풀코트
 
 ## 이런 검색에 해당합니다
-- 프리미엄 배구 아카데미, 프리미엄 배구학원, 배구학원, 배구교실, 배구 레슨, 배구 아카데미, 배구 개인레슨, 배구 원데이 클래스
+- 프리미엄 배구 아카데미, 프리미엄 배구학원, 상암배구학원, 서울배구학원, 배구아카데미, 배구학원, 배구교실, 배구레슨, 배구개인레슨, 배구원데이클래스, 배구 레슨, 배구 아카데미, 배구 개인레슨, 배구 원데이 클래스
 - 초등학생 배구, 유소년 배구교실, 어린이 배구, 초등학교 배구부 준비, 중학생 배구
 - 성인 배구 취미, 배구 초보, 배구 기본기, 배구 자세 교정
 - 국가대표 출신 코치 배구 레슨, 프로 출신 배구 코치
-- 국제학교 배구, 국제학교 배구 레슨, 외국인학교 배구, 해외 거주 학생 방학 배구 레슨, volleyball lessons for international school students
-- 지역: 상암, 수색, DMC, 은평, 고양, 덕양, 서울 서북부
+- 국제학교배구, 외국인학교배구, 바시티대표팀배구, 바시티 트라이아웃, JV 배구, 해외 거주 학생 방학 배구 레슨, volleyball lessons for international school students, volleyball lesson Seoul
+- 초등배구, 어린이배구, 유소년배구, 배구입문, 성인배구, 배구동호회, 배구선수반, 엘리트유소년배구
+- 찾아가는배구교실, 학교배구재능기부, 학교스포츠클럽배구, 유소년배구저변확대
+- 지역: 상암, 수색, DMC, 은평, 서대문, 강서, 고양, 덕양, 서울 서북부 (상암배구, 은평배구, 서대문배구, 강서배구, 고양배구)
 
 ## 위치 · 연락
 - 상암 인근 · 현천동 180-1 (건물 앞 주차 가능)
@@ -1491,6 +1686,7 @@ LLMS = '''# 하이앤드 발리볼 아카데미 (HIGH END Volleyball Academy)
 - 하이앤드 소개: [주소]/about/
 - 코칭 스태프 (김재휘 헤드코치 · 황준태 코치): [주소]/about/coaches/
 - Hi : And Day (국가대표 출신 · 현역 프로배구 선수와 함께하는 하이앤드 특별 배구 클래스, 2026.07.25): [주소]/story/hiandday/
+- 국가대표가 찾아가는 배구교실 (국가대표 출신 코치진이 학교로 찾아가는 배구교실, 2026년 가재울중 · 등촌고 · 은평중): [주소]/story/school-class/
 - 하이앤드 코칭 시스템: [주소]/method/
 - 4단계 성장 레벨: [주소]/method/level/
 - 클래스 전체 안내: [주소]/class/
@@ -1500,9 +1696,9 @@ LLMS = '''# 하이앤드 발리볼 아카데미 (HIGH END Volleyball Academy)
 - 초급반: [주소]/class/regular/beginner/
 - 중급반: [주소]/class/regular/intermediate/
 - 개인레슨: [주소]/class/private/
-- 국제학교 · 해외 학생: [주소]/class/international/
+- INTERNATIONAL (국제학교 · 외국인학교 · 해외 학생): [주소]/class/international/
 - 시합반 (팀 클래스): [주소]/class/team/competition/
-- 동호회 · 단체 레슨: [주소]/class/group/club/
+- 팀클래스 (동호회 · 학교 · 기업 단체): [주소]/class/team-class/
 - 수강 · 결제 안내: [주소]/class/guide/
 - 클래스 사진: [주소]/class/photos/
 - 자주 묻는 질문: [주소]/contact/faq/
@@ -1629,6 +1825,10 @@ def home_legacy():
   targets.forEach(t=>io2.observe(t));
 })();
 """ + s[b:]
+    # 6-2) 위쪽 메뉴의 원데이 예약 버튼 빼기 (원데이 페이지·다른 네이버 예약 링크는 그대로)
+    nb = s.index('class="btn-naver">원데이클래스</a>')
+    a_start = s.rindex('<a ', 0, nb)
+    s = s[:a_start].rstrip() + '\n      ' + s[nb + len('class="btn-naver">원데이클래스</a>'):].lstrip()
     # 7) ☰ 전체 메뉴: 하위 페이지와 같은 로켓츠식 왼쪽 메뉴 (PC·휴대폰 모두 로고 왼쪽에 ☰)
     hb_start = s.index('<button class="hamburger" id="menuBtn"')
     hb_end = s.index('</button>', hb_start) + len('</button>')
@@ -1650,6 +1850,7 @@ def home_legacy():
     css += site_css[site_css.index('/* 떠 있는 "문의" 버튼'):site_css.index('/* 나타나기 효과')]
     css += '#fab{--navy:#003960}\n'
     css += '.hm-brand{display:flex;align-items:center;gap:6px;flex-shrink:0}\n.nav-logo{gap:8px}.nav-logo img.lg-emb{width:auto;height:40px;border-radius:0;object-fit:contain}.nav-logo img.lg-word{width:auto;height:26px;border-radius:0}\n.hamburger.hm-all{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin-right:4px;color:var(--text)}\n.hamburger.hm-all svg{width:26px;height:26px}\n'
+    swap('<!-- FOOTER -->', '<section style="padding:8px 20px 56px;text-align:center"><p style="max-width:760px;margin:0 auto;font-size:14px;line-height:1.9;color:#5a6380;word-break:keep-all">상암배구 · 상암배구학원 · 수색배구 · DMC배구 · 은평배구 · 서대문배구 · 마포배구 · 강서배구 · 고양배구 · 행신배구 · 향동배구 · 덕은배구 · 창릉배구 · 도래울배구 · 삼송배구<br>하이앤드 발리볼 아카데미 상암점 · 상암 인근 · 현천동 180-1</p></section>\n<!-- FOOTER -->')
     swap('</body>', f'{drawer_html("", "home")}\n<style>{css}</style>\n<script src="assets/js/drawer.js?v={ver("assets/js/drawer.js")}" defer></script>\n</body>')
     return s
 
