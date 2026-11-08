@@ -701,3 +701,6 @@ p strong,.lead strong{white-space:nowrap}
 .faq-links{display:flex;flex-wrap:wrap;gap:10px}
 .faq-links a{padding:9px 16px;border:1.5px solid #003960;border-radius:999px;background:#fff;color:#003960;font-weight:700}
 .faq-links a:hover{background:#003960;color:#fff}
+
+/* 엘리트 선수 준비반: 인물 사진은 얼굴이 보이게 위쪽 기준으로 자름 */
+.split img.obj-top{object-position:center 6%}

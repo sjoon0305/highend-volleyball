@@ -112,6 +112,9 @@ PAGES = {
     'private': P(path='class/private/', crumb='개인레슨', title='배구개인레슨 | 1:1 포지션별 원포인트 레슨',
                  desc='배구개인레슨 60분 1회 25만 원(10회 등록 시 회당 20만 원). 포지션별 원포인트레슨으로 서브·리시브·스파이크타점교정·점프서브까지 내 몸에 맞게 교정합니다. 국가대표·프로 출신 하이앤드 코치진.',
                  banner=('PRIVATE LESSON', '1:1 개인레슨', '60분 동안 한 사람만 봅니다'), bg='class-6'),
+    'elite': P(path='class/elite/', crumb='엘리트 선수 준비반', title='엘리트 선수 준비반 | 배구선수 되는법 · 배구부 입단 테스트 준비',
+               desc='배구선수를 꿈꾸는 초등 4학년~고등학생을 위한 하이앤드 엘리트 선수 준비반. 레벨 진단부터 포지션별 기술, 배구부 입단 테스트 준비까지 국가대표·프로 출신 하이앤드 코치진이 함께합니다. 수업 시간과 수강료는 카카오톡 상담.',
+               banner=('ELITE PLAYER PREP', '엘리트 선수 준비반', '국가대표·프로 출신 코치진이 함께 준비합니다'), bg='class-6'),
     'intl': P(path='class/international/', crumb='INTERNATIONAL', title='국제학교배구 · 외국인학교배구 | 바시티 트라이아웃 준비',
               desc='국제학교배구·외국인학교배구 레슨. 바시티(Varsity)·JV 대표팀 트라이아웃 준비, 방학 단기 집중 레슨, 익숙한 영어 배구 용어. Volleyball lesson Seoul for international school students. 국가대표·프로 출신 하이앤드 코치진.',
               banner=('INTERNATIONAL SCHOOL', 'INTERNATIONAL', '국제학교 · 외국인학교 · 해외 학생'), en=None),
@@ -160,6 +163,7 @@ NAV = [
                           ('flow', '수업 80분 흐름'), ('level', '성장 레벨')]),
     ('class', 'CLASS', [(None, '원데이 클래스', [('oneday', '원데이클래스'), ('oneday-apply', '원데이클래스 신청'), ('oneday-reviews', '원데이클래스 후기')]),
                         (None, '정규 클래스', [('youth', '유소년반'), ('beginner', '초급반'), ('intermediate', '중급반'), ('competition', '시합반'), ('team', '팀클래스'), ('regular-reviews', '정규 클래스 후기')]),
+                        ('elite', '엘리트 선수 준비반'),
                         ('intl', 'INTERNATIONAL'),
                         ('private', '개인레슨'), ('guide', '수강 · 결제 안내'), ('photos', '클래스 사진')]),
     ('story', 'STORY', [('story', '수업 이야기'), ('hiand', 'Hi : And Day'), ('school', '국가대표가 찾아가는 배구교실'), ('note', '배구 노트')]),
@@ -751,6 +755,7 @@ def class_body(r):
              ('intermediate', 'class-4', '중급반', '중학생 이상 · 경력 6개월 이상 · 토요일 16:30', ''),
              ('competition', 'class-6', '시합반', 'U15 중학생 · U18 고등학생 · 대회 준비', ''),
              ('team', 'class-2', '팀클래스', '동호회 · 학교 · 기업 단체 · 주 1회', ''),
+             ('elite', '0820-07', '엘리트 선수 준비반', '초등 4학년~고등학생 · 선수를 꿈꾸는 학생', 'elite'),
              ('intl', '0820-09', 'INTERNATIONAL', '국제학교 · 외국인학교 · 방학 단기 집중', 'intl'),
              ('private', '0820-04', '개인레슨', '60분 · 한 사람만 보는 수업', 'private')]
     out = []
@@ -764,7 +769,7 @@ def class_body(r):
     <p class="lead">국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 처음이라면 원데이 클래스로, 실력과 나이에 맞춰 정규 클래스로 이어집니다.</p>
     <h2 class="cgrp">정규 클래스</h2>
     <div class="ccards">{"".join(out[:6])}</div>
-    <h2 class="cgrp">INTERNATIONAL · 개인레슨</h2>
+    <h2 class="cgrp">엘리트 선수 준비반 · INTERNATIONAL · 개인레슨</h2>
     <div class="ccards">{"".join(out[6:])}</div>
     <div class="ccard-more"><a id="schedule" href="{rel(r, 'guide')}">수강 · 결제 안내 · 시간표 →</a><a href="{rel(r, 'photos')}">클래스 사진 →</a></div>
   </div>
@@ -924,6 +929,75 @@ def private_body(r):
 </section>'''
 
 
+def elite_body(r):
+    return f'''<section class="sec">
+  <div class="wrap split">
+    <figure class="reveal">{img(r, '0820-07', '하이앤드 코치진과 함께 훈련하는 학생', 1200, 1600)}</figure>
+    <div class="reveal">
+      <h2>선수의 길을 걸어 본 코치진이 함께 준비합니다</h2>
+      <p>배구선수를 꿈꾸는 초등 4학년부터 고등학생까지를 위한 반입니다.<br>국가대표·프로 선수의 훈련 방식을 바탕으로,<br>지금 실력을 먼저 진단하고 목표에 맞춰 준비합니다.</p>
+      <ul class="ticks"><li>대상: 초등 4학년 ~ 고등학생</li><li>수업: 주 1회 그룹 수업 + 소그룹 집중 클래스</li><li>1:1 개인레슨은 필요할 때 함께 선택할 수 있습니다</li><li>입반: 상담과 레벨 진단 후 시작합니다</li></ul>
+      <p class="note">취미로 배우는 초등학생은 유소년반, 선수를 목표로 하는 학생은 엘리트 선수 준비반에서 시작합니다.<br>초등 고학년 학부모님은 상담에서 아이의 단계를 함께 확인해 드립니다.</p>
+      <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡으로 상담</a>{go(r, 'level', '4단계 성장 레벨 보기')}</div>
+    </div>
+  </div>
+</section>
+<section class="sec alt">
+  <div class="wrap split rev">
+    <figure class="reveal">{img(r, 'coach-kim-national', '국가대표 유니폼을 입은 하이앤드 헤드코치', 900, 1200, cls='obj-top')}</figure>
+    <div>
+    <p class="k">HEAD COACH STORY</p>
+    <h2>먼저 걸어 본 길</h2>
+    <p class="lead reveal">하이앤드 헤드코치는 16살에 배구를 시작했습니다.<br>쉽지 않은 시간도 이겨 내며,<br>국가대표 7년 · 프로(V리그) 10년의 선수가 되었습니다.</p>
+    <p class="reveal">그래서 늦은 시작도, 다시 일어서는 과정도 가까이에서 압니다.<br>하이앤드는 가능성을 약속하지 않고,<br>지금 단계를 정직하게 진단하는 것부터 시작합니다.</p>
+    <blockquote class="reveal">"만약 내가 16살 때 올바른 방법으로 배구를 배웠더라면…"</blockquote>
+    <p class="reveal">하이앤드는 그 아쉬움을 학생들의 준비 과정에 담았습니다.</p>
+    <div class="btns">{go(r, 'coaches', '코칭 스태프 보기')}</div>
+    </div>
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <h2>이런 학생에게 맞습니다</h2>
+    <div class="grid2 mt">
+      <div class="card reveal"><h3 class="t">배구부 입단 테스트를 앞둔 학생</h3><p>리시브 · 토스 · 서브 같은 기본기를 먼저 점검합니다.</p></div>
+      <div class="card reveal"><h3 class="t">엘리트 중·고 진학을 고민하는 학생</h3><p>지금 단계와 준비할 순서를 함께 정합니다.</p></div>
+      <div class="card reveal"><h3 class="t">늦게 시작해 기본기를 다지고 싶은 학생</h3><p>이유를 알고 하는 반복으로 기본기를 쌓습니다.</p></div>
+      <div class="card reveal"><h3 class="t">포지션을 고민하는 학생</h3><p>포지션에 필요한 기술과 움직임을 익힙니다.</p></div>
+    </div>
+  </div>
+</section>
+<section class="sec alt">
+  <div class="wrap">
+    <h2>이렇게 준비합니다</h2>
+    <ol class="steps mt">
+      <li class="reveal"><div class="k">STEP 1</div><h3 class="t">상담 · 레벨 진단</h3><p>지금 실력과 목표를 확인하고,<br>점프력 · 체력을 측정해 시작점을 확인합니다</p></li>
+      <li class="reveal"><div class="k">STEP 2</div><h3 class="t">맞춤 계획</h3><p>진단 결과로 준비할 순서를 정합니다</p></li>
+      <li class="reveal"><div class="k">STEP 3</div><h3 class="t">포지션별 기술</h3><p>세터 · 레프트 · 센터 · 리베로,<br>포지션마다 필요한 기술을 익힙니다</p></li>
+      <li class="reveal"><div class="k">STEP 4</div><h3 class="t">몸 준비</h3><p>국가대표·프로 선수 경험을 바탕으로<br>하이앤드가 만든 MAPS 워밍업으로,<br>점프와 착지를 안전하게 배웁니다</p></li>
+      <li class="reveal"><div class="k">STEP 5</div><h3 class="t">영상 · 운동일지</h3><p>국가대표·프로 선수 시절,<br>경기 전 상대 분석을 A4 한 장에 적어 외우던 습관을<br>운동일지 Today &amp; Next Ball로 만들었습니다</p></li>
+    </ol>
+    <div class="grid3 mt">
+      <div class="card reveal"><h3 class="t">그룹 수업 · 주 1회</h3><p>같은 목표를 가진 학생들과 기본기와 포지션 기술을 함께 훈련합니다.</p></div>
+      <div class="card reveal"><h3 class="t">소그룹 집중 클래스</h3><p>적은 인원으로 기술 하나하나를 깊게 다룹니다.</p></div>
+      <div class="card reveal"><h3 class="t">1:1 개인레슨 · 선택</h3><p>약점과 포지션 기술을 코치가 한 사람만 보며 교정합니다.</p></div>
+    </div>
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <h2>선수로 성장하는 방향</h2>
+    <div class="grid3 mt">
+      <div class="card reveal"><h3 class="t">어느 길이 맞을까</h3><p>즐기는 배구(스포츠클럽)와 선수를 목표로 하는 배구는 준비가 다릅니다.<br>상담에서 함께 정합니다.</p></div>
+      <div class="card reveal"><h3 class="t">공부와 함께</h3><p>수업과 운동을 함께 하며 성장하는 방향을 지향합니다.<br>성장 속도보다 방향을 봅니다.</p></div>
+      <div class="card reveal"><h3 class="t en">Next Ball</h3><p>실수는 지나가고, 다음 공은 늘 옵니다.<br>실수한 다음 공을 다시 준비하는 법까지 연습합니다.</p></div>
+    </div>
+    <p class="note">국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 수업 시간과 수강료는 카카오톡 상담으로 안내드립니다.</p>
+    <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡으로 상담</a>{go(r, 'private', '1:1 개인레슨 보기')}</div>
+  </div>
+</section>'''
+
+
 def intl_body(r):
     return f'''<section class="sec intl">
   <div class="wrap">
@@ -931,7 +1005,7 @@ def intl_body(r):
     <p class="lead">국제학교 · 외국인학교 학생과, 방학마다 한국을 찾는 해외 거주 학생도 함께 배웁니다. 국가대표·프로 출신 하이앤드 코치진이 지도합니다.</p>
     <p class="intl-en" lang="en">HIGH END Volleyball Academy offers volleyball lessons in Seoul for international and foreign school students (students from YISS, SFS, Dwight School Seoul, SIS, KIS, SPPS and Cheongna Dalton School have trained with us) — private lessons, school-break intensive training, and Varsity / JV tryout preparation, coached by former Korean national team and professional players. Located near Sangam (Hyeoncheon-dong 180-1).</p>
     <div class="intl-grid mt">
-      <div class="intl-card reveal"><span class="n">01</span><h3>익숙한 배구 용어로</h3><p>Underpass · Set · Spike · Serve. 해외 학교와 클럽에서 쓰던 용어를 함께 써서, 영어가 편한 아이들도 자연스럽게 적응합니다. 영어 수업이 아니라 익숙한 용어로 몸의 움직임을 이해하는 데 초점을 둡니다.</p></div>
+      <div class="intl-card reveal"><span class="n">01</span><h3>익숙한 배구 용어로</h3><p>Forearm pass(bump) · Set · Spike · Serve. 해외 학교와 클럽에서 쓰던 용어를 함께 써서, 영어가 편한 아이들도 자연스럽게 적응합니다. 영어 수업이 아니라 익숙한 용어로 몸의 움직임을 이해하는 데 초점을 둡니다.</p></div>
       <div class="intl-card reveal"><span class="n">02</span><h3>한 명 한 명, 기본기 교정</h3><p>팀 훈련과는 별개로 리시브할 때 발의 위치, 공을 맞히는 팔의 각도, 스파이크를 위한 몸의 움직임을 세밀하게 교정합니다. 작아 보이는 차이가 쌓여 실력의 차이가 됩니다.</p></div>
       <div class="intl-card reveal"><span class="n">03</span><h3>방학마다 이어지는 성장</h3><p>첫 방학에는 기본기, 다음 방학에는 기술 향상, 그다음에는 실전. 매번 처음부터 다시 시작하지 않고 지난 훈련을 다음 방학으로 이어갑니다.</p></div>
     </div>
@@ -1281,9 +1355,11 @@ CONTACT_FAQ = [
     ('배구레슨 반과 시간은 어떻게 되나요?', '토요일 정규 수업은 80분이며 유소년반(초등학생) 12:00, 초급반(중학생 이상 입문) 13:30, 중급반(중학생 이상, 경력 6개월 이상) 16:30입니다. 평일 반은 4명 이상 모이면 개설하고, 1:1 개인레슨은 따로 시간을 맞춰 드립니다.'),
     ('배구학원 수강료와 결제는 어떻게 하나요?', '원데이 클래스 금액과 일정은 네이버 예약에서 확인하실 수 있고, 개인레슨은 60분 1회 25만 원(10회 등록 시 회당 20만 원)입니다. 정규 수강권은 카카오톡 상담으로 안내드리며, 결제는 계좌이체 · 현금 · 카드 모두 가능합니다.'),
     ('처음 배구레슨을 받을 때 무엇을 준비하나요?', '실내 운동화, 물, 편한 운동복을 준비하시고 수업 시작 10분 전까지 와 주세요. 처음이라면 원데이 클래스(네이버 예약)로 시작하시고, 정규 수업을 등록하시면 원데이 비용을 차감해 드립니다.'),
-    ('서울배구학원을 찾는데 어느 지역에서 다니기 좋나요?', '상암 인근 · 현천동 180-1에 있어 상암·수색·DMC·은평·서대문·마포와 고양(덕양구·향동·덕은·행신·도래울·창릉)에서 오기 좋습니다. 건물 앞 주차가 가능합니다.'),
+    ('서울배구학원을 찾는데 어느 지역에서 다니기 좋나요?', '상암 인근 · 현천동 180-1에 있어 상암·수색·DMC·은평·서대문·마포와 고양(덕양구·일산·향동·덕은·행신·도래울·창릉)에서 오기 좋습니다. 건물 앞 주차가 가능합니다.'),
     ('하이앤드 코치는 누구인가요?', '국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 헤드코치 김재휘는 국가대표 7년(2016~2022) · 프로(V리그) 10년, 선수 17년 경력에 2018 아시안게임 은메달, V리그 우승 4회, FIVB 코치 레벨1, 전문스포츠지도사 2급(배구) 자격이 있습니다.'),
     ('형제가 함께 다녀도 되나요?', '네. 형제는 모든 수강권을 함께 나눠 쓸 수 있습니다.'),
+    ('키가 작아도 배구를 할 수 있나요?', '네. 배구에는 리시브와 수비를 맡는 리베로 같은 포지션이 있습니다. 하이앤드 황준태 코치도 리베로로, 대통령배 배구대회 리베로상을 두 번 받았습니다. 키가 작아도 시작할 수 있고, 몸 방향과 발 쓰는 법을 익히면 도움이 됩니다.'),
+    ('배구 전에 스트레칭은 어떻게 하나요?', '하이앤드 수업은 매번 MAPS 워밍업으로 시작합니다. 국가대표·프로 선수 경험을 바탕으로 하이앤드가 만든 워밍업으로, Mobility · Activation · Plyometrics · Stability 순서로 몸을 깨웁니다. 안전하게 오래 하는 배구를 위해 몸 준비부터 가르칩니다.'),
 ]
 # 클래스 페이지별 자주 묻는 질문 (답이 None이면 대표 확인 전이라 싣지 않음)
 CLASS_FAQ = {
@@ -1291,31 +1367,45 @@ CLASS_FAQ = {
         ('초등학생 운동으로 배구를 시작해도 괜찮을까요?', '네. 하이앤드 유소년반은 초등학생 대상 토요일 12:00, 80분 정규수업입니다. MAPS 워밍업으로 몸을 준비한 뒤 왜 → 어떻게 → 해보기(게임) 순서로, 줄 서서 기다리지 않고 모두 함께 움직이며 배웁니다. 처음이라면 원데이 클래스(네이버 예약)로 먼저 경험해 보세요. 초등학생운동으로 배구를 고민하신다면 원데이 클래스로 먼저 경험해 보세요.'),
         ('배구가 키 크는 운동에 도움이 되나요?', '배구는 점프와 전신을 함께 쓰는 운동이라 성장기 아이들이 즐겁게 몸을 쓰기 좋습니다. 다만 키 성장은 사람마다 다릅니다. 하이앤드는 MAPS 워밍업으로 몸을 먼저 준비해 안전하게 오래 하는 배구를 가르칩니다. 키크는운동을 찾으신다면, 아이가 즐겁고 꾸준하게 할 수 있는 운동인지가 가장 중요합니다.'),
         ('유소년 배구는 몇 살부터 배울 수 있나요?', '5세 이상 유아부터 배울 수 있습니다. 유아와 초등 저학년도 유소년반에서 눈높이에 맞춰 수업합니다. 처음이라면 원데이 클래스(네이버 예약)로 먼저 경험해 보세요.'),
+        ('아이가 배구 규칙을 몰라도 되나요?', '괜찮습니다. 수업 마지막은 매번 게임으로 마무리해서, 배운 동작을 게임에서 써 보며 규칙을 접합니다.'),
+        ('무릎보호대가 꼭 필요한가요?', '성장기 아이들에게는 무릎보호대를 필수로 권합니다. 바닥에서 공을 받는 동작이 많아 무릎을 보호하는 것이 좋습니다.'),
     ],
     'beginner': [
         ('중학생이 처음 배구를 배워도 되나요?', '네. 초급반은 배구를 처음 배우는 중학생 이상을 위한 토요일 13:30, 80분 정규수업입니다. 패스 · 서브 · 리시브 기본기를 왜 그렇게 움직이는지부터 이해하며 익힙니다. 중학생운동, 중등배구를 처음 시작하는 학생도 기본기부터 차근차근 배웁니다.'),
-        ('취미로 배구를 처음 시작해도 괜찮을까요?', '네. 성인도 초급반에서 처음부터 배울 수 있습니다. 국가대표·프로 출신 하이앤드 코치진이 동작마다 이유를 설명하고 몸으로 보여 줍니다. 처음이라면 원데이 클래스(네이버 예약)로 실제 수업을 먼저 경험해 보세요. 취미배구를 처음 시작하는 성인에게도 맞는 수업입니다.'),
+        ('공이 무서운 완전 초보도 괜찮을까요?', '네. 처음 배우는 분은 초급반(중학생 이상), 초등학생은 유소년반에서 시작합니다. 왜 이렇게 움직이는지 이유부터 쉽게 설명하고, 코치가 몸으로 먼저 보여 드립니다. 처음이라면 원데이 클래스로 수업 분위기를 먼저 경험해 보세요.'),
+        ('취미로 배구를 처음 시작해도 괜찮을까요?', '네. 성인도 초급반에서 처음부터 배울 수 있고, 혼자 오셔도 괜찮습니다. 동호회에 들어가기 전에 기본기를 다지고 싶은 분도 이 반에서 시작합니다. 국가대표·프로 출신 하이앤드 코치진이 동작마다 이유를 설명하고 몸으로 보여 줍니다. 처음이라면 원데이 클래스(네이버 예약)로 실제 수업을 먼저 경험해 보세요. 취미배구를 처음 시작하는 성인에게도 맞는 수업입니다.'),
     ],
     'intermediate': [
         ('배구를 조금 해 봤는데 어느 반이 맞나요?', '중학생 이상이고 배구 경력이 6개월 이상이면 중급반(토요일 16:30, 80분)이 맞습니다. 경력이 그보다 짧거나 기본기를 처음부터 다지고 싶다면 초급반(토요일 13:30)을 권합니다. 어느 반이 맞을지 모르겠다면 카카오톡으로 상담해 주세요.'),
-        ('배구교실과 배구학원 수업은 무엇이 다른가요?', '이름보다 수업 방식이 중요합니다. 하이앤드는 정규 수업마다 MAPS 워밍업 → 왜 → 어떻게 → 해보기(게임) 순서로 진행하고, 줄 서서 기다리지 않고 모두 동시에 움직이는 훈련을 합니다. 국가대표·프로 출신 하이앤드 코치진이 이유를 알고 하는 반복으로 기본기를 만듭니다.'),
+        ('배구교실과 배구학원 수업은 무엇이 다른가요?', '이름보다 수업 방식이 중요합니다. 하이앤드는 정규 수업마다 MAPS 워밍업 → 왜 → 어떻게 → 해보기(게임) 순서로 진행하고, 줄 서서 기다리지 않고 모두 동시에 움직이는 훈련을 합니다. 국가대표·프로 출신 하이앤드 코치진이 이유를 알고 하는 반복으로 기본기를 만듭니다. 학원을 고를 때는 코치 경력, 기다리는 시간 없이 모두 움직이는지, 동작마다 이유를 설명해 주는지 보시고, 원데이 클래스로 직접 경험해 보세요.'),
     ],
     'competition': [
         ('대회에 나가고 싶은 중·고등학생도 배울 수 있나요?', '네. 시합반은 U15(13세 이상) · U18(16세 이상) 연령별 대표팀 선발과 대회를 목표로 한 반입니다. 수업 시간과 구성은 카카오톡 상담으로 맞춰 드립니다.'),
         ('시합반은 어떤 훈련을 하나요?', '6인제 실전 훈련을 중심으로 경기 리딩, 상황 판단, 팀 전술을 익힙니다. 하이앤드 코치진이 국가대표와 V리그에서 경험한 팀 시스템을 쉬운 말로 풀어, 왜 그 자리에 서야 하는지부터 이해하게 합니다.'),
     ],
     'team': [
-        ('배구동호회 팀 단위로 배울 수 있나요?', '네. 팀클래스는 배구동호회처럼 한 팀이 함께 배우는 주 1회 정기 수업입니다. 인원과 목표에 맞춰 진행하고, 수강료와 일정은 카카오톡 상담으로 안내드립니다.'),
+        ('배구동호회 팀 단위로 배울 수 있나요?', '네. 팀클래스는 배구동호회처럼 한 팀이 함께 배우는 주 1회 정기 수업입니다. 동호회에서 하는 9인제로 진행하고, 인원과 목표에 맞춰 수업합니다. 수강료와 일정은 카카오톡 상담으로 안내드립니다.'),
         ('배구클럽이나 학교·회사 팀도 수업이 가능한가요?', '네. 배구클럽, 학교 · 학교스포츠클럽, 기업 단체 모두 팀클래스로 수업할 수 있습니다. 처음 배구를 하는 사람도 함께할 수 있게 수준에 맞춰 나눠서 지도합니다.'),
         ('함께 배구할 사람들을 만날 수 있나요?', '팀클래스에서는 같은 팀이 한 주에 한 번 함께 배웁니다. 또 하이앤드 수강생이 함께하는 행사 Hi : And Day에서 국가대표 출신 · 현역 프로 선수들과 함께 배구를 경험할 수 있습니다.'),
     ],
     'private': [
-        ('배구 개인레슨은 어떻게 진행되나요?', '1:1 개인레슨은 60분 동안 코치가 한 사람만 봅니다. 지금 실력을 확인하고 서브 · 리시브 · 스파이크 등 약점을 영상으로 함께 확인하며 교정합니다. 1회 25만 원, 10회 등록 시 회당 20만 원입니다.'),
+        ('배구 개인레슨은 어떻게 진행되나요?', '1:1 개인레슨은 60분 동안 코치가 한 사람만 봅니다. 서브 · 리시브 · 토스 · 스파이크 · 블로킹까지, 배우고 싶은 기술을 골라 배울 수 있습니다. 지금 실력을 확인하고, 약점을 영상으로 함께 보며 교정합니다. 1회 25만 원, 10회 등록 시 회당 20만 원입니다.'),
         ('짧은 기간에 집중해서 배구레슨을 받을 수 있나요?', '네. 1:1 개인레슨은 코치가 한 사람에게만 집중하는 수업입니다. 수업 중 동작을 영상으로 촬영해 함께 보며 교정하고, 원하시는 기간과 횟수에 맞춰 일정을 잡아 드립니다.'),
+        ('학교 배구 수행평가도 준비할 수 있나요?', '네. 언더토스 · 오버토스 · 서브처럼 수행평가에 나오는 동작을, 이유부터 이해하고 반복으로 몸에 익힙니다. 동작마다 이유를 알고 하니까, 수행평가 기술도 쉽게 익힙니다. 학교마다 종목이 다를 수 있어, 상담으로 먼저 확인해 드립니다. 1:1 개인레슨에서는 시험에 나오는 기술만 골라 연습할 수 있습니다.'),
+        ('혼자 영상 보고 연습하다가 와도 되나요?', '네. 먼저 지금 실력을 확인하고 맞는 반을 안내해 드립니다. 고치고 싶은 동작이 분명하다면, 1:1 개인레슨에서 영상으로 함께 보며 교정할 수 있습니다.'),
+    ],
+    'elite': [
+        ('몇 학년부터 들을 수 있나요?', '초등 4학년부터 고등학생까지 들을 수 있습니다. 상담과 레벨 진단 후 시작합니다.'),
+        ('배구를 늦게 시작했는데 괜찮을까요?', '하이앤드 헤드코치도 16살에 배구를 시작했습니다. 지금 실력을 먼저 진단하고, 기본기부터 준비할 순서를 정합니다. 가능성을 약속하지 않고, 이유를 알고 하는 반복으로 차근차근 쌓아 갑니다.'),
+        ('키가 작아도 선수를 준비할 수 있나요?', '포지션마다 필요한 기술이 다릅니다. 리시브와 수비를 맡는 리베로처럼, 몸에 맞는 포지션 기술을 익힙니다. 하이앤드 황준태 코치도 리베로로 대통령배 배구대회 리베로상을 두 번 받았습니다. 가능 여부는 약속하지 않고, 지금 단계를 진단한 뒤 방향을 정합니다.'),
+        ('스포츠클럽에서 하다가 엘리트를 준비해도 되나요?', '즐기는 배구와 선수를 목표로 하는 배구는 준비가 다릅니다. 지금 단계를 진단하고, 어느 길이 맞을지 상담에서 함께 정합니다.'),
+        ('배구부 입단 테스트를 준비할 수 있나요?', '네. 테스트는 학교마다 다를 수 있어, 상담 후 리시브 · 토스 · 서브 같은 기본기와 포지션 움직임을 먼저 점검합니다. 필요하면 1:1 개인레슨으로 반복합니다.'),
+        ('수업 시간과 수강료는 어떻게 되나요?', '수업 시간과 수강료는 카카오톡 상담으로 안내드립니다.'),
+        ('성장기 아이도 괜찮을까요?', '수업은 매번 MAPS 워밍업으로 시작해 점프와 착지부터 가르칩니다. 성장기 아이들에게는 무릎보호대 착용을 꼭 권합니다.'),
     ],
     'intl': [
         ('국제학교 학생도 서울에서 배구학원을 다닐 수 있나요?', '네. 국제학교 · 외국인학교 학생과 방학마다 한국을 찾는 해외 거주 학생도 상암 인근 · 현천동 180-1의 하이앤드에서 배웁니다. 해외 학교에서 쓰는 영어 배구 용어를 함께 쓰고, 1:1 개인레슨과 방학 단기 집중 레슨을 상담으로 맞춰 드립니다.'),
-        ('학교 배구팀 트라이아웃을 준비할 수 있나요?', '네. 바시티(Varsity) · JV 팀 트라이아웃 전에 리시브 · 토스 · 서브를 먼저 점검하고, 포지션에 맞는 움직임을 1:1 개인레슨으로 반복합니다. 동작마다 이유를 설명하고 영상으로 함께 확인해 스스로 고칠 수 있게 돕습니다.'),
+        ('학교 배구팀 트라이아웃을 준비할 수 있나요?', '트라이아웃은 학교 배구팀이 선수를 뽑는 선발 테스트입니다. 네. 바시티(Varsity) · JV 팀 트라이아웃 전에 리시브 · 토스 · 서브를 먼저 점검하고, 포지션에 맞는 움직임을 1:1 개인레슨으로 반복합니다. 동작마다 이유를 설명하고 영상으로 함께 확인해 스스로 고칠 수 있게 돕습니다.'),
     ],
 }
 
@@ -1480,7 +1570,7 @@ BUILD = {
     'class': (class_body, [ONEDAY, YOUTH, BEGINNER, INTER, PRIVATE], []), 'oneday': (oneday_body, [ONEDAY], []),
     'oneday-apply': (apply_body, [], []), 'oneday-reviews': (reviews_body, [], []),
     'youth': (with_faq('youth', youth_body), [YOUTH] + ([faq_ld(class_faq('youth'))] if class_faq('youth') else []), []), 'beginner': (with_faq('beginner', beginner_body), [BEGINNER] + ([faq_ld(class_faq('beginner'))] if class_faq('beginner') else []), []), 'intermediate': (with_faq('intermediate', intermediate_body), [INTER] + ([faq_ld(class_faq('intermediate'))] if class_faq('intermediate') else []), []),
-    'regular-reviews': (reviews_body, [], []), 'competition': (with_faq('competition', competition_body), [] + ([faq_ld(class_faq('competition'))] if class_faq('competition') else []), []), 'team': (with_faq('team', team_body), [] + ([faq_ld(class_faq('team'))] if class_faq('team') else []), []), 'private': (with_faq('private', private_body), [PRIVATE] + ([faq_ld(class_faq('private'))] if class_faq('private') else []), []), 'intl': (with_faq('intl', intl_body), [] + ([faq_ld(class_faq('intl'))] if class_faq('intl') else []), []),
+    'regular-reviews': (reviews_body, [], []), 'competition': (with_faq('competition', competition_body), [] + ([faq_ld(class_faq('competition'))] if class_faq('competition') else []), []), 'team': (with_faq('team', team_body), [] + ([faq_ld(class_faq('team'))] if class_faq('team') else []), []), 'private': (with_faq('private', private_body), [PRIVATE] + ([faq_ld(class_faq('private'))] if class_faq('private') else []), []), 'elite': (with_faq('elite', elite_body), [] + ([faq_ld(class_faq('elite'))] if class_faq('elite') else []), []), 'intl': (with_faq('intl', intl_body), [] + ([faq_ld(class_faq('intl'))] if class_faq('intl') else []), []),
     'guide': (guide_body, [], FIREBASE + ['assets/js/schedule.js']), 'photos': (photos_body, [], ['assets/js/media.js']),
     'story': (story_body, [], []), 'hiand': (hiand_body, [faq_ld(HIAND_FAQ), HIAND_EVENT], []), 'school': (school_body, [], []), 'note': (soon_body, [], []),
     'contact': (contact_body, [], []), 'local': (local_body, [faq_ld(LOCAL_FAQ)], []), 'faq': (faq_body, [faq_ld(CONTACT_FAQ)], []),
