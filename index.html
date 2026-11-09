@@ -23,8 +23,6 @@
 <meta name="twitter:description" content="국가대표·프로 선수의 훈련 방식을 시스템으로 만든 프리미엄 배구 아카데미 하이앤드. 상암 인근 · 현천동 180-1, 국가대표·프로 출신 코치진이 초등학생부터 성인까지 가르칩니다. 원데이 클래스는 네이버 예약, 문의 010-4463-1177">
 <meta name="twitter:image" content="https://sjoon0305.github.io/highend-volleyball/assets/img/og-image.jpg">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon-64.png"><link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <link rel="preload" href="./fonts/Paperlogy-9Black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./fonts/Paperlogy-4Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -695,6 +693,7 @@ p,li,dd,summary{text-wrap:balance}
 .mobile-menu a.msub{padding-left:36px;font-size:14px;}
 .mobile-menu a.msub3{padding-left:56px;font-size:13px;}
 .mobile-menu .mgrp{display:block;padding:12px 20px 4px 36px;font-size:13px;font-weight:700;color:var(--muted);border-bottom:none;}
+.footer-kw{margin-top:16px;max-width:860px;font-size:12.5px;line-height:1.9;color:rgba(255,255,255,.5);word-break:keep-all}
 /* 로켓츠식 남색 메뉴바 (2026-11-09) */
 :root{--hdh:86px;--hdnavy:#003960}
 @media (max-width:760px){:root{--hdh:48px}}
@@ -822,48 +821,40 @@ p,li,dd,summary{text-wrap:balance}
 })();
 </script>
 
-<!-- STATS -->
-<div class="stats-strip">
-  <div class="stats-inner">
-    <div class="reveal"><div class="stat-n">7년</div><div class="stat-l">국가대표 경력</div></div>
-    <div class="reveal rd1"><div class="stat-n">10년</div><div class="stat-l">프로 경력</div></div>
-    <div class="reveal rd2"><div class="stat-n">4회</div><div class="stat-l">V리그 우승</div></div>
-    <div class="reveal rd3"><div class="stat-n">FIVB</div><div class="stat-l">코치 자격 레벨1</div></div>
-  </div>
-</div>
+<!-- 메인: 수업 고르기 사진 칸 (2026-11-09). 칸 모양 CSS는 site.css "수업 고르기 사진 칸" -->
+<style>
+#classes{padding:96px 24px 104px;background:#fff}
+.hk-in{max-width:1160px;margin:0 auto}
+.hk-head{text-align:center;margin-bottom:44px}
+.hk-head .sec-label{display:block}
+@media (max-width:900px){#classes{padding:64px 16px 72px}}
+/* 수업 고르기 사진 칸 (2026-11-09, 로켓츠식 사진 위 큰 자막) — 메인·CLASS 공통 */
+.hk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.hk{position:relative;display:block;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:#003960;box-shadow:0 14px 34px rgba(0,30,60,.16);isolation:isolate;scroll-margin-top:140px}
+.hk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1);z-index:-2}
+.hk::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,57,96,.10) 0%,rgba(0,57,96,0) 35%,rgba(0,40,72,.30) 60%,rgba(0,30,56,.80) 100%)}
+.hk:hover img,.hk:focus-within img{transform:scale(1.06)}
+.hk-cover{position:absolute;inset:0;z-index:1}
+.hk-t{position:absolute;right:22px;bottom:22px;left:22px;z-index:2;text-align:right;color:#fff;text-shadow:0 4px 18px rgba(0,20,40,.55);pointer-events:none}
+.hk-t small{display:block;font-size:14px;font-weight:800;letter-spacing:.02em;line-height:1.5;margin-bottom:6px;opacity:.95;color:#fff}
+.hk-t b{display:block;font-family:'Paperlogy','Noto Sans KR',sans-serif;font-weight:900;font-size:clamp(34px,3.6vw,52px);line-height:1.02;letter-spacing:-.04em;transform:skewX(-6deg);transform-origin:right bottom;color:#fff}
+.hk-go{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:6px 18px;margin-top:12px}
+.hk-go a{pointer-events:auto;font-size:13px;font-weight:800;color:#ffd400!important;letter-spacing:.04em;text-decoration:none}
+.hk-go a:hover{text-decoration:underline}
+.hk-links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 28px;margin-top:40px;font-size:16px;font-weight:700}
+.hk-links a{color:#1a53d4}
+.hk-links a:hover{text-decoration:underline}
+@media (max-width:900px){.hk-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.hk{border-radius:16px}.hk-t{right:14px;bottom:14px;left:14px}.hk-t small{font-size:12px}.hk-t b{font-size:clamp(26px,7vw,40px)}.hk-go a{font-size:12px}}
 
-<!-- PUBLIC SCHEDULE -->
-<section id="schedule">
-  <div class="sec-inner">
-    <div style="margin-bottom:32px;">
-      <div class="sec-label reveal">CLASS SCHEDULE</div>
-      <h2 class="sec-title reveal">수업 일정 확인</h2>
-      <p class="sec-desc reveal">로그인 없이 수업 일정을 확인할 수 있습니다. <br>예약은 회원 로그인 후 이용하세요.</p>
+</style>
+<section id="classes">
+  <div class="hk-in">
+    <div class="hk-head">
+      <div class="sec-label reveal">CLASS</div>
+      <h2 class="sec-title reveal">나에게 맞는 수업 고르기</h2>
     </div>
-    <div class="sched-grid reveal" id="schedGrid">
-      <div class="cal-wrap">
-        <div class="cal-nav-row">
-          <button class="cal-nav-btn" id="calPrev">‹</button>
-          <div class="month-title" id="calTitle">로딩중...</div>
-          <button class="cal-nav-btn" id="calNext">›</button>
-        </div>
-        <div class="cal-head">
-          <div class="cal-hd sun">일</div><div class="cal-hd">월</div>
-          <div class="cal-hd">화</div><div class="cal-hd">수</div>
-          <div class="cal-hd">목</div><div class="cal-hd">금</div>
-          <div class="cal-hd sat">토</div>
-        </div>
-        <div class="cal-days" id="calDays"></div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>수업있음</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>거의 마감</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--muted);opacity:.5"></div>취소됨</div>
-        </div>
-      </div>
-      <div class="sched-panel" id="schedPanel">
-        <div class="no-sess-msg"><div class="icon"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor"/></svg></div><div>날짜를 선택하면<br>수업 일정이 표시됩니다</div></div>
-      </div>
-    </div>
+    <div class="hk-grid"><div class="hk reveal"><img src="assets/img/class-5.webp?v=04686921" alt="" loading="lazy"><a class="hk-cover" href="class/regular/youth/" aria-label="유소년반"></a><span class="hk-t"><small>초등학생</small><b>유소년반</b><span class="hk-go"><a href="class/regular/youth/">자세히 보기 →</a></span></span></div><div class="hk reveal"><img src="assets/img/class-3.webp?v=7f1d8cb4" alt="" loading="lazy"><a class="hk-cover" href="class/regular/beginner/" aria-label="초급 · 중급반"></a><span class="hk-t"><small>중학생 이상 · 입문 / 경력 6개월</small><b>초급 · 중급반</b><span class="hk-go"><a href="class/regular/beginner/">초급반 보기 →</a><a href="class/regular/intermediate/">중급반 보기 →</a></span></span></div><div class="hk reveal"><img src="assets/img/class-2.webp?v=622fc680" alt="" loading="lazy"><a class="hk-cover" href="class/team-class/" aria-label="팀 클래스"></a><span class="hk-t"><small>동호회 · 학교 · 기업 단체</small><b>팀 클래스</b><span class="hk-go"><a href="class/team-class/">자세히 보기 →</a></span></span></div><div class="hk reveal"><img src="assets/img/elite-tokyo-qual.webp?v=5c20ab9c" alt="" loading="lazy"><a class="hk-cover" href="class/elite/" aria-label="엘리트 선수 준비반"></a><span class="hk-t"><small>초등 4학년~고등학생</small><b>엘리트<br>선수 준비반</b><span class="hk-go"><a href="class/elite/">자세히 보기 →</a></span></span></div><div class="hk reveal"><img src="assets/img/class-6.webp?v=ed2f502b" alt="" loading="lazy"><a class="hk-cover" href="class/international/" aria-label="국제학교 시합반"></a><span class="hk-t"><small>국제학교 트라이아웃 · U15 · U18</small><b>국제학교<br>시합반</b><span class="hk-go"><a href="class/international/">INTERNATIONAL 보기 →</a><a href="class/team/competition/">시합반 보기 →</a></span></span></div><div class="hk reveal"><img src="assets/img/0820-04.jpg?v=2c703ef7" alt="" loading="lazy"><a class="hk-cover" href="class/private/" aria-label="개인레슨"></a><span class="hk-t"><small>60분 · 1:1 맞춤 수업</small><b>개인레슨</b><span class="hk-go"><a href="class/private/">자세히 보기 →</a></span></span></div></div>
+    <div class="hk-links"><a href="class/oneday/">처음이라면 원데이 클래스로 먼저 경험해 보세요 →</a><a href="class/guide/">수업 시간표 · 수강 안내 보기 →</a></div>
   </div>
 </section>
 
@@ -905,50 +896,41 @@ p,li,dd,summary{text-wrap:balance}
   </div>
 </section>
 
-<!-- CURRICULUM -->
-<section id="curriculum">
-  <div class="sec-inner">
-    <div class="curr-header">
-      <div class="sec-label reveal">CURRICULUM</div>
-      <h2 class="sec-title reveal">단계별 맞춤 훈련 커리큘럼</h2>
-      <p class="sec-desc reveal" style="max-width:560px;margin:0 auto;">안전하게 오래 하는 배구, 즐겁게 지속하는 배구 <br class="bk">기본이 무너지지 않는 배구 — 그것이 하이앤드입니다</p>
+<!-- 메인: 수업은 이렇게 진행됩니다 (2026-11-09 B안, 문구는 METHOD 수업 80분 흐름 기준) -->
+<style>
+#howto{padding:96px 24px 100px;background:#fff}
+.hw-in{max-width:1160px;margin:0 auto}
+.hw-head{text-align:center;margin-bottom:44px}
+.hw-head .sec-label{display:block}
+.hw-head .hw-lead{max-width:640px;margin:14px auto 0;color:var(--sub,#4a5878);font-size:16px;line-height:1.8}
+.hw-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;list-style:none;margin:0;padding:0;counter-reset:hw}
+.hw-step{position:relative;background:#f4f7fc;border:1px solid #e1e8f3;border-radius:18px;padding:26px 22px 28px;overflow:hidden}
+.hw-step::before{content:"";position:absolute;left:0;top:0;right:0;height:5px;background:#003960}
+.hw-step .k{font-family:Impact,'Arial Narrow Bold',sans-serif;font-size:15px;letter-spacing:.08em;color:#1a53d4}
+.hw-step h3{margin:10px 0 0;font-size:clamp(21px,1.9vw,26px);font-weight:900;color:#0d1b2e;letter-spacing:-.02em;line-height:1.25}
+.hw-step h3 em{display:block;font-style:normal;font-family:Impact,'Arial Narrow Bold',sans-serif;font-weight:400;font-size:1.25em;color:#003960;letter-spacing:.01em}
+.hw-step p{margin:12px 0 0;font-size:15px;line-height:1.75;color:#4a5878}
+.hw-arrow{position:absolute;right:-14px;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;background:#003960;color:#fff;font-size:14px;display:none}
+.hw-more{text-align:center;margin-top:36px;font-size:16px;font-weight:700}
+.hw-more a{color:#1a53d4}
+.hw-more a:hover{text-decoration:underline}
+@media (max-width:900px){.hw-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#howto{padding:64px 16px 72px}.hw-step{padding:22px 16px 22px}.hw-step p{font-size:14px}}
+@media (max-width:420px){.hw-steps{grid-template-columns:1fr}}
+</style>
+<section id="howto">
+  <div class="hw-in">
+    <div class="hw-head">
+      <div class="sec-label reveal">HOW WE TEACH</div>
+      <h2 class="sec-title reveal">수업은 이렇게 진행됩니다</h2>
+      <p data-hero class="hw-lead reveal">매주 토요일 80분, 모든 수업은 같은 순서로 진행합니다.<br>줄 서서 기다리지 않고, 모두 동시에 움직입니다.</p>
     </div>
-    <div class="curr-cards">
-      <div class="curr-card reveal">
-        <div class="curr-lv">1</div>
-        <div class="curr-name">유소년반</div>
-        <div class="curr-target">초등학생</div>
-        <div class="curr-desc">배구에 재미 붙이기. <br>올바른 자세와 기본기를 즐겁게 익힙니다.</div>
-      </div>
-      <div class="curr-card reveal rd1">
-        <div class="curr-lv">2</div>
-        <div class="curr-name">초급반</div>
-        <div class="curr-target">중학생 이상 입문</div>
-        <div class="curr-desc">기초 기술 습득. <br>올바른 자세와 기본기 완성.</div>
-      </div>
-      <div class="curr-card reveal rd2">
-        <div class="curr-lv">3</div>
-        <div class="curr-name">중급반</div>
-        <div class="curr-target">배구 경력 6개월 이상</div>
-        <div class="curr-desc">기술 완성도 향상, 신체 밸런스 강화. <br>실전 적용 능력 개발.</div>
-      </div>
-      <div class="curr-card reveal rd3">
-        <div class="curr-lv">4</div>
-        <div class="curr-name">시합반</div>
-        <div class="curr-target">대회 준비</div>
-        <div class="curr-desc">대회를 목표로 한 집중 코칭. <br>실전 경기 전략 및 멘탈 훈련.</div>
-      </div>
-      <div class="curr-card reveal rd4">
-        <div class="curr-lv"><svg class="ln star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.5l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></svg></div>
-        <div class="curr-name">개인레슨</div>
-        <div class="curr-target">1:1 맞춤</div>
-        <div class="curr-desc">개인별 목표 맞춤 집중 지도. <br>국가대표·프로 출신 코치진의 1:1 기술 지도.</div>
-      </div>
-    </div>
-    <div class="curr-imgs">
-      <img src="./2. 커리큘럼 사진/KakaoTalk_20260504_235923807_01.png" alt="커리큘럼 상세" class="reveal">
-      <img src="./2. 커리큘럼 사진/KakaoTalk_20260504_235923807_02.png" alt="수업 안내" class="reveal rd1">
-    </div>
+    <ol class="hw-steps">
+      <li class="hw-step reveal"><div class="k">STEP 1</div><h3><em>MAPS</em>워밍업</h3><p data-hero>가동성 → 활성화 → 순발력 → 안정성. 안전하게 움직이는 몸을 준비합니다</p></li>
+      <li class="hw-step reveal rd1"><div class="k">STEP 2</div><h3><em>Why ?</em>원리 이해</h3><p data-hero>오늘 배울 동작이 왜 필요한지 먼저 이해합니다</p></li>
+      <li class="hw-step reveal rd2"><div class="k">STEP 3</div><h3><em>How ?</em>교정 반복</h3><p data-hero>한 사람씩 자세를 보고, 몸에 맞게 정밀하게 교정합니다</p></li>
+      <li class="hw-step reveal rd3"><div class="k">STEP 4</div><h3><em>Play !</em>게임</h3><p data-hero>배운 원리를 게임과 실전 상황에서 직접 써 봅니다</p></li>
+    </ol>
+    <p data-hero class="hw-more reveal"><a href="method/flow/">수업 방식 자세히 보기 →</a></p>
   </div>
 </section>
 
@@ -989,77 +971,6 @@ p,li,dd,summary{text-wrap:balance}
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.54 12.47L7.84 2H4v20h4.46V11.53L16.16 22H20V2h-4.46z"/></svg>
         리뷰 보기
       </a>
-    </div>
-
-    <!-- REELS / VIDEO SLIDER -->
-    <div class="reels-section reveal">
-      <div class="reels-header">
-        <div class="sec-label">HIGHLIGHTS</div>
-        <h2 class="sec-title" style="margin-top:8px;">하이라이트 영상</h2>
-        <p class="sec-desc" style="margin-top:8px;max-width:480px;">하이앤드 발리볼 아카데미의 생생한 수업 영상을 확인하세요</p>
-      </div>
-      <div class="reels-outer">
-        <div class="reels-viewport" id="reelsViewport">
-          <div class="reels-track" id="reelsTrack">
-            <!-- Slide 1 -->
-            <div class="reel-slide" data-idx="0">
-              <video src="./4. 수업 사진/동영상/1.mp4" loop muted playsinline preload="auto"></video>
-              <div class="reel-play-layer" id="rpl0">
-                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-              </div>
-            </div>
-            <!-- Slide 2 -->
-            <div class="reel-slide" data-idx="1">
-              <video src="./4. 수업 사진/동영상/2.mp4" loop muted playsinline preload="metadata"></video>
-              <div class="reel-play-layer" id="rpl1">
-                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-              </div>
-            </div>
-            <!-- Slide 3 -->
-            <div class="reel-slide" data-idx="2">
-              <video src="./4. 수업 사진/동영상/3.mp4" loop muted playsinline preload="metadata"></video>
-              <div class="reel-play-layer" id="rpl2">
-                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-              </div>
-            </div>
-            <!-- Slide 4 -->
-            <div class="reel-slide" data-idx="3" style="background:#000;">
-              <video src="./4. 수업 사진/동영상/4.mp4" loop muted playsinline preload="metadata" style="width:100%;aspect-ratio:9/16;object-fit:contain;display:block;"></video>
-              <div class="reel-play-layer" id="rpl3">
-                <div class="reel-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-              </div>
-            </div>
-            <!-- Slide 5: Instagram CTA -->
-            <div class="reel-slide reel-slide-cta">
-              <div class="reel-cta-icon">
-                <svg viewBox="0 0 24 24" fill="white" style="width:40px;height:40px;display:block;"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              </div>
-              <div class="reel-cta-text">더 많은 영상<br>인스타그램에서</div>
-              <div class="reel-cta-sub">팔로우하고 최신 수업<br>현장을 확인하세요</div>
-              <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="reel-cta-btn">@highend_volleyball</a>
-            </div>
-          </div>
-        </div>
-        <!-- Nav -->
-        <div class="reels-nav">
-          <button class="reels-arr" id="reelsPrev" aria-label="이전">&#8249;</button>
-          <div class="slider-dots" id="reelsDots">
-            <div class="s-dot active"></div>
-            <div class="s-dot"></div>
-            <div class="s-dot"></div>
-            <div class="s-dot"></div>
-            <div class="s-dot"></div>
-          </div>
-          <button class="reels-arr" id="reelsNext" aria-label="다음">&#8250;</button>
-        </div>
-      </div>
-      <!-- Instagram 더보기 -->
-      <div class="reels-more">
-        <a href="https://www.instagram.com/highend_volleyball" target="_blank" class="reels-more-btn">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          인스타그램에서 더 보기
-        </a>
-      </div>
     </div>
   </div>
 </section>
@@ -1114,19 +1025,19 @@ p,li,dd,summary{text-wrap:balance}
   </div>
 </section>
 
-<section style="padding:8px 20px 56px;text-align:center"><p style="max-width:760px;margin:0 auto;font-size:14px;line-height:1.9;color:#5a6380;word-break:keep-all">상암배구 · 상암배구학원 · 수색배구 · DMC배구 · 은평배구 · 서대문배구 · 마포배구 · 강서배구 · 고양배구 · 행신배구 · 향동배구 · 덕은배구 · 창릉배구 · 도래울배구 · 삼송배구 <br class="bk">하이앤드 발리볼 아카데미 상암점 · 상암 인근 · 현천동 180-1</p></section>
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div>
       <div class="footer-links">
         <a href="#hero">HOME</a>
-        <a href="#schedule">수업일정</a>
+        <a href="class/guide/">수업일정</a>
         <a href="#coach">코치소개</a>
         <a href="#gallery">갤러리</a>
         <a href="dashboard.html">회원 로그인</a>
       </div>
-      <div class="footer-copy" style="margin-top:8px;">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
+      <div class="footer-kw">상암배구 · 상암배구학원 · 수색배구 · DMC배구 · 은평배구 · 서대문배구 · 마포배구 · 강서배구 · 고양배구 · 행신배구 · 향동배구 · 덕은배구 · 창릉배구 · 도래울배구 · 삼송배구<br>하이앤드 발리볼 아카데미 상암점 · 상암 인근 · 현천동 180-1</div>
+      <div class="footer-copy" style="margin-top:10px;">© 2026 HIGH END VOLLEYBALL ACADEMY</div>
     </div>
   </div>
 </footer>
@@ -1142,155 +1053,6 @@ p,li,dd,summary{text-wrap:balance}
 </div>
 
 <script>
-// ── FIREBASE (READ ONLY) ──────────────────────────────
-const firebaseConfig={apiKey:"AIzaSyBLP7b8C94e1g6eMlsEwntOAmGcVTm7gHg",authDomain:"highend-volleyball-60f04.firebaseapp.com",databaseURL:"https://highend-volleyball-60f04-default-rtdb.firebaseio.com",projectId:"highend-volleyball-60f04",storageBucket:"highend-volleyball-60f04.firebasestorage.app",messagingSenderId:"815322795093",appId:"1:815322795093:web:4339fb5d71f1a4406b98dc"};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.database();
-
-let pubSessions={}, pubReservations={};
-let calY=new Date().getFullYear(), calM=new Date().getMonth();
-let selDate=null, _nearestDone=false;
-
-function todayStr(){const t=new Date();return`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;}
-function calcEnd(t){if(!t)return'';const[h,m]=t.split(':').map(Number);const e=new Date(2000,0,1,h,m+80);return`${String(e.getHours()).padStart(2,'0')}:${String(e.getMinutes()).padStart(2,'0')}`;}
-
-function autoSelectNearest(){
-  if(_nearestDone||!Object.keys(pubSessions).length)return;
-  const td=todayStr();
-  const future=Object.values(pubSessions)
-    .filter(s=>s.date>=td&&s.status!=='cancelled')
-    .sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
-  if(!future.length)return;
-  _nearestDone=true;
-  const d=future[0].date;
-  const[y,m]=d.split('-').map(Number);
-  calY=y;calM=m-1;selDate=d;
-  renderCal();renderPanel(d);
-}
-
-db.ref('sessions').on('value',s=>{pubSessions=s.val()||{};renderCal();autoSelectNearest();});
-db.ref('reservations').on('value',s=>{pubReservations=s.val()||{};renderCal();if(selDate)renderPanel(selDate);});
-
-function renderCal(){
-  const y=calY,m=calM;
-  const firstDay=new Date(y,m,1).getDay();
-  const daysInMonth=new Date(y,m+1,0).getDate();
-  const today=todayStr();
-  const ms=`${y}-${String(m+1).padStart(2,'0')}`;
-
-  const $title=document.getElementById('calTitle');
-  const $days=document.getElementById('calDays');
-  if(!$title||!$days) return;
-  $title.textContent=`${y}년 ${m+1}월`;
-
-  // sessions in this month, keyed by date
-  const daySessions={};
-  Object.values(pubSessions).forEach(s=>{
-    if(s.date&&s.date.startsWith(ms)){
-      if(!daySessions[s.date]) daySessions[s.date]=[];
-      daySessions[s.date].push(s);
-    }
-  });
-
-  let html='';
-  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day empty"></div>`;
-  for(let d=1;d<=daysInMonth;d++){
-    const ds=`${ms}-${String(d).padStart(2,'0')}`;
-    const dow=new Date(ds+'T12:00:00').getDay();
-    const isSat=dow===6, isSun=dow===0;
-    const isToday=ds===today;
-    const isPast=ds<today;
-    const sessions=daySessions[ds]||[];
-    const activeSess=sessions.filter(s=>s.status!=='cancelled');
-    const cancelledSess=sessions.filter(s=>s.status==='cancelled');
-    const hasSess=activeSess.length>0;
-    const hasCancelled=cancelledSess.length>0 && !hasSess;
-    const isSelected=selDate===ds;
-
-    // check if any sessions almost full
-    let dotClass='';
-    if(hasSess){
-      const anyAlmostFull=activeSess.some(s=>{
-        const rc=Object.values(pubReservations).filter(r=>r.sessionId===s.id&&r.status!=='cancelled').length;
-        const cap=s.maxCapacity||16;
-        return rc/cap>=0.7;
-      });
-      dotClass=anyAlmostFull?'full-dot':'';
-    } else if(hasCancelled) dotClass='cancelled-dot';
-
-    html+=`<div class="cal-day${isSat?' saturday':''}${isSun?' sunday':''}${isToday?' today':''}${isPast?' past':''}${hasSess||hasCancelled?' has-sess':''}${isSelected?' selected':''} ${dotClass}" data-date="${ds}">
-      <span class="day-num">${d}</span>
-      ${(hasSess||hasCancelled)?'<div class="cal-sess-dot"></div>':''}
-    </div>`;
-  }
-  $days.innerHTML=html;
-
-  // attach events
-  $days.querySelectorAll('.cal-day[data-date]').forEach(el=>{
-    el.addEventListener('click',()=>{
-      selDate=el.dataset.date;
-      renderCal();
-      renderPanel(el.dataset.date);
-    });
-  });
-
-  if(selDate) renderPanel(selDate);
-}
-
-function renderPanel(date){
-  const $panel=document.getElementById('schedPanel');
-  if(!$panel) return;
-  const sessions=Object.values(pubSessions)
-    .filter(s=>s.date===date)
-    .sort((a,b)=>a.time.localeCompare(b.time));
-
-  if(!sessions.length){
-    $panel.innerHTML=`<div class="no-sess-msg"><div class="icon"><svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor"/></svg></div><div>${new Date(date+'T12:00:00').toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'long'})}<br>등록된 수업이 없습니다</div></div>`;
-    return;
-  }
-
-  const dt=new Date(date+'T12:00:00');
-  const dtStr=dt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
-  const today=todayStr();
-  const isPast=date<today;
-
-  let html=`<div class="panel-date-title">${dtStr}</div>`;
-  sessions.forEach(s=>{
-    const isCancelled=s.status==='cancelled';
-    const rc=Object.values(pubReservations).filter(r=>r.sessionId===s.id&&r.status!=='cancelled').length;
-    const cap=s.maxCapacity||16;
-    const isFull=rc>=cap;
-    const isAlmost=!isFull&&rc>5;
-
-    html+=`<div class="sess-slot${isCancelled?' cancelled-slot':''}">
-      <div>
-        <div class="slot-time-big">${s.time}</div>
-        <div style="font-size:11px;color:var(--muted);">~${calcEnd(s.time)}</div>
-      </div>
-      <div class="slot-info">
-        <div class="slot-title">${s.title||'정규반'} ${isCancelled?'<span style="color:var(--red);font-size:12px;">(취소됨)</span>':''}</div>
-        <div class="slot-meta">${s.sessionType||'정규반'} · 최대 ${cap}명</div>
-      </div>
-      ${!isCancelled?`
-      <div class="slot-avail" style="text-align:right;flex-shrink:0;">
-        ${isFull
-          ?'<span style="background:var(--redL);color:var(--red);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;">마감</span>'
-          :isAlmost
-          ?'<span style="background:var(--orangeL);color:var(--orange);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;">거의 마감</span>'
-          :'<span style="background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;">여유</span>'}
-      </div>`:`<div style="font-size:12px;color:var(--muted);">취소</div>`}
-    </div>`;
-  });
-
-  if(!isPast){
-    html+=`<div class="sched-login-note"><svg class="ln lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10.5" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.4" fill="currentColor"/><path d="M12 16.2v2"/></svg> 예약을 하려면 <a href="dashboard.html" style="font-weight:700;color:var(--blue);text-decoration:underline;">회원 로그인</a>이 필요합니다</div>`;
-  }
-  $panel.innerHTML=html;
-}
-
-function changeMonth(d){calM+=d;if(calM<0){calM=11;calY--;}if(calM>11){calM=0;calY++;}selDate=null;renderCal();}
-document.getElementById('calPrev').onclick=()=>changeMonth(-1);
-document.getElementById('calNext').onclick=()=>changeMonth(1);
 
 // ── NAV ──────────────────────────────────────────────
 const nav=document.getElementById('nav');

@@ -1,0 +1,37 @@
+<!-- 메인: 수업은 이렇게 진행됩니다 (2026-11-09 B안, 문구는 METHOD 수업 80분 흐름 기준) -->
+<style>
+#howto{padding:96px 24px 100px;background:#fff}
+.hw-in{max-width:1160px;margin:0 auto}
+.hw-head{text-align:center;margin-bottom:44px}
+.hw-head .sec-label{display:block}
+.hw-head .hw-lead{max-width:640px;margin:14px auto 0;color:var(--sub,#4a5878);font-size:16px;line-height:1.8}
+.hw-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;list-style:none;margin:0;padding:0;counter-reset:hw}
+.hw-step{position:relative;background:#f4f7fc;border:1px solid #e1e8f3;border-radius:18px;padding:26px 22px 28px;overflow:hidden}
+.hw-step::before{content:"";position:absolute;left:0;top:0;right:0;height:5px;background:#003960}
+.hw-step .k{font-family:Impact,'Arial Narrow Bold',sans-serif;font-size:15px;letter-spacing:.08em;color:#1a53d4}
+.hw-step h3{margin:10px 0 0;font-size:clamp(21px,1.9vw,26px);font-weight:900;color:#0d1b2e;letter-spacing:-.02em;line-height:1.25}
+.hw-step h3 em{display:block;font-style:normal;font-family:Impact,'Arial Narrow Bold',sans-serif;font-weight:400;font-size:1.25em;color:#003960;letter-spacing:.01em}
+.hw-step p{margin:12px 0 0;font-size:15px;line-height:1.75;color:#4a5878}
+.hw-arrow{position:absolute;right:-14px;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;background:#003960;color:#fff;font-size:14px;display:none}
+.hw-more{text-align:center;margin-top:36px;font-size:16px;font-weight:700}
+.hw-more a{color:#1a53d4}
+.hw-more a:hover{text-decoration:underline}
+@media (max-width:900px){.hw-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#howto{padding:64px 16px 72px}.hw-step{padding:22px 16px 22px}.hw-step p{font-size:14px}}
+@media (max-width:420px){.hw-steps{grid-template-columns:1fr}}
+</style>
+<section id="howto">
+  <div class="hw-in">
+    <div class="hw-head">
+      <div class="sec-label reveal">HOW WE TEACH</div>
+      <h2 class="sec-title reveal">수업은 이렇게 진행됩니다</h2>
+      <p data-hero class="hw-lead reveal">매주 토요일 80분, 모든 수업은 같은 순서로 진행합니다.<br>줄 서서 기다리지 않고, 모두 동시에 움직입니다.</p>
+    </div>
+    <ol class="hw-steps">
+      <li class="hw-step reveal"><div class="k">STEP 1</div><h3><em>MAPS</em>워밍업</h3><p data-hero>가동성 → 활성화 → 순발력 → 안정성. 안전하게 움직이는 몸을 준비합니다</p></li>
+      <li class="hw-step reveal rd1"><div class="k">STEP 2</div><h3><em>Why ?</em>원리 이해</h3><p data-hero>오늘 배울 동작이 왜 필요한지 먼저 이해합니다</p></li>
+      <li class="hw-step reveal rd2"><div class="k">STEP 3</div><h3><em>How ?</em>교정 반복</h3><p data-hero>한 사람씩 자세를 보고, 몸에 맞게 정밀하게 교정합니다</p></li>
+      <li class="hw-step reveal rd3"><div class="k">STEP 4</div><h3><em>Play !</em>게임</h3><p data-hero>배운 원리를 게임과 실전 상황에서 직접 써 봅니다</p></li>
+    </ol>
+    <p data-hero class="hw-more reveal"><a href="{FLOW}">수업 방식 자세히 보기 →</a></p>
+  </div>
+</section>

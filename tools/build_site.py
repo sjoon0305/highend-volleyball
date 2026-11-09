@@ -754,38 +754,39 @@ CAL_PANEL = '''<div class="sched-grid" id="schedGrid">
 </div>'''
 
 
-def class_body(r):
-    # A안: 위 60% 수업 사진 / 아래 40% 남색 칸(반 이름 · 설명 · 자세히 보기)
-    # 2026-11-09 대표 확정: 6칸(3×2). 원데이는 카드에서 빼고 한 줄 링크. 초급·중급, 시합반·국제학교는 한 카드에 링크 2개
-    cards = [('youth', 'class-5', '유소년반', '초등학생 · 토요일 12:00 · 80분', 'youth', None),
-             ('beginner', 'class-3', '초급 · 중급반', '중학생 이상 · 입문 13:30 · 경력 6개월 이상 16:30', 'group',
+def hk_tiles(r, rich=False):
+    """수업 고르기 사진 칸 6개 (메인·CLASS 공통). rich=True면 CLASS 페이지용 자세한 설명 + 앵커 id"""
+    cards = [('youth', 'class-5.webp', '초등학생', '초등학생 · 토요일 12:00 · 80분', '유소년반', 'youth', None),
+             ('beginner', 'class-3.webp', '중학생 이상 · 입문 / 경력 6개월', '중학생 이상 · 입문 13:30 · 경력 6개월 이상 16:30', '초급 · 중급반', 'group',
               [('beginner', '초급반 보기'), ('intermediate', '중급반 보기')]),
-             ('team', 'class-2', '팀클래스', '동호회 · 학교 · 기업 단체 · 주 1회', 'team', None),
-             ('elite', 'elite-tokyo-qual', '엘리트 선수 준비반', '초등 4학년~고등학생 · 선수를 꿈꾸는 학생', 'elite', None),
-             ('intl', 'class-6', '국제학교 · 시합반', '국제학교 트라이아웃 · U15 · U18 대회 준비', 'intl',
+             ('team', 'class-2.webp', '동호회 · 학교 · 기업 단체', '동호회 · 학교 · 기업 단체 · 주 1회', '팀 클래스', 'team', None),
+             ('elite', 'elite-tokyo-qual.webp', '초등 4학년~고등학생', '초등 4학년~고등학생 · 선수를 꿈꾸는 학생', '엘리트<br>선수 준비반', 'elite', None),
+             ('intl', 'class-6.webp', '국제학교 트라이아웃 · U15 · U18', '국제학교 트라이아웃 · U15 · U18 대회 준비', '국제학교<br>시합반', 'intl',
               [('intl', 'INTERNATIONAL 보기'), ('competition', '시합반 보기')]),
-             ('private', '0820-04', '개인레슨', '60분 · 한 사람만 보는 1:1 수업', 'private', None)]
+             ('private', '0820-04.jpg', '60분 · 1:1 맞춤 수업', '60분 · 한 사람만 보는 1:1 수업', '개인레슨', 'private', None)]
     out = []
-    for key, im, t, d, aid, links in cards:
-        a = f' id="{aid}"' if aid else ''
-        ext = 'jpg' if im.startswith('0820') else 'webp'
-        pic = f'<span class="ccard-img" style="background-image:url(\'{r}assets/img/{im}.{ext}?v={ver(f"assets/img/{im}.{ext}")}\')" role="img" aria-label="{escape(t)} 수업 사진"></span>'
-        if links:
-            ls = ''.join(f'<a class="ccard-go" href="{rel(r, k)}">{escape(x)} →</a>' for k, x in links)
-            out.append(f'<div class="ccard ccard-multi reveal"{a}><a class="ccard-pic" href="{rel(r, key)}" tabindex="-1" aria-hidden="true">{pic}</a>'
-                       f'<span class="ccard-txt"><b>{escape(t)}</b><span>{escape(d)}</span><span class="ccard-gos">{ls}</span></span></div>')
-        else:
-            out.append(f'<a class="ccard reveal"{a} href="{rel(r, key)}">{pic}'
-                       f'<span class="ccard-txt"><b>{escape(t)}</b><span>{escape(d)}</span><em>자세히 보기 →</em></span></a>')
+    for key, f, sm, d, t, aid, links in cards:
+        a = f' id="{aid}"' if rich else ''
+        name = t.replace('<br>', ' ')
+        go = ''.join(f'<a href="{rel(r, k)}">{escape(x)} →</a>' for k, x in (links or [(key, '자세히 보기')]))
+        out.append(f'<div class="hk reveal"{a}><img src="{r}assets/img/{f}?v={ver("assets/img/" + f)}" alt="" loading="lazy">'
+                   f'<a class="hk-cover" href="{rel(r, key)}" aria-label="{escape(name)}"></a>'
+                   f'<span class="hk-t"><small>{escape(d if rich else sm)}</small><b>{t}</b><span class="hk-go">{go}</span></span></div>')
+    return out
+
+
+def class_body(r):
+    # 2026-11-09 대표 확정: 메인과 같은 '사진 위 큰 자막' 칸 6개(3×2). 원데이는 카드에서 빼고 한 줄 링크
+    out = hk_tiles(r, rich=True)
     return f'''<section class="sec">
   <div class="wrap">
     <p class="lead">국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 처음이라면 원데이 클래스로, 실력과 나이에 맞춰 정규 클래스로 이어집니다.</p>
     <h2 class="cgrp">정규 클래스</h2>
     <p class="cgrp-sub">토요일 정규 수업과 단체 수업</p>
-    <div class="ccards c3">{"".join(out[:3])}</div>
+    <div class="hk-grid">{"".join(out[:3])}</div>
     <h2 class="cgrp cgrp-gap">목표별 · 맞춤 클래스</h2>
     <p class="cgrp-sub">선수 준비, 대회, 1:1 맞춤 수업</p>
-    <div class="ccards c3">{"".join(out[3:])}</div>
+    <div class="hk-grid">{"".join(out[3:])}</div>
     <p class="ccard-oneday" id="oneday"><a href="{rel(r, 'oneday')}">처음이라면 원데이 클래스로 먼저 경험해 보세요 →</a></p>
     <div class="ccard-more"><a id="schedule" href="{rel(r, 'guide')}">수강 · 결제 안내 · 시간표 →</a><a href="{rel(r, 'photos')}">클래스 사진 →</a></div>
   </div>
@@ -1851,6 +1852,7 @@ p,li,dd,summary{text-wrap:balance}
 .mobile-menu a.msub{padding-left:36px;font-size:14px;}
 .mobile-menu a.msub3{padding-left:56px;font-size:13px;}
 .mobile-menu .mgrp{display:block;padding:12px 20px 4px 36px;font-size:13px;font-weight:700;color:var(--muted);border-bottom:none;}
+.footer-kw{margin-top:16px;max-width:860px;font-size:12.5px;line-height:1.9;color:rgba(255,255,255,.5);word-break:keep-all}
 /* 로켓츠식 남색 메뉴바 (2026-11-09) */
 :root{--hdh:86px;--hdnavy:#003960}
 @media (max-width:760px){:root{--hdh:48px}}
@@ -1993,7 +1995,8 @@ def home_legacy():
     css += site_css[site_css.index('/* 떠 있는 "문의" 버튼'):site_css.index('/* 나타나기 효과')]
     css += '#fab{--navy:#003960}\n'
     css += '.hm-brand{display:flex;align-items:center;gap:6px;flex-shrink:0}\n.nav-logo{gap:8px}.nav-logo img.lg-emb{width:auto;height:40px;border-radius:0;object-fit:contain}.nav-logo img.lg-word{width:auto;height:26px;border-radius:0}\n.hamburger.hm-all{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin-right:4px;color:#fff}\n.hamburger.hm-all svg{width:26px;height:26px}\n'
-    swap('<!-- FOOTER -->', '<section style="padding:8px 20px 56px;text-align:center"><p style="max-width:760px;margin:0 auto;font-size:14px;line-height:1.9;color:#5a6380;word-break:keep-all">상암배구 · 상암배구학원 · 수색배구 · DMC배구 · 은평배구 · 서대문배구 · 마포배구 · 강서배구 · 고양배구 · 행신배구 · 향동배구 · 덕은배구 · 창릉배구 · 도래울배구 · 삼송배구<br>하이앤드 발리볼 아카데미 상암점 · 상암 인근 · 현천동 180-1</p></section>\n<!-- FOOTER -->')
+    # 지역 키워드 줄: 흰 칸 대신 남색 맨 아래 칸 안으로 (2026-11-09 대표 결정)
+    swap('<div class="footer-copy" style="margin-top:8px;">', '<div class="footer-kw">상암배구 · 상암배구학원 · 수색배구 · DMC배구 · 은평배구 · 서대문배구 · 마포배구 · 강서배구 · 고양배구 · 행신배구 · 향동배구 · 덕은배구 · 창릉배구 · 도래울배구 · 삼송배구<br>하이앤드 발리볼 아카데미 상암점 · 상암 인근 · 현천동 180-1</div>\n      <div class="footer-copy" style="margin-top:10px;">')
     swap('</body>', f'{drawer_html("", "home")}\n<style>{css}</style>\n<script src="assets/js/drawer.js?v={ver("assets/js/drawer.js")}" defer></script>\n</body>')
     # 8) 첫 화면 교체 (2026-11-09 시안 3): tools/home_hero.html
     hero = open(os.path.join(ROOT_DIR, 'tools', 'home_hero.html'), encoding='utf-8').read()
@@ -2002,6 +2005,33 @@ def home_legacy():
     h0 = s.index('<!-- HERO -->')
     h1 = s.index('<!-- STATS -->')
     s = s[:h0] + hero + '\n' + s[h1:]
+    # 9) 수업 일정 달력 → 수업 고르기 사진 칸 (2026-11-09). 달력은 회원 로그인·수강 안내 페이지에 그대로 있음
+    tiles = hk_tiles('')
+    html = f'    <div class="hk-grid">{"".join(tiles)}</div>'
+    sc = open(os.path.join(ROOT_DIR, 'assets', 'css', 'site.css'), encoding='utf-8').read()
+    hkcss = sc[sc.index('/* 수업 고르기 사진 칸'):sc.index('/* 수업 고르기 끝 */')]
+    blk = open(os.path.join(ROOT_DIR, 'tools', 'home_classes.html'), encoding='utf-8').read().replace('{HKCSS}', hkcss).replace('{CARDS}', html)
+    c0 = s.index('<!-- PUBLIC SCHEDULE -->')
+    c1 = s.index('<!-- COACH -->')
+    s = s[:c0] + blk + '\n' + s[c1:]
+    # 10) 파란 숫자 띠·커리큘럼 칸(포스터 2장 포함) 빼기 (2026-11-09 대표 확정: 수업 고르기 칸과 겹침, 경력은 코치 칸에 있음)
+    for x0, x1 in [('<!-- STATS -->', '<!-- 메인: 수업 고르기 사진 칸'), ('<!-- CURRICULUM -->', '<!-- GALLERY -->')]:
+        p0 = s.index(x0); p1 = s.index(x1, p0)
+        s = s[:p0] + s[p1:]
+    # 11) 하이라이트 영상 빼기 + 코치 칸 아래 '수업은 이렇게 진행됩니다'(B안) (2026-11-09 대표 확정)
+    p0 = s.index('    <!-- REELS / VIDEO SLIDER -->')
+    p1 = s.index('  </div>\n</section>\n<div class="lightbox"', p0)
+    s = s[:p0].rstrip() + '\n' + s[p1:]
+    flow = open(os.path.join(ROOT_DIR, 'tools', 'home_flow.html'), encoding='utf-8').read().replace('{FLOW}', rel('', 'flow'))
+    g = s.index('<!-- GALLERY -->')
+    s = s[:g] + flow + '\n' + s[g:]
+    j0 = s.index('// ── FIREBASE (READ ONLY)')
+    j1 = s.index("document.getElementById('calNext').onclick=()=>changeMonth(1);\n") + len("document.getElementById('calNext').onclick=()=>changeMonth(1);\n")
+    s = s[:j0] + s[j1:]
+    for tag in ['<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>\n',
+                '<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>\n']:
+        swap(tag, '')
+    swap('<a href="#schedule">수업일정</a>', f'<a href="{rel("", "guide")}">수업일정</a>')
     return s
 
 
