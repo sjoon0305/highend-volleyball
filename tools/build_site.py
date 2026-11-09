@@ -756,14 +756,15 @@ CAL_PANEL = '''<div class="sched-grid" id="schedGrid">
 
 def hk_tiles(r, rich=False):
     """수업 고르기 사진 칸 6개 (메인·CLASS 공통). rich=True면 CLASS 페이지용 자세한 설명 + 앵커 id"""
-    cards = [('youth', 'class-5.webp', '초등학생', '초등학생 · 토요일 12:00 · 80분', '유소년반', 'youth', None),
-             ('beginner', 'class-3.webp', '중학생 이상 · 입문 / 경력 6개월', '중학생 이상 · 입문 13:30 · 경력 6개월 이상 16:30', '초급 · 중급반', 'group',
+    # 2026-11-09 대표: 메인은 대상만 짧게, CLASS 페이지는 시간 없이 꼭 필요한 안내 한 줄
+    cards = [('youth', 'class-5.webp', '초등학생', '초등학생 · 정규 수업', '유소년반', 'youth', None),
+             ('beginner', 'class-3.webp', '중학생 이상', '중학생 이상 · 입문 / 경력 6개월 이상', '초급 · 중급반', 'group',
               [('beginner', '초급반 보기'), ('intermediate', '중급반 보기')]),
-             ('team', 'class-2.webp', '동호회 · 학교 · 기업 단체', '동호회 · 학교 · 기업 단체 · 주 1회', '팀 클래스', 'team', None),
-             ('elite', 'elite-tokyo-qual.webp', '초등 4학년~고등학생', '초등 4학년~고등학생 · 선수를 꿈꾸는 학생', '엘리트<br>선수 준비반', 'elite', None),
-             ('intl', 'class-6.webp', '국제학교 트라이아웃 · U15 · U18', '국제학교 트라이아웃 · U15 · U18 대회 준비', '국제학교<br>시합반', 'intl',
+             ('team', 'class-2.webp', '동호회 · 학교 · 기업', '동호회 · 학교 · 기업', '팀 클래스', 'team', None),
+             ('elite', 'elite-tokyo-qual.webp', '초등 4학년~고등학생', '초등 4학년~고등학생 · 배구선수를 꿈꾸는 학생', '엘리트<br>선수 준비반', 'elite', None),
+             ('intl', 'class-6.webp', '국제학교 · U15 · U18', '국제학교 트라이아웃 · U15 · U18 대회', '국제학교<br>시합반', 'intl',
               [('intl', 'INTERNATIONAL 보기'), ('competition', '시합반 보기')]),
-             ('private', '0820-04.jpg', '60분 · 1:1 맞춤 수업', '60분 · 한 사람만 보는 1:1 수업', '개인레슨', 'private', None)]
+             ('private', '0820-04.jpg', '1:1 맞춤 수업', '1:1 맞춤 수업', '개인레슨', 'private', None)]
     out = []
     for key, f, sm, d, t, aid, links in cards:
         a = f' id="{aid}"' if rich else ''
@@ -2032,6 +2033,10 @@ def home_legacy():
                 '<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>\n']:
         swap(tag, '')
     swap('<a href="#schedule">수업일정</a>', f'<a href="{rel("", "guide")}">수업일정</a>')
+    # 12) CONTACT 칸: 원데이·회원 로그인 카드 빼기 (원데이는 첫 화면 버튼, 로그인은 맨 위 메뉴에 있음). 카톡 띠 + 오시는 길만
+    p0 = s.index('    <div class="cta-cards cta-cards-2 reveal">')
+    p1 = s.index('    <div class="kakao-banner reveal">', p0)
+    s = s[:p0] + s[p1:]
     return s
 
 
