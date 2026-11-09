@@ -772,7 +772,7 @@ def hk_tiles(r, rich=False):
         go = ''.join(f'<a href="{rel(r, k)}">{escape(x)} →</a>' for k, x in (links or [(key, '자세히 보기')]))
         out.append(f'<div class="hk reveal"{a}><img src="{r}assets/img/{f}?v={ver("assets/img/" + f)}" alt="" loading="lazy">'
                    f'<a class="hk-cover" href="{rel(r, key)}" aria-label="{escape(name)}"></a>'
-                   f'<span class="hk-t"><small>{escape(d if rich else sm)}</small><b>{t}</b><span class="hk-go">{go}</span></span></div>')
+                   f'<span class="hk-t"><small>{escape(d)}</small><b>{t}</b><span class="hk-go">{go}</span></span></div>')
     return out
 
 
@@ -2037,6 +2037,13 @@ def home_legacy():
     p0 = s.index('    <div class="cta-cards cta-cards-2 reveal">')
     p1 = s.index('    <div class="kakao-banner reveal">', p0)
     s = s[:p0] + s[p1:]
+    # 13) 카톡 상담 띠를 오시는 길(지도) 아래로 (2026-11-09 대표)
+    k0 = s.index('    <div class="kakao-banner reveal">')
+    k1 = s.index('    <!-- 오시는 길 -->', k0)
+    kb = s[k0:k1]
+    s = s[:k0] + s[k1:]
+    e = s.index('  </div>\n</section>\n\n<!-- FOOTER -->')
+    s = s[:e] + kb + s[e:]
     return s
 
 
