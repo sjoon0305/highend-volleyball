@@ -166,7 +166,7 @@ NAV = [
                         ('elite', '엘리트 선수 준비반'),
                         ('intl', 'INTERNATIONAL'),
                         ('private', '개인레슨'), ('guide', '수강 · 결제 안내'), ('photos', '클래스 사진')]),
-    ('story', 'STORY', [('story', '수업 이야기'), ('hiand', 'Hi : And Day'), ('school', '국가대표가 찾아가는 배구교실'), ('note', '배구 노트')]),
+    ('story', 'STORY', [('school', '국가대표가 찾아가는 배구교실'), ('hiand', 'Hi : And Day'), ('story', '수업 이야기'), ('note', '배구 노트')]),
     ('contact', 'CONTACT', [('contact', '오시는 길'), ('local', '상암·은평·고양 배구학원'), ('faq', '자주 묻는 질문'), ('ask', '상담하기')]),
 ]
 
@@ -756,28 +756,37 @@ CAL_PANEL = '''<div class="sched-grid" id="schedGrid">
 
 def class_body(r):
     # A안: 위 60% 수업 사진 / 아래 40% 남색 칸(반 이름 · 설명 · 자세히 보기)
-    cards = [('oneday', 'class-oneday', '원데이 클래스', '토요일 정규 수업에 그대로 함께 · 80분', 'oneday'),
-             ('youth', 'class-5', '유소년반', '초등학생 · 토요일 12:00 · 80분', 'youth'),
-             ('beginner', 'class-3', '초급반', '중학생 이상 입문 · 토요일 13:30', 'group'),
-             ('intermediate', 'class-4', '중급반', '중학생 이상 · 경력 6개월 이상 · 토요일 16:30', ''),
-             ('competition', 'class-6', '시합반', 'U15 중학생 · U18 고등학생 · 대회 준비', ''),
-             ('team', 'class-2', '팀클래스', '동호회 · 학교 · 기업 단체 · 주 1회', ''),
-             ('elite', '0820-07', '엘리트 선수 준비반', '초등 4학년~고등학생 · 선수를 꿈꾸는 학생', 'elite'),
-             ('intl', '0820-09', 'INTERNATIONAL', '국제학교 · 외국인학교 · 방학 단기 집중', 'intl'),
-             ('private', '0820-04', '개인레슨', '60분 · 한 사람만 보는 수업', 'private')]
+    # 2026-11-09 대표 확정: 6칸(3×2). 원데이는 카드에서 빼고 한 줄 링크. 초급·중급, 시합반·국제학교는 한 카드에 링크 2개
+    cards = [('youth', 'class-5', '유소년반', '초등학생 · 토요일 12:00 · 80분', 'youth', None),
+             ('beginner', 'class-3', '초급 · 중급반', '중학생 이상 · 입문 13:30 · 경력 6개월 이상 16:30', 'group',
+              [('beginner', '초급반 보기'), ('intermediate', '중급반 보기')]),
+             ('team', 'class-2', '팀클래스', '동호회 · 학교 · 기업 단체 · 주 1회', 'team', None),
+             ('elite', 'elite-tokyo-qual', '엘리트 선수 준비반', '초등 4학년~고등학생 · 선수를 꿈꾸는 학생', 'elite', None),
+             ('intl', 'class-6', '국제학교 · 시합반', '국제학교 트라이아웃 · U15 · U18 대회 준비', 'intl',
+              [('intl', 'INTERNATIONAL 보기'), ('competition', '시합반 보기')]),
+             ('private', '0820-04', '개인레슨', '60분 · 한 사람만 보는 1:1 수업', 'private', None)]
     out = []
-    for key, im, t, d, aid in cards:
+    for key, im, t, d, aid, links in cards:
         a = f' id="{aid}"' if aid else ''
         ext = 'jpg' if im.startswith('0820') else 'webp'
-        out.append(f'<a class="ccard reveal"{a} href="{rel(r, key)}"><span class="ccard-img" style="background-image:url(\'{r}assets/img/{im}.{ext}\')" role="img" aria-label="{escape(t)} 수업 사진"></span>'
-                   f'<span class="ccard-txt"><b{" class=en" if t.isascii() else ""}>{escape(t)}</b><span>{escape(d)}</span><em>자세히 보기 →</em></span></a>')
+        pic = f'<span class="ccard-img" style="background-image:url(\'{r}assets/img/{im}.{ext}?v={ver(f"assets/img/{im}.{ext}")}\')" role="img" aria-label="{escape(t)} 수업 사진"></span>'
+        if links:
+            ls = ''.join(f'<a class="ccard-go" href="{rel(r, k)}">{escape(x)} →</a>' for k, x in links)
+            out.append(f'<div class="ccard ccard-multi reveal"{a}><a class="ccard-pic" href="{rel(r, key)}" tabindex="-1" aria-hidden="true">{pic}</a>'
+                       f'<span class="ccard-txt"><b>{escape(t)}</b><span>{escape(d)}</span><span class="ccard-gos">{ls}</span></span></div>')
+        else:
+            out.append(f'<a class="ccard reveal"{a} href="{rel(r, key)}">{pic}'
+                       f'<span class="ccard-txt"><b>{escape(t)}</b><span>{escape(d)}</span><em>자세히 보기 →</em></span></a>')
     return f'''<section class="sec">
   <div class="wrap">
     <p class="lead">국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 처음이라면 원데이 클래스로, 실력과 나이에 맞춰 정규 클래스로 이어집니다.</p>
     <h2 class="cgrp">정규 클래스</h2>
-    <div class="ccards">{"".join(out[:6])}</div>
-    <h2 class="cgrp">엘리트 선수 준비반 · INTERNATIONAL · 개인레슨</h2>
-    <div class="ccards">{"".join(out[6:])}</div>
+    <p class="cgrp-sub">토요일 정규 수업과 단체 수업</p>
+    <div class="ccards c3">{"".join(out[:3])}</div>
+    <h2 class="cgrp cgrp-gap">목표별 · 맞춤 클래스</h2>
+    <p class="cgrp-sub">선수 준비, 대회, 1:1 맞춤 수업</p>
+    <div class="ccards c3">{"".join(out[3:])}</div>
+    <p class="ccard-oneday" id="oneday"><a href="{rel(r, 'oneday')}">처음이라면 원데이 클래스로 먼저 경험해 보세요 →</a></p>
     <div class="ccard-more"><a id="schedule" href="{rel(r, 'guide')}">수강 · 결제 안내 · 시간표 →</a><a href="{rel(r, 'photos')}">클래스 사진 →</a></div>
   </div>
 </section>'''.replace('<section class="sec">', '<section class="sec sec-tight">', 1)

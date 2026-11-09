@@ -730,3 +730,19 @@ p strong,.lead strong{white-space:nowrap}
 .dream-tag{display:inline-block;font-size:13px;font-weight:700;color:#0b1f3f;background:#9cc4ff;border-radius:999px;padding:3px 12px;margin-bottom:10px}
 @media (max-width:760px){.dream-cards{grid-template-columns:1fr}}
 .sec.dream .dream-card p{color:#eef4ff;margin:0}
+
+/* CLASS 첫 화면 6칸 (2026-11-09 대표 확정) */
+.ccards.c3{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:22px}
+.cgrp.cgrp-gap{margin-top:72px}
+.cgrp-sub{color:#5a6380;margin:6px 0 0;font-size:16px}
+.ccards.c3 .ccard-txt{padding:24px 26px 26px;gap:10px}
+.ccards.c3 .ccard-txt b{font-size:24px}
+.ccard-multi .ccard-pic{display:block}
+.ccard-gos{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:6px}
+.ccard-go{color:#ffd400;font-weight:700;font-size:inherit;text-decoration:none}
+.ccard-go:hover{text-decoration:underline}
+.ccard-oneday{text-align:center;margin:48px 0 8px;font-size:17px;font-weight:700}
+.ccard-oneday a{color:var(--blue)}
+@media (max-width:760px){.ccards.c3{grid-template-columns:1fr;gap:20px}.ccards.c3 .ccard-txt{padding:20px 20px 22px}}
+.ccard-txt .ccard-gos{display:flex!important;flex-wrap:wrap;gap:8px 22px}
+.ccard-txt .ccard-go{margin-right:2px}
