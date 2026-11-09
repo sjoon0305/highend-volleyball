@@ -787,14 +787,10 @@ p,li,dd,summary{text-wrap:balance}
     <path d="M-40 760 L520 520 L1480 520 M520 520 L380 900 M760 520 L720 900 M-40 640 L1480 640"/>
   </svg>
   <div class="hx-pics" aria-hidden="true">
-    <i class="on" style="background-image:url('assets/img/hero-hiand-1.webp?v=381ae915')"></i>
-    <i style="background-image:url('assets/img/hero-play.webp?v=cd923ed3')"></i>
-    <i style="background-image:url('assets/img/hero-hiand-2.webp?v=11153df0')"></i>
+    <i class="on" style="background-image:url('assets/img/hero-hiand-2.webp?v=11153df0')"></i>
   </div>
   <div class="hx-cap" aria-hidden="true">
-    <span class="on"><em>HI : AND DAY</em>2026.07.25 · 프로 선수들과 함께한 하루</span>
-    <span><em>SATURDAY CLASS</em>토요일 정규 수업 현장</span>
-    <span><em>HI : AND DAY</em>하이앤드 수강생과 프로 선수들</span>
+    <span class="on"><em>HI : AND DAY</em>하이앤드 수강생과 프로 선수들</span>
   </div>
   <div class="hx-mq" aria-hidden="true">HIGH END VOLLEYBALL ACADEMY · HIGH END VOLLEYBALL ACADEMY · HIGH END VOLLEYBALL ACADEMY · HIGH END VOLLEYBALL ACADEMY ·&nbsp;</div>
   <div class="hx-tx">
@@ -808,18 +804,7 @@ p,li,dd,summary{text-wrap:balance}
     </div>
   </div>
 </section>
-<script>
-/* 사진과 사진 설명을 6초마다 함께 바꾸기 (움직임 줄이기 설정이면 첫 장 고정) */
-(function(){
-  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  var ps=document.querySelectorAll('.hx-pics i'),cs=document.querySelectorAll('.hx-cap span'),i=0;
-  setInterval(function(){
-    i=(i+1)%ps.length;
-    ps.forEach(function(p,k){p.classList.toggle('on',k===i)});
-    cs.forEach(function(c,k){c.classList.toggle('on',k===i)});
-  },6000);
-})();
-</script>
+<!-- 2026-11-10 대표: 초등학생 단체 사진 한 장으로 고정 (전환 없음) -->
 
 <!-- 메인: 수업 고르기 사진 칸 (2026-11-09). 칸 모양 CSS는 site.css "수업 고르기 사진 칸" -->
 <style>
