@@ -1,0 +1,94 @@
+<!-- 메인 첫 화면 (2026-11-09 시안 3): 사진 전체 배경 + 왼쪽 흰 덮개, 사진 3장 6초마다 전환 -->
+<style>
+#hero.hx{display:block;position:relative;height:100vh;min-height:660px;padding:var(--hdh,86px) 0 0!important;overflow:hidden;isolation:isolate;background:linear-gradient(180deg,#fff 0%,#f3f6fb 100%)}
+.hx{--hx-navy:#003960;--hx-ink:#0d1b2e;--hx-blue:#1a53d4;--hx-sub:#4a5878}
+.hx-pics{position:absolute;top:var(--hdh,86px);left:0;right:0;bottom:0;z-index:-3;opacity:0;animation:hxFade 1.2s .1s forwards}
+.hx-pics i{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.1);transform-origin:50% 60%;transition:opacity 1.2s ease,transform 7.5s linear}
+.hx-pics i.on{opacity:1;transform:scale(1)}
+.hx-pics::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.94) 0%,rgba(255,255,255,.86) 30%,rgba(255,255,255,.35) 55%,rgba(255,255,255,0) 75%),linear-gradient(0deg,rgba(0,57,96,.30) 0%,rgba(0,57,96,0) 25%)}
+.hx-cap{position:absolute;right:130px;bottom:30px;z-index:2;height:44px;width:420px;max-width:calc(100% - 32px)}
+.hx-cap span{position:absolute;right:0;bottom:0;white-space:nowrap;background:rgba(0,57,96,.92);color:#fff;font-weight:800;font-size:13px;letter-spacing:.03em;padding:11px 16px;border-radius:999px;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
+.hx-cap span.on{opacity:1;transform:none;transition-delay:.45s}
+.hx-cap em{font-style:normal;color:#9cc4ff;margin-right:8px;font-family:Impact,'Arial Narrow Bold',sans-serif;font-weight:400;letter-spacing:.06em;font-size:14px}
+.hx-court{position:absolute;inset:0;z-index:-2;width:100%;height:100%;opacity:.06;pointer-events:none}
+.hx-court path{fill:none;stroke:var(--hx-navy);stroke-width:1.4;stroke-dasharray:2400;stroke-dashoffset:2400;animation:hxDraw 2.4s .2s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes hxDraw{to{stroke-dashoffset:0}}
+@keyframes hxFade{to{opacity:1}}
+@keyframes hxUp{to{opacity:1;transform:none}}
+@keyframes hxRise{to{transform:none}}
+.hx-tx{position:relative;z-index:2;max-width:1200px;height:100%;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;justify-content:center;text-align:left}
+.hx-tx>*{max-width:540px}
+.hx-up{opacity:0;transform:translateY(26px);animation:hxUp .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hx-eb{display:flex;align-items:center;gap:12px;margin:0;font-weight:800;font-size:13px;letter-spacing:.32em;color:var(--hx-navy);animation-delay:.3s}
+.hx-eb::before{content:"";width:34px;height:3px;background:var(--hx-navy)}
+.hx h1{margin:22px 0 0;font-weight:900;font-size:clamp(46px,6.6vw,96px);line-height:1.05;letter-spacing:-.035em;color:var(--hx-ink);text-wrap:initial}
+.hx h1 .l{display:block;overflow:hidden;padding-bottom:.04em}
+.hx h1 .l>span{display:inline-block;transform:translateY(105%);animation:hxRise 1s cubic-bezier(.2,.8,.2,1) forwards}
+.hx h1 .l:nth-child(1)>span{animation-delay:.55s}
+.hx h1 .l:nth-child(2)>span{animation-delay:.75s}
+.hx h1 em{font-style:normal;background:linear-gradient(90deg,var(--hx-navy) 0%,var(--hx-blue) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hx-sub{margin:26px 0 0;font-weight:500;font-size:clamp(15px,1.4vw,19px);line-height:1.75;color:var(--hx-sub);animation-delay:1.2s;max-width:640px}
+.hx-sub>span{display:block;white-space:nowrap}
+@media (max-width:600px){.hx-sub>span{display:inline;white-space:normal}}
+.hx-wpp{display:flex;align-items:center;gap:14px;margin:30px 0 0;font-family:Impact,'Arial Narrow Bold',sans-serif;font-size:clamp(22px,2.3vw,30px);letter-spacing:.02em;color:var(--hx-navy)}
+.hx-wpp b{font-weight:400;opacity:0;transform:translateY(14px);animation:hxUp .6s forwards}
+.hx-wpp b:nth-of-type(1){animation-delay:1.6s}.hx-wpp b:nth-of-type(2){animation-delay:2s}.hx-wpp b:nth-of-type(3){animation-delay:2.4s;color:var(--hx-blue)}
+.hx-wpp s{text-decoration:none;opacity:0;color:#9aa8c0;font-size:.7em;animation:hxFade .4s forwards}
+.hx-wpp s:nth-of-type(1){animation-delay:1.85s}.hx-wpp s:nth-of-type(2){animation-delay:2.25s}
+.hx-act{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:40px;animation-delay:2.7s}
+.hx-btn{display:inline-flex;align-items:center;gap:10px;background:var(--hx-navy);color:#fff!important;font-weight:900;font-size:17px;padding:17px 30px;border-radius:999px;box-shadow:0 12px 28px rgba(0,57,96,.28);transition:transform .2s,background .2s}
+.hx-btn:hover{transform:translateY(-2px);background:#00497a}
+.hx-loc{margin:0;font-weight:500;font-size:14px;color:var(--hx-sub);line-height:1.6}
+.hx-loc b{color:var(--hx-ink);font-weight:800}
+.hx-mq{position:absolute;left:0;bottom:-18px;z-index:-2;white-space:nowrap;font-family:Impact,'Arial Narrow Bold',sans-serif;font-size:clamp(60px,9vw,130px);letter-spacing:.04em;color:transparent;-webkit-text-stroke:1px rgba(0,57,96,.10);animation:hxMq 40s linear infinite;pointer-events:none}
+@keyframes hxMq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:900px){
+  .hx-pics::after{background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.15) 30%,rgba(255,255,255,.86) 52%,rgba(255,255,255,.95) 100%)}
+  .hx-tx{justify-content:flex-end;padding-bottom:40px}
+  .hx-cap{top:calc(var(--hdh,48px) + 16px);bottom:auto;right:16px}
+  .hx h1{margin-top:16px;font-size:clamp(50px,13vw,64px)}
+  .hx-btn{width:100%;justify-content:center}
+  .hx-mq{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .hx *,.hx *::before,.hx *::after{animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important;transition:none!important}
+}
+</style>
+<section id="hero" class="hx" aria-label="하이앤드 발리볼 아카데미">
+  <svg class="hx-court" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-40 760 L520 520 L1480 520 M520 520 L380 900 M760 520 L720 900 M-40 640 L1480 640"/>
+  </svg>
+  <div class="hx-pics" aria-hidden="true">
+    <i class="on" style="background-image:url('assets/img/hero-hiand-1.webp?v={V1}')"></i>
+    <i style="background-image:url('assets/img/hero-play.webp?v={V2}')"></i>
+    <i style="background-image:url('assets/img/hero-hiand-2.webp?v={V3}')"></i>
+  </div>
+  <div class="hx-cap" aria-hidden="true">
+    <span class="on"><em>HI : AND DAY</em>2026.07.25 · 프로 선수들과 함께한 하루</span>
+    <span><em>SATURDAY CLASS</em>토요일 정규 수업 현장</span>
+    <span><em>HI : AND DAY</em>하이앤드 수강생과 프로 선수들</span>
+  </div>
+  <div class="hx-mq" aria-hidden="true">HIGH END VOLLEYBALL ACADEMY · HIGH END VOLLEYBALL ACADEMY · HIGH END VOLLEYBALL ACADEMY · HIGH END VOLLEYBALL ACADEMY ·&nbsp;</div>
+  <div class="hx-tx">
+    <p data-hero class="hx-eb hx-up">PREMIUM VOLLEYBALL ACADEMY</p>
+    <h1><span class="l"><span>알고 하면</span></span><span class="l"><span><em>쉬운 배구</em></span></span></h1>
+    <p data-hero class="hx-sub hx-up"><span>국가대표·프로 선수의 훈련 방식을 시스템으로 만든</span> <span>프리미엄 배구 아카데미, 하이앤드</span></p>
+    <p data-hero class="hx-wpp" aria-label="Why? How? Play!"><b>Why ?</b><s>→</s><b>How ?</b><s>→</s><b>Play !</b></p>
+    <div class="hx-act hx-up">
+      <a class="hx-btn" href="https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC" target="_blank" rel="noopener">원데이클래스 신청 →</a>
+      <p data-hero class="hx-loc"><b>상암 인근 · 현천동 180-1</b><br>매주 토요일 정규 수업</p>
+    </div>
+  </div>
+</section>
+<script>
+/* 사진과 사진 설명을 6초마다 함께 바꾸기 (움직임 줄이기 설정이면 첫 장 고정) */
+(function(){
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var ps=document.querySelectorAll('.hx-pics i'),cs=document.querySelectorAll('.hx-cap span'),i=0;
+  setInterval(function(){
+    i=(i+1)%ps.length;
+    ps.forEach(function(p,k){p.classList.toggle('on',k===i)});
+    cs.forEach(function(c,k){c.classList.toggle('on',k===i)});
+  },6000);
+})();
+</script>

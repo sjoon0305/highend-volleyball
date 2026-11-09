@@ -746,3 +746,16 @@ p strong,.lead strong{white-space:nowrap}
 @media (max-width:760px){.ccards.c3{grid-template-columns:1fr;gap:20px}.ccards.c3 .ccard-txt{padding:20px 20px 22px}}
 .ccard-txt .ccard-gos{display:flex!important;flex-wrap:wrap;gap:8px 22px}
 .ccard-txt .ccard-go{margin-right:2px}
+
+/* 로켓츠식 남색 메뉴바 높이 (2026-11-09): PC 86px / 휴대폰 48px */
+:root{--hdh:86px}
+@media (max-width:760px){:root{--hdh:48px}}
+body{padding-top:var(--hdh)}
+.hd3-in,.gnb3{height:var(--hdh)}
+.pills,.subnav{top:var(--hdh)}
+.mnav{top:var(--hdh)}
+@media (max-width:760px){.hd3-logo .lg-emb{height:32px}.hd3-logo .lg-word{height:20px}}
+/* 남색 구분선 (로켓츠식): 같은 내용 안에서는 긋지 않고, 내용 종류가 바뀔 때만
+   본문 → 자주 묻는 질문 / 인스타 사진 / 맨 아래 상담 칸 */
+#faq.sec,.sec.ig,.sec.cta2{border-top:10px solid var(--navy)}
+@media (max-width:760px){#faq.sec,.sec.ig,.sec.cta2{border-top-width:6px}}

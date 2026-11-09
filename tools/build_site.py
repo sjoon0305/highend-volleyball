@@ -1851,6 +1851,20 @@ p,li,dd,summary{text-wrap:balance}
 .mobile-menu a.msub{padding-left:36px;font-size:14px;}
 .mobile-menu a.msub3{padding-left:56px;font-size:13px;}
 .mobile-menu .mgrp{display:block;padding:12px 20px 4px 36px;font-size:13px;font-weight:700;color:var(--muted);border-bottom:none;}
+/* 로켓츠식 남색 메뉴바 (2026-11-09) */
+:root{--hdh:86px;--hdnavy:#003960}
+@media (max-width:760px){:root{--hdh:48px}}
+#nav{background:var(--hdnavy);border-bottom:0;box-shadow:0 2px 14px rgba(0,20,45,.25)}
+.nav-inner{height:var(--hdh)}
+#hero{padding-top:var(--hdh)}
+.nav-links .nvi>a{color:#fff;font-size:15px;font-weight:800;letter-spacing:.06em;background:transparent}
+.nvi:hover>a,.nvi:focus-within>a{color:#f5c400;background:transparent}
+.btn-login-nav{background:transparent;border-color:rgba(255,255,255,.55);color:#fff}
+.btn-login-nav:hover{border-color:#f5c400;color:#f5c400}
+@media (max-width:760px){.nav-logo img.lg-emb{height:32px!important}.nav-logo img.lg-word{height:20px!important}}
+/* 남색 구분선: 내용 종류가 바뀔 때만 (코치·수업 소개 / 사진·영상 / 문의·오시는 길) */
+#coach,#gallery,#cta{border-top:10px solid var(--hdnavy)}
+@media (max-width:760px){#coach,#gallery,#cta{border-top-width:6px}}
 </style>
 '''
 
@@ -1868,6 +1882,17 @@ def home_legacy():
     swap('부상 없이 오래 할 수 있는 배구, 즐겁게 지속할 수 있는 배구', '안전하게 오래 하는 배구, 즐겁게 지속하는 배구')
     swap('국가대표 기준 고급 기술 습득. 실질적 팀플레이 완성 및 경기 분석.', '국가대표·프로 선수의 훈련 방식을 바탕으로 한 고급 기술 습득. 실질적 팀플레이 완성 및 경기 분석.')
     swap('개인별 목표 맞춤 집중 지도. 국가대표 수준 기술 전수.', '개인별 목표 맞춤 집중 지도. 국가대표·프로 출신 코치진의 1:1 기술 지도.')
+
+    # E) 메인 오류 수정 (2026-11-09): 없는 "심화반" 빼고 유소년반 넣기, KB스타즈 -> KB손해보험
+    swap('현대캐피탈·KB스타즈', '현대캐피탈·KB손해보험')
+    a = s.index('<div class="curr-cards">')
+    b = s.index('<div class="curr-card reveal rd3">', a)
+    cards = [('', '1', '유소년반', '초등학생', '배구에 재미 붙이기. 올바른 자세와 기본기를 즐겁게 익힙니다.'),
+             (' rd1', '2', '초급반', '중학생 이상 입문', '기초 기술 습득. 올바른 자세와 기본기 완성.'),
+             (' rd2', '3', '중급반', '배구 경력 6개월 이상', '기술 완성도 향상, 신체 밸런스 강화. 실전 적용 능력 개발.')]
+    s = s[:a] + '<div class="curr-cards">\n' + ''.join(
+        f'      <div class="curr-card reveal{c}">\n        <div class="curr-lv">{n}</div>\n        <div class="curr-name">{t}</div>\n'
+        f'        <div class="curr-target">{g}</div>\n        <div class="curr-desc">{d}</div>\n      </div>\n' for c, n, t, g, d in cards) + '      ' + s[b:]
 
     # 1) 머리말: 검색 제목·설명문·공유 미리보기·구조화 데이터
     h = head('home', '', [])
@@ -1921,7 +1946,7 @@ def home_legacy():
     lo = s.index('<a href="#hero" class="nav-logo">')
     lo_end = s.index('</a>', lo)
     s = (s[:lo] + '<a href="#hero" class="nav-logo"><img class="lg-emb" src="assets/img/logo-emblem.webp" alt="" width="36" height="40">'
-         '<img class="lg-word" src="assets/img/logo-text-dark.webp" alt="HIGH END VOLLEYBALL ACADEMY 하이앤드 발리볼 아카데미" width="88" height="26">' + s[lo_end:])
+         '<img class="lg-word" src="assets/img/logo-text-white.webp" alt="HIGH END VOLLEYBALL ACADEMY 하이앤드 발리볼 아카데미" width="88" height="26">' + s[lo_end:])
     # 6-1) 떠 있는 아이콘 4개 → 하위 페이지와 같은 "문의" 버튼 하나
     fb = s.index('<!-- FLOAT -->')
     fb_end = s.index('</div>', s.index('<div class="float-bar">', fb)) + len('</div>')
@@ -1967,9 +1992,16 @@ def home_legacy():
     site_css = open(os.path.join(ROOT_DIR, 'assets', 'css', 'site.css'), encoding='utf-8').read()
     css += site_css[site_css.index('/* 떠 있는 "문의" 버튼'):site_css.index('/* 나타나기 효과')]
     css += '#fab{--navy:#003960}\n'
-    css += '.hm-brand{display:flex;align-items:center;gap:6px;flex-shrink:0}\n.nav-logo{gap:8px}.nav-logo img.lg-emb{width:auto;height:40px;border-radius:0;object-fit:contain}.nav-logo img.lg-word{width:auto;height:26px;border-radius:0}\n.hamburger.hm-all{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin-right:4px;color:var(--text)}\n.hamburger.hm-all svg{width:26px;height:26px}\n'
+    css += '.hm-brand{display:flex;align-items:center;gap:6px;flex-shrink:0}\n.nav-logo{gap:8px}.nav-logo img.lg-emb{width:auto;height:40px;border-radius:0;object-fit:contain}.nav-logo img.lg-word{width:auto;height:26px;border-radius:0}\n.hamburger.hm-all{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin-right:4px;color:#fff}\n.hamburger.hm-all svg{width:26px;height:26px}\n'
     swap('<!-- FOOTER -->', '<section style="padding:8px 20px 56px;text-align:center"><p style="max-width:760px;margin:0 auto;font-size:14px;line-height:1.9;color:#5a6380;word-break:keep-all">상암배구 · 상암배구학원 · 수색배구 · DMC배구 · 은평배구 · 서대문배구 · 마포배구 · 강서배구 · 고양배구 · 행신배구 · 향동배구 · 덕은배구 · 창릉배구 · 도래울배구 · 삼송배구<br>하이앤드 발리볼 아카데미 상암점 · 상암 인근 · 현천동 180-1</p></section>\n<!-- FOOTER -->')
     swap('</body>', f'{drawer_html("", "home")}\n<style>{css}</style>\n<script src="assets/js/drawer.js?v={ver("assets/js/drawer.js")}" defer></script>\n</body>')
+    # 8) 첫 화면 교체 (2026-11-09 시안 3): tools/home_hero.html
+    hero = open(os.path.join(ROOT_DIR, 'tools', 'home_hero.html'), encoding='utf-8').read()
+    hero = (hero.replace('{V1}', ver('assets/img/hero-hiand-1.webp')).replace('{V2}', ver('assets/img/hero-play.webp'))
+                .replace('{V3}', ver('assets/img/hero-hiand-2.webp')))
+    h0 = s.index('<!-- HERO -->')
+    h1 = s.index('<!-- STATS -->')
+    s = s[:h0] + hero + '\n' + s[h1:]
     return s
 
 
