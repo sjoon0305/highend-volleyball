@@ -234,7 +234,9 @@ def img(root, name, alt, w, h, lazy=True, cls=''):
     ext = 'jpg' if name.startswith('0820') or name.startswith('coach-hwang') or name.startswith('hero-') else 'webp'
     attrs = ' loading="lazy" decoding="async"' if lazy else ' fetchpriority="high"'
     c = f' class="{cls}"' if cls else ''
-    return f'<img{c} src="{root}assets/img/{name}.{ext}" alt="{escape(alt)}" width="{w}" height="{h}"{attrs}>'
+    # 사진을 바꿔도 브라우저가 예전 사진을 보여 주지 않도록 파일 내용 기준 버전을 붙임 (2026-11-09)
+    v = ver(f'assets/img/{name}.{ext}')
+    return f'<img{c} src="{root}assets/img/{name}.{ext}?v={v}" alt="{escape(alt)}" width="{w}" height="{h}"{attrs}>'
 
 
 # ════════════════════════ 구조화 데이터 ════════════════════════
@@ -946,7 +948,7 @@ def elite_body(r):
   </div>
 </section>
 <section class="sec alt">
-  <div class="wrap split rev">
+  <div class="wrap split">
     <figure class="reveal r916">{img(r, 'coach-kim-national', 'VNL 국가대표 경기에서 득점 후 웃으며 손가락을 든 하이앤드 헤드코치', 900, 1600, cls='obj-top')}</figure>
     <div>
     <p class="k">HEAD COACH STORY</p>
