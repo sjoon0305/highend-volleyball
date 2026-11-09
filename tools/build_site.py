@@ -497,6 +497,11 @@ def go(r, key, text, cls='s'):
     return f'<a class="btn {cls}" href="{rel(r, key)}">{escape(text)}</a>'
 
 
+def tl(r, key, text):
+    """본문 중간의 다른 페이지 안내: 큰 버튼 대신 작은 글자 링크 (2026-11-09 대표 결정)"""
+    return f'<a class="tlink" href="{rel(r, key)}">{escape(text)} →</a>'
+
+
 def linkcards(r, items):
     """다른 서브페이지로 가는 카드 (예전 #위치 id를 붙여 길을 잃지 않게)"""
     out = []
@@ -590,7 +595,7 @@ def coaches_body(r):
         </div>
       </div>
     </div>
-    <div class="btns">{go(r, 'method', '수업 방식 보기')}{go(r, 'oneday-apply', '원데이클래스 신청', 'p')}</div>
+    <p class="tlinks">{tl(r, 'method', '수업 방식 보기')}</p>
   </div>
 </section>'''
 
@@ -655,7 +660,7 @@ def maps_body(r):
       <div class="card reveal"><div class="big-letter">S</div><h2 class="t" style="margin-top:10px">Stability · 안정성</h2><p>한 발 서기, 착지 후 버티기로 방향 전환 때 흔들리지 않게 합니다.</p><p class="note">2인 1조 상체 안정성 운동.</p></div>
     </div>
     <div class="principle reveal"><div class="t">하이앤드가 MAPS를 만든 이유</div><p>국가대표·프로 선수 경험을 바탕으로 하이앤드가 만든 준비 운동입니다. 오래, 안전하게 배구를 즐길 수 있는 몸을 어릴 때부터 만들어 주고 싶다는 마음에서 시작했습니다. 나이에 맞게 바꿔서, 초등 저학년은 놀이와 게임으로, 중·고등과 시합반은 더 높은 강도로 합니다.</p></div>
-    <div class="btns">{go(r, 'flow', '수업 80분 흐름 보기')}</div>
+    <p class="tlinks">{tl(r, 'flow', '수업 80분 흐름 보기')}</p>
   </div>
 </section>'''
 
@@ -670,7 +675,7 @@ def correction_body(r):
     </div>
     <div class="principle reveal"><div class="t">한 사람씩 봅니다</div><p>같은 실수라도 원인은 사람마다 다릅니다. 하이앤드 코치진은 <strong>먼저 묻고 → 원인을 짚어 주고 → 영상으로 함께 확인</strong>합니다.</p></div>
     <p class="note">유튜브와 인스타에서는 방법을 보여 드립니다. 내 몸에 맞는 세부 교정은 하이앤드 수업에서 직접 경험해 보세요.</p>
-    <div class="btns">{go(r, 'private', '1:1 개인레슨 보기')}</div>
+    <p class="tlinks">{tl(r, 'private', '1:1 개인레슨 보기')}</p>
   </div>
 </section>'''
 
@@ -689,7 +694,7 @@ def flow_body(r):
       <div class="card reveal"><h2 class="t">기다리지 않는 연습</h2><p>한 사람이 공을 만지는 횟수가 중요합니다. 모두가 동시에 움직이도록 수업을 짭니다.</p></div>
       <div class="card reveal"><h2 class="t">게임으로 마무리</h2><p>게임은 수업마다 다르게 준비합니다. 유소년 수업에서는 아이들이 즐겁게 몰입하는 놀이형 게임을 많이 합니다.</p></div>
     </div>
-    <div class="btns">{go(r, 'level', '성장 레벨 보기')}{go(r, 'oneday', '원데이 클래스로 경험하기', 'p')}</div>
+    <p class="tlinks">{tl(r, 'level', '성장 레벨 보기')}</p>
   </div>
 </section>'''
 
@@ -836,7 +841,7 @@ def youth_body(r):
       <h2>초등학생 배구교실부터 엘리트 진학 준비까지</h2>
       <p>바른 자세와 기본기를 처음부터 제대로 익힙니다. 학부모님께 "우리 아이가 제대로 배우고 있다"는 안심을 드리고 싶습니다.</p>
       <ul class="ticks"><li>토요일 12:00 · 80분 정규수업</li><li>대상: 초등학생</li><li>형제는 수강권을 함께 쓸 수 있습니다</li></ul>
-      <div class="btns">{go(r, 'oneday-apply', '원데이 클래스로 시작', 'p')}{go(r, 'level', '성장 레벨 보기')}</div>
+      <p class="tlinks">{tl(r, 'level', '성장 레벨 보기')}</p>
     </div>
   </div>
 </section>'''
@@ -850,7 +855,7 @@ def beginner_body(r):
       <h2>기초 기술 습득 · 배구에 재미 붙이기</h2>
       <p>배구를 처음 시작하는 중학생 이상을 위한 반입니다. 패스, 서브, 리시브의 기본 메커니즘을 익히고, 팀워크 경험으로 배구의 재미를 발견합니다.</p>
       <ul class="ticks"><li>토요일 13:30 · 80분 정규수업</li><li>대상: 중학생 이상, 처음 배우는 분</li><li>처음 배우는 초등학생은 유소년반에서 시작합니다</li></ul>
-      <div class="btns">{go(r, 'oneday-apply', '원데이 클래스로 시작', 'p')}{go(r, 'intermediate', '중급반 보기')}</div>
+      <p class="tlinks">{tl(r, 'intermediate', '중급반 보기')}</p>
     </div>
   </div>
 </section>'''
@@ -864,7 +869,7 @@ def intermediate_body(r):
       <h2>기술의 정교화 · 신체 밸런스 강화</h2>
       <p>기본기를 갖추고 실전 실력을 높이고 싶은 분을 위한 반입니다. 볼 컨트롤을 정밀하게 다듬고, 신체 정렬 코칭으로 몸에 무리를 줄이는 효율적인 폼을 만듭니다.</p>
       <ul class="ticks"><li>토요일 16:30 · 80분 정규수업</li><li>대상: 중학생 이상, 배구 경력 6개월 이상</li><li>기본 포지션 이해, 상황별 협력 수비</li></ul>
-      <div class="btns">{go(r, 'oneday-apply', '원데이 클래스로 시작', 'p')}{go(r, 'level', '성장 레벨 보기')}</div>
+      <p class="tlinks">{tl(r, 'level', '성장 레벨 보기')}</p>
     </div>
   </div>
 </section>'''
@@ -884,7 +889,7 @@ def competition_body(r):
         <div><dt>그 밖에</dt><dd>초등 고학년 · 성인은 상담으로 맞춰 드립니다</dd></div>
       </dl>
       <p class="note">수업 시간과 구성은 별도 상담으로 맞춰 드립니다.</p>
-      <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡으로 상담</a>{go(r, 'level', '4단계 성장 레벨 보기')}</div>
+      <p class="tlinks">{tl(r, 'level', '4단계 성장 레벨 보기')}</p>
     </div>
   </div>
 </section>'''
@@ -898,7 +903,6 @@ def team_body(r):
       <h2>함께 배우는 팀클래스</h2>
       <p>같은 동호회, 같은 학교, 같은 회사 사람들이 한 팀으로 배우는 수업입니다. 인원과 목표에 맞춰 주 1회 정기 수업으로 진행합니다. 국가대표·프로 출신 하이앤드 코치진이 기본기부터 팀 전술까지 가르칩니다.</p>
       <ul class="ticks"><li>주 1회 정기 수업 · 1시간 30분</li><li>일정 · 인원 · 수업 장소는 상담으로 맞춰 드립니다</li><li>수강료는 카카오톡 상담으로 안내드립니다</li></ul>
-      <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡 상담</a></div>
     </div>
   </div>
 </section>
@@ -910,7 +914,7 @@ def team_body(r):
       <div class="card reveal"><h3 class="t">학교 · 학교스포츠클럽</h3><p>체육 시간, 방과후, 학교스포츠클럽 배구 수업. 2026년에는 <a href="{rel(r, 'school')}">국가대표가 찾아가는 배구교실</a>(가재울중 · 등촌고 · 은평중)도 열었습니다.</p></div>
       <div class="card reveal"><h3 class="t">기업 · 단체</h3><p>회사 동호회, 기관 단체 수업. 처음 배구를 하는 사람도 함께할 수 있게 수준에 맞춰 나눠서 지도합니다.</p></div>
     </div>
-    <div class="btns">{go(r, 'intl', 'INTERNATIONAL 국제학교 레슨')}{go(r, 'competition', '시합반 보기')}</div>
+    <p class="tlinks">{tl(r, 'intl', 'INTERNATIONAL 국제학교 레슨')}{tl(r, 'competition', '시합반 보기')}</p>
   </div>
 </section>'''
 
@@ -923,7 +927,6 @@ def private_body(r):
       <h2>내 약점을, 내 몸에 맞게</h2>
       <p>국가대표·프로 출신 하이앤드 코치진이 60분 동안 한 사람만 봅니다. 서브, 리시브, 스파이크 등 내 약점을 내 몸에 맞게 교정합니다. 영상 분석을 바탕으로 신체 조건에 맞는 폼을 함께 찾습니다.</p>
       <div class="prices"><div><span>1회 (60분)</span><strong>25만 원</strong></div><div><span>10회 등록</span><strong>회당 20만 원</strong></div></div>
-      <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡으로 예약 문의</a></div>
     </div>
   </div>
 </section>'''
@@ -932,19 +935,19 @@ def private_body(r):
 def elite_body(r):
     return f'''<section class="sec">
   <div class="wrap split">
-    <figure class="reveal">{img(r, '0820-07', '하이앤드 코치진과 함께 훈련하는 학생', 1200, 1600)}</figure>
+    <figure class="reveal">{img(r, 'elite-tokyo-qual', '도쿄올림픽 아시아 대륙예선에 출전한 대한민국 남자 배구 대표팀', 2400, 1572)}</figure>
     <div class="reveal">
       <h2>선수의 길을 걸어 본 코치진이 함께 준비합니다</h2>
       <p>배구선수를 꿈꾸는 초등 4학년부터 고등학생까지를 위한 반입니다.<br>국가대표·프로 선수의 훈련 방식을 바탕으로,<br>지금 실력을 먼저 진단하고 목표에 맞춰 준비합니다.</p>
       <ul class="ticks"><li>대상: 초등 4학년 ~ 고등학생</li><li>수업: 주 1회 그룹 수업 + 소그룹 집중 클래스</li><li>1:1 개인레슨은 필요할 때 함께 선택할 수 있습니다</li><li>입반: 상담과 레벨 진단 후 시작합니다</li></ul>
       <p class="note">취미로 배우는 초등학생은 유소년반, 선수를 목표로 하는 학생은 엘리트 선수 준비반에서 시작합니다.<br>초등 고학년 학부모님은 상담에서 아이의 단계를 함께 확인해 드립니다.</p>
-      <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡으로 상담</a>{go(r, 'level', '4단계 성장 레벨 보기')}</div>
+      <p class="tlinks">{tl(r, 'level', '4단계 성장 레벨 보기')}</p>
     </div>
   </div>
 </section>
 <section class="sec alt">
   <div class="wrap split rev">
-    <figure class="reveal">{img(r, 'coach-kim-national', '국가대표 유니폼을 입은 하이앤드 헤드코치', 900, 1200, cls='obj-top')}</figure>
+    <figure class="reveal r916">{img(r, 'coach-kim-national', 'VNL 국가대표 경기에서 득점 후 웃으며 손가락을 든 하이앤드 헤드코치', 900, 1600, cls='obj-top')}</figure>
     <div>
     <p class="k">HEAD COACH STORY</p>
     <h2>먼저 걸어 본 길</h2>
@@ -952,7 +955,7 @@ def elite_body(r):
     <p class="reveal">그래서 늦은 시작도, 다시 일어서는 과정도 가까이에서 압니다.<br>하이앤드는 가능성을 약속하지 않고,<br>지금 단계를 정직하게 진단하는 것부터 시작합니다.</p>
     <blockquote class="reveal">"만약 내가 16살 때 올바른 방법으로 배구를 배웠더라면…"</blockquote>
     <p class="reveal">하이앤드는 그 아쉬움을 학생들의 준비 과정에 담았습니다.</p>
-    <div class="btns">{go(r, 'coaches', '코칭 스태프 보기')}</div>
+    <p class="tlinks">{tl(r, 'coaches', '코칭 스태프 보기')}</p>
     </div>
   </div>
 </section>
@@ -993,10 +996,24 @@ def elite_body(r):
       <div class="card reveal"><h3 class="t en">Next Ball</h3><p>실수는 지나가고, 다음 공은 늘 옵니다.<br>실수한 다음 공을 다시 준비하는 법까지 연습합니다.</p></div>
     </div>
     <p class="note">국가대표·프로 출신 하이앤드 코치진이 가르칩니다. 수업 시간과 수강료는 카카오톡 상담으로 안내드립니다.</p>
-    <div class="btns"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡으로 상담</a>{go(r, 'private', '1:1 개인레슨 보기')}</div>
+    <p class="tlinks">{tl(r, 'private', '1:1 개인레슨 보기')}</p>
   </div>
 </section>'''
 
+
+def elite_dream(r):
+    """엘리트 선수 준비반 맺음 칸: 미래의 국가대표에게 (2026-11-09 대표 선택 1안·4안)"""
+    return f'''
+<section class="sec dream" style="--dream-bg:url('{r}assets/img/elite-dream-bg.webp')">
+  <div class="wrap hd-narrow">
+    <p class="k">FUTURE NATIONAL TEAM</p>
+    <h2>미래의 국가대표를 꿈꾸는 학생에게</h2>
+    <div class="dream-cards">
+      <div class="dream-card reveal"><p>국가대표의 길은 하루아침에 만들어지지 않습니다.<br>오늘의 기본기 하나, 다음 공 하나가 쌓여 꿈에 가까워집니다.<br>그 길을 먼저 걸어 본 코치진이,<br>첫걸음부터 함께 준비합니다.</p></div>
+      <div class="dream-card reveal"><span class="dream-tag">학부모님께</span><p>아이가 국가대표를 꿈꾼다고 말할 때,<br>그 길을 직접 걸어 본 코치진이<br>정직하게 함께 준비합니다.</p></div>
+    </div>
+  </div>
+</section>'''
 
 def intl_body(r):
     return f'''<section class="sec intl">
@@ -1308,7 +1325,7 @@ def school_body(r):
     <h2>우리 학교에도 와 주실 수 있나요?</h2>
     <p>학교 체육 시간, 방과후, 학교스포츠클럽 수업으로<br>찾아가는 배구교실을 신청하실 수 있습니다.</p>
     <p>일정과 인원을 카카오톡 채널로 남겨 주시면<br>확인 후 안내드리겠습니다.</p>
-    <div class="hd-news"><a class="hp-btn" href="{KAKAO_CHAT}" target="_blank" rel="noopener">카카오톡 상담 →</a></div>
+    <div class="hd-news"><a class="btn k" href="{KAKAO_CHAT}" target="_blank" rel="noopener">{SN['kakao']}카카오톡 상담</a></div>
   </div>
 </section>
 <section class="hd-sec sec">
@@ -1570,7 +1587,7 @@ BUILD = {
     'class': (class_body, [ONEDAY, YOUTH, BEGINNER, INTER, PRIVATE], []), 'oneday': (oneday_body, [ONEDAY], []),
     'oneday-apply': (apply_body, [], []), 'oneday-reviews': (reviews_body, [], []),
     'youth': (with_faq('youth', youth_body), [YOUTH] + ([faq_ld(class_faq('youth'))] if class_faq('youth') else []), []), 'beginner': (with_faq('beginner', beginner_body), [BEGINNER] + ([faq_ld(class_faq('beginner'))] if class_faq('beginner') else []), []), 'intermediate': (with_faq('intermediate', intermediate_body), [INTER] + ([faq_ld(class_faq('intermediate'))] if class_faq('intermediate') else []), []),
-    'regular-reviews': (reviews_body, [], []), 'competition': (with_faq('competition', competition_body), [] + ([faq_ld(class_faq('competition'))] if class_faq('competition') else []), []), 'team': (with_faq('team', team_body), [] + ([faq_ld(class_faq('team'))] if class_faq('team') else []), []), 'private': (with_faq('private', private_body), [PRIVATE] + ([faq_ld(class_faq('private'))] if class_faq('private') else []), []), 'elite': (with_faq('elite', elite_body), [] + ([faq_ld(class_faq('elite'))] if class_faq('elite') else []), []), 'intl': (with_faq('intl', intl_body), [] + ([faq_ld(class_faq('intl'))] if class_faq('intl') else []), []),
+    'regular-reviews': (reviews_body, [], []), 'competition': (with_faq('competition', competition_body), [] + ([faq_ld(class_faq('competition'))] if class_faq('competition') else []), []), 'team': (with_faq('team', team_body), [] + ([faq_ld(class_faq('team'))] if class_faq('team') else []), []), 'private': (with_faq('private', private_body), [PRIVATE] + ([faq_ld(class_faq('private'))] if class_faq('private') else []), []), 'elite': (lambda r: with_faq('elite', elite_body)(r) + elite_dream(r), [] + ([faq_ld(class_faq('elite'))] if class_faq('elite') else []), []), 'intl': (with_faq('intl', intl_body), [] + ([faq_ld(class_faq('intl'))] if class_faq('intl') else []), []),
     'guide': (guide_body, [], FIREBASE + ['assets/js/schedule.js']), 'photos': (photos_body, [], ['assets/js/media.js']),
     'story': (story_body, [], []), 'hiand': (hiand_body, [faq_ld(HIAND_FAQ), HIAND_EVENT], []), 'school': (school_body, [], []), 'note': (soon_body, [], []),
     'contact': (contact_body, [], []), 'local': (local_body, [faq_ld(LOCAL_FAQ)], []), 'faq': (faq_body, [faq_ld(CONTACT_FAQ)], []),

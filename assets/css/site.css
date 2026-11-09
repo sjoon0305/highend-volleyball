@@ -704,3 +704,29 @@ p strong,.lead strong{white-space:nowrap}
 
 /* 엘리트 선수 준비반: 인물 사진은 얼굴이 보이게 위쪽 기준으로 자름 */
 .split img.obj-top{object-position:center 6%}
+
+/* 본문 중간 다른 페이지 안내: 글자 링크 */
+.tlinks{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:22px}
+.tlink{color:var(--blue);font-weight:700;font-size:15px;text-decoration:none;border-bottom:1px solid transparent}
+.tlink:hover{border-bottom-color:currentColor}
+
+/* 코치 스토리 사진: 16:9 */
+.split figure.r169{aspect-ratio:16/9}
+.split figure.r169 img.obj-top{object-position:center 12%}
+
+/* 코치 스토리 개인 사진: 9:16 세로 (2026-11-09 대표 결정) */
+.split figure.r916{aspect-ratio:9/16;max-width:420px;margin-inline:auto}
+.split figure.r916 img.obj-top{object-position:center center}
+
+/* 엘리트 선수 준비반 맺음 칸: 미래의 국가대표에게 */
+.sec.dream{position:relative;color:#fff;background:#0b1f3f;overflow:hidden}
+.sec.dream::before{content:"";position:absolute;inset:0;background:var(--dream-bg) center/cover no-repeat;opacity:.35}
+.sec.dream::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,22,48,.55),rgba(8,22,48,.85))}
+.sec.dream .wrap{position:relative;z-index:1;text-align:center}
+.sec.dream .k{color:#9cc4ff}
+.sec.dream h2{color:#fff}
+.dream-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px;text-align:left}
+.dream-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:24px 22px;line-height:1.85;color:#eef4ff}
+.dream-tag{display:inline-block;font-size:13px;font-weight:700;color:#0b1f3f;background:#9cc4ff;border-radius:999px;padding:3px 12px;margin-bottom:10px}
+@media (max-width:760px){.dream-cards{grid-template-columns:1fr}}
+.sec.dream .dream-card p{color:#eef4ff;margin:0}
