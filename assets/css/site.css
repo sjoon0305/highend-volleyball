@@ -420,6 +420,31 @@ table.tbl{width:100%;border-collapse:collapse;font-size:15px;min-width:520px;}
 .fab-i{display:flex;align-items:center;gap:8px;background:#fff;color:var(--text);padding:9px 14px 9px 10px;border-radius:999px;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(0,20,45,.18);}
 .fab-i svg{width:22px;height:22px;display:block;}
 .fab-i.kakao svg{color:#3c1e1e;}
+/* 네이버 지도 (이미지 + 누르면 네이버 지도 열림, 2026-11-11) */
+.loc-map.naver-map{display:block;position:relative;text-decoration:none;}
+.naver-map img{display:block;width:100%;height:280px;object-fit:cover;}
+.contact-grid .naver-map img{height:340px;}
+.naver-map .nm-chip{position:absolute;left:50%;top:calc(50% - 64px);transform:translateX(-50%);background:#03c75a;color:#fff;font-weight:800;font-size:14px;padding:7px 14px;border-radius:20px;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.18);}
+.naver-map .nm-open{position:absolute;right:12px;bottom:12px;background:#fff;color:#0d1b2e;font-weight:700;font-size:13px;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,0,0,.12);}
+@media(max-width:640px){.naver-map img,.contact-grid .naver-map img{height:240px;}.naver-map .nm-chip{font-size:13px;}}
+
+.loc-btn.kakao{background:#fff;color:var(--text);border:1.5px solid var(--border);}
+.loc-btns{gap:16px;margin-top:18px;}
+.loc-a + .kakao-banner,.loc-a ~ .kakao-banner{margin-top:40px;}
+@media(max-width:640px){.loc-btns{gap:10px;}.loc-a + .kakao-banner,.loc-a ~ .kakao-banner{margin-top:28px;}}
+
+/* 메인 버튼·상담 칸 색을 하이앤드 남색·파랑으로 통일 (2026-11-11 대표: 노랑·초록·인스타색이 너무 튐) */
+.kakao-banner{background:#0d1b2e;}
+.kakao-banner .kb-title{color:#fff;}
+.kakao-banner .kb-sub{color:#c9d6f0;}
+.kakao-banner .kb-btn{background:#1a53d4;color:#fff;}
+.kakao-banner .kb-btn:hover{background:#1240b0;opacity:1;}
+.gal-actions .gal-btn-insta,.reels-more-btn{background:#0d1b2e;color:#fff;}
+.reels-more-btn svg{color:#fff;}
+.gal-actions .gal-btn-naver{background:#fff;color:#1a53d4;border:1.5px solid #1a53d4;}
+.gal-actions .gal-btn-naver:hover{background:#1a53d4;color:#fff;}
+.naver-map .nm-chip{background:#1a53d4;}
+
 /* 나타나기 효과: 화면에 들어오면 바로 또렷하게, 동작 줄이기 설정이면 효과 없음 */
 .reveal{opacity:1;transform:none;}
 html.js .reveal:not(.visible){opacity:0;transform:translateY(14px);}

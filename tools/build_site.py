@@ -35,9 +35,20 @@ NAVER_MAP = 'https://map.naver.com/p/entry/place/2022442484'
 NAVER_BOOK = 'https://m.place.naver.com/place/2022442484/ticket?entry=pll&bk_query=%ED%95%98%EC%9D%B4%EC%95%A4%EB%93%9C%20%EB%B0%9C%EB%A6%AC%EB%B3%BC'
 GOOGLE_MAP = 'https://www.google.com/maps?cid=1837675666172275385'
 GOOGLE_EMBED = 'https://maps.google.com/maps?cid=1837675666172275385&amp;z=16&amp;hl=ko&amp;output=embed'
+# 네이버 지도 (2026-11-11 대표: 구글 지도 대신 네이버 지도 하나만). 이미지는 네이버 정적 지도에서 받아 assets/img/map-naver.webp로 보관, 누르면 네이버 지도 열림
+# 지도 아래 버튼: 구글 지도 · 카카오맵 (2026-11-11 대표: 네이버 지도 열기 버튼 삭제, 지도 자체가 네이버)
+KAKAO_MAP = 'https://map.kakao.com/link/map/하이앤드 발리볼 아카데미 상암점,37.5958553,126.8672514'
+KAKAO_PIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#191919" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>'
+def naver_map_img(root=''):
+    return ('<a class="loc-map naver-map" href="https://map.naver.com/p/entry/place/2022442484" target="_blank" rel="noopener" '
+                 'aria-label="네이버 지도에서 하이앤드 발리볼 아카데미 상암점 열기">'
+                 '<img src="' + root + 'assets/img/map-naver.webp" alt="하이앤드 발리볼 아카데미 상암점 위치 (네이버 지도)" width="1400" height="630" loading="lazy">'
+                 '<span class="nm-chip">하이앤드 발리볼 아카데미 상암점</span><span class="nm-open">네이버 지도에서 크게 보기 ↗</span></a>')
 CAREER = '국가대표 7년 · 프로(V리그) 10년, 선수 17년'
 
 SN = json.load(open(os.path.join(ROOT_DIR, 'tools', 'snippets.json'), encoding='utf-8'))
+MAP_BTNS = (f'<div class="loc-btns"><a class="loc-btn google" href="{GOOGLE_MAP}" target="_blank" rel="noopener">{SN["google"]}Google 지도</a>'
+            f'<a class="loc-btn kakao" href="{KAKAO_MAP}" target="_blank" rel="noopener">{KAKAO_PIN}카카오맵</a></div>')
 USER_ICON = ('<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" '
              'stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>')
 CHAT_ICON = ('<svg class="ln" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" '
@@ -1501,16 +1512,16 @@ LOCAL_FAQ = [
 ]
 
 
-def map_block():
-    return f'''<div class="loc-map"><iframe src="{GOOGLE_EMBED}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="하이앤드 발리볼 아카데미 상암점 위치 지도"></iframe></div>
-      <div class="loc-btns"><a class="loc-btn naver" href="{NAVER_MAP}" target="_blank" rel="noopener">{SN['naverN']}네이버 지도 열기</a><a class="loc-btn google" href="{GOOGLE_MAP}" target="_blank" rel="noopener">{SN['google']}Google 지도</a></div>'''
+def map_block(root=''):
+    return f'''{naver_map_img(root)}
+      {MAP_BTNS}'''
 
 
 def contact_body(r):
     return f'''<section class="sec" id="map">
   <div class="wrap">
     <div class="contact-grid">
-      <div class="reveal">{map_block()}</div>
+      <div class="reveal">{map_block(r)}</div>
       <div class="card reveal">
         <h2 class="t">{NAME}</h2>
         <dl class="facts">
@@ -2076,6 +2087,16 @@ def home_legacy():
     s = s[:k0] + s[k1:]
     e = s.index('  </div>\n</section>\n\n<!-- FOOTER -->')
     s = s[:e] + kb + s[e:]
+    # 14) CONTACT 제목·설명 빼기, 지도는 네이버 지도 하나만 (2026-11-11 대표)
+    c0 = s.index('    <div class="sec-label reveal" style="text-align:center">CONTACT</div>')
+    c1 = s.index('    </p>\n', c0) + len('    </p>\n')
+    s = s[:c0] + s[c1:]
+    m0 = s.index('      <div class="loc-map"><iframe')
+    m1 = s.index('</div>\n', m0) + len('</div>\n')
+    s = s[:m0] + '      ' + naver_map_img() + '\n' + s[m1:]
+    b0 = s.index('      <div class="loc-btns">', m0)
+    b1 = s.index('      </div>\n', b0) + len('      </div>\n')
+    s = s[:b0] + '      ' + MAP_BTNS + '\n' + s[b1:]
     return s
 
 
