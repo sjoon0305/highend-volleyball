@@ -618,8 +618,8 @@ def facility_body(r):
   <div class="wrap">
     <h2>200평 풀코트에서 배웁니다</h2>
     <div class="photos mt">
-      <figure class="reveal">{img(r, 'class-1', '하이앤드 200평 풀코트 체육관에서 진행되는 배구 수업 전경', 720, 960)}</figure>
-      <figure class="reveal">{img(r, 'class-3', '네트 앞에서 수강생들이 리시브 자세를 연습하는 수업 장면', 1200, 1600)}</figure>
+      <figure class="reveal">{img(r, 'facility-1', '하이앤드 200평 풀코트 체육관 전경 (엔드라인 쪽에서 본 모습)', 1600, 1200)}</figure>
+      <figure class="reveal">{img(r, 'facility-2', '하이앤드 200평 풀코트 체육관 전경 (코트 모서리에서 본 모습)', 1600, 1200)}</figure>
     </div>
     <p class="note">{ADDR} · 건물 앞 주차 가능 · <a href="{rel(r, 'contact')}">오시는 길 보기</a></p>
   </div>
